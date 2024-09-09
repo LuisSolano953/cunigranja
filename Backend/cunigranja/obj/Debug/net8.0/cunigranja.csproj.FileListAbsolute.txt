@@ -1,0 +1,132 @@
+C:\Users\SENA\Documents\cunigranja\cunigranja\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\SENA\Documents\cunigranja\cunigranja\bin\Debug\net8.0\appsettings.json
+C:\Users\SENA\Documents\cunigranja\cunigranja\bin\Debug\net8.0\cunigranja.exe
+C:\Users\SENA\Documents\cunigranja\cunigranja\bin\Debug\net8.0\cunigranja.deps.json
+C:\Users\SENA\Documents\cunigranja\cunigranja\bin\Debug\net8.0\cunigranja.runtimeconfig.json
+C:\Users\SENA\Documents\cunigranja\cunigranja\bin\Debug\net8.0\cunigranja.dll
+C:\Users\SENA\Documents\cunigranja\cunigranja\bin\Debug\net8.0\cunigranja.pdb
+C:\Users\SENA\Documents\cunigranja\cunigranja\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\SENA\Documents\cunigranja\cunigranja\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\SENA\Documents\cunigranja\cunigranja\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\SENA\Documents\cunigranja\cunigranja\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\SENA\Documents\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.csproj.AssemblyReference.cache
+C:\Users\SENA\Documents\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\SENA\Documents\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.AssemblyInfoInputs.cache
+C:\Users\SENA\Documents\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.AssemblyInfo.cs
+C:\Users\SENA\Documents\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.csproj.CoreCompileInputs.cache
+C:\Users\SENA\Documents\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\SENA\Documents\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\SENA\Documents\cunigranja\cunigranja\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\SENA\Documents\cunigranja\cunigranja\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\SENA\Documents\cunigranja\cunigranja\obj\Debug\net8.0\staticwebassets\msbuild.cunigranja.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\SENA\Documents\cunigranja\cunigranja\obj\Debug\net8.0\staticwebassets\msbuild.build.cunigranja.props
+C:\Users\SENA\Documents\cunigranja\cunigranja\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.cunigranja.props
+C:\Users\SENA\Documents\cunigranja\cunigranja\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.cunigranja.props
+C:\Users\SENA\Documents\cunigranja\cunigranja\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\SENA\Documents\cunigranja\cunigranja\obj\Debug\net8.0\scopedcss\bundle\cunigranja.styles.css
+C:\Users\SENA\Documents\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.csproj.Up2Date
+C:\Users\SENA\Documents\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.dll
+C:\Users\SENA\Documents\cunigranja\cunigranja\obj\Debug\net8.0\refint\cunigranja.dll
+C:\Users\SENA\Documents\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.pdb
+C:\Users\SENA\Documents\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.genruntimeconfig.cache
+C:\Users\SENA\Documents\cunigranja\cunigranja\obj\Debug\net8.0\ref\cunigranja.dll
+C:\Users\SENA\Documents\cunigranja\cunigranja\bin\Debug\net8.0\System.Web.Mvc.dll
+C:\Users\SENA\Documents\cunigranja\cunigranja\bin\Debug\net8.0\System.Web.Razor.dll
+C:\Users\SENA\Documents\cunigranja\cunigranja\bin\Debug\net8.0\System.Web.Helpers.dll
+C:\Users\SENA\Documents\cunigranja\cunigranja\bin\Debug\net8.0\System.Web.WebPages.Deployment.dll
+C:\Users\SENA\Documents\cunigranja\cunigranja\bin\Debug\net8.0\System.Web.WebPages.Razor.dll
+C:\Users\SENA\Documents\cunigranja\cunigranja\bin\Debug\net8.0\System.Web.WebPages.dll
+C:\Users\SENA\Documents\cunigranja\cunigranja\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\SENA\Documents\cunigranja\cunigranja\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\SENA\Documents\cunigranja\cunigranja\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\SENA\Documents\cunigranja\cunigranja\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\SENA\Documents\cunigranja\cunigranja\bin\Debug\net8.0\Microsoft.Web.Infrastructure.dll
+C:\Users\SENA\Documents\cunigranja\cunigranja\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\appsettings.json
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\cunigranja.exe
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\cunigranja.deps.json
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\cunigranja.runtimeconfig.json
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\cunigranja.dll
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\cunigranja.pdb
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\System.Web.Mvc.dll
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\System.Web.Razor.dll
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\System.Web.Helpers.dll
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\System.Web.WebPages.Deployment.dll
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\System.Web.WebPages.Razor.dll
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\System.Web.WebPages.dll
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\Microsoft.Web.Infrastructure.dll
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.csproj.AssemblyReference.cache
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.AssemblyInfoInputs.cache
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.AssemblyInfo.cs
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.csproj.CoreCompileInputs.cache
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\staticwebassets\msbuild.cunigranja.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\staticwebassets\msbuild.build.cunigranja.props
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.cunigranja.props
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.cunigranja.props
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\scopedcss\bundle\cunigranja.styles.css
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.csproj.Up2Date
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.dll
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\refint\cunigranja.dll
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.pdb
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.genruntimeconfig.cache
+C:\Users\usser\Downloads\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\ref\cunigranja.dll
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\appsettings.json
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\cunigranja.exe
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\cunigranja.deps.json
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\cunigranja.runtimeconfig.json
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\cunigranja.dll
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\cunigranja.pdb
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\System.Web.Mvc.dll
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\System.Web.Razor.dll
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\System.Web.Helpers.dll
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\System.Web.WebPages.Deployment.dll
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\System.Web.WebPages.Razor.dll
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\System.Web.WebPages.dll
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\Microsoft.Web.Infrastructure.dll
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.csproj.AssemblyReference.cache
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.AssemblyInfoInputs.cache
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.AssemblyInfo.cs
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.csproj.CoreCompileInputs.cache
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\staticwebassets\msbuild.cunigranja.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\staticwebassets\msbuild.build.cunigranja.props
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.cunigranja.props
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.cunigranja.props
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\scopedcss\bundle\cunigranja.styles.css
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.csproj.Up2Date
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.dll
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\refint\cunigranja.dll
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.pdb
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\cunigranja.genruntimeconfig.cache
+C:\Users\SENA\Downloads\cunigranja (3)\cunigranja (3)\cunigranja\cunigranja\obj\Debug\net8.0\ref\cunigranja.dll
