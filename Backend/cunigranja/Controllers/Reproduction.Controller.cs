@@ -5,10 +5,10 @@ namespace cunigranja.Controllers
 {
     [ApiController]
     [Route("Api/[controller]")]
-    public class ReproducionController : Controller
+    public class ReproductionController : Controller
     {
         [HttpPost("CreateReproduction")]
-        public IActionResult create(ReproduccionModel Reproducion)
+        public IActionResult create(ReproductionModel Reproduction)
 
         {
             try
@@ -36,7 +36,7 @@ namespace cunigranja.Controllers
             }
         }
         [HttpPut("UpdateReproduction")]
-        public IActionResult Update(ReproduccionModel Reproduccion)
+        public IActionResult Update(ReproductionModel Reproductcion)
         {
             try
             {
