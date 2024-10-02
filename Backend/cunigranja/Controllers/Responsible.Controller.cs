@@ -53,7 +53,7 @@ namespace cunigranja.Controllers
         }
 
         [HttpPut("UpdateResponsible")]
-            public IActionResult Update(int Id, CageModel Responsible)
+            public IActionResult Update(int Id, ResponsibleModel Responsible)
             {
                 try
                 {
