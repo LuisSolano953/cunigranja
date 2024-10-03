@@ -2,9 +2,9 @@
 {
     public class ResponsibleModel
     {
-        public int Responsible_ID { get; set; }
-        public string Responsible_Name { get; set; }
-        public string Responsible_Type { get; set; }
+        public int Id_responsible { get; set; }
+        public string name_responsible { get; set; }
+        public string  tipo_responsible { get; set; }
   
 
         }
