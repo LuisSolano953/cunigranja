@@ -38,21 +38,9 @@ namespace cunigranja.Controllers
                 }
             }
 
-        [HttpGet("GetsAlLResposible")]
-        public IActionResult GetsAllResponsible(int id, GeneralFuctions generalFuctions)
-        {
-            try
-            {
-                return Ok();
-            }
-            catch (Exception ex)
-            {
+        
 
-                return StatusCode(500, ex.ToString());
-            }
-        }
-
-        [HttpPut("UpdateResponsible")]
+        [HttpPost("UpdateResponsible")]
             public IActionResult Update(int Id, ResponsibleModel Responsible)
             {
                 try
