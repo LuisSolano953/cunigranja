@@ -1,64 +1,73 @@
 ﻿using cunigranja.Models;
+using cunigranja.Functions;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("Api/[controller]")]
-public class healthcontroller : Controller
+    public class HealthController : Controller
 {
+    public IConfiguration _configuration { get; set; }
+    public GeneralFunctions FunctionsGeneral;
+    public HealthController(IConfiguration configuration)
+    {
+        FunctionsGeneral = new GeneralFunctions(configuration);
+        _configuration = configuration;
+       
+    }
     [HttpPost("Createhealth")]
     public IActionResult Create(HealthModel sanidad)
     {
         try
         {
-            // Lógica para crear un registro de sanidad
-            return Ok("health created successfully");
+            return Ok();
         }
         catch (Exception ex)
         {
+            FunctionsGeneral.AddLog(ex.Message);
             return StatusCode(500, ex.ToString());
         }
     }
 
-    [HttpGet("GetHealth")]
-    public IActionResult Get(int id)
-    {
-        try
+        [HttpGet("GetHealth")]
+        public IActionResult Get(int id)
         {
-            // Lógica para obtener un registro de sanidad por id
-            return Ok("Sanidad details retrieved successfully");
+            try
+            {
+             return Ok();
         }
-        catch (Exception ex)
-        {
-            return StatusCode(500, ex.ToString());
+            catch (Exception ex)
+            {
+                FunctionsGeneral.AddLog(ex.Message);
+                return StatusCode(500, ex.ToString());
+            }
         }
-    }
 
-    [HttpPost("UpdateHealth")]
-    public IActionResult Update(HealthModel HealthModel)
-    {
-        try
+        [HttpPost("UpdateHealth")]
+        public IActionResult Update(HealthModel HealthModel)
         {
-            // Lógica para actualizar un registro de sanidad
-            return Ok("Sanidad updated successfully");
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, ex.ToString());
-        }
-    }
+            try
+            {
 
-    [HttpDelete("DeleteHealth")]
-    public IActionResult Delete(int id)
-    {
-        try
-        {
-            // Lógica para eliminar un registro de sanidad
-            return Ok("Sanidad deleted successfully");
+            return Ok();
         }
-        catch (Exception ex)
-        {
-            return StatusCode(500, ex.ToString());
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
         }
-    }
+
+        [HttpDelete("DeleteHealth")]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+            return Ok();
+        }
+            catch (Exception ex)
+            {
+                FunctionsGeneral.AddLog(ex.Message);
+                return StatusCode(500, ex.ToString());
+            }
+        }
 }
 

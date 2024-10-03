@@ -1,4 +1,5 @@
-﻿using cunigranja.Models;
+﻿using cunigranja.Functions;
+using cunigranja.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cunigranja.Controllers
@@ -7,6 +8,13 @@ namespace cunigranja.Controllers
     [Route("Api/[controller]")]
     public class ReproductionController : Controller
     {
+        public IConfiguration _configuration { get; set; }
+        public GeneralFunctions FunctionsGeneral;
+        public ReproductionController(IConfiguration configuration)
+        {
+            FunctionsGeneral = new GeneralFunctions(configuration);
+            _configuration = configuration;
+        }
         [HttpPost("CreateReproduction")]
         public IActionResult create(ReproductionModel Reproduction)
 
@@ -17,7 +25,8 @@ namespace cunigranja.Controllers
             }
                 catch (Exception ex)
                 {
-                     return StatusCode(500, ex.ToString()); 
+                    FunctionsGeneral.AddLog(ex.Message);
+                    return StatusCode(500, ex.ToString()); 
                 
                 }
         }
@@ -31,7 +40,8 @@ namespace cunigranja.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.ToString());
+                    FunctionsGeneral.AddLog(ex.Message);
+                    return StatusCode(500, ex.ToString());
 
             }
         }
@@ -44,6 +54,7 @@ namespace cunigranja.Controllers
             }
             catch (Exception ex)
             {
+                FunctionsGeneral.AddLog(ex.Message);
                 return StatusCode(500, ex.ToString());
 
             }
@@ -57,6 +68,7 @@ namespace cunigranja.Controllers
             }
             catch (Exception ex)
             {
+
                 return StatusCode(500, ex.ToString());
 
             }

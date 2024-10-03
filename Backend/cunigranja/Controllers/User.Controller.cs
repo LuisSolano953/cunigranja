@@ -1,5 +1,6 @@
 ﻿using cunigranja.Functions;
 using cunigranja.Models;
+using cunigranja.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -14,12 +15,14 @@ namespace cunigranja.Controllers
     public class UserController : Controller
     {
         public IConfiguration _configuration { get; set; }
+        private readonly UserServices userServices;
         public JwtModel JWT;
         public GeneralFunctions FunctionsGeneral;
-        public UserController(IConfiguration configuration)
+        public UserController(IConfiguration configuration, UserServices userservices)
         {
             FunctionsGeneral = new GeneralFunctions(configuration);
             _configuration = configuration;
+            userServices = userservices;
             JWT = _configuration.GetSection("JWT").Get<JwtModel>();
         }
 
@@ -74,6 +77,12 @@ namespace cunigranja.Controllers
                 return StatusCode(500, ex.ToString());
             }
         }
+
+            [HttpGet("AllUser")]
+            public ActionResult<IEnumerable<User>> AllUsers()
+            {
+                return Ok(userServices.GetUsers());
+            }
         [HttpPost("CreateUser")]
         public IActionResult CreateUser(User user)
         {

@@ -1,20 +1,31 @@
+using cunigranja.Functions;
 using cunigranja.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 [ApiController]
 [Route("Api/[controller]")]
 public class FoodController : Controller
 {
+        public IConfiguration _configuration { get; set; }
+        public GeneralFunctions FunctionsGeneral;
+        public FoodController(IConfiguration configuration)
+        {
+            FunctionsGeneral = new GeneralFunctions(configuration);
+            _configuration = configuration;
+        }
+
     [HttpPost("CreateFood")]
     public IActionResult Create(FoodModel food)
     {
         try
         {
-            // Lógica para crear un registro de alimentación
-            return Ok("Alimentación creada exitosamente");
+            
+            return Ok();
         }
         catch (Exception ex)
         {
+            FunctionsGeneral.AddLog(ex.Message);
             return StatusCode(500, ex.ToString());
         }
     }
@@ -24,11 +35,12 @@ public class FoodController : Controller
     {
         try
         {
-            // Lógica para obtener un registro de alimentación por id
-            return Ok("Detalles de la alimentación recuperados exitosamente");
+            
+            return Ok();
         }
         catch (Exception ex)
         {
+            FunctionsGeneral.AddLog(ex.Message);
             return StatusCode(500, ex.ToString());
         }
     }
@@ -38,11 +50,12 @@ public class FoodController : Controller
     {
         try
         {
-            // Lógica para actualizar un registro de alimentación
-            return Ok("Alimentación actualizada exitosamente");
+            
+            return Ok();
         }
         catch (Exception ex)
         {
+            FunctionsGeneral.AddLog(ex.Message);
             return StatusCode(500, ex.ToString());
         }
     }
@@ -52,11 +65,13 @@ public class FoodController : Controller
     {
         try
         {
-            // Lógica para eliminar un registro de alimentación
-            return Ok("Alimentación eliminada exitosamente");
+            
+            return Ok();
         }
         catch (Exception ex)
+
         {
+            FunctionsGeneral.AddLog(ex.Message);
             return StatusCode(500, ex.ToString());
         }
     }

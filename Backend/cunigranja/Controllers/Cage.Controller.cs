@@ -8,60 +8,73 @@ namespace cunigranja.Controllers
     [Route("Api/[controller]")]
     public class CageController : Controller
     {
-        [HttpPost("CreateCage")]
-        public IActionResult create(CageModel Cage)
 
-        {
-            try
+            public IConfiguration _configuration { get; set; }
+            public GeneralFunctions FunctionsGeneral;
+            public CageController(IConfiguration configuration)
             {
-                return Ok();
+                FunctionsGeneral = new GeneralFunctions(configuration);
+                _configuration = configuration;
             }
-                catch (Exception ex)
+
+        [HttpPost("CreateCage")]
+            public IActionResult create(CageModel Cage)
+
+            {
+                try
                 {
-                     return StatusCode(500, ex.ToString()); 
-                
+                    return Ok();
                 }
-        }
+                    catch (Exception ex)
+                    {
+                        FunctionsGeneral.AddLog(ex.Message);
+                        return StatusCode(500, ex.ToString()); 
+                
+                    }
+            }
         [HttpGet("GetCage")]
 
-        public  IActionResult Get (int Id)
-        {
-            try
+            public  IActionResult Get (int Id)
             {
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.ToString());
+                try
+                {
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    FunctionsGeneral.AddLog(ex.Message);
+                    return StatusCode(500, ex.ToString());
 
+                }
             }
-        }
 
        [HttpPost("UpdateCage")]
-        public IActionResult Update(int Id,CageModel Cage)
-        {
-            try
+            public IActionResult Update(int Id,CageModel Cage)
             {
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.ToString());
+                try
+                {
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    FunctionsGeneral.AddLog(ex.Message);
+                    return StatusCode(500, ex.ToString());
 
+                }
             }
-        }
         [HttpDelete("DeleteCage")]
-        public IActionResult Delete(int Id)
-        {
-            try
+            public IActionResult Delete(int Id)
             {
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.ToString());
+                try
+                {
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    FunctionsGeneral.AddLog(ex.Message);
+                    return StatusCode(500, ex.ToString());
 
+                }
             }
-        }
     }
 }
