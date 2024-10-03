@@ -2,6 +2,6 @@
 {
     public class ReproductionModel
     {
-        public DateTime fec_reproduction { get; set; }
+        public DateTime fecha_reproduction { get; set; }
     }
 }
