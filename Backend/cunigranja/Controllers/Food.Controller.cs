@@ -1,12 +1,12 @@
-﻿using cunigranja.Models;
+using cunigranja.Models;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("Api/[controller]")]
-public class AlimentacionController : Controller
+public class FoodController : Controller
 {
-    [HttpPost("CreateAlimentacion")]
-    public IActionResult Create(Alimentacion alimentacion)
+    [HttpPost("CreateFood")]
+    public IActionResult Create(FoodModel food)
     {
         try
         {
@@ -19,7 +19,7 @@ public class AlimentacionController : Controller
         }
     }
 
-    [HttpGet("GetAlimentacion")]
+    [HttpGet("GetFood")]
     public IActionResult Get(int id)
     {
         try
@@ -33,8 +33,8 @@ public class AlimentacionController : Controller
         }
     }
 
-    [HttpPost("UpdateAlimentacion")]
-    public IActionResult Update( Alimentacion alimentacion)
+    [HttpPost("UpdateFood")]
+    public IActionResult Update(  FoodModel food)
     {
         try
         {
@@ -47,7 +47,7 @@ public class AlimentacionController : Controller
         }
     }
 
-    [HttpDelete("DeleteAlimentacion")]
+    [HttpDelete("DeleteFood")]
     public IActionResult Delete()
     {
         try
