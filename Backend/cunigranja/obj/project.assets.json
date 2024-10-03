@@ -771,11 +771,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\SENA\\Downloads\\cunigranja (3)\\cunigranja (3)\\cunigranja\\cunigranja\\cunigranja.csproj",
+      "projectUniqueName": "C:\\Users\\SENA\\Documents\\Nueva carpeta (2)\\cunigranja\\Backend\\cunigranja\\cunigranja.csproj",
       "projectName": "cunigranja",
-      "projectPath": "C:\\Users\\SENA\\Downloads\\cunigranja (3)\\cunigranja (3)\\cunigranja\\cunigranja\\cunigranja.csproj",
+      "projectPath": "C:\\Users\\SENA\\Documents\\Nueva carpeta (2)\\cunigranja\\Backend\\cunigranja\\cunigranja.csproj",
       "packagesPath": "C:\\Users\\SENA\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\SENA\\Downloads\\cunigranja (3)\\cunigranja (3)\\cunigranja\\cunigranja\\obj\\",
+      "outputPath": "C:\\Users\\SENA\\Documents\\Nueva carpeta (2)\\cunigranja\\Backend\\cunigranja\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -855,12 +855,6 @@
     }
   },
   "logs": [
-    {
-      "code": "NU1900",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Error al obtener los datos de vulnerabilidad del paquete: No se puede cargar el índice de servicio del origen https://api.nuget.org/v3/index.json."
-    },
     {
       "code": "NU1701",
       "level": "Warning",

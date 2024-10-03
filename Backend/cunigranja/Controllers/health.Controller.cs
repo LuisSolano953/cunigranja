@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 public class healthcontroller : Controller
 {
     [HttpPost("Createhealth")]
-    public IActionResult Create(healthModel sanidad)
+    public IActionResult Create(HealthModel sanidad)
     {
         try
         {
@@ -19,7 +19,7 @@ public class healthcontroller : Controller
         }
     }
 
-    [HttpGet("GetSanidad")]
+    [HttpGet("GetHealth")]
     public IActionResult Get(int id)
     {
         try
@@ -33,8 +33,8 @@ public class healthcontroller : Controller
         }
     }
 
-    [HttpPost("UpdateSanidad")]
-    public IActionResult Update(SanidadModel sanidadModel)
+    [HttpPost("UpdateHealth")]
+    public IActionResult Update(HealthModel HealthModel)
     {
         try
         {
@@ -47,7 +47,7 @@ public class healthcontroller : Controller
         }
     }
 
-    [HttpDelete("DeleteSanidad")]
+    [HttpDelete("DeleteHealth")]
     public IActionResult Delete(int id)
     {
         try

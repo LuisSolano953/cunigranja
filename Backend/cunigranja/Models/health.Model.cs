@@ -1,8 +1,8 @@
 ﻿namespace cunigranja.Models
 {
-    public class healthModel
+    public class HealthModel
     {
-        public string idhealth { get; set; }
+        public string id_health { get; set; }
 
         public string date_health { get; set; }
 
