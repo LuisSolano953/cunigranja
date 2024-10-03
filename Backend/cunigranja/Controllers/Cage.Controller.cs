@@ -37,22 +37,7 @@ namespace cunigranja.Controllers
             }
         }
 
-        [HttpGet("GetsAllCage")]
-        public IActionResult GetsAllCage(int id, GeneralFuctions generalFuctions)
-        {
-            try
-            {
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                
-                return StatusCode(500, ex.ToString());
-            }
-        }
-
-
-        [HttpPut("UpdateCage")]
+       [HttpPost("UpdateCage")]
         public IActionResult Update(int Id,CageModel Cage)
         {
             try
