@@ -1,7 +1,7 @@
-﻿namespace cunigranja.Models
+namespace cunigranja.Models
 {
-    public class ReproduccionModel
+    public class ReproductionModel
     {
-        public DateTime fec_reproduction { get; set; }
+        public DateTime fecha_reproduction { get; set; }
     }
 }
