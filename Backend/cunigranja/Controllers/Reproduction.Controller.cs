@@ -40,7 +40,7 @@ namespace cunigranja.Controllers
         {
             try
             {
-                return Ok();
+                return Ok( _Services.GetReproduction());
             }
             catch (Exception ex)
             {

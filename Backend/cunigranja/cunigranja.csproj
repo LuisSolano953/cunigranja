@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Compile Remove="Functions\Func.cs" />
+    <Compile Remove="Models\UsersModel.cs" />
   </ItemGroup>
 
   <ItemGroup>

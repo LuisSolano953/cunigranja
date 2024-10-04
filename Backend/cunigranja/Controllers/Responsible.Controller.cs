@@ -44,7 +44,7 @@ namespace cunigranja.Controllers
         {
                 try
                 {
-                    return Ok();
+                return Ok(_Services.GetResponsible());
                 }
                 catch (Exception ex)
                 {

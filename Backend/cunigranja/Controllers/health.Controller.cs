@@ -37,7 +37,7 @@ using cunigranja.Services;
             {
                 try
                 {
-                    return Ok();
+                    return Ok(_Services.GetHealth());
                  }
                 catch (Exception ex)
                 {

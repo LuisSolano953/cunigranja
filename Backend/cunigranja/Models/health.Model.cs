@@ -5,7 +5,7 @@ namespace cunigranja.Models
     public class HealthModel
     {
         [Key]
-        public int id_health { get; set; }
+        public int Id_health { get; set; }
 
         public string name_health { get; set; }
        

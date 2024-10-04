@@ -38,11 +38,11 @@ namespace cunigranja.Controllers
             }
         [HttpGet("GetCage")]
 
-              public ActionResult<IEnumerable<CageModel>> Getcage()
+              public ActionResult<IEnumerable<CageModel>> GetCage()
               {
                 try
                 {
-                    return Ok();
+                    return Ok(_Services.GetCage());
                 }
                 catch (Exception ex)
                 {

@@ -14,16 +14,15 @@ namespace cunigranja.Controllers
     [Route("Api/[controller]")]
     public class UserController : Controller
     {
-        
+        public readonly UserServices _Services;
         public IConfiguration _configuration { get; set; }
-        private readonly UserServices userServices;
         public JwtModel JWT;
         public GeneralFunctions FunctionsGeneral;
         public UserController(IConfiguration configuration, UserServices userservices)
         {
             FunctionsGeneral = new GeneralFunctions(configuration);
+            _Services = userservices;
             _configuration = configuration;
-            userServices = userservices;
             JWT = _configuration.GetSection("JWT").Get<JwtModel>();
         }
 
@@ -80,17 +79,17 @@ namespace cunigranja.Controllers
         }
 
             [HttpGet("AllUser")]
-            public ActionResult<IEnumerable<User>> AllUsers()
+            public ActionResult<IEnumerable<User>> GetUsers()
             {
                 
-                return Ok(userServices.GetUsers());
+                return Ok(_Services.GetUsers());
             }
         [HttpPost("CreateUser")]
-        public IActionResult CreateUser(User user)
+        public IActionResult Add(User entity)
         {
             try
             {
-                
+                _Services.Add(entity);
                 return Ok();
             }
             catch (Exception ex)

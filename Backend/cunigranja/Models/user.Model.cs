@@ -1,5 +1,7 @@
 ﻿
 
+using System.ComponentModel.DataAnnotations;
+
 namespace cunigranja.Models
 {
     public class LoginUser
@@ -15,7 +17,9 @@ namespace cunigranja.Models
     }
     public class User
     {
-        public int Num { get; set;  }
-        public string Name { get; set; }
+        [Key]
+        public int Id_user { get; set; }
+        public string password_user { get; set; }
+        public string name_user { get; set; }
     }
 }   

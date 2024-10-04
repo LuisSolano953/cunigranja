@@ -35,12 +35,11 @@ public class FoodController : Controller
     }
 
         [HttpGet("GetFood")]
-       public ActionResult<IEnumerable<FoodModel>> GetFood()
+       public ActionResult<IEnumerable<FoodModel>>Getfood()
     {
         try
-        {
-            
-            return Ok();
+        {            
+            return Ok(_Services.GetFood());
         }
         catch (Exception ex)
         {

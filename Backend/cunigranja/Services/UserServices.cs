@@ -1,5 +1,4 @@
 ﻿using cunigranja.Models;
-using System;
 
 namespace cunigranja.Services
 {
@@ -10,9 +9,14 @@ namespace cunigranja.Services
         {
             _context = context;
         }
-        public IEnumerable<UsersModel> GetUsers()
+        public IEnumerable<User> GetUsers()
         {
             return _context.user.ToList();
+        }
+        public void Add(User entity)
+        {
+            _context.user.Add(entity);
+            _context.SaveChanges();
         }
         
     }

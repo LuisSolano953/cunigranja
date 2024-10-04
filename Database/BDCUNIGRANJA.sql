@@ -46,6 +46,7 @@ CREATE TABLE `cage` (
 
 LOCK TABLES `cage` WRITE;
 /*!40000 ALTER TABLE `cage` DISABLE KEYS */;
+INSERT INTO `cage` VALUES (1,'string','string','string',1,'2024-10-04','2024-10-04','string','string','string',3);
 /*!40000 ALTER TABLE `cage` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -61,7 +62,7 @@ CREATE TABLE `food` (
   `name_food` varchar(45) DEFAULT NULL,
   `cantidad_food` varchar(45) DEFAULT NULL,
   `fecha_food` date DEFAULT NULL,
-  `hora_food` time DEFAULT NULL,
+  `hora_food` date DEFAULT NULL,
   PRIMARY KEY (`Id_food`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -72,6 +73,7 @@ CREATE TABLE `food` (
 
 LOCK TABLES `food` WRITE;
 /*!40000 ALTER TABLE `food` DISABLE KEYS */;
+INSERT INTO `food` VALUES (1,'string','string','2024-10-04','2024-10-04'),(2,'string','string','2024-10-04','2024-10-04'),(3,'string','string','2024-10-04','2024-10-04'),(4,'string','string','2024-10-04','2024-10-04'),(5,'string','string','2024-10-04','2024-10-04');
 /*!40000 ALTER TABLE `food` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,10 +85,10 @@ DROP TABLE IF EXISTS `health`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `health` (
-  `idhealth` int NOT NULL,
+  `Id_health` int NOT NULL,
   `name_health` varchar(45) DEFAULT NULL,
   `fecha_health` date DEFAULT NULL,
-  PRIMARY KEY (`idhealth`)
+  PRIMARY KEY (`Id_health`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -96,6 +98,7 @@ CREATE TABLE `health` (
 
 LOCK TABLES `health` WRITE;
 /*!40000 ALTER TABLE `health` DISABLE KEYS */;
+INSERT INTO `health` VALUES (1,'string','2024-10-04'),(2,'string','2024-10-04');
 /*!40000 ALTER TABLE `health` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,6 +122,7 @@ CREATE TABLE `reproduction` (
 
 LOCK TABLES `reproduction` WRITE;
 /*!40000 ALTER TABLE `reproduction` DISABLE KEYS */;
+INSERT INTO `reproduction` VALUES (1,'2024-10-04'),(2,'2024-10-04');
 /*!40000 ALTER TABLE `reproduction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,6 +147,7 @@ CREATE TABLE `responsible` (
 
 LOCK TABLES `responsible` WRITE;
 /*!40000 ALTER TABLE `responsible` DISABLE KEYS */;
+INSERT INTO `responsible` VALUES (1,'string','string');
 /*!40000 ALTER TABLE `responsible` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -167,6 +172,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'1234','luis'),(2,'1323','gabriel'),(3,'463732mme','mariana');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -179,4 +185,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-02 20:21:14
+-- Dump completed on 2024-10-04  9:43:21
