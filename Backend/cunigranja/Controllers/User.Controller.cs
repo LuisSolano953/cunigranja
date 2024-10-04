@@ -14,6 +14,7 @@ namespace cunigranja.Controllers
     [Route("Api/[controller]")]
     public class UserController : Controller
     {
+        
         public IConfiguration _configuration { get; set; }
         private readonly UserServices userServices;
         public JwtModel JWT;
@@ -81,6 +82,7 @@ namespace cunigranja.Controllers
             [HttpGet("AllUser")]
             public ActionResult<IEnumerable<User>> AllUsers()
             {
+                
                 return Ok(userServices.GetUsers());
             }
         [HttpPost("CreateUser")]
@@ -88,6 +90,7 @@ namespace cunigranja.Controllers
         {
             try
             {
+                
                 return Ok();
             }
             catch (Exception ex)

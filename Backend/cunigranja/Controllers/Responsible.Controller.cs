@@ -1,5 +1,6 @@
 ﻿using cunigranja.Functions;
 using cunigranja.Models;
+using cunigranja.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -10,20 +11,23 @@ namespace cunigranja.Controllers
         [Route("Api/[controller]")]
         public class ResponsibleController : Controller
         {
+            public readonly ResponsibleServices _Services;
             public IConfiguration _configuration { get; set; }
             public GeneralFunctions FunctionsGeneral;
-            public ResponsibleController(IConfiguration configuration)
+            public ResponsibleController(IConfiguration configuration, ResponsibleServices responsibleServices)
             {
                 FunctionsGeneral = new GeneralFunctions(configuration);
                 _configuration = configuration;
-            }
+            _Services = responsibleServices;
+        }
 
         [HttpPost("CreateResponsible")]
-            public IActionResult create(ResponsibleModel Resposible)
+            public IActionResult create(ResponsibleModel entity)
 
             {
                 try
                 {
+                    _Services.Add(entity);
                     return Ok();
                 }
                 catch (Exception ex)
@@ -36,8 +40,8 @@ namespace cunigranja.Controllers
             }
             [HttpGet("GetResponsible")]
 
-            public IActionResult Get(int Id)
-            {
+        public ActionResult<IEnumerable<ResponsibleModel>> Getresponsible()
+        {
                 try
                 {
                     return Ok();

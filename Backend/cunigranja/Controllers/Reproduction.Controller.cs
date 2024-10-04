@@ -1,5 +1,6 @@
 ﻿using cunigranja.Functions;
 using cunigranja.Models;
+using cunigranja.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cunigranja.Controllers
@@ -8,19 +9,22 @@ namespace cunigranja.Controllers
     [Route("Api/[controller]")]
     public class ReproductionController : Controller
     {
+        public readonly ReproductionServices _Services;
         public IConfiguration _configuration { get; set; }
         public GeneralFunctions FunctionsGeneral;
-        public ReproductionController(IConfiguration configuration)
+        public ReproductionController(IConfiguration configuration, ReproductionServices reproductionServices)
         {
             FunctionsGeneral = new GeneralFunctions(configuration);
             _configuration = configuration;
+            _Services = reproductionServices;
         }
         [HttpPost("CreateReproduction")]
-        public IActionResult create(ReproductionModel Reproduction)
+        public IActionResult create(ReproductionModel entity)
 
         {
             try
             {
+                _Services.Add(entity);
                 return Ok();
             }
                 catch (Exception ex)
@@ -32,7 +36,7 @@ namespace cunigranja.Controllers
         }
         [HttpGet("GetReproduction")]
 
-        public  IActionResult Get (int Id)
+        public ActionResult<IEnumerable<ReproductionModel>> Getreproduction()
         {
             try
             {

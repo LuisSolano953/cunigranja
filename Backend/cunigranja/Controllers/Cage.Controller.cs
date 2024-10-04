@@ -1,5 +1,6 @@
 ﻿using cunigranja.Functions;
 using cunigranja.Models;
+using cunigranja.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cunigranja.Controllers
@@ -9,23 +10,26 @@ namespace cunigranja.Controllers
     public class CageController : Controller
     {
 
+            public readonly CageServices _Services;
             public IConfiguration _configuration { get; set; }
             public GeneralFunctions FunctionsGeneral;
-            public CageController(IConfiguration configuration)
+            public CageController(IConfiguration configuration, CageServices cageServices)
             {
                 FunctionsGeneral = new GeneralFunctions(configuration);
                 _configuration = configuration;
+                _Services = cageServices;
             }
 
         [HttpPost("CreateCage")]
-            public IActionResult create(CageModel Cage)
+            public IActionResult create(CageModel entity)
 
             {
                 try
                 {
+                    _Services.Add(entity);
                     return Ok();
                 }
-                    catch (Exception ex)
+                catch (Exception ex)
                     {
                         FunctionsGeneral.AddLog(ex.Message);
                         return StatusCode(500, ex.ToString()); 
@@ -34,8 +38,8 @@ namespace cunigranja.Controllers
             }
         [HttpGet("GetCage")]
 
-            public  IActionResult Get (int Id)
-            {
+              public ActionResult<IEnumerable<CageModel>> Getcage()
+              {
                 try
                 {
                     return Ok();

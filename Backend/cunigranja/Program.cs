@@ -13,6 +13,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql
 (builder.Configuration.GetConnectionString("DefaulConnection"), new MySqlServerVersion(new Version(8, 0, 23))));
+
+builder.Services.AddScoped<ReproductionServices>();
+builder.Services.AddScoped<ResponsibleServices>();
+builder.Services.AddScoped<CageServices>();
 builder.Services.AddScoped<UserServices>();
 
 

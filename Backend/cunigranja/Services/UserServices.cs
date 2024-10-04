@@ -14,5 +14,6 @@ namespace cunigranja.Services
         {
             return _context.user.ToList();
         }
+        
     }
 }

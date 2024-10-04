@@ -8,6 +8,9 @@ namespace cunigranja.Models
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<UsersModel> user { get; set; }
+        public DbSet<ReproductionModel> reproduction { get; set; }
+        public DbSet<ResponsibleModel> responsible { get; set; }
+        public DbSet<CageModel> cage { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (optionsBuilder.IsConfigured)

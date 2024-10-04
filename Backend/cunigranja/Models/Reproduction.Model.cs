@@ -1,8 +1,11 @@
-﻿namespace cunigranja.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace cunigranja.Models
 {
     public class ReproductionModel
     {
-        public int Id_Reproduction  { get; set; }
-        public DateTime fecha_reproduction { get; set; }
+        [Key]
+        public int Id_Reproduction { get; set; }
+        public DateTime fecha__reproduction { get; set; }
     }
 }
