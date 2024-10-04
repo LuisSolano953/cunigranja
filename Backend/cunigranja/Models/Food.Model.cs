@@ -7,11 +7,11 @@ namespace cunigranja.Models
 
 
         [Key]
-    public string Id_food { get; set; } 
+    public int Id_food { get; set; } 
         public string  name_food { get; set; }
         public string cantidad_food { get; set; }
-        public string fecha_food { get; set; }
-        public string hora_food { get; set; }
+        public DateTime fecha_food { get; set; }
+        public DateTime hora_food { get; set; }
 
     }
 }

@@ -49,7 +49,7 @@ namespace cunigranja.Controllers
 
             }
         }
-        [HttpPut("UpdateReproduction")]
+        [HttpPost("UpdateReproduction")]
         public IActionResult Update(ReproductionModel Reproductcion)
         {
             try

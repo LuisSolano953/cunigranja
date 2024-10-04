@@ -1,5 +1,6 @@
 using cunigranja.Functions;
 using cunigranja.Models;
+using cunigranja.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
@@ -7,20 +8,23 @@ using Microsoft.Extensions.Configuration;
 [Route("Api/[controller]")]
 public class FoodController : Controller
 {
+        public readonly FoodServices _Services;
         public IConfiguration _configuration { get; set; }
         public GeneralFunctions FunctionsGeneral;
-        public FoodController(IConfiguration configuration)
+        public FoodController(IConfiguration configuration, FoodServices foodServices)
         {
             FunctionsGeneral = new GeneralFunctions(configuration);
             _configuration = configuration;
-        }
+        _Services = foodServices;
+    }
 
     [HttpPost("CreateFood")]
-    public IActionResult Create(FoodModel food)
+    public IActionResult Create(FoodModel entity)
     {
         try
         {
-            
+            _Services.Add(entity);
+
             return Ok();
         }
         catch (Exception ex)
@@ -30,8 +34,8 @@ public class FoodController : Controller
         }
     }
 
-    [HttpGet("GetFood")]
-    public IActionResult Get(int id)
+        [HttpGet("GetFood")]
+       public ActionResult<IEnumerable<FoodModel>> GetFood()
     {
         try
         {

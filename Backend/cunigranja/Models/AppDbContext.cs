@@ -11,6 +11,8 @@ namespace cunigranja.Models
         public DbSet<ReproductionModel> reproduction { get; set; }
         public DbSet<ResponsibleModel> responsible { get; set; }
         public DbSet<CageModel> cage { get; set; }
+        public DbSet<HealthModel> health { get; set; }
+        public DbSet<FoodModel> food { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (optionsBuilder.IsConfigured)

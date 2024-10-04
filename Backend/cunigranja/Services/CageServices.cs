@@ -9,7 +9,7 @@ namespace cunigranja.Services
         {
             _context = context;
         }
-        public IEnumerable<CageModel> GetUsers()
+        public IEnumerable<CageModel> GetCage()
         {
             return _context.cage.ToList();
         }

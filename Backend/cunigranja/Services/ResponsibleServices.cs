@@ -9,7 +9,7 @@ namespace cunigranja.Services
         {
             _context = context;
         }
-        public IEnumerable<ResponsibleModel> GetUsers()
+        public IEnumerable<ResponsibleModel> GetResponsible()
         {
             return _context.responsible.ToList();
         }

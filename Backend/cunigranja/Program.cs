@@ -17,6 +17,8 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql
 builder.Services.AddScoped<ReproductionServices>();
 builder.Services.AddScoped<ResponsibleServices>();
 builder.Services.AddScoped<CageServices>();
+builder.Services.AddScoped<HealthServices>();
+builder.Services.AddScoped<FoodServices>();
 builder.Services.AddScoped<UserServices>();
 
 

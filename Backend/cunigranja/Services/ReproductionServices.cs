@@ -10,7 +10,7 @@ namespace cunigranja.Services
         {
             _context = context;
         }
-        public IEnumerable<ReproductionModel> GetUsers()
+        public IEnumerable<ReproductionModel> GetReproduction()
         {
             return _context.reproduction.ToList();
         }
