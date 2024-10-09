@@ -8,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
+
 namespace cunigranja.Controllers
 {
     [ApiController]
@@ -78,24 +79,83 @@ namespace cunigranja.Controllers
             }
         }
 
-            [HttpGet("AllUser")]
+        [HttpGet("AllUser")]
             public ActionResult<IEnumerable<User>> GetUsers()
             {
                 
                 return Ok(_Services.GetUsers());
             }
-        [HttpPost("CreateUser")]
-        public IActionResult Add(User entity)
+         [HttpPost("CreateUser")]
+            public IActionResult Add(User entity)
+            {
+                try
+                {
+                    _Services.Add(entity);
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    FunctionsGeneral.AddLog(ex.Message);
+                 
+                    return StatusCode(500, ex.ToString());
+                }
+            }
+        [HttpDelete("DeleteUser")]
+            public IActionResult DeleteUserById(int Id_user)
+            {
+                try
+                {
+                    if (Id_user <= 0)
+                    {
+                        return BadRequest("Invalid user ID.");
+                    }
+
+                    var result = _Services.DeleteById(Id_user);
+
+                    if (result)
+                    {
+                        return Ok("User deleted successfully.");
+                    }
+                    else
+                    {
+                        return NotFound("User not found.");
+                    }
+                }
+            catch (Exception ex)
+            {
+                FunctionsGeneral.AddLog(ex.Message);
+                return StatusCode(500, ex.ToString());
+            }
+        }
+        [HttpGet("ConsulUser")]
+            public ActionResult<User> GetUserById(int Id_user)
+            {
+                var user = _Services.GetUserById(Id_user);
+                if (user != null)
+                {
+                    return Ok(user);
+                }
+                else
+                {
+                    return NotFound("User ot found");
+                }
+            }
+        [HttpPost("UpdateUser")]
+        public IActionResult UpdateUser(User entity)
         {
             try
             {
-                _Services.Add(entity);
-                return Ok();
+                if (entity.Id_user <= 0) // Verifica que el ID sea válido
+                {
+                    return BadRequest("Invalid user ID.");
+                }
+
+                _Services.Update(entity);
+                return Ok("User updated successfully.");
             }
             catch (Exception ex)
             {
                 FunctionsGeneral.AddLog(ex.Message);
-                 
                 return StatusCode(500, ex.ToString());
             }
         }
