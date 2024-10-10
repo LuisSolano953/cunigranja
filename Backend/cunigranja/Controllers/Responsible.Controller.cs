@@ -54,38 +54,69 @@ namespace cunigranja.Controllers
                 }
             }
 
-        
 
-        [HttpPost("UpdateResponsible")]
-            public IActionResult Update(int Id, ResponsibleModel Responsible)
+
+        [HttpGet("ConsulResponsible")]
+        public ActionResult<ResponsibleModel> GetResponsibleById(int Id_Responsible)
+        {
+            var responsible = _Services.GetResponsibleById(Id_Responsible);
+            if (responsible != null)
             {
-                try
+                return Ok(responsible);
+            }
+            else
+            {
+                return NotFound("Responsible ot found");
+            }
+        }
+        [HttpPost("UpdateResponsible")]
+        public IActionResult UpdateResponsible(ResponsibleModel entity)
+        {
+            try
+            {
+                if (entity.Id_responsible <= 0) // Verifica que el ID sea válido
                 {
-                    return Ok();
+                    return BadRequest("Invalid Responsible ID.");
                 }
-                catch (Exception ex)
-                {
-                    FunctionsGeneral.AddLog(ex.Message);
-                    return StatusCode(500, ex.ToString());
 
+                _Services.Update(entity);
+                return Ok("Responsible updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                FunctionsGeneral.AddLog(ex.Message);
+                return StatusCode(500, ex.ToString());
+            }
+        }
+        [HttpDelete("DeleteResponsible")]
+        public IActionResult DeleteResponsibleById(int Id_responsible)
+        {
+            try
+            {
+                if (Id_responsible <= 0)
+                {
+                    return BadRequest("Invalid responsible ID.");
+                }
+
+                var result = _Services.DeleteById(Id_responsible);
+
+                if (result)
+                {
+                    return Ok("Responsible deleted successfully.");
+                }
+                else
+                {
+                    return NotFound("Responsible not found.");
                 }
             }
-            [HttpDelete("DeleteResponsible")]
-            public IActionResult Delete(int Id)
+            catch (Exception ex)
             {
-                 try
-                     {
-                        return Ok();
-                     }
-                 catch (Exception ex)
-                     {
-                          FunctionsGeneral.AddLog(ex.Message);
-                          return StatusCode(500, ex.ToString());
-
-                      }
-        }
+                FunctionsGeneral.AddLog(ex.Message);
+                return StatusCode(500, ex.ToString());
+            }
         }
     }
+}
         
     
 

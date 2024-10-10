@@ -100,33 +100,6 @@ namespace cunigranja.Controllers
                     return StatusCode(500, ex.ToString());
                 }
             }
-        [HttpDelete("DeleteUser")]
-            public IActionResult DeleteUserById(int Id_user)
-            {
-                try
-                {
-                    if (Id_user <= 0)
-                    {
-                        return BadRequest("Invalid user ID.");
-                    }
-
-                    var result = _Services.DeleteById(Id_user);
-
-                    if (result)
-                    {
-                        return Ok("User deleted successfully.");
-                    }
-                    else
-                    {
-                        return NotFound("User not found.");
-                    }
-                }
-            catch (Exception ex)
-            {
-                FunctionsGeneral.AddLog(ex.Message);
-                return StatusCode(500, ex.ToString());
-            }
-        }
         [HttpGet("ConsulUser")]
             public ActionResult<User> GetUserById(int Id_user)
             {
@@ -160,5 +133,32 @@ namespace cunigranja.Controllers
             }
         }
 
+        [HttpDelete("DeleteUser")]
+            public IActionResult DeleteUserById(int Id_user)
+            {
+                try
+                {
+                    if (Id_user <= 0)
+                    {
+                        return BadRequest("Invalid user ID.");
+                    }
+
+                    var result = _Services.DeleteById(Id_user);
+
+                    if (result)
+                    {
+                        return Ok("User deleted successfully.");
+                    }
+                    else
+                    {
+                        return NotFound("User not found.");
+                    }
+                }
+            catch (Exception ex)
+            {
+                FunctionsGeneral.AddLog(ex.Message);
+                return StatusCode(500, ex.ToString());
+            }
+        }
     }
 }
