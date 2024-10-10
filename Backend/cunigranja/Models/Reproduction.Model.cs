@@ -5,7 +5,7 @@ namespace cunigranja.Models
     public class ReproductionModel
     {
         [Key]
-        public int Id_Reproduction { get; set; }
-        public DateTime fecha__reproduction { get; set; }
+        public int Id_reproduction { get; set; }
+        public DateTime fecha_reproduction { get; set; }
     }
 }
