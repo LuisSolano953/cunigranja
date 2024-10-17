@@ -46,7 +46,7 @@ CREATE TABLE `cage` (
 
 LOCK TABLES `cage` WRITE;
 /*!40000 ALTER TABLE `cage` DISABLE KEYS */;
-INSERT INTO `cage` VALUES (1,'354','35','sena',2312,'2024-10-17','2024-10-17','ruzo californiano','Macho','ocupada',3);
+INSERT INTO `cage` VALUES (1,'string','string','string',1,'2024-10-04','2024-10-04','string','string','string',3);
 /*!40000 ALTER TABLE `cage` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -73,7 +73,7 @@ CREATE TABLE `food` (
 
 LOCK TABLES `food` WRITE;
 /*!40000 ALTER TABLE `food` DISABLE KEYS */;
-INSERT INTO `food` VALUES (1,'arroz','string','2024-10-17','2024-09-17'),(2,'string','string','2024-10-04','2024-10-04'),(3,'string','string','2024-10-04','2024-10-04'),(4,'string','string','2024-10-04','2024-10-04'),(5,'string','string','2024-10-04','2024-10-04'),(7,'salchichon','string','2024-10-17','2024-10-17');
+INSERT INTO `food` VALUES (1,'string','string','2024-10-04','2024-10-04'),(2,'string','string','2024-10-04','2024-10-04'),(3,'string','string','2024-10-04','2024-10-04'),(4,'string','string','2024-10-04','2024-10-04'),(5,'string','string','2024-10-04','2024-10-04');
 /*!40000 ALTER TABLE `food` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -98,7 +98,7 @@ CREATE TABLE `health` (
 
 LOCK TABLES `health` WRITE;
 /*!40000 ALTER TABLE `health` DISABLE KEYS */;
-INSERT INTO `health` VALUES (1,'vacunacion','2024-10-17'),(2,'string','2024-10-04');
+INSERT INTO `health` VALUES (1,'string','2024-10-04'),(2,'string','2024-10-04');
 /*!40000 ALTER TABLE `health` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -111,7 +111,7 @@ DROP TABLE IF EXISTS `reproduction`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `reproduction` (
   `Id_reproduction` int NOT NULL,
-  `fecha_reproduction` datetime DEFAULT NULL,
+  `fecha__reproduction` date DEFAULT NULL,
   PRIMARY KEY (`Id_reproduction`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -122,33 +122,8 @@ CREATE TABLE `reproduction` (
 
 LOCK TABLES `reproduction` WRITE;
 /*!40000 ALTER TABLE `reproduction` DISABLE KEYS */;
-INSERT INTO `reproduction` VALUES (1,'2024-10-16 00:00:00'),(2,'2024-10-16 00:00:00');
+INSERT INTO `reproduction` VALUES (1,'2024-10-04'),(2,'2024-10-04');
 /*!40000 ALTER TABLE `reproduction` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `responsible`
---
-
-DROP TABLE IF EXISTS `responsible`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `responsible` (
-  `Id_responsible` int NOT NULL,
-  `name_responsible` varchar(45) DEFAULT NULL,
-  `tipo_responsible` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`Id_responsible`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `responsible`
---
-
-LOCK TABLES `responsible` WRITE;
-/*!40000 ALTER TABLE `responsible` DISABLE KEYS */;
-INSERT INTO `responsible` VALUES (1,'12312123232','string');
-/*!40000 ALTER TABLE `responsible` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -160,8 +135,13 @@ DROP TABLE IF EXISTS `user`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
   `Id_user` int NOT NULL,
-  `password_user` varchar(45) DEFAULT NULL,
-  `name_user` varchar(45) DEFAULT NULL,
+  `password_user` varchar(250) DEFAULT NULL,
+  `name_user` varchar(250) DEFAULT NULL,
+  `intentos_user` int DEFAULT NULL,
+  `token_user` varchar(250) DEFAULT NULL,
+  `blockard` tinyint(1) DEFAULT '0',
+  `tipo_user` varchar(250) DEFAULT NULL,
+  `email_user` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`Id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -172,7 +152,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'1312312312312','string'),(2,'1323','gabriel'),(3,'463732mme','mariana');
+INSERT INTO `user` VALUES (1,'carlos','sccttuyg',NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -185,4 +165,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-16 21:11:14
+-- Dump completed on 2024-10-17 15:11:19
