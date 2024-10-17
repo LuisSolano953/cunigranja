@@ -34,18 +34,25 @@ namespace cunigranja.Services
             return _context.responsible.Find(Id_responsible);
         }
 
-        public void Update(ResponsibleModel entity)
+        public void UpdateResponsible(int Id, ResponsibleModel updatedResponsible)
         {
-            var responsible = _context.responsible.Find(entity.Id_responsible);
+            // Traer el usuario existente utilizando el ID
+            var responsible = _context.responsible.SingleOrDefault(u => u.Id_responsible == Id);
+
             if (responsible != null)
             {
-                responsible.name_responsible = entity.name_responsible; // Actualiza los campos 
-                responsible.tipo_responsible = entity.tipo_responsible; // Actualiza los campos 
-              
-
+                // Actualizar solo los campos que tienen valores en updatedUser
+                _context.Entry(responsible).CurrentValues.SetValues(updatedResponsible);
                 _context.SaveChanges();
             }
         }
+        public IEnumerable<ResponsibleModel> GetResponsibleModelInRange(int startId, int endId)
+        {
+            return _context.responsible
+                           .Where(u => u.Id_responsible >= startId && u.Id_responsible <= endId)
+                           .ToList();
+        }
+    }
     }
 
-}
+

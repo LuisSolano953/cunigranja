@@ -35,17 +35,24 @@ namespace cunigranja.Services
             return _context.user.Find(Id_user);
         }
 
-        public void Update(User entity)
+        public void UpdateUser(int Id, User updatedUser)
         {
-            var user = _context.user.Find(entity.Id_user); 
+            // Traer el usuario existente utilizando el ID
+            var user = _context.user.SingleOrDefault(u => u.Id_user == Id);
+
             if (user != null)
             {
-                user.name_user = entity.name_user; // Actualiza los campos 
-                user.password_user = entity.password_user;
-               
-
+                // Actualizar solo los campos que tienen valores en updatedUser
+                _context.Entry(user).CurrentValues.SetValues(updatedUser);
                 _context.SaveChanges();
             }
         }
+        public IEnumerable<User> GetUsersInRange(int startId, int endId)
+        {
+            return _context.user
+                           .Where(u => u.Id_user >= startId && u.Id_user <= endId)
+                           .ToList();
+        }
+
     }
 }

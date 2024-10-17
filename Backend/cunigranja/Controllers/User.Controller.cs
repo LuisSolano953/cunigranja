@@ -123,8 +123,28 @@ namespace cunigranja.Controllers
                     return BadRequest("Invalid user ID.");
                 }
 
-                _Services.Update(entity);
+                // Llamar al método de actualización en el servicio
+                _Services.UpdateUser(entity.Id_user, entity);
+
                 return Ok("User updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                FunctionsGeneral.AddLog(ex.Message);
+                return StatusCode(500, ex.ToString());
+            }
+        }
+        [HttpGet("ConsulUsersInRange")]
+        public ActionResult<IEnumerable<User>> GetUsersInRange(int startId, int endId)
+        {
+            try
+            {
+                var users = _Services.GetUsersInRange(startId, endId);
+                if (users == null || !users.Any())
+                {
+                    return NotFound("No users found in the specified range.");
+                }
+                return Ok(users);
             }
             catch (Exception ex)
             {

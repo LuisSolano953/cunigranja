@@ -71,11 +71,31 @@ namespace cunigranja.Controllers
             {
                 if (entity.Id_food <= 0) // Verifica que el ID sea válido
                 {
-                    return BadRequest("Invalid Food ID.");
+                    return BadRequest("Invalid food ID.");
                 }
 
-                _Services.Update(entity);
+                // Llamar al método de actualización en el servicio
+                _Services.UpdateFood(entity.Id_food, entity);
+
                 return Ok("Food updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                FunctionsGeneral.AddLog(ex.Message);
+                return StatusCode(500, ex.ToString());
+            }
+        }
+        [HttpGet("GetFoodInRange")]
+        public ActionResult<IEnumerable<FoodModel>> GetCagesInRange(int startId, int endId)
+        {
+            try
+            {
+                var foodModels = _Services.GetCageInRange(startId, endId);
+                if (foodModels == null || !foodModels.Any())
+                {
+                    return NotFound("No Food found in the specified range.");
+                }
+                return Ok(foodModels);
             }
             catch (Exception ex)
             {

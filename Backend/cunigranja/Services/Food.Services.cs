@@ -34,20 +34,24 @@ namespace cunigranja.Services
             return _context.food.Find(Id_food);
         }
 
-        public void Update(FoodModel entity)
+        public void UpdateFood(int Id, FoodModel updatedFood)
         {
-            var food = _context.food.Find(entity.Id_food);
+            // Traer el usuario existente utilizando el ID
+            var food = _context.food.SingleOrDefault(u => u.Id_food == Id);
+
             if (food != null)
             {
-               food. name_food = entity.name_food; // Actualiza los campos 
-               food.cantidad_food = entity.cantidad_food; // Actualiza los campos 
-               food.fecha_food = entity.fecha_food; // Actualiza los campos 
-               food.hora_food = entity.hora_food; // Actualiza los campos 
-                       
-
-
+                // Actualizar solo los campos que tienen valores en updatedUser
+                _context.Entry(food).CurrentValues.SetValues(updatedFood);
                 _context.SaveChanges();
             }
+        }
+
+        public IEnumerable<FoodModel> GetCageInRange(int startId, int endId)
+        {
+            return _context.food
+                           .Where(u => u.Id_food >= startId && u.Id_food <= endId)
+                           .ToList();
         }
 
     }

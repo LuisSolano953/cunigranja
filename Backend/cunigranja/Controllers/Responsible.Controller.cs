@@ -76,10 +76,12 @@ namespace cunigranja.Controllers
             {
                 if (entity.Id_responsible <= 0) // Verifica que el ID sea válido
                 {
-                    return BadRequest("Invalid Responsible ID.");
+                    return BadRequest("Invalid responsible ID.");
                 }
 
-                _Services.Update(entity);
+                // Llamar al método de actualización en el servicio
+                _Services.UpdateResponsible(entity.Id_responsible, entity);
+
                 return Ok("Responsible updated successfully.");
             }
             catch (Exception ex)
@@ -88,6 +90,26 @@ namespace cunigranja.Controllers
                 return StatusCode(500, ex.ToString());
             }
         }
+        [HttpGet("GetResponsibleInRange")]
+        public ActionResult<IEnumerable<ResponsibleModel>> GetResponsibleInRange(int startId, int endId)
+        {
+            try
+            {
+                var ResponsibleModel = _Services.GetResponsibleModelInRange(startId, endId);
+                if (ResponsibleModel == null || !ResponsibleModel.Any())
+                {
+                    return NotFound("No Food found in the specified range.");
+                }
+                return Ok(ResponsibleModel);
+            }
+            catch (Exception ex)
+            {
+                FunctionsGeneral.AddLog(ex.Message);
+                return StatusCode(500, ex.ToString());
+            }
+
+        }
+
         [HttpDelete("DeleteResponsible")]
         public IActionResult DeleteResponsibleById(int Id_responsible)
         {

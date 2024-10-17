@@ -69,14 +69,36 @@ namespace cunigranja.Controllers
                     return BadRequest("Invalid health ID.");
                 }
 
-                _Services.Update(entity);
-                return Ok("Health record updated successfully.");
+                // Llamar al método de actualización en el servicio
+                _Services.UpdateHealth(entity.Id_health, entity);
+
+                return Ok("Health updated successfully.");
             }
             catch (Exception ex)
             {
                 FunctionsGeneral.AddLog(ex.Message);
                 return StatusCode(500, ex.ToString());
             }
+        }
+        [HttpGet("GetHealthInRange")]
+        public ActionResult<IEnumerable<HealthModel>> GetCagesInRange(int startId, int endId)
+        {
+            try
+            {
+                var HealthModel = _Services.GetCageInRange(startId, endId);
+                if (HealthModel == null || !HealthModel.Any())
+                {
+                    return NotFound("No Food found in the specified range.");
+                }
+                return Ok(HealthModel);
+            }
+            catch (Exception ex)
+            {
+                FunctionsGeneral.AddLog(ex.Message);
+                return StatusCode(500, ex.ToString());
+            }
+
+
         }
 
         // DELETE: api/Health/DeleteHealth?id=1

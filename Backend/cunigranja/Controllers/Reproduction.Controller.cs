@@ -72,7 +72,9 @@ namespace cunigranja.Controllers
                     return BadRequest("Invalid reproduction ID.");
                 }
 
-                _Services.Update(entity);
+                // Llamar al método de actualización en el servicio
+                _Services.UpdateReproduction(entity.Id_reproduction, entity);
+
                 return Ok("Reproduction updated successfully.");
             }
             catch (Exception ex)
@@ -80,6 +82,25 @@ namespace cunigranja.Controllers
                 FunctionsGeneral.AddLog(ex.Message);
                 return StatusCode(500, ex.ToString());
             }
+        }
+        [HttpGet("GetReproductionInRange")]
+        public ActionResult<IEnumerable<FoodModel>> GetCagesInRange(int startId, int endId)
+        {
+            try
+            {
+                var ReproductionModel = _Services.GetReproductionInRange(startId, endId);
+                if (ReproductionModel == null || !ReproductionModel.Any())
+                {
+                    return NotFound("No Food found in the specified range.");
+                }
+                return Ok(ReproductionModel);
+            }
+            catch (Exception ex)
+            {
+                FunctionsGeneral.AddLog(ex.Message);
+                return StatusCode(500, ex.ToString());
+            }
+
         }
         [HttpDelete("DeleteReproduction")]
         public IActionResult DeleteReproductionById(int Id_reproduction)

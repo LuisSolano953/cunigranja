@@ -35,17 +35,23 @@ namespace cunigranja.Services
             return _context.reproduction.Find(Id_reproduction);
         }
 
-        public void Update(ReproductionModel entity)
+        public void UpdateReproduction(int Id, ReproductionModel updatedReproduction)
         {
-            var reproduction = _context.reproduction.Find(entity.Id_reproduction);
+            // Traer el usuario existente utilizando el ID
+            var reproduction = _context.reproduction.SingleOrDefault(u => u.Id_reproduction == Id);
+
             if (reproduction != null)
             {
-                reproduction.fecha_reproduction = entity.fecha_reproduction; // Actualiza los campos 
-              
-
-
+                // Actualizar solo los campos que tienen valores en updatedUser
+                _context.Entry(reproduction).CurrentValues.SetValues(updatedReproduction);
                 _context.SaveChanges();
             }
+        }
+        public IEnumerable<ReproductionModel> GetReproductionInRange(int startId, int endId)
+        {
+            return _context.reproduction
+                           .Where(u => u.Id_reproduction >= startId && u.Id_reproduction <= endId)
+                           .ToList();
         }
 
     }
