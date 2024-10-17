@@ -28,7 +28,7 @@ namespace cunigranja.Controllers
         }
 
         // POST: LoginController/Create
-        [HttpPost ("Login")]
+        [HttpPost("Login")]
         public IActionResult Login(LoginUser Login)
         {
             try
@@ -42,8 +42,8 @@ namespace cunigranja.Controllers
 
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
-                    Subject=subject,
-                    Expires=DateTime.UtcNow.AddMinutes(Convert.ToDouble(JWT.JwtExpiretime)),
+                    Subject = subject,
+                    Expires = DateTime.UtcNow.AddMinutes(Convert.ToDouble(JWT.JwtExpiretime)),
                     SigningCredentials = new SigningCredentials(
                         new SymmetricSecurityKey(Key),
                         SecurityAlgorithms.HmacSha256Signature
@@ -54,12 +54,12 @@ namespace cunigranja.Controllers
 
 
 
-                return Ok(new JwtSecurityTokenHandler().WriteToken(token)); 
+                return Ok(new JwtSecurityTokenHandler().WriteToken(token));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 FunctionsGeneral.AddLog(ex.Message);
-                return StatusCode(500,ex.ToString());
+                return StatusCode(500, ex.ToString());
             }
         }
         [HttpPost("ResetPassUser")]
@@ -80,39 +80,47 @@ namespace cunigranja.Controllers
         }
 
         [HttpGet("AllUser")]
-            public ActionResult<IEnumerable<User>> GetUsers()
+        public ActionResult<IEnumerable<User>> GetUsers()
+        {
+
+            return Ok(_Services.GetUsers());
+        }
+        [HttpPost("CreateUser")]
+        public IActionResult Add(User entity)
+        {
+            try
             {
-                
-                return Ok(_Services.GetUsers());
+                //var errores = FunctionsGeneral.ValidModel(user);
+                //if (errores.Length == 0)
+                //{
+                _Services.Add(entity);
+                return Ok(new
+                {
+                    message = "User creado con éxito"
+                });
+                //}
+                //return BadRequest(errores);
             }
-         [HttpPost("CreateUser")]
-            public IActionResult Add(User entity)
+            catch (Exception ex)
             {
-                try
-                {
-                    _Services.Add(entity);
-                    return Ok();
-                }
-                catch (Exception ex)
-                {
-                    FunctionsGeneral.AddLog(ex.Message);
-                 
-                    return StatusCode(500, ex.ToString());
-                }
+                FunctionsGeneral.AddLog(ex.ToString());
+                return StatusCode(500, ex.ToString());
             }
+
+        }
         [HttpGet("ConsulUser")]
-            public ActionResult<User> GetUserById(int Id_user)
+        public ActionResult<User> GetUserById(int Id_user)
+        {
+            var user = _Services.GetUserById(Id_user);
+            if (user != null)
             {
-                var user = _Services.GetUserById(Id_user);
-                if (user != null)
-                {
-                    return Ok(user);
-                }
-                else
-                {
-                    return NotFound("User ot found");
-                }
+                return Ok(user);
             }
+            else
+            {
+                return NotFound("User ot found");
+            }
+        }
         [HttpPost("UpdateUser")]
         public IActionResult UpdateUser(User entity)
         {
@@ -154,26 +162,26 @@ namespace cunigranja.Controllers
         }
 
         [HttpDelete("DeleteUser")]
-            public IActionResult DeleteUserById(int Id_user)
+        public IActionResult DeleteUserById(int Id_user)
+        {
+            try
             {
-                try
+                if (Id_user <= 0)
                 {
-                    if (Id_user <= 0)
-                    {
-                        return BadRequest("Invalid user ID.");
-                    }
-
-                    var result = _Services.DeleteById(Id_user);
-
-                    if (result)
-                    {
-                        return Ok("User deleted successfully.");
-                    }
-                    else
-                    {
-                        return NotFound("User not found.");
-                    }
+                    return BadRequest("Invalid user ID.");
                 }
+
+                var result = _Services.DeleteById(Id_user);
+
+                if (result)
+                {
+                    return Ok("User deleted successfully.");
+                }
+                else
+                {
+                    return NotFound("User not found.");
+                }
+            }
             catch (Exception ex)
             {
                 FunctionsGeneral.AddLog(ex.Message);
