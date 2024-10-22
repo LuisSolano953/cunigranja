@@ -19,8 +19,8 @@ namespace cunigranja.Models
     public class User
     {
         [Key]
-        [DisplayName("primer nombre")]
-        [Required(ErrorMessage = "El campo {0} es requerido")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [Range(0, 100, ErrorMessage = "El campo {0} debe estar entre {1} y {2}.")]
         public int Id_user { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es requerido")]
@@ -50,6 +50,7 @@ namespace cunigranja.Models
         [Required(ErrorMessage = "El campo {0} es requerido")]
         [StringLength(50, ErrorMessage = "el campo {0} tiene un limite de caracteres de {1}")]
         public string email_user {get; set;}
+        
     }
 }   
  

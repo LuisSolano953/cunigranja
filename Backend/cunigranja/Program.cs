@@ -15,11 +15,14 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql
 (builder.Configuration.GetConnectionString("DefaulConnection"), new MySqlServerVersion(new Version(8, 0, 23))));
 
 builder.Services.AddScoped<ReproductionServices>();
-builder.Services.AddScoped<ResponsibleServices>();
+builder.Services.AddScoped<WeighingServices>();
 builder.Services.AddScoped<CageServices>();
 builder.Services.AddScoped<HealthServices>();
 builder.Services.AddScoped<FoodServices>();
 builder.Services.AddScoped<UserServices>();
+builder.Services.AddScoped<RaceServices>();
+builder.Services.AddScoped<FeedingServices>();
+builder.Services.AddScoped<MortalityServices>();
 
 
 var app = builder.Build();
