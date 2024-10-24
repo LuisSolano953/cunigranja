@@ -1,34 +1,26 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\",
+  "WorkspaceRootPath": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\usser\\documents\\main\\cunigranja\\backend\\cunigranja\\controllers\\cage.controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\controllers\\cage.controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\sena\\documents\\main\\cunigranja\\backend\\cunigranja\\controllers\\user.controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\controllers\\user.controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\usser\\documents\\main\\cunigranja\\backend\\cunigranja\\models\\feeding.model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\models\\feeding.model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\sena\\documents\\main\\cunigranja\\backend\\cunigranja\\middleware\\jwtmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\middleware\\jwtmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\usser\\documents\\main\\cunigranja\\backend\\cunigranja\\models\\food.model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\models\\food.model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\sena\\documents\\main\\cunigranja\\backend\\cunigranja\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\usser\\documents\\main\\cunigranja\\backend\\cunigranja\\controllers\\feeding.controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\controllers\\feeding.controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\usser\\documents\\main\\cunigranja\\backend\\cunigranja\\services\\feeding.services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\services\\feeding.services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\usser\\documents\\main\\cunigranja\\backend\\cunigranja\\models\\health.model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\models\\health.model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\usser\\documents\\main\\cunigranja\\backend\\cunigranja\\models\\user.model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\sena\\documents\\main\\cunigranja\\backend\\cunigranja\\models\\user.model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\models\\user.model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\sena\\documents\\main\\cunigranja\\backend\\cunigranja\\services\\user.services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\services\\user.services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,97 +30,71 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Cage.Controller.cs",
-              "DocumentMoniker": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Controllers\\Cage.Controller.cs",
-              "RelativeDocumentMoniker": "cunigranja\\Controllers\\Cage.Controller.cs",
-              "ToolTip": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Controllers\\Cage.Controller.cs",
-              "RelativeToolTip": "cunigranja\\Controllers\\Cage.Controller.cs",
-              "ViewState": "AQIAAD0AAAAAAAAAAAAcwFQAAAA2AAAA",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Program.cs",
+              "RelativeDocumentMoniker": "cunigranja\\Program.cs",
+              "ToolTip": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Program.cs",
+              "RelativeToolTip": "cunigranja\\Program.cs",
+              "ViewState": "AQIAABUAAAAAAAAAAAAiwCIAAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-24T01:24:30.551Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Feeding.Model.cs",
-              "DocumentMoniker": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Models\\Feeding.Model.cs",
-              "RelativeDocumentMoniker": "cunigranja\\Models\\Feeding.Model.cs",
-              "ToolTip": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Models\\Feeding.Model.cs",
-              "RelativeToolTip": "cunigranja\\Models\\Feeding.Model.cs",
-              "ViewState": "AQIAAAUAAAAAAAAAAAAxwAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-24T01:17:25.426Z",
+              "WhenOpened": "2024-10-24T19:15:02.549Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Feeding.Controller.cs",
-              "DocumentMoniker": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Controllers\\Feeding.Controller.cs",
-              "RelativeDocumentMoniker": "cunigranja\\Controllers\\Feeding.Controller.cs",
-              "ToolTip": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Controllers\\Feeding.Controller.cs",
-              "RelativeToolTip": "cunigranja\\Controllers\\Feeding.Controller.cs",
-              "ViewState": "AQIAAGgAAAAAAAAAAAAuwAAAAAAAAAAA",
+              "Title": "user.Model.cs",
+              "DocumentMoniker": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Models\\user.Model.cs",
+              "RelativeDocumentMoniker": "cunigranja\\Models\\user.Model.cs",
+              "ToolTip": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Models\\user.Model.cs",
+              "RelativeToolTip": "cunigranja\\Models\\user.Model.cs",
+              "ViewState": "AQIAABcAAAAAAAAAAAA2wCgAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-24T01:16:13.212Z",
+              "WhenOpened": "2024-10-24T18:07:48.08Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "User.Controller.cs",
+              "DocumentMoniker": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Controllers\\User.Controller.cs",
+              "RelativeDocumentMoniker": "cunigranja\\Controllers\\User.Controller.cs",
+              "ToolTip": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Controllers\\User.Controller.cs",
+              "RelativeToolTip": "cunigranja\\Controllers\\User.Controller.cs",
+              "ViewState": "AQIAAFsAAAAAAAAAAAAqwHQAAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-24T17:17:43.711Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "JwtMiddleware.cs",
+              "DocumentMoniker": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Middleware\\JwtMiddleware.cs",
+              "RelativeDocumentMoniker": "cunigranja\\Middleware\\JwtMiddleware.cs",
+              "ToolTip": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Middleware\\JwtMiddleware.cs",
+              "RelativeToolTip": "cunigranja\\Middleware\\JwtMiddleware.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABcAAABQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-24T18:23:56.595Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "Feeding.Services.cs",
-              "DocumentMoniker": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Services\\Feeding.Services.cs",
-              "RelativeDocumentMoniker": "cunigranja\\Services\\Feeding.Services.cs",
-              "ToolTip": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Services\\Feeding.Services.cs",
-              "RelativeToolTip": "cunigranja\\Services\\Feeding.Services.cs",
-              "ViewState": "AQIAACgAAAAAAAAAAAAcwAAAAAAAAAAA",
+              "Title": "User.Services.cs",
+              "DocumentMoniker": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Services\\User.Services.cs",
+              "RelativeDocumentMoniker": "cunigranja\\Services\\User.Services.cs",
+              "ToolTip": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Services\\User.Services.cs",
+              "RelativeToolTip": "cunigranja\\Services\\User.Services.cs",
+              "ViewState": "AQIAACEAAAAAAAAAAAA5wDwAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-24T01:15:55.498Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "user.Model.cs",
-              "DocumentMoniker": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Models\\user.Model.cs",
-              "RelativeDocumentMoniker": "cunigranja\\Models\\user.Model.cs",
-              "ToolTip": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Models\\user.Model.cs",
-              "RelativeToolTip": "cunigranja\\Models\\user.Model.cs",
-              "ViewState": "AQIAABgAAAAAAAAAAAAmwCoAAAAXAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-24T01:09:52.229Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "health.Model.cs",
-              "DocumentMoniker": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Models\\health.Model.cs",
-              "RelativeDocumentMoniker": "cunigranja\\Models\\health.Model.cs",
-              "ToolTip": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Models\\health.Model.cs",
-              "RelativeToolTip": "cunigranja\\Models\\health.Model.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-24T01:07:05.423Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Food.Model.cs",
-              "DocumentMoniker": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Models\\Food.Model.cs",
-              "RelativeDocumentMoniker": "cunigranja\\Models\\Food.Model.cs",
-              "ToolTip": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Models\\Food.Model.cs",
-              "RelativeToolTip": "cunigranja\\Models\\Food.Model.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-24T01:01:21.13Z",
+              "WhenOpened": "2024-10-24T17:30:34.052Z",
               "EditorCaption": ""
             }
           ]

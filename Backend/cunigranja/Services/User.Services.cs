@@ -14,6 +14,7 @@ namespace cunigranja.Services
         {
             return _context.user.ToList();
         }
+
         public void Add(User entity)
         {
             _context.user.Add(entity);
@@ -52,6 +53,10 @@ namespace cunigranja.Services
             return _context.user
                            .Where(u => u.Id_user >= startId && u.Id_user <= endId)
                            .ToList();
+        }
+        public User GetByEmail(string email_user)
+        {
+            return _context.user.FirstOrDefault(u => u.email_user == email_user);
         }
 
     }

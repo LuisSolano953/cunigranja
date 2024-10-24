@@ -598,3 +598,10 @@ C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\obj\Debug\net8.0\refi
 C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\obj\Debug\net8.0\cunigranja.pdb
 C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\obj\Debug\net8.0\cunigranja.genruntimeconfig.cache
 C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\obj\Debug\net8.0\ref\cunigranja.dll
+C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
+C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Microsoft.Extensions.Options.dll

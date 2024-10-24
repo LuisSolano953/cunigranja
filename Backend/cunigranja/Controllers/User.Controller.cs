@@ -29,36 +29,49 @@ namespace cunigranja.Controllers
 
         // POST: LoginController/Create
         [HttpPost("Login")]
-        public IActionResult Login(LoginUser Login)
+        public IActionResult Login(LoginUser login)
         {
             try
             {
-                var Key = Encoding.UTF8.GetBytes(JWT.KeySecret);
-                ClaimsIdentity subject = new ClaimsIdentity(new Claim[]
-                {
-                new Claim("User", Login.Email)
+                // Obtener el usuario por correo electrónico
+                var user = _Services.GetUsers().FirstOrDefault(u => u.email_user == login.Email);
 
-                });
+                // Verificar si el usuario existe y la contraseña es correcta
+                if (user == null || !BCrypt.Net.BCrypt.Verify(login.Passaword + user.intentos_user, user.password_user))
+                {
+                    return Unauthorized("Credenciales incorrectas.");
+                }
+
+                // Generar el token JWT
+                var key = Encoding.UTF8.GetBytes(JWT.KeySecret);
+                var claims = new ClaimsIdentity(new[]
+                {
+            new Claim("User", login.Email)
+        });
 
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
-                    Subject = subject,
+                    Subject = claims,
                     Expires = DateTime.UtcNow.AddMinutes(Convert.ToDouble(JWT.JwtExpiretime)),
                     SigningCredentials = new SigningCredentials(
-                        new SymmetricSecurityKey(Key),
-                        SecurityAlgorithms.HmacSha256Signature
-                        )
-
+                        new SymmetricSecurityKey(key),
+                        SecurityAlgorithms.HmacSha256Signature)
                 };
+
                 var token = new JwtSecurityTokenHandler().CreateToken(tokenDescriptor);
+                var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
+                // Guardar el token en la base de datos
+                user.token_user = tokenString;
+                _Services.UpdateUser(user.Id_user, user);
 
-
-                return Ok(new JwtSecurityTokenHandler().WriteToken(token));
+                // Devolver el token generado
+                return Ok(new { token = tokenString });
             }
             catch (Exception ex)
             {
-                FunctionsGeneral.AddLog(ex.Message);
+                // Registrar el error y devolver una respuesta de error
+                FunctionsGeneral.AddLog(ex.ToString());
                 return StatusCode(500, ex.ToString());
             }
         }
@@ -86,13 +99,22 @@ namespace cunigranja.Controllers
             return Ok(_Services.GetUsers());
         }
         [HttpPost("CreateUser")]
-        public IActionResult Add(User entity)
+        public IActionResult CreateUser([FromBody]User entity)
         {
             try
             {
-                //var errores = FunctionsGeneral.ValidModel(user);
-                //if (errores.Length == 0)
-                //{
+                if(entity.Id_user<=0)
+                {
+                    return BadRequest("El Id del usuario de ser un valor aceptable");
+                }
+
+                // Generar salt
+                string salt = BCrypt.Net.BCrypt.GenerateSalt();
+                // Hashear la contraseña
+                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(entity.password_user + salt);
+                entity.salt = salt;                    // Usa entity.salt en lugar de User.salt
+                entity.password_user = hashedPassword; // Usa entity.password_user para almacenar la contraseña hasheada
+                entity.token_user = "";
                 _Services.Add(entity);
                 return Ok(new
                 {

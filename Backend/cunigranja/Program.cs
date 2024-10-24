@@ -1,3 +1,4 @@
+using cunigranja.Middleware;
 using cunigranja.Models;
 using cunigranja.Services;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,16 @@ builder.Services.AddScoped<MortalityServices>();
 
 
 var app = builder.Build();
+
+void Configure(IApplicationBuilder app, IWebHostEnvironment
+env)
+{
+    app.UseMiddleware<JwtMiddleware>();
+    app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapControllers();
+    });
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

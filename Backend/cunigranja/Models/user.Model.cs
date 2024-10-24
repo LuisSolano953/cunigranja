@@ -39,8 +39,6 @@ namespace cunigranja.Models
         [StringLength(250, ErrorMessage = "el campo {0} tiene un limite de caracteres de {1}")]
         public string token_user { get; set; } //VARCHAR 250
 
-        [Required(ErrorMessage = "El campo {0} es requerido")]
-        [StringLength(0, ErrorMessage = "el campo {0} tiene un limite de caracteres de {1}")]
         public bool blockard { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "La cantidad de intento debe ser mayor que 0.")]
@@ -51,6 +49,9 @@ namespace cunigranja.Models
         [StringLength(250, ErrorMessage = "el campo {0} tiene un limite de caracteres de {1}")]
         public string email_user {get; set; } //VARCHAR 250
 
+        [Required(ErrorMessage = "El campo {0} es requerido")]
+        [StringLength(250, ErrorMessage = "el campo {0} tiene un limite de caracteres de {1}")]
+        public string salt { get; set; }
     }
 }   
  
