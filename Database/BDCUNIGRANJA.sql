@@ -59,7 +59,7 @@ DROP TABLE IF EXISTS `feeding`;
 CREATE TABLE `feeding` (
   `Id_feeding` int NOT NULL,
   `fecha_feeding` datetime DEFAULT NULL,
-  `hora_feeding` time DEFAULT NULL,
+  `hora_feeding` datetime DEFAULT NULL,
   `cantidad_feeding` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`Id_feeding`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -146,6 +146,7 @@ CREATE TABLE `mortality` (
 
 LOCK TABLES `mortality` WRITE;
 /*!40000 ALTER TABLE `mortality` DISABLE KEYS */;
+INSERT INTO `mortality` VALUES (1,'string',2147483647,'2024-10-24 00:00:00');
 /*!40000 ALTER TABLE `mortality` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -181,7 +182,7 @@ DROP TABLE IF EXISTS `reproduction`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `reproduction` (
   `Id_reproduction` int NOT NULL,
-  `fecha__reproduction` date DEFAULT NULL,
+  `fecha_reproduction` date DEFAULT NULL,
   PRIMARY KEY (`Id_reproduction`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -192,7 +193,7 @@ CREATE TABLE `reproduction` (
 
 LOCK TABLES `reproduction` WRITE;
 /*!40000 ALTER TABLE `reproduction` DISABLE KEYS */;
-INSERT INTO `reproduction` VALUES (1,'2024-10-04'),(2,'2024-10-04');
+INSERT INTO `reproduction` VALUES (1,'2024-10-04'),(2,'2024-10-04'),(100,'2024-10-24');
 /*!40000 ALTER TABLE `reproduction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -248,6 +249,7 @@ CREATE TABLE `weighing` (
 
 LOCK TABLES `weighing` WRITE;
 /*!40000 ALTER TABLE `weighing` DISABLE KEYS */;
+INSERT INTO `weighing` VALUES (100,'2024-10-24 00:00:00','string','string');
 /*!40000 ALTER TABLE `weighing` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -260,4 +262,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-22 11:39:17
+-- Dump completed on 2024-10-23 20:29:52
