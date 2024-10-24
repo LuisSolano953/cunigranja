@@ -22,12 +22,5 @@ namespace cunigranja.Models
         [Display(Name = "Cantidad de Comida")]
         public string cantidad_food { get; set; }
 
-        [Required(ErrorMessage = "El campo [0] es obligatorio.")]
-        [Display(Name = "Fecha de Registro")]
-        public DateTime fecha_food { get; set; }
-
-        [Required(ErrorMessage = "El campo [0] es obligatorio.")]
-        [Display(Name = "Hora de Registro")]
-        public DateTime hora_food { get; set; }
     }
 }

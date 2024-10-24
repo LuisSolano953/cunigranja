@@ -28,29 +28,29 @@ namespace cunigranja.Models
         public string password_user { get; set; } //VARCHAR 250
 
         [Required(ErrorMessage = "El campo {0} es requerido")]
-        [StringLength(50, ErrorMessage = "el campo {0} tiene un limite de caracteres de {1}")]
-        public string name_user { get; set; }
+        [StringLength(250, ErrorMessage = "el campo {0} tiene un limite de caracteres de {1}")]
+        public string name_user { get; set; } //VARCHAR 250
 
         [Required(ErrorMessage = "El campo {0} es requerido")]
-        [StringLength(50, ErrorMessage = "el campo {0} tiene un limite de caracteres de {1}")]
-        public string tipo_user { get; set; }
+        [StringLength(250, ErrorMessage = "el campo {0} tiene un limite de caracteres de {1}")]
+        public string tipo_user { get; set; } //VARCHAR 250
 
         [Required(ErrorMessage = "El campo {0} es requerido")]
-        [StringLength(50, ErrorMessage = "el campo {0} tiene un limite de caracteres de {1}")]
-        public string token_user { get; set; }
+        [StringLength(250, ErrorMessage = "el campo {0} tiene un limite de caracteres de {1}")]
+        public string token_user { get; set; } //VARCHAR 250
 
         [Required(ErrorMessage = "El campo {0} es requerido")]
-        [StringLength(50, ErrorMessage = "el campo {0} tiene un limite de caracteres de {1}")]
+        [StringLength(0, ErrorMessage = "el campo {0} tiene un limite de caracteres de {1}")]
         public bool blockard { get; set; }
 
-        [Required(ErrorMessage = "El campo {0} es requerido")]
-        [StringLength(50, ErrorMessage = "el campo {0} tiene un limite de caracteres de {1}")]
-        public string intentos_user {get; set;}
+        [Range(1, int.MaxValue, ErrorMessage = "La cantidad de intento debe ser mayor que 0.")]
+        [Display(Name = "Cantidad de Mortalidad")]
+        public string intentos_user {get; set; } //VARCHAR 250
 
         [Required(ErrorMessage = "El campo {0} es requerido")]
-        [StringLength(50, ErrorMessage = "el campo {0} tiene un limite de caracteres de {1}")]
-        public string email_user {get; set;}
-        
+        [StringLength(250, ErrorMessage = "el campo {0} tiene un limite de caracteres de {1}")]
+        public string email_user {get; set; } //VARCHAR 250
+
     }
 }   
  

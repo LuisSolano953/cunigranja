@@ -82,7 +82,7 @@ namespace cunigranja.Controllers
                 // Llamar al método de actualización en el servicio
                 _Services.UpdateCage(entity.Id_cage, entity);
 
-                return Ok("Health updated successfully.");
+                return Ok("Cage updated successfully.");
             }
             catch (Exception ex)
             {
@@ -91,16 +91,16 @@ namespace cunigranja.Controllers
             }
         }
         [HttpGet("GetCagesInRange")]
-        public ActionResult<IEnumerable<CageModel>> GetCagesInRange(int startId, int endId)
+        public ActionResult<IEnumerable<CageModel>> GetCageInRange(int startId, int endId)
         {
             try
             {
-                var cages = _Services.GetCageInRange(startId, endId);
-                if (cages == null || !cages.Any())
+                var cage = _Services.GetCageInRange(startId, endId);
+                if (cage == null || !cage.Any())
                 {
                     return NotFound("No cage found in the specified range.");
                 }
-                return Ok(cages);
+                return Ok(cage);
             }
             catch (Exception ex)
             {
