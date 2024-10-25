@@ -1,4 +1,5 @@
-﻿using cunigranja.Models;
+﻿using cunigranja.Functions;
+using cunigranja.Models;
 using cunigranja.Services;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -8,6 +9,7 @@ namespace cunigranja.Middleware
 {
     public class JwtMiddleware
     {
+        public GeneralFunctions FunctionsGeneral;
         private readonly IConfiguration _configuration;
         private readonly RequestDelegate _next;
         public JwtModel Jwt;
@@ -21,13 +23,25 @@ namespace cunigranja.Middleware
 
         public async Task Invoke(HttpContext context, UserServices userService)
         {
-            var token = context.Request.Headers["Authorization"].FirstOrDefault ()?.Split(" ").Last();
-            if (token != null)
-                 AttachUserToContext(context, userService, token);
-            await _next(context);
+            try
+            {
+                var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+                if (token != null)
+                {
+                     AttachUserToContext(context, userService, token);
+                }
+                await _next(context);
+            }
+            catch (Exception ex)
+            {
+
+                FunctionsGeneral.AddLog(ex.ToString());
+               
+
+            }
         }
 
-        private async Task AttachUserToContext(HttpContext context, UserServices userService, string token)
+        public  void AttachUserToContext(HttpContext context, UserServices userService, string token)
         {
             try
             {
@@ -47,11 +61,13 @@ namespace cunigranja.Middleware
 
                 context.Items["User"] = userService.GetByEmail(userEmail);
             }
-            catch
+            catch(Exception ex)
             {
-                // No adjuntar el usuario si la validación falla
+             
+                FunctionsGeneral.AddLog(ex.Message);
             }
-        }
+
+         }
     }
 
 }

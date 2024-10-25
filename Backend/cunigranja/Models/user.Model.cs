@@ -39,11 +39,11 @@ namespace cunigranja.Models
         [StringLength(250, ErrorMessage = "el campo {0} tiene un limite de caracteres de {1}")]
         public string token_user { get; set; } //VARCHAR 250
 
-        public bool blockard { get; set; }
+        public int blockard { get; set; } = 0;
 
-        [Range(1, int.MaxValue, ErrorMessage = "La cantidad de intento debe ser mayor que 0.")]
+        [Range(1, 3, ErrorMessage = "La cantidad de intento debe ser mayor que 0.")]
         [Display(Name = "Cantidad de Mortalidad")]
-        public string intentos_user {get; set; } //VARCHAR 250
+        public int intentos_user {get; set; } //VARCHAR 250
 
         [Required(ErrorMessage = "El campo {0} es requerido")]
         [StringLength(250, ErrorMessage = "el campo {0} tiene un limite de caracteres de {1}")]

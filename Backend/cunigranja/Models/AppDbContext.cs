@@ -18,11 +18,11 @@ namespace cunigranja.Models
         public DbSet<MortalityModel> mortality { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (optionsBuilder.IsConfigured)
+            if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseMySql("Server=localhost;Database=cunigranja;User=root;Password=luis200513;Port=3306",
                     new MySqlServerVersion(new Version(8, 0, 23)));
-            };
+            }
         }
     }
 }

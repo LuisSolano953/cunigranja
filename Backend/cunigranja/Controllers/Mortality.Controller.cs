@@ -46,15 +46,23 @@ namespace cunigranja.Controllers
         // GET: api/Health/ConsulHealth?id=1
         [HttpGet("ConsulMortality")]
         public ActionResult<MortalityModel> GetById(int id)
-        {
-            var health = _Services.GetById(id);
-            if (health != null)
+        {    try
             {
-                return Ok(health);
+                var health = _Services.GetById(id);
+                if (health != null)
+                {
+                    return Ok(health);
+                }
+                else
+                {
+                    return NotFound("Mortality record not found.");
+                }
+
             }
-            else
+            catch (Exception ex)
             {
-                return NotFound("Mortality record not found.");
+                FunctionsGeneral.AddLog(ex.Message);
+                return StatusCode(500, ex.ToString());
             }
         }
 

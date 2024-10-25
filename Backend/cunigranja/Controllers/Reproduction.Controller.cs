@@ -52,14 +52,22 @@ namespace cunigranja.Controllers
         [HttpGet("ConsulReproduction")]
         public ActionResult<ReproductionModel> GetReproductionById(int Id_reproduction)
         {
-            var reproduction = _Services.GetReproductionById(Id_reproduction);
-            if (reproduction != null)
-            {
-                return Ok(reproduction);
+            try
+            { 
+                    var reproduction = _Services.GetReproductionById(Id_reproduction);
+                if (reproduction != null)
+                {
+                    return Ok(reproduction);
+                }
+                else
+                {
+                    return NotFound("Reproduction ot found");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return NotFound("Reproduction ot found");
+                FunctionsGeneral.AddLog(ex.Message);
+                return StatusCode(500, ex.ToString());
             }
         }
         [HttpPost("UpdateReproduction")]

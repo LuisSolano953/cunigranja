@@ -54,15 +54,25 @@ namespace cunigranja.Controllers
         [HttpGet("ConsulWeighing")]
         public ActionResult<WeighingModel> GetweighingById(int Id_weighing)
         {
-            var weighing = _Services.GetWeighingById(Id_weighing);
-            if (weighing != null)
+            try
             {
-                return Ok(weighing);
+
+                var weighing = _Services.GetWeighingById(Id_weighing);
+                if (weighing != null)
+                {
+                    return Ok(weighing);
+                }
+                else
+                {
+                    return NotFound("Weighing ot found");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return NotFound("Weighing ot found");
+                FunctionsGeneral.AddLog(ex.Message);
+                return StatusCode(500, ex.ToString());
             }
+
         }
         [HttpPost("UpdateWeighing")]
         public IActionResult UpdateWeighing(WeighingModel entity)

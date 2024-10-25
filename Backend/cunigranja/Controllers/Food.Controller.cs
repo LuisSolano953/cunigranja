@@ -54,14 +54,23 @@ namespace cunigranja.Controllers
         [HttpGet("ConsulFood")]
         public ActionResult<FoodModel> GetFoodById(int Id_food)
         {
-            var food = _Services.GetFoodById(Id_food);
-            if (food != null)
+            try
             {
-                return Ok(food);
+                var food = _Services.GetFoodById(Id_food);
+                if (food != null)
+                {
+                    return Ok(food);
+                }
+                else
+                {
+                    return NotFound("Food ot found");
+                }
+
             }
-            else
+            catch (Exception ex)
             {
-                return NotFound("Food ot found");
+                FunctionsGeneral.AddLog(ex.Message);
+                return StatusCode(500, ex.ToString());
             }
         }
         [HttpPost("UpdateFood")]

@@ -47,14 +47,23 @@ namespace cunigranja.Controllers
         [HttpGet("ConsulHealth")]
         public ActionResult<HealthModel> GetHealthById(int id)
         {
-            var health = _Services.GetHealthById(id);
-            if (health != null)
+            try
             {
-                return Ok(health);
+
+                var health = _Services.GetHealthById(id);
+                if (health != null)
+                {
+                    return Ok(health);
+                }
+                else
+                {
+                    return NotFound("Health record not found.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return NotFound("Health record not found.");
+                FunctionsGeneral.AddLog(ex.Message);
+                return StatusCode(500, ex.ToString());
             }
         }
 

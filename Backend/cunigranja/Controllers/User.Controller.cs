@@ -1,6 +1,7 @@
 ﻿using cunigranja.Functions;
 using cunigranja.Models;
 using cunigranja.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -39,15 +40,15 @@ namespace cunigranja.Controllers
                 // Verificar si el usuario existe y la contraseña es correcta
                 if (user == null || !BCrypt.Net.BCrypt.Verify(login.Passaword + user.intentos_user, user.password_user))
                 {
-                    return Unauthorized("Credenciales incorrectas.");
+                    return Unauthorized(new { message = "Credenciales incorrectas." });
                 }
 
                 // Generar el token JWT
                 var key = Encoding.UTF8.GetBytes(JWT.KeySecret);
                 var claims = new ClaimsIdentity(new[]
                 {
-            new Claim("User", login.Email)
-        });
+                new Claim("User", login.Email)
+                });
 
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
@@ -91,12 +92,21 @@ namespace cunigranja.Controllers
                 return StatusCode(500, ex.ToString());
             }
         }
-
+        [Authorize]
         [HttpGet("AllUser")]
         public ActionResult<IEnumerable<User>> GetUsers()
         {
+            try
+            {
+                 return Ok(_Services.GetUsers());
 
-            return Ok(_Services.GetUsers());
+            }
+            catch (Exception ex)
+            {
+                FunctionsGeneral.AddLog(ex.Message);
+                return StatusCode(500, ex.ToString());
+            }
+
         }
         [HttpPost("CreateUser")]
         public IActionResult CreateUser([FromBody]User entity)
@@ -133,14 +143,23 @@ namespace cunigranja.Controllers
         [HttpGet("ConsulUser")]
         public ActionResult<User> GetUserById(int Id_user)
         {
-            var user = _Services.GetUserById(Id_user);
-            if (user != null)
+            try
             {
-                return Ok(user);
+                var user = _Services.GetUserById(Id_user);
+                if (user != null)
+                {
+                    return Ok(user);
+                }
+                else
+                {
+                    return NotFound("User ot found");
+                }
+
             }
-            else
+            catch (Exception ex)
             {
-                return NotFound("User ot found");
+                FunctionsGeneral.AddLog(ex.Message);
+                return StatusCode(500, ex.ToString());
             }
         }
         [HttpPost("UpdateUser")]

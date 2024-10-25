@@ -53,14 +53,24 @@ namespace cunigranja.Controllers
         [HttpGet("ConsulRace")]
         public ActionResult<RaceModel> GetRaceById(int Id_race)
         {
-            var race = _raceServices.GetRaceById(Id_race);
-            if (race != null)
+            try
             {
-                return Ok(race);
+
+                var race = _raceServices.GetRaceById(Id_race);
+                if (race != null)
+                {
+                    return Ok(race);
+                }
+                else
+                {
+                    return NotFound("Race not found.");
+                }
+
             }
-            else
+            catch (Exception ex)
             {
-                return NotFound("Race not found.");
+                FunctionsGeneral.AddLog(ex.Message);
+                return StatusCode(500, ex.ToString());
             }
         }
 
