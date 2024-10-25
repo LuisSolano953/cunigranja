@@ -605,3 +605,6 @@ C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Micr
 C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
 C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
