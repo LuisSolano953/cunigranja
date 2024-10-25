@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `cunigranja` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `cunigranja`;
 -- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
 --
 -- Host: localhost    Database: cunigranja
@@ -59,7 +57,7 @@ DROP TABLE IF EXISTS `feeding`;
 CREATE TABLE `feeding` (
   `Id_feeding` int NOT NULL,
   `fecha_feeding` datetime DEFAULT NULL,
-  `hora_feeding` datetime DEFAULT NULL,
+  `hora_feeding` time DEFAULT NULL,
   `cantidad_feeding` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`Id_feeding`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -146,7 +144,6 @@ CREATE TABLE `mortality` (
 
 LOCK TABLES `mortality` WRITE;
 /*!40000 ALTER TABLE `mortality` DISABLE KEYS */;
-INSERT INTO `mortality` VALUES (1,'string',2147483647,'2024-10-24 00:00:00');
 /*!40000 ALTER TABLE `mortality` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -182,7 +179,7 @@ DROP TABLE IF EXISTS `reproduction`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `reproduction` (
   `Id_reproduction` int NOT NULL,
-  `fecha_reproduction` date DEFAULT NULL,
+  `fecha__reproduction` date DEFAULT NULL,
   PRIMARY KEY (`Id_reproduction`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -193,7 +190,7 @@ CREATE TABLE `reproduction` (
 
 LOCK TABLES `reproduction` WRITE;
 /*!40000 ALTER TABLE `reproduction` DISABLE KEYS */;
-INSERT INTO `reproduction` VALUES (1,'2024-10-04'),(2,'2024-10-04'),(100,'2024-10-24');
+INSERT INTO `reproduction` VALUES (1,'2024-10-04'),(2,'2024-10-04');
 /*!40000 ALTER TABLE `reproduction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -213,6 +210,7 @@ CREATE TABLE `user` (
   `blockard` tinyint(1) DEFAULT '0',
   `tipo_user` varchar(250) DEFAULT NULL,
   `email_user` varchar(250) DEFAULT NULL,
+  `salt` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`Id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -223,7 +221,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'carlos','sccttuyg',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `user` VALUES (2,'$2a$11$Syk.RroafqyzNG5hNw8o1.VEtl2CdFuLmd3bUh5mJxwy6jqaLkM2e','luis',1,'',1,'aprendiz','luissolanor860@gmail.com','$2a$11$3feQsdHy6ZlPl8yRltmMju'),(100,'$2a$11$ZWSzOjffN5Qh1z9krMm1nes0/ekIMmNtRjBoCcFaBaHhoW3edBvI6','string',2147483647,'',0,'string','luissolanor2022@gmail.com','$2a$11$99H3xC8CkqBR3wIsEh0jp.');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -249,7 +247,7 @@ CREATE TABLE `weighing` (
 
 LOCK TABLES `weighing` WRITE;
 /*!40000 ALTER TABLE `weighing` DISABLE KEYS */;
-INSERT INTO `weighing` VALUES (100,'2024-10-24 00:00:00','string','string');
+INSERT INTO `weighing` VALUES (1,'2024-10-22 16:59:40','string','string');
 /*!40000 ALTER TABLE `weighing` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -262,4 +260,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-23 20:29:52
+-- Dump completed on 2024-10-25  9:09:27
