@@ -1,30 +1,30 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\SENA\\Documents\\luis\\cunigranja\\Backend\\",
+  "WorkspaceRootPath": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\sena\\documents\\luis\\cunigranja\\backend\\cunigranja\\models\\user.model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\sena\\documents\\main\\cunigranja\\backend\\cunigranja\\controllers\\user.controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\controllers\\user.controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\sena\\documents\\main\\cunigranja\\backend\\cunigranja\\models\\user.model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\models\\user.model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\sena\\documents\\luis\\cunigranja\\backend\\cunigranja\\models\\usersmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\models\\usersmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\sena\\documents\\main\\cunigranja\\backend\\cunigranja\\middleware\\jwtmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\middleware\\jwtmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\sena\\documents\\luis\\cunigranja\\backend\\cunigranja\\services\\responsibleservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\services\\responsibleservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\sena\\documents\\main\\cunigranja\\backend\\cunigranja\\services\\user.services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\services\\user.services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\sena\\documents\\luis\\cunigranja\\backend\\cunigranja\\models\\responsible.model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\models\\responsible.model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\sena\\documents\\main\\cunigranja\\backend\\cunigranja\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\sena\\documents\\luis\\cunigranja\\backend\\cunigranja\\services\\userservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\services\\userservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\sena\\documents\\luis\\cunigranja\\backend\\cunigranja\\models\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\models\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\sena\\documents\\main\\cunigranja\\backend\\cunigranja\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,85 +34,80 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "UsersModel.cs",
-              "DocumentMoniker": "C:\\Users\\SENA\\Documents\\luis\\cunigranja\\Backend\\cunigranja\\Models\\UsersModel.cs",
-              "RelativeDocumentMoniker": "cunigranja\\Models\\UsersModel.cs",
-              "ToolTip": "C:\\Users\\SENA\\Documents\\luis\\cunigranja\\Backend\\cunigranja\\Models\\UsersModel.cs",
-              "RelativeToolTip": "cunigranja\\Models\\UsersModel.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAABAAAA",
+              "Title": "user.Model.cs",
+              "DocumentMoniker": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Models\\user.Model.cs",
+              "RelativeDocumentMoniker": "cunigranja\\Models\\user.Model.cs",
+              "ToolTip": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Models\\user.Model.cs",
+              "RelativeToolTip": "cunigranja\\Models\\user.Model.cs",
+              "ViewState": "AQIAAAIAAAAAAAAAAAAqwBQAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-04T14:39:34.145Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-07T15:49:02.703Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ResponsibleServices.cs",
-              "DocumentMoniker": "C:\\Users\\SENA\\Documents\\luis\\cunigranja\\Backend\\cunigranja\\Services\\ResponsibleServices.cs",
-              "RelativeDocumentMoniker": "cunigranja\\Services\\ResponsibleServices.cs",
-              "ToolTip": "C:\\Users\\SENA\\Documents\\luis\\cunigranja\\Backend\\cunigranja\\Services\\ResponsibleServices.cs",
-              "RelativeToolTip": "cunigranja\\Services\\ResponsibleServices.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAFAAAA",
+              "DocumentIndex": 5,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\cunigranja\\appsettings.json",
+              "RelativeDocumentMoniker": "cunigranja\\appsettings.json",
+              "ToolTip": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\cunigranja\\appsettings.json",
+              "RelativeToolTip": "cunigranja\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAOAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-11-07T13:22:46.173Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "User.Controller.cs",
+              "DocumentMoniker": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Controllers\\User.Controller.cs",
+              "RelativeDocumentMoniker": "cunigranja\\Controllers\\User.Controller.cs",
+              "ToolTip": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Controllers\\User.Controller.cs",
+              "RelativeToolTip": "cunigranja\\Controllers\\User.Controller.cs",
+              "ViewState": "AQIAAG8AAAAAAAAAAAArwFIAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-04T14:25:02.642Z",
+              "WhenOpened": "2024-10-25T17:11:27.734Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Responsible.Model.cs",
-              "DocumentMoniker": "C:\\Users\\SENA\\Documents\\luis\\cunigranja\\Backend\\cunigranja\\Models\\Responsible.Model.cs",
-              "RelativeDocumentMoniker": "cunigranja\\Models\\Responsible.Model.cs",
-              "ToolTip": "C:\\Users\\SENA\\Documents\\luis\\cunigranja\\Backend\\cunigranja\\Models\\Responsible.Model.cs",
-              "RelativeToolTip": "cunigranja\\Models\\Responsible.Model.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Title": "User.Services.cs",
+              "DocumentMoniker": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Services\\User.Services.cs",
+              "RelativeDocumentMoniker": "cunigranja\\Services\\User.Services.cs",
+              "ToolTip": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Services\\User.Services.cs",
+              "RelativeToolTip": "cunigranja\\Services\\User.Services.cs",
+              "ViewState": "AQIAACUAAAAAAAAAAAAcwC0AAAAdAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-04T14:24:58.975Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "AppDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\SENA\\Documents\\luis\\cunigranja\\Backend\\cunigranja\\Models\\AppDbContext.cs",
-              "RelativeDocumentMoniker": "cunigranja\\Models\\AppDbContext.cs",
-              "ToolTip": "C:\\Users\\SENA\\Documents\\luis\\cunigranja\\Backend\\cunigranja\\Models\\AppDbContext.cs",
-              "RelativeToolTip": "cunigranja\\Models\\AppDbContext.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAZAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-04T14:11:37.769Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-25T16:25:04.462Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "UserServices.cs",
-              "DocumentMoniker": "C:\\Users\\SENA\\Documents\\luis\\cunigranja\\Backend\\cunigranja\\Services\\UserServices.cs",
-              "RelativeDocumentMoniker": "cunigranja\\Services\\UserServices.cs",
-              "ToolTip": "C:\\Users\\SENA\\Documents\\luis\\cunigranja\\Backend\\cunigranja\\Services\\UserServices.cs",
-              "RelativeToolTip": "cunigranja\\Services\\UserServices.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAmAAAA",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Program.cs",
+              "RelativeDocumentMoniker": "cunigranja\\Program.cs",
+              "ToolTip": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Program.cs",
+              "RelativeToolTip": "cunigranja\\Program.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAswAwAAAAbAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-04T14:08:41.631Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-25T16:14:21.18Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "user.Model.cs",
-              "DocumentMoniker": "C:\\Users\\SENA\\Documents\\luis\\cunigranja\\Backend\\cunigranja\\Models\\user.Model.cs",
-              "RelativeDocumentMoniker": "cunigranja\\Models\\user.Model.cs",
-              "ToolTip": "C:\\Users\\SENA\\Documents\\luis\\cunigranja\\Backend\\cunigranja\\Models\\user.Model.cs",
-              "RelativeToolTip": "cunigranja\\Models\\user.Model.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAwwA4AAAAFAAAA",
+              "DocumentIndex": 2,
+              "Title": "JwtMiddleware.cs",
+              "DocumentMoniker": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Middleware\\JwtMiddleware.cs",
+              "RelativeDocumentMoniker": "cunigranja\\Middleware\\JwtMiddleware.cs",
+              "ToolTip": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Middleware\\JwtMiddleware.cs",
+              "RelativeToolTip": "cunigranja\\Middleware\\JwtMiddleware.cs",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAWwCkAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-04T13:42:22.95Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-25T16:04:49.293Z"
             }
           ]
         }

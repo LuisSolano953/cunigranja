@@ -70,17 +70,37 @@ namespace cunigranja.Controllers
         }
 
         [HttpPost("UpdateCage")]
-        public IActionResult Update(CageModel entity)
+        public IActionResult UpdateCage(CageModel entity)
         {
             try
             {
                 if (entity.Id_cage <= 0) // Verifica que el ID sea válido
                 {
-                    return BadRequest("Invalid cage ID.");
+                    return BadRequest("Invalid Cage ID.");
                 }
 
-                _Services.Update(entity);
+                // Llamar al método de actualización en el servicio
+                _Services.UpdateCage(entity.Id_cage, entity);
+
                 return Ok("Cage updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                FunctionsGeneral.AddLog(ex.Message);
+                return StatusCode(500, ex.ToString());
+            }
+        }
+        [HttpGet("GetCagesInRange")]
+        public ActionResult<IEnumerable<CageModel>> GetCageInRange(int startId, int endId)
+        {
+            try
+            {
+                var cage = _Services.GetCageInRange(startId, endId);
+                if (cage == null || !cage.Any())
+                {
+                    return NotFound("No cage found in the specified range.");
+                }
+                return Ok(cage);
             }
             catch (Exception ex)
             {

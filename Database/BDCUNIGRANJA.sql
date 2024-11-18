@@ -26,15 +26,14 @@ DROP TABLE IF EXISTS `cage`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cage` (
   `Id_cage` int NOT NULL,
-  `capacidad_cage` varchar(45) DEFAULT NULL,
-  `tamaño_cage` varchar(45) DEFAULT NULL,
-  `ubicacion_cage` varchar(45) DEFAULT NULL,
+  `capacidad_cage` varchar(250) DEFAULT NULL,
+  `tamaño_cage` varchar(250) DEFAULT NULL,
+  `ubicacion_cage` varchar(250) DEFAULT NULL,
   `ficha_conejo` int DEFAULT NULL,
   `fecha_ingreso` date DEFAULT NULL,
   `fecha_salida` date DEFAULT NULL,
-  `raza_conejo` varchar(45) DEFAULT NULL,
-  `sexo_conejo` varchar(45) DEFAULT NULL,
-  `estado_cage` varchar(45) DEFAULT NULL,
+  `sexo_conejo` varchar(250) DEFAULT NULL,
+  `estado_cage` varchar(250) DEFAULT NULL,
   `edad_conejo` int DEFAULT NULL,
   PRIMARY KEY (`Id_cage`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -46,8 +45,33 @@ CREATE TABLE `cage` (
 
 LOCK TABLES `cage` WRITE;
 /*!40000 ALTER TABLE `cage` DISABLE KEYS */;
-INSERT INTO `cage` VALUES (1,'string','string','string',1,'2024-10-04','2024-10-04','string','string','string',3);
+INSERT INTO `cage` VALUES (1,'string','string','string',1,'2024-10-04','2024-10-04','string','string',3);
 /*!40000 ALTER TABLE `cage` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `feeding`
+--
+
+DROP TABLE IF EXISTS `feeding`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `feeding` (
+  `Id_feeding` int NOT NULL,
+  `fecha_feeding` datetime DEFAULT NULL,
+  `hora_feeding` time DEFAULT NULL,
+  `cantidad_feeding` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`Id_feeding`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `feeding`
+--
+
+LOCK TABLES `feeding` WRITE;
+/*!40000 ALTER TABLE `feeding` DISABLE KEYS */;
+/*!40000 ALTER TABLE `feeding` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -59,10 +83,8 @@ DROP TABLE IF EXISTS `food`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `food` (
   `Id_food` int NOT NULL,
-  `name_food` varchar(45) DEFAULT NULL,
-  `cantidad_food` varchar(45) DEFAULT NULL,
-  `fecha_food` date DEFAULT NULL,
-  `hora_food` date DEFAULT NULL,
+  `name_food` varchar(250) DEFAULT NULL,
+  `cantidad_food` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`Id_food`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -73,7 +95,7 @@ CREATE TABLE `food` (
 
 LOCK TABLES `food` WRITE;
 /*!40000 ALTER TABLE `food` DISABLE KEYS */;
-INSERT INTO `food` VALUES (1,'string','string','2024-10-04','2024-10-04'),(2,'string','string','2024-10-04','2024-10-04'),(3,'string','string','2024-10-04','2024-10-04'),(4,'string','string','2024-10-04','2024-10-04'),(5,'string','string','2024-10-04','2024-10-04');
+INSERT INTO `food` VALUES (1,'string','string'),(2,'string','string'),(3,'string','string'),(4,'string','string'),(5,'string','string'),(10,'string','string');
 /*!40000 ALTER TABLE `food` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,7 +108,7 @@ DROP TABLE IF EXISTS `health`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `health` (
   `Id_health` int NOT NULL,
-  `name_health` varchar(45) DEFAULT NULL,
+  `name_health` varchar(250) DEFAULT NULL,
   `fecha_health` date DEFAULT NULL,
   PRIMARY KEY (`Id_health`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -100,6 +122,54 @@ LOCK TABLES `health` WRITE;
 /*!40000 ALTER TABLE `health` DISABLE KEYS */;
 INSERT INTO `health` VALUES (1,'string','2024-10-04'),(2,'string','2024-10-04');
 /*!40000 ALTER TABLE `health` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `mortality`
+--
+
+DROP TABLE IF EXISTS `mortality`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mortality` (
+  `Id_mortality` int NOT NULL,
+  `causa_mortality` varchar(250) DEFAULT NULL,
+  `cantidad_mortality` int DEFAULT NULL,
+  `fecha_mortality` datetime DEFAULT NULL,
+  PRIMARY KEY (`Id_mortality`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `mortality`
+--
+
+LOCK TABLES `mortality` WRITE;
+/*!40000 ALTER TABLE `mortality` DISABLE KEYS */;
+/*!40000 ALTER TABLE `mortality` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `race`
+--
+
+DROP TABLE IF EXISTS `race`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `race` (
+  `Id_race` int NOT NULL,
+  `nombre_race` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`Id_race`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `race`
+--
+
+LOCK TABLES `race` WRITE;
+/*!40000 ALTER TABLE `race` DISABLE KEYS */;
+/*!40000 ALTER TABLE `race` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -127,31 +197,6 @@ INSERT INTO `reproduction` VALUES (1,'2024-10-04'),(2,'2024-10-04');
 UNLOCK TABLES;
 
 --
--- Table structure for table `responsible`
---
-
-DROP TABLE IF EXISTS `responsible`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `responsible` (
-  `Id_responsible` int NOT NULL,
-  `name_responsible` varchar(45) DEFAULT NULL,
-  `tipo_responsible` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`Id_responsible`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `responsible`
---
-
-LOCK TABLES `responsible` WRITE;
-/*!40000 ALTER TABLE `responsible` DISABLE KEYS */;
-INSERT INTO `responsible` VALUES (1,'string','string');
-/*!40000 ALTER TABLE `responsible` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `user`
 --
 
@@ -159,11 +204,18 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
-  `Id_user` int NOT NULL,
-  `password_user` varchar(45) DEFAULT NULL,
-  `name_user` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`Id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `Id_user` int NOT NULL AUTO_INCREMENT,
+  `password_user` varchar(250) DEFAULT NULL,
+  `name_user` varchar(250) DEFAULT NULL,
+  `intentos_user` int DEFAULT '0',
+  `token_user` varchar(250) DEFAULT NULL,
+  `blockard` tinyint(1) DEFAULT '0',
+  `tipo_user` varchar(250) DEFAULT NULL,
+  `email_user` varchar(250) NOT NULL,
+  `salt` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`Id_user`),
+  UNIQUE KEY `email_user_UNIQUE` (`email_user`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -172,8 +224,34 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'1234','luis'),(2,'1323','gabriel'),(3,'463732mme','mariana');
+INSERT INTO `user` VALUES (1,'$2a$11$Tbt2UJE6H.C8EPhCylH41.xTkhWg5cnH0SKz1H6wmcQY/bUZOYBKK','luisa',NULL,'',0,NULL,'luisa@gmail','$2a$11$BGle7tBywwQFSwx0Fg3B2u'),(3,'$2a$11$TrfK.MuiCSWPnPVJ5j0zGOOLKZRmKyGyPnuiU4.QW45HLTC6lyqrS','luis',NULL,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyIjoibHVpc0BnbWFpbCIsIm5iZiI6MTczMTkzNzU0NiwiZXhwIjoxNzMxOTQxMTQ2LCJpYXQiOjE3MzE5Mzc1NDZ9.RqLjSiIO3zPzFI3T2lmQPL5iMNtxid6ep0l9Ob385vE',0,NULL,'luis@gmail','$2a$11$mvjrLpltimr7XAeTV9IDm.'),(4,'$2a$11$l4X54DhtBuQO/SdPczZpcOd.2oFWgenm3esbunCKx9siqQGFSgVpi','carla',NULL,'',0,NULL,'carla@gmail','$2a$11$Tvq4CjY/NfNeYFBcLexRZO');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `weighing`
+--
+
+DROP TABLE IF EXISTS `weighing`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `weighing` (
+  `Id_weighing` int NOT NULL,
+  `fecha_weighing` datetime DEFAULT NULL,
+  `peso_actual` varchar(250) DEFAULT NULL,
+  `ganancia_peso` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`Id_weighing`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `weighing`
+--
+
+LOCK TABLES `weighing` WRITE;
+/*!40000 ALTER TABLE `weighing` DISABLE KEYS */;
+INSERT INTO `weighing` VALUES (1,'2024-10-22 16:59:40','string','string');
+/*!40000 ALTER TABLE `weighing` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -185,4 +263,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-04  9:43:21
+-- Dump completed on 2024-11-18 12:18:23

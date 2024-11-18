@@ -71,5 +71,20 @@ namespace cunigranja.Functions
                 Log.Write(BytsNewlog, 0, BytsNewlog.Length);
             }
         }
+        public string[] Validate(dynamic collection)
+        {
+            string[] errores = new string[collection.Count];
+            int indice = 0;
+            foreach (var item in collection)
+            {
+                if (item == String.Empty)
+                {
+                    errores[indice] = "el campo item es vacío";
+                }
+               indice++;
+            }
+            return errores;
+        }
+
     }
 }

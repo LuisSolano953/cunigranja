@@ -28,14 +28,15 @@ namespace cunigranja.Services
             _context.SaveChanges();
         }
 
-        public void Update(HealthModel entity)
+        public void UpdateHealth(int Id, HealthModel updatedHealth)
         {
-            var health = _context.health.Find(entity.Id_health);
+            // Traer el usuario existente utilizando el ID
+            var health = _context.health.SingleOrDefault(u => u.Id_health == Id);
+
             if (health != null)
             {
-                health.name_health = entity.name_health;
-                health.fecha_health = entity.fecha_health;
-
+                // Actualizar solo los campos que tienen valores en updatedUser
+                _context.Entry(health).CurrentValues.SetValues(updatedHealth);
                 _context.SaveChanges();
             }
         }
@@ -50,6 +51,12 @@ namespace cunigranja.Services
                 return true;
             }
             return false;
+        }
+        public IEnumerable<HealthModel> GetCageInRange(int startId, int endId)
+        {
+            return _context.health
+                           .Where(u => u.Id_health >= startId && u.Id_health <= endId)
+                           .ToList();
         }
     }
 }
