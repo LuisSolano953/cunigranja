@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `cunigranja` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `cunigranja`;
 -- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
 --
 -- Host: localhost    Database: cunigranja
@@ -93,7 +95,7 @@ CREATE TABLE `food` (
 
 LOCK TABLES `food` WRITE;
 /*!40000 ALTER TABLE `food` DISABLE KEYS */;
-INSERT INTO `food` VALUES (1,'string','string'),(2,'string','string'),(3,'string','string'),(4,'string','string'),(5,'string','string');
+INSERT INTO `food` VALUES (1,'string','string'),(2,'string','string'),(3,'string','string'),(4,'string','string'),(5,'string','string'),(10,'string','string');
 /*!40000 ALTER TABLE `food` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -202,17 +204,18 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
-  `Id_user` int NOT NULL,
+  `Id_user` int NOT NULL AUTO_INCREMENT,
   `password_user` varchar(250) DEFAULT NULL,
   `name_user` varchar(250) DEFAULT NULL,
-  `intentos_user` int DEFAULT NULL,
+  `intentos_user` int DEFAULT '0',
   `token_user` varchar(250) DEFAULT NULL,
   `blockard` tinyint(1) DEFAULT '0',
   `tipo_user` varchar(250) DEFAULT NULL,
-  `email_user` varchar(250) DEFAULT NULL,
+  `email_user` varchar(250) NOT NULL,
   `salt` varchar(250) DEFAULT NULL,
-  PRIMARY KEY (`Id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`Id_user`),
+  UNIQUE KEY `email_user_UNIQUE` (`email_user`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -221,7 +224,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (2,'$2a$11$Syk.RroafqyzNG5hNw8o1.VEtl2CdFuLmd3bUh5mJxwy6jqaLkM2e','luis',1,'',1,'aprendiz','luissolanor860@gmail.com','$2a$11$3feQsdHy6ZlPl8yRltmMju'),(100,'$2a$11$ZWSzOjffN5Qh1z9krMm1nes0/ekIMmNtRjBoCcFaBaHhoW3edBvI6','string',2147483647,'',0,'string','luissolanor2022@gmail.com','$2a$11$99H3xC8CkqBR3wIsEh0jp.');
+INSERT INTO `user` VALUES (1,'$2a$11$Tbt2UJE6H.C8EPhCylH41.xTkhWg5cnH0SKz1H6wmcQY/bUZOYBKK','luisa',NULL,'',0,NULL,'luisa@gmail','$2a$11$BGle7tBywwQFSwx0Fg3B2u'),(3,'$2a$11$TrfK.MuiCSWPnPVJ5j0zGOOLKZRmKyGyPnuiU4.QW45HLTC6lyqrS','luis',NULL,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyIjoibHVpc0BnbWFpbCIsIm5iZiI6MTczMTkzNzU0NiwiZXhwIjoxNzMxOTQxMTQ2LCJpYXQiOjE3MzE5Mzc1NDZ9.RqLjSiIO3zPzFI3T2lmQPL5iMNtxid6ep0l9Ob385vE',0,NULL,'luis@gmail','$2a$11$mvjrLpltimr7XAeTV9IDm.'),(4,'$2a$11$l4X54DhtBuQO/SdPczZpcOd.2oFWgenm3esbunCKx9siqQGFSgVpi','carla',NULL,'',0,NULL,'carla@gmail','$2a$11$Tvq4CjY/NfNeYFBcLexRZO');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,4 +263,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-25  9:09:27
+-- Dump completed on 2024-11-18 12:18:23
