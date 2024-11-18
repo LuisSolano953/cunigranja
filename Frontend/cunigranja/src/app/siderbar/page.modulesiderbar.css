@@ -1,0 +1,93 @@
+/* ===== Root Variables ===== */
+:root {
+  --body-color: #e4e9f7;
+  --sidebar-color: #fff;
+  --primary-color: #695cfe;
+  --primary-color-light: #f6f5ff;
+  --toggle-color: #ddd;
+  --text-color: #707070;
+  --hover-color: #fff; /* Texto al hacer hover */
+  --icon-hover-color: var(--sidebar-color); /* Color de iconos al hacer hover */
+  --dark-body-color: #18191a;
+  --dark-sidebar-color: #242526;
+  --dark-primary-color: #3a3b3c;
+  --dark-primary-light: #3a3b3c;
+  --dark-text-color: #ccc;
+
+  --tran-03: all 0.2s ease;
+  --tran-05: all 0.3s ease;
+}
+
+/* ===== General Body Styling ===== */
+body {
+  margin: 0; /* Elimina cualquier margen del body */
+  padding: 0; /* Elimina cualquier padding del body */
+  min-height: 100vh; /* Asegura que el body cubra toda la pantalla */
+  background-color: var(--body-color);
+  color: var(--text-color);
+  overflow-x: hidden; /* Evita scroll horizontal no deseado */
+  display: flex; /* Asegura que sidebar y contenido sean flexibles */
+}
+
+body.dark {
+  background-color: var(--dark-body-color);
+  color: var(--dark-text-color);
+}
+
+/* ===== Sidebar Styling ===== */
+.sidebar {
+
+  top: 0;
+  left: 0;
+  height: 100vh;
+  max-width: 400px;
+  padding: 10px;
+ 
+  background-color: var(--sidebar-color);
+  overflow-y:var(--body-color); /* Activa scroll solo en el contenido del sidebar */
+  box-shadow: 20px 0 50 px rgba(0, 0, 0, 0.1);
+  z-index: 100; /* Asegura que esté sobre el contenido */
+  transition: var(--tran-05);
+}
+
+.sidebar.close {
+  width: 250px; /* Sidebar en modo colapsado */
+}
+
+.sidebar li {
+  list-style: none;
+  margin: 15px 0;
+}
+
+.sidebar li a {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+  padding: 10px;
+  text-decoration: none;
+  border-radius: 6px;
+  color: var(--text-color);
+  transition: var(--tran-05);
+}
+
+.sidebar li a:hover {
+  background-color: var(--primary-color);
+  color: var(--hover-color);
+}
+
+/* ===== Main Content Styling ===== */
+.home {
+  margin-left: 250px; /* Desplaza el contenido para no sobreponerse al sidebar */
+  padding: 20px;
+  width: calc(100% - 250px); /* Ajusta el ancho dinámicamente */
+  background-color: var(--body-color);
+  min-height: 100vh; /* Asegura que cubra toda la pantalla */
+  transition: var(--tran-05);
+}
+
+.sidebar.close ~ .home {
+  margin-left: 88px; /* Ajusta margen cuando el sidebar está colapsado */
+  width: calc(100% - 88px); /* Ajusta el ancho dinámicamente */
+}
+
+

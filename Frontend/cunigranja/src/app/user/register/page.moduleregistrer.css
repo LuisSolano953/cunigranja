@@ -1,0 +1,79 @@
+:root {
+  --bg-color-primary: #FFE5FF;
+  --bg-body: #FFFFFF;
+  --btn-primario: rgb(26, 156, 21);
+  --btn-text: rgb(255, 255, 255);
+  --btn-primary: #F1F6F6;
+  --ba-color-segun: rgb(34, 204, 28);
+  --ba-color-text: black;
+  --input-border-color: #ccc;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: var(--bg-body);
+  height: 100vh;
+  display: flex;
+  flex-direction: column; /* Permite que la barra de navegación esté arriba y el formulario esté debajo */
+  
+}
+
+
+.form {
+  padding-top: 20px;  /* Espacio dentro del formulario en la parte superior */
+  padding-bottom: 20px;  /* Espacio dentro del formulario en la parte inferior */
+  width: 100%;
+  margin: 50px 0 0 500px;
+  max-width: 400px; /* Asegura que el formulario no se estire más allá de 400px */
+  padding: 40px;
+  border-radius: 10px;
+  background-color: var(--bg-body);
+  border: 1px solid var(--ba-color-text);
+  box-shadow: 0px 0px 20px var(--ba-color-text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.form-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+label {
+  font-weight: bold;
+  font-size: 16px;
+  color: var(--ba-color-text);
+  width: 100%;
+  text-align: left;
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--input-border-color);
+  border-radius: 5px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.btnn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--btn-primario);
+  color: var(--btn-primary);
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.btnn:hover {
+  background-color: var(--ba-color-segun);
+}
