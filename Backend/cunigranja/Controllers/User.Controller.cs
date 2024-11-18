@@ -20,10 +20,10 @@ namespace cunigranja.Controllers
         public IConfiguration _configuration { get; set; }
         public JwtModel JWT;
         public GeneralFunctions FunctionsGeneral;
-        public UserController(IConfiguration configuration, UserServices userservices)
+        public UserController(IConfiguration configuration, UserServices _userservices)
         {
             FunctionsGeneral = new GeneralFunctions(configuration);
-            _Services = userservices;
+            _Services = _userservices;
             _configuration = configuration;
             JWT = _configuration.GetSection("JWT").Get<JwtModel>();
         }
@@ -38,7 +38,7 @@ namespace cunigranja.Controllers
                 var user = _Services.GetUsers().FirstOrDefault(u => u.email_user == login.Email);
 
                 // Verificar si el usuario existe y la contraseña es correcta
-                if (user == null || !BCrypt.Net.BCrypt.Verify(login.Passaword + user.intentos_user, user.password_user))
+                if (user == null || !BCrypt.Net.BCrypt.Verify(login.Password + user.salt, user.password_user))
                 {
                     return Unauthorized(new { message = "Credenciales incorrectas." });
                 }
@@ -81,10 +81,16 @@ namespace cunigranja.Controllers
         {
             try
             {
+                if(user ==null || string.IsNullOrEmpty(user.Email))
+                {
+                    return BadRequest("el Email es invalido");
+                }
+
+                //var EmailExist = _Services.CheckEmailExists(user.Email);
                 //Func funcn = new Func(_configuration);
                 await FunctionsGeneral.SendEmail(user.Email);
 
-                return Ok();
+                return Ok(Response);
             }
             catch (Exception ex)
             {
@@ -92,7 +98,6 @@ namespace cunigranja.Controllers
                 return StatusCode(500, ex.ToString());
             }
         }
-        [Authorize]
         [HttpGet("AllUser")]
         public ActionResult<IEnumerable<User>> GetUsers()
         {
@@ -113,10 +118,10 @@ namespace cunigranja.Controllers
         {
             try
             {
-                if(entity.Id_user<=0)
-                {
-                    return BadRequest("El Id del usuario de ser un valor aceptable");
-                }
+                //if(entity.Id_user<=0)
+                //{
+                //    return BadRequest("El Id del usuario de ser un valor aceptable");
+                //}
 
                 // Generar salt
                 string salt = BCrypt.Net.BCrypt.GenerateSalt();
@@ -177,7 +182,7 @@ namespace cunigranja.Controllers
 
                 return Ok("User updated successfully.");
             }
-            catch (Exception ex)
+            catch (Exception ex)    
             {
                 FunctionsGeneral.AddLog(ex.Message);
                 return StatusCode(500, ex.ToString());

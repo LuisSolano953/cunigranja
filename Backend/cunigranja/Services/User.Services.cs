@@ -15,6 +15,8 @@ namespace cunigranja.Services
             return _context.user.ToList();
         }
 
+        
+
         public void Add(User entity)
         {
             _context.user.Add(entity);

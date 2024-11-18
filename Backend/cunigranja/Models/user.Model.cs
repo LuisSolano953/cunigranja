@@ -10,7 +10,7 @@ namespace cunigranja.Models
       
         public string Email{ get; set; }
 
-        public string Passaword { get; set; }
+        public string Password { get; set; }
     }
     public class ResetPassUser
     {
@@ -19,9 +19,7 @@ namespace cunigranja.Models
     public class User
     {
         [Key]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [Range(0, 100, ErrorMessage = "El campo {0} debe estar entre {1} y {2}.")]
-        public int Id_user { get; set; }
+        public int Id_user { get; set; } = 0;
 
         [Required(ErrorMessage = "El campo {0} es requerido")]
         [StringLength(250, ErrorMessage = "el campo {0} tiene un limite de caracteres de {1}")]
@@ -31,27 +29,20 @@ namespace cunigranja.Models
         [StringLength(250, ErrorMessage = "el campo {0} tiene un limite de caracteres de {1}")]
         public string name_user { get; set; } //VARCHAR 250
 
-        [Required(ErrorMessage = "El campo {0} es requerido")]
-        [StringLength(250, ErrorMessage = "el campo {0} tiene un limite de caracteres de {1}")]
-        public string tipo_user { get; set; } //VARCHAR 250
+        public string? tipo_user { get; set; } //VARCHAR 250
 
-        [Required(ErrorMessage = "El campo {0} es requerido")]
-        [StringLength(250, ErrorMessage = "el campo {0} tiene un limite de caracteres de {1}")]
-        public string token_user { get; set; } //VARCHAR 250
+        public string? token_user { get; set; } //VARCHAR 250
 
-        public int blockard { get; set; } = 0;
+        public int? blockard { get; set; } = 0;
 
-        [Range(1, 3, ErrorMessage = "La cantidad de intento debe ser mayor que 0.")]
-        [Display(Name = "Cantidad de Mortalidad")]
-        public int intentos_user {get; set; } //VARCHAR 250
+
+        public int? intentos_user {get; set; } //VARCHAR 250
 
         [Required(ErrorMessage = "El campo {0} es requerido")]
         [StringLength(250, ErrorMessage = "el campo {0} tiene un limite de caracteres de {1}")]
         public string email_user {get; set; } //VARCHAR 250
 
-        [Required(ErrorMessage = "El campo {0} es requerido")]
-        [StringLength(250, ErrorMessage = "el campo {0} tiene un limite de caracteres de {1}")]
-        public string salt { get; set; }
+        public string? salt { get; set; }
     }
 }   
  

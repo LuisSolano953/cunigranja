@@ -8,6 +8,15 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder=> builder
+        .AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader());
+});
+
 // Add services to the container.
 builder.Services.AddControllers();
 // Configuración de Swagger/OpenAPI
@@ -34,38 +43,38 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ClockSkew = TimeSpan.Zero
         };
 
-        options.Events = new JwtBearerEvents
-        {
-            OnMessageReceived = context =>
-            {
-                if (string.IsNullOrEmpty(context.Request.Headers["Authorization"]))
-                {
-                    context.NoResult();
-                    context.Response.StatusCode = 401;
-                    context.Response.ContentType = "application/json";
-                    return context.Response.WriteAsync("{\"error\": \"Token no proporcionado\"}");
-                }
-                return Task.CompletedTask;
-            },
-            OnAuthenticationFailed = context =>
-            {
-                context.NoResult();
-                context.Response.StatusCode = 401;
-                context.Response.ContentType = "application/json";
-                return context.Response.WriteAsync("{\"error\": \"Token inválido o expirado\"}");
-            },
-            OnChallenge = context =>
-            {
-                context.HandleResponse();
-                if (!context.Response.HasStarted)
-                {
-                    context.Response.StatusCode = 401;
-                    context.Response.ContentType = "application/json";
-                    return context.Response.WriteAsync("{\"error\": \"No autorizado: falta token\"}");
-                }
-                return Task.CompletedTask;
-            }
-        };
+        //options.Events = new JwtBearerEvents
+        //{
+        //    OnMessageReceived = context =>
+        //    {
+        //        if (string.IsNullOrEmpty(context.Request.Headers["Authorization"]))
+        //        {
+        //            context.NoResult();
+        //            context.Response.StatusCode = 401;
+        //            context.Response.ContentType = "application/json";
+        //            return context.Response.WriteAsync("{\"error\": \"Token no proporcionado\"}");
+        //        }
+        //        return Task.CompletedTask;
+        //    },
+        //    OnAuthenticationFailed = context =>
+        //    {
+        //        context.NoResult();
+        //        context.Response.StatusCode = 401;
+        //        context.Response.ContentType = "application/json";
+        //        return context.Response.WriteAsync("{\"error\": \"Token inválido o expirado\"}");
+        //    },
+        //    OnChallenge = context =>
+        //    {
+        //        context.HandleResponse();
+        //        if (!context.Response.HasStarted)
+        //        {
+        //            context.Response.StatusCode = 401;
+        //            context.Response.ContentType = "application/json";
+        //            return context.Response.WriteAsync("{\"error\": \"No autorizado: falta token\"}");
+        //        }
+        //        return Task.CompletedTask;
+        //    }
+        //};
     });
 
 // Servicios
@@ -91,6 +100,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // Asegúrate de agregar el middleware de routing y autenticación en el orden correcto
+app.UseCors("AllowSpecificOrigin");
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();

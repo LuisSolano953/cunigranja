@@ -1,0 +1,34 @@
+14/11/2024 9:22:20 a. m.System.FormatException: The specified string is not in the form required for an e-mail address.
+   at System.Net.Mail.MailAddressParser.TryReadCfwsAndThrowIfIncomplete(String data, Int32 index, Int32& outIndex, Boolean throwExceptionIfFail)
+   at System.Net.Mail.MailAddressParser.TryParseDomain(String data, Int32& index, String& domain, Boolean throwExceptionIfFail)
+   at System.Net.Mail.MailAddressParser.TryParseAddress(String data, Boolean expectMultipleAddresses, Int32& index, ParseAddressInfo& parseAddressInfo, Boolean throwExceptionIfFail)
+   at System.Net.Mail.MailAddressParser.TryParseAddress(String data, ParseAddressInfo& parsedAddress, Boolean throwExceptionIfFail)
+   at System.Net.Mail.MailAddress.TryParse(String address, String displayName, Encoding displayNameEncoding, ValueTuple`4& parsedData, Boolean throwExceptionIfFail)
+   at System.Net.Mail.MailAddress..ctor(String address)
+   at cunigranja.Functions.GeneralFunctions.SendEmail(String EmailDestination) in C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\Functions\General.Functions.cs:line 33
+14/11/2024 9:59:30 a. m.System.Net.Mail.SmtpException: Failure sending mail.
+ ---> System.Net.Sockets.SocketException (11001): Host desconocido.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.TaskToAsyncResult.End(IAsyncResult asyncResult)
+   at System.Net.Sockets.TcpClient.EndConnect(IAsyncResult asyncResult)
+   at System.Net.Mail.SmtpConnection.ConnectAndHandshakeAsyncResult.InitializeConnectionCallback(IAsyncResult result)
+--- End of stack trace from previous location ---
+   at System.Net.Mail.SmtpClient.ConnectCallback(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at cunigranja.Functions.GeneralFunctions.SendEmail(String EmailDestination) in C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\Functions\General.Functions.cs:line 41
+14/11/2024 10:03:13 a. m.System.Net.Mail.SmtpException: Failure sending mail.
+ ---> System.Net.Sockets.SocketException (11001): Host desconocido.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.TaskToAsyncResult.End(IAsyncResult asyncResult)
+   at System.Net.Sockets.TcpClient.EndConnect(IAsyncResult asyncResult)
+   at System.Net.Mail.SmtpConnection.ConnectAndHandshakeAsyncResult.InitializeConnectionCallback(IAsyncResult result)
+--- End of stack trace from previous location ---
+   at System.Net.Mail.SmtpClient.ConnectCallback(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at cunigranja.Functions.GeneralFunctions.SendEmail(String EmailDestination) in C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\Functions\General.Functions.cs:line 41
