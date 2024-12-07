@@ -20,16 +20,24 @@ namespace cunigranja.Controllers
             _configuration = configuration;
         }
 
+<<<<<<< HEAD
+        
+=======
         // GET: api/Health/AllHealth
 
         // POST: api/Health/CreateHealth
+>>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
         [HttpPost("CreateHealth")]
         public IActionResult Add(HealthModel entity)
         {
             try
             {
                 _Services.Add(entity);
+<<<<<<< HEAD
+                return Ok(new { message = "sanidad creado con extito" });
+=======
                 return Ok();
+>>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
             }
             catch (Exception ex)
             {

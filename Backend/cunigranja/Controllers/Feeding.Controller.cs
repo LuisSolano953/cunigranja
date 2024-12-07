@@ -5,8 +5,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace cunigranja.Controllers
 {
+<<<<<<< HEAD
+    [ApiController]
+    [Route("Api/[controller]")]
     public class FeedingController : Controller
     {
+        
+=======
+    public class FeedingController : Controller
+    {
+>>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
         public readonly FeedingServices _Services;
         public IConfiguration _configuration { get; set; }
         public GeneralFunctions FunctionsGeneral;
@@ -24,7 +32,11 @@ namespace cunigranja.Controllers
             try
             {
                 _Services.Add(entity);
+<<<<<<< HEAD
+                return Ok(new { message = "alimentacion creado con extito" });
+=======
                 return Ok();
+>>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
             }
             catch (Exception ex)
             {

@@ -5,6 +5,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+<<<<<<< HEAD
+using System.Text.Json;
+=======
+>>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +33,51 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     new MySqlServerVersion(new Version(8, 0, 23))));
 
 // Configuración de JWT
+<<<<<<< HEAD
+//var key = builder.Configuration.GetSection("JWT:KeySecret").Value;
+
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//    .AddJwtBearer(options =>
+//    {
+//    options.TokenValidationParameters = new TokenValidationParameters
+//    {
+//        ValidateIssuerSigningKey = true,
+//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
+//        ValidateIssuer = false,
+//        ValidateAudience = false,
+//        ClockSkew = TimeSpan.Zero
+//    };
+
+//    options.Events = new JwtBearerEvents
+//    {
+//        OnChallenge = context =>
+//        {
+//            context.HandleResponse();
+//            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+//            context.Response.ContentType = "aplication/json";
+
+//            if (string.IsNullOrEmpty(context.Error)) context.Error = "Token invalido o no autorizado";
+
+//            if (string.IsNullOrEmpty(context.ErrorDescription))
+//                context.ErrorDescription = "Esta solicitud requiere que se proporsione un token de acceso JWT valido";
+//            if (context.AuthenticateFailure != null && context.AuthenticateFailure.GetType() == typeof(SecurityTokenExpiredException))
+//            {
+//                var authenticationException = context.AuthenticateFailure as SecurityTokenExpiredException;
+//                context.Response.Headers.Add("x-token-expired", authenticationException.Expires.ToString("o"));
+//                context.ErrorDescription = $"el token expiro el{authenticationException.Expires.ToString("o")}";
+//            }
+
+//            return context.Response.WriteAsync(JsonSerializer.Serialize(new
+//            {
+//                error = context.Error,
+//                error_description = context.ErrorDescription
+//            }
+//                ));
+//        }
+        
+//        };
+//    });
+=======
 var key = builder.Configuration.GetSection("JWT:KeySecret").Value;
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -76,6 +125,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         //    }
         //};
     });
+>>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
 
 // Servicios
 builder.Services.AddScoped<ReproductionServices>();
@@ -106,7 +156,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 // Middleware de JWT
+<<<<<<< HEAD
+//app.UseMiddleware<JwtMiddleware>();
+=======
 app.UseMiddleware<JwtMiddleware>();
+>>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
 
 // Mapea los controladores
 app.MapControllers();

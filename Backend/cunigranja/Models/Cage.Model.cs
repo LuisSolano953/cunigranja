@@ -7,9 +7,14 @@ namespace cunigranja.Models
     public class CageModel
     {
         [Key]
+<<<<<<< HEAD
+
+        public int Id_cage { get; set; } = 0;
+=======
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [Range(0, 100, ErrorMessage = "El campo {0} debe estar entre {1} y {2}.")]
         public int Id_cage { get; set; }
+>>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
 
         [DisplayName("Capacidad de la jaula ")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
