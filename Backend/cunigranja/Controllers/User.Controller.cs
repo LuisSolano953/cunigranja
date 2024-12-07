@@ -100,10 +100,7 @@ namespace cunigranja.Controllers
             }
         }
         [HttpGet("AllUser")]
-<<<<<<< HEAD
        
-=======
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
         public ActionResult<IEnumerable<User>> GetUsers()
         {
             try
@@ -150,13 +147,9 @@ namespace cunigranja.Controllers
             }
 
         }
-<<<<<<< HEAD
         
         [HttpGet("ConsulUser")]
        
-=======
-        [HttpGet("ConsulUser")]
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
         public ActionResult<User> GetUserById(int Id_user)
         {
             try
@@ -179,10 +172,7 @@ namespace cunigranja.Controllers
             }
         }
         [HttpPost("UpdateUser")]
-<<<<<<< HEAD
         [Authorize]
-=======
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
         public IActionResult UpdateUser(User entity)
         {
             try
@@ -204,10 +194,7 @@ namespace cunigranja.Controllers
             }
         }
         [HttpGet("ConsulUsersInRange")]
-<<<<<<< HEAD
         
-=======
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
         public ActionResult<IEnumerable<User>> GetUsersInRange(int startId, int endId)
         {
             try
@@ -227,10 +214,7 @@ namespace cunigranja.Controllers
         }
 
         [HttpDelete("DeleteUser")]
-<<<<<<< HEAD
         
-=======
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
         public IActionResult DeleteUserById(int Id_user)
         {
             try

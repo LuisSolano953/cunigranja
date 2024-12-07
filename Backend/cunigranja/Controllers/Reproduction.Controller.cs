@@ -75,20 +75,12 @@ namespace cunigranja.Controllers
         {
             try
             {
-<<<<<<< HEAD
                 if (entity.Id_reproduction <= 0) 
-=======
-                if (entity.Id_reproduction <= 0) // Verifica que el ID sea válido
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
                 {
                     return BadRequest("Invalid reproduction ID.");
                 }
 
-<<<<<<< HEAD
                 
-=======
-                // Llamar al método de actualización en el servicio
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
                 _Services.UpdateReproduction(entity.Id_reproduction, entity);
 
                 return Ok("Reproduction updated successfully.");

@@ -27,11 +27,7 @@ namespace cunigranja.Controllers
             {
                 _Services.Add(entity);
 
-<<<<<<< HEAD
                 return Ok(new { message = "creado con extito" });
-=======
-                return Ok();
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
             }
             catch (Exception ex)
             {

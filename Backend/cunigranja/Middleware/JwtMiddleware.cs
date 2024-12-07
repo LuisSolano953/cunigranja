@@ -13,25 +13,17 @@ namespace cunigranja.Middleware
         private readonly IConfiguration _configuration;
         private readonly RequestDelegate _next;
         public JwtModel Jwt;
-<<<<<<< HEAD
         private readonly List<string> _publicRoutes;
-=======
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
 
         public JwtMiddleware(RequestDelegate next, IConfiguration configuration)
         {
             _next = next;
-<<<<<<< HEAD
             FunctionsGeneral = new GeneralFunctions(_configuration);
             Jwt = _configuration.GetSection("JWT").Get<JwtModel>();
             _publicRoutes = _configuration.GetSection("RutePublic")
                             .Get<List<RouteConfig>>()
                             .Select(route => route.Route)
                             .ToList();
-=======
-            _configuration = configuration;
-            Jwt = _configuration.GetSection("JWT").Get<JwtModel>();
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
         }
 
         public async Task Invoke(HttpContext context, UserServices userService)
@@ -39,7 +31,6 @@ namespace cunigranja.Middleware
             try
             {
                 var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-<<<<<<< HEAD
 
                 var path = context.Request.Path;
 
@@ -64,32 +55,15 @@ namespace cunigranja.Middleware
                 await _next(context);
                 return;
                 
-=======
-                if (token != null)
-                {
-                     AttachUserToContext(context, userService, token);
-                }
-                await _next(context);
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
             }
             catch (Exception ex)
             {
 
-<<<<<<< HEAD
                 throw;
             }
         }
 
         public bool AttachUserToContext(HttpContext context, UserServices userService, string token)
-=======
-                FunctionsGeneral.AddLog(ex.ToString());
-               
-
-            }
-        }
-
-        public  void AttachUserToContext(HttpContext context, UserServices userService, string token)
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
         {
             try
             {
@@ -108,7 +82,6 @@ namespace cunigranja.Middleware
                 var userEmail = jwtToken.Claims.First(x => x.Type == "User").Value;
 
                 context.Items["User"] = userService.GetByEmail(userEmail);
-<<<<<<< HEAD
                 return true;
             }
             catch (Exception ex)
@@ -119,16 +92,6 @@ namespace cunigranja.Middleware
             }
 
         }
-=======
-            }
-            catch(Exception ex)
-            {
-             
-                FunctionsGeneral.AddLog(ex.Message);
-            }
-
-         }
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
     }
 
 }

@@ -608,7 +608,6 @@ C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Micr
 C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
 C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
-<<<<<<< HEAD
 C:\Users\usser\Documents\cunigranja\Backend\cunigranja\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\usser\Documents\cunigranja\Backend\cunigranja\bin\Debug\net8.0\appsettings.json
 C:\Users\usser\Documents\cunigranja\Backend\cunigranja\bin\Debug\net8.0\cunigranja.exe
@@ -736,5 +735,3 @@ C:\Users\usser\Documents\cunigranja\Backend\cunigranja\obj\Debug\net8.0\refint\c
 C:\Users\usser\Documents\cunigranja\Backend\cunigranja\obj\Debug\net8.0\cunigranja.pdb
 C:\Users\usser\Documents\cunigranja\Backend\cunigranja\obj\Debug\net8.0\cunigranja.genruntimeconfig.cache
 C:\Users\usser\Documents\cunigranja\Backend\cunigranja\obj\Debug\net8.0\ref\cunigranja.dll
-=======
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4

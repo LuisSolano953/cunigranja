@@ -20,24 +20,14 @@ namespace cunigranja.Controllers
             _configuration = configuration;
         }
 
-<<<<<<< HEAD
       
-=======
-        // GET: api/Health/AllHealth
-
-        // POST: api/Health/CreateHealth
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
         [HttpPost("CreateMortality")]
         public IActionResult Add(MortalityModel entity)
         {
             try
             {
                 _Services.Add(entity);
-<<<<<<< HEAD
                 return Ok(new { message = "mortalidad creado con extito" });
-=======
-                return Ok();
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
             }
             catch (Exception ex)
             {
@@ -51,10 +41,6 @@ namespace cunigranja.Controllers
             return Ok(_Services.GetMortality());
         }
 
-<<<<<<< HEAD
-=======
-        // GET: api/Health/ConsulHealth?id=1
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
         [HttpGet("ConsulMortality")]
         public ActionResult<MortalityModel> GetById(int id)
         {    try
@@ -77,29 +63,17 @@ namespace cunigranja.Controllers
             }
         }
 
-<<<<<<< HEAD
-=======
-        // POST: api/Health/UpdateHealth
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
         [HttpPost("UpdateMortality")]
         public IActionResult UpdateMortality(MortalityModel entity)
         {
             try
             {
-<<<<<<< HEAD
                 if (entity.Id_mortality <= 0) 
-=======
-                if (entity.Id_mortality <= 0) // Verifica que el ID sea válido
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
                 {
                     return BadRequest("Invalid Mortality ID.");
                 }
 
-<<<<<<< HEAD
                 
-=======
-                // Llamar al método de actualización en el servicio
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
                 _Services.UpdateMortality(entity.Id_mortality, entity);
 
                 return Ok("Mortality updated successfully.");

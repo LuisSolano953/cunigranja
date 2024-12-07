@@ -5,10 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-<<<<<<< HEAD
 using System.Text.Json;
-=======
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,7 +30,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     new MySqlServerVersion(new Version(8, 0, 23))));
 
 // Configuración de JWT
-<<<<<<< HEAD
 //var key = builder.Configuration.GetSection("JWT:KeySecret").Value;
 
 //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -77,55 +73,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         
 //        };
 //    });
-=======
-var key = builder.Configuration.GetSection("JWT:KeySecret").Value;
-
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
-            ValidateIssuer = false,
-            ValidateAudience = false,
-            ClockSkew = TimeSpan.Zero
-        };
-
-        //options.Events = new JwtBearerEvents
-        //{
-        //    OnMessageReceived = context =>
-        //    {
-        //        if (string.IsNullOrEmpty(context.Request.Headers["Authorization"]))
-        //        {
-        //            context.NoResult();
-        //            context.Response.StatusCode = 401;
-        //            context.Response.ContentType = "application/json";
-        //            return context.Response.WriteAsync("{\"error\": \"Token no proporcionado\"}");
-        //        }
-        //        return Task.CompletedTask;
-        //    },
-        //    OnAuthenticationFailed = context =>
-        //    {
-        //        context.NoResult();
-        //        context.Response.StatusCode = 401;
-        //        context.Response.ContentType = "application/json";
-        //        return context.Response.WriteAsync("{\"error\": \"Token inválido o expirado\"}");
-        //    },
-        //    OnChallenge = context =>
-        //    {
-        //        context.HandleResponse();
-        //        if (!context.Response.HasStarted)
-        //        {
-        //            context.Response.StatusCode = 401;
-        //            context.Response.ContentType = "application/json";
-        //            return context.Response.WriteAsync("{\"error\": \"No autorizado: falta token\"}");
-        //        }
-        //        return Task.CompletedTask;
-        //    }
-        //};
-    });
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
 
 // Servicios
 builder.Services.AddScoped<ReproductionServices>();
@@ -156,11 +103,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 // Middleware de JWT
-<<<<<<< HEAD
 //app.UseMiddleware<JwtMiddleware>();
-=======
-app.UseMiddleware<JwtMiddleware>();
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
 
 // Mapea los controladores
 app.MapControllers();

@@ -14,11 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("cunigranja")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< HEAD
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+56dc09bf91636aff202dfdb3c8894fd5a85467d4")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dcf91325c4b2ece84d999054ef24d7168b76822d")]
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("cunigranja")]
 [assembly: System.Reflection.AssemblyTitleAttribute("cunigranja")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -8,14 +8,8 @@ namespace cunigranja.Models
     {
         [Key]
 
-<<<<<<< HEAD
 
         public int Id_food { get; set; } = 0;
-=======
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [Range(0, 100, ErrorMessage = "El campo {0} debe estar entre {1} y {2}.")]
-        public int Id_food { get; set; }
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
 
         [Required(ErrorMessage = "El campo [0] de es obligatorio.")]
         [StringLength(250, ErrorMessage = "El Nombre de Comida no puede tener más de 100 caracteres.")]
