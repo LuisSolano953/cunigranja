@@ -82,16 +82,14 @@ namespace cunigranja.Controllers
         {
             try
             {
-                if(user ==null || string.IsNullOrEmpty(user.Email))
+                if (user == null || string.IsNullOrEmpty(user.Email) || !FunctionsGeneral.IsValidEmail(user.Email))
                 {
-                    return BadRequest("el Email es invalido");
+                    return BadRequest("El Email proporcionado no es válido.");
                 }
 
-                //var EmailExist = _Services.CheckEmailExists(user.Email);
-                //Func funcn = new Func(_configuration);
                 await FunctionsGeneral.SendEmail(user.Email);
 
-                return Ok(Response);
+                return Ok(new { message = "Correo enviado exitosamente" });
             }
             catch (Exception ex)
             {
@@ -172,7 +170,7 @@ namespace cunigranja.Controllers
             }
         }
         [HttpPost("UpdateUser")]
-        [Authorize]
+     
         public IActionResult UpdateUser(User entity)
         {
             try

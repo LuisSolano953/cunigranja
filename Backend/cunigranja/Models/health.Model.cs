@@ -15,8 +15,18 @@ namespace cunigranja.Models
         [Display(Name = "Nombre de Salud")]
         public string name_health { get; set; }
 
-        [Required(ErrorMessage = "El campo {0} de Registro es obligatorio.")]
-        [Display(Name = "Fecha de Registro")]
+        [DisplayName("Fecha de la sanidad")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [DataType(DataType.Date)]
         public DateTime fecha_health { get; set; }
+
+        [Required(ErrorMessage = "El campo {0} de Registro es obligatorio.")]
+        [Display(Name = "descripcion de la sanidad")]
+        public string descripcion_health { get; set; }
+
+
+        [Range(1, int.MaxValue, ErrorMessage = "valor de la sanidad mator que 0.")]
+        [Display(Name = "Valor de la sanidad")]
+        public int valor_health { get; set; }
     }
 }

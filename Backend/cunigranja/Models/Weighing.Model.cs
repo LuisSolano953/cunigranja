@@ -14,14 +14,9 @@ namespace cunigranja.Models
         [Required(ErrorMessage = "La fecha de mortalidad es obligatoria.")]
         public DateTime fecha_weighing { get; set; }
 
-        [DisplayName("peso actual")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [StringLength(250, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
-        public string peso_actual { get; set; }
 
-        [DisplayName("peso ganado")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [StringLength(250, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
-        public string ganancia_peso { get; set; }
+        [Range(1, 500, ErrorMessage = "La cantidad de peso debe ser mayor que 0.")]
+        [Display(Name = "Cantidad de peso")]
+        public int cantidad_peso { get; set; }
     }
 }

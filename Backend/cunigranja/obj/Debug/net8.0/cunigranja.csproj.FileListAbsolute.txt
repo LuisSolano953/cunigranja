@@ -735,3 +735,13 @@ C:\Users\usser\Documents\cunigranja\Backend\cunigranja\obj\Debug\net8.0\refint\c
 C:\Users\usser\Documents\cunigranja\Backend\cunigranja\obj\Debug\net8.0\cunigranja.pdb
 C:\Users\usser\Documents\cunigranja\Backend\cunigranja\obj\Debug\net8.0\cunigranja.genruntimeconfig.cache
 C:\Users\usser\Documents\cunigranja\Backend\cunigranja\obj\Debug\net8.0\ref\cunigranja.dll
+C:\Users\usser\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\usser\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\usser\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\usser\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\usser\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\usser\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
+C:\Users\usser\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\usser\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\usser\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\usser\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll

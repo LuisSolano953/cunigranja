@@ -8,6 +8,10 @@ namespace cunigranja.Models
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<User> user { get; set; }
+        public DbSet<MountsModel> mounts { get; set; }
+        public DbSet<EntradaModel> entrada { get; set; }
+        public DbSet<RabiModel> rabi { get; set; }
+        public DbSet<DesteteModel> destete { get; set; }
         public DbSet<ReproductionModel> reproduction { get; set; }
         public DbSet<WeighingModel> weighing { get; set; }
         public DbSet<CageModel> cage { get; set; }
