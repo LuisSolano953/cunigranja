@@ -6,6 +6,56 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.text-section {
+  max-width: 50%; /* Limita el ancho del texto */
+  font-family: Arial, sans-serif; /* Fuente más legible */
+}
+
+.text-section h1 {
+  font-size: 2rem; /* Tamaño grande para el título */
+  margin-bottom: 16px; /* Espacio debajo del título */
+  color: #000000; /* Color del texto */
+}
+
+.text-section p {
+  font-size: 1rem; /* Tamaño del texto del párrafo */
+  line-height: 1.6; /* Mejora la legibilidad */
+  color: #000000; /* Color más claro para el párrafo */
+}
+
+.carrusel {
+  width: 400px; /* Ancho del carrusel */
+  border: 2px solid #ccc; /* Borde alrededor del carrusel */
+  border-radius: 15px; /* Bordes redondeados */
+  background-color: #ffffff; /* Fondo para que destaque */
+  box-shadow: 0 20px 20px rgb(143, 143, 143); /* Sombra suave */
+
+
+}
+
+.carrusel-container {
+  display: flex; /* Alinea los elementos en fila */
+  justify-content: space-between; /* Espacio entre el texto y el carrusel */
+  align-items: center; /* Centra verticalmente los elementos */
+  gap: 20px; /* Espacio entre el texto y el carrusel */
+  padding: 100px; /* Espaciado general del contenedor */
+  padding-top: 50px; /* Espacio arriba */
+  padding-bottom: 50px; /* Espacio abajo */
+}
+
+
+
+
+
+.carrusel img {
+  width: 100%; /* Asegura que las imágenes ocupen todo el ancho */
+  border-radius: 8px; /* Bordes redondeados en las imágenes */
+}
+
+
+
+
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -84,5 +134,9 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+    background-color: rgb(255, 255, 255);
   }
 }
+
+
+

@@ -54,7 +54,9 @@
     "react-hook-form": "^7.53.1",
     "react-resizable-panels": "^2.1.6",
     "react-router-dom": "^6.27.0",
+    "react-slick": "^0.30.2",
     "recharts": "^2.13.2",
+    "slick-carousel": "^1.8.1",
     "sonner": "^1.5.0",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
@@ -62,9 +64,11 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "css-loader": "^7.1.2",
     "eslint": "^8",
     "eslint-config-next": "15.0.2",
     "postcss": "^8",
+    "style-loader": "^4.0.0",
     "tailwindcss": "^3.4.1"
   }
 }
