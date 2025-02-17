@@ -124,11 +124,11 @@ namespace cunigranja.Controllers
 
                 if (result)
                 {
-                    return Ok("Reproduction deleted successfully.");
+                    return Ok("Feeding deleted successfully.");
                 }
                 else
                 {
-                    return NotFound("Reproduction not found.");
+                    return NotFound("Feeding not found.");
                 }
             }
             catch (Exception ex)

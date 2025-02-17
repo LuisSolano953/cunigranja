@@ -82,6 +82,10 @@ builder.Services.AddScoped<HealthServices>();
 builder.Services.AddScoped<FoodServices>();
 builder.Services.AddScoped<UserServices>();
 builder.Services.AddScoped<RaceServices>();
+builder.Services.AddScoped<EntradaServices>();
+builder.Services.AddScoped<RabiServices>();
+builder.Services.AddScoped<MountsServices>();
+builder.Services.AddScoped<DesteteServices>();
 builder.Services.AddScoped<FeedingServices>();
 builder.Services.AddScoped<MortalityServices>();
 

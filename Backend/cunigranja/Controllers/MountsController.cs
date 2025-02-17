@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace cunigranja.Controllers
 {
+    [ApiController]
+    [Route("Api/[controller]")]
     public class MountsController : Controller
     {
         

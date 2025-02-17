@@ -87,9 +87,27 @@ namespace cunigranja.Controllers
                     return BadRequest("El Email proporcionado no es válido.");
                 }
 
-                await FunctionsGeneral.SendEmail(user.Email);
+                // Generar un token único para el restablecimiento de contraseña
+                var resetToken = Guid.NewGuid().ToString();
 
-                return Ok(new { message = "Correo enviado exitosamente" });
+                // Guardar el token en la base de datos (asociado al usuario)
+                var dbUser = _Services.GetByEmail(user.Email);
+                if (dbUser == null)
+                {
+                    return NotFound("Usuario no encontrado.");
+                }
+                
+                // Enviar el correo con el token
+                var result = await FunctionsGeneral.SendEmail(user.Email, resetToken);
+
+                if (result.status)
+                {
+                    return Ok(new { message = "Correo enviado exitosamente" });
+                }
+                else
+                {
+                    return StatusCode(500, "Error al enviar el correo");
+                }
             }
             catch (Exception ex)
             {

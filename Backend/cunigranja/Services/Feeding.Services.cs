@@ -9,6 +9,17 @@ namespace cunigranja.Services
         {
             _context = context;
         }
+        // Verificar si el Id_rabi existe
+        public bool CheckRabiExists(int id)
+        {
+            return _context.rabi.Any(r => r.Id_rabi == id);
+        }
+
+        // Obtener los datos del conejo por Id
+        public RabiModel GetRabiById(int id)
+        {
+            return _context.rabi.FirstOrDefault(r => r.Id_rabi == id);
+        }
 
         public IEnumerable<FeedingModel> GetFeeding()
         {
@@ -39,14 +50,16 @@ namespace cunigranja.Services
             }
         }
 
-        public void Delete(int id)
+        public bool DeleteById(int Id_feeding)
         {
-            var feeding = _context.feeding.FirstOrDefault(c => c.Id_feeding == id);
+            var feeding = _context.feeding.Find(Id_feeding);
             if (feeding != null)
             {
                 _context.feeding.Remove(feeding);
                 _context.SaveChanges();
+                return true;
             }
+            return false;
         }
         public IEnumerable<FeedingModel> GetFeedingInRange(int startId, int endId)
         {

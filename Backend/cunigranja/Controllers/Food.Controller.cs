@@ -73,19 +73,17 @@ namespace cunigranja.Controllers
                 return StatusCode(500, ex.ToString());
             }
         }
-        [HttpPost("UpdateFood")]
-        public IActionResult UpdateFood(FoodModel entity)
+        [HttpPut("UpdateFood")]
+        public IActionResult UpdateFood([FromBody] FoodModel entity)
         {
             try
             {
-                if (entity.Id_food <= 0) // Verifica que el ID sea válido
+                if (entity.Id_food <= 0)
                 {
                     return BadRequest("Invalid food ID.");
                 }
 
-                // Llamar al método de actualización en el servicio
                 _Services.UpdateFood(entity.Id_food, entity);
-
                 return Ok("Food updated successfully.");
             }
             catch (Exception ex)

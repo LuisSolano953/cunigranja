@@ -109,18 +109,26 @@ namespace cunigranja.Controllers
             }
         }
 
-        [HttpDelete("DeleteCage")]
-        public IActionResult DeleteCageById(int id)
+        [HttpDelete("DeleteFeeding")]
+        public IActionResult DeleteFeedingById(int Id_feeding)
         {
             try
             {
-                var existingFeeding = _Services.GetFeedingById(id);
-                if (existingFeeding == null)
+                if (Id_feeding <= 0)
                 {
-                    return NotFound();
+                    return BadRequest("Invalid feeding ID.");
                 }
-                _Services.Delete(id);
-                return Ok();
+
+                var result = _Services.DeleteById(Id_feeding);
+
+                if (result)
+                {
+                    return Ok("Feeding deleted successfully.");
+                }
+                else
+                {
+                    return NotFound("Feeding not found.");
+                }
             }
             catch (Exception ex)
             {

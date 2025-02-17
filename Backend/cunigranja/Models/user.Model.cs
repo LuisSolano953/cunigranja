@@ -35,6 +35,8 @@ namespace cunigranja.Models
 
         public int? blockard { get; set; } = 0;
 
+       
+
 
         public int? intentos_user {get; set; } //VARCHAR 250
 

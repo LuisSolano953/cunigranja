@@ -3,6 +3,7 @@ using System.Net.Mail;
 using System.Net;
 using System.Text;
 
+
 namespace cunigranja.Functions
 {
     public class GeneralFunctions
@@ -14,7 +15,7 @@ namespace cunigranja.Functions
             configServer = configuration.GetSection("ConfigServerEmail").Get<ConfigServer>();
         }
 
-        public async Task<ResponseSend> SendEmail(string EmailDestination)
+        public async Task<ResponseSend> SendEmail(string EmailDestination, string resetToken)
         {
             ResponseSend responseSend = new ResponseSend();
 
@@ -31,10 +32,28 @@ namespace cunigranja.Functions
                 MailAddress destinatario = new MailAddress(EmailDestination);
                 MailMessage message = new MailMessage(remitente, destinatario)
                 {
-                    Subject = "PRUEBA ENVIO CORREO ADSO ",
-                    Body = "cuerpo del correo",
+                    Subject = "Restablecimiento de Contraseña - CUNI_GRANJA",
                     IsBodyHtml = true
                 };
+
+                // Crear el cuerpo del correo con HTML y la imagen incrustada
+                string imageUrl = "https://ejemplo.com/ruta/a/tu/imagen.png"; // Reemplaza con la URL de tu imagen
+                string resetLink = $"https://tudominio.com/reset-password?token={resetToken}"; // Reemplaza con tu URL de restablecimiento
+
+                message.Body = $@"
+                <html>
+                <body style='font-family: Arial, sans-serif;'>
+                    <div style='text-align: center;'>
+                        <img src='{imageUrl}' alt='Logo' style='max-width: 200px;'>
+                        <h2>Restablecimiento de Contraseña</h2>
+                        <p>Has solicitado restablecer tu contraseña. Haz clic en el siguiente botón para continuar:</p>
+                        <a href='{resetLink}' style='background-color: #4CAF50; color: white; padding: 14px 20px; text-align: center; text-decoration: none; display: inline-block; border-radius: 4px;'>
+                            Restablecer Contraseña
+                        </a>
+                        <p>Si no solicitaste este cambio, puedes ignorar este correo.</p>
+                    </div>
+                </body>
+                </html>";
 
                 await smtpClient.SendMailAsync(message);
                 responseSend.Message = "Correo enviado exitosamente";
@@ -42,9 +61,7 @@ namespace cunigranja.Functions
             }
             catch (Exception ex)
             {
-                // Registra el error en un log para análisis
                 Console.WriteLine(ex.Message);
-                // Manda un mensaje más amigable al cliente
                 responseSend.Message = "Ocurrió un error al enviar el correo. Inténtalo más tarde.";
                 responseSend.status = false;
             }

@@ -23,5 +23,7 @@ namespace cunigranja.Models
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [StringLength(250, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
         public  string cantidad_feeding { get; set; }
+
+       
     }
 }

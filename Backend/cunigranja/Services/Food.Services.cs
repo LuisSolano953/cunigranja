@@ -36,12 +36,10 @@ namespace cunigranja.Services
 
         public void UpdateFood(int Id, FoodModel updatedFood)
         {
-            // Traer el usuario existente utilizando el ID
             var food = _context.food.SingleOrDefault(u => u.Id_food == Id);
 
             if (food != null)
             {
-                // Actualizar solo los campos que tienen valores en updatedUser
                 _context.Entry(food).CurrentValues.SetValues(updatedFood);
                 _context.SaveChanges();
             }
