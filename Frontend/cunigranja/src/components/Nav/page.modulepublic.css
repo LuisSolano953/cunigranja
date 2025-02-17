@@ -79,3 +79,16 @@
   color: var(--ba-color-dark);
   border-bottom: 2px solid;
 }
+/* Mantener los estilos existentes si son necesarios */
+.bg-nav-public {
+  background-color: black;
+}
+
+.nav-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Los demás estilos son manejados por Tailwind y Framer Motion */
+

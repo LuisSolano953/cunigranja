@@ -1,15 +1,14 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import PublicNav from "@/components/Nav/PublicNav";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Footer from "@/components/Nav/footer";
 
-const ImageCarousel = () => {
-  const [hoveredCard, setHoveredCard] = useState(null);
 
+const ImageCarousel = () => {
   const settings = {
     dots: true,
     infinite: true,
@@ -104,30 +103,22 @@ const ImageCarousel = () => {
             {cardData.slice(0, 2).map((card, index) => (
               <div
                 key={index}
-                className="p-4 rounded-lg shadow-md max-w-md w-full overflow-hidden transition-all duration-300 ease-in-out transform hover:scale-105 relative group"
-                onMouseEnter={() => setHoveredCard(index)}
-                onMouseLeave={() => setHoveredCard(null)}
+                className="p-4 rounded-lg shadow-md max-w-md w-full overflow-hidden transition-all duration-300 ease-in-out transform hover:scale-105 relative bg-gradient-to-r from-blue-100 to-purple-100"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"></div>
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 animate-gradient-x opacity-30"></div>
                 <div className="relative z-10">
-                  <h3 className="text-lg font-bold mb-2 text-gray-800 group-hover:text-white transition-colors duration-300">{card.title}</h3>
-                  <p className="text-gray-600 group-hover:text-gray-100 transition-colors duration-300">{card.description}</p>
+                  <h3 className="text-lg font-bold mb-2 text-gray-800">{card.title}</h3>
+                  <p className="text-gray-700">{card.description}</p>
                 </div>
               </div>
             ))}
           </div>
           {/* Fila 2: Una tarjeta centrada */}
           <div
-            className="p-4 rounded-lg shadow-md max-w-md w-full overflow-hidden transition-all duration-300 ease-in-out transform hover:scale-105 relative group"
-            onMouseEnter={() => setHoveredCard(2)}
-            onMouseLeave={() => setHoveredCard(null)}
+            className="p-4 rounded-lg shadow-md max-w-md w-full overflow-hidden transition-all duration-300 ease-in-out transform hover:scale-105 relative bg-gradient-to-r from-blue-100 to-purple-100"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"></div>
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 animate-gradient-x opacity-30"></div>
             <div className="relative z-10">
-              <h3 className="text-lg font-bold mb-2 text-gray-800 group-hover:text-white transition-colors duration-300">{cardData[2].title}</h3>
-              <p className="text-gray-600 group-hover:text-gray-100 transition-colors duration-300">{cardData[2].description}</p>
+              <h3 className="text-lg font-bold mb-2 text-gray-800">{cardData[2].title}</h3>
+              <p className="text-gray-700">{cardData[2].description}</p>
             </div>
           </div>
         </div>

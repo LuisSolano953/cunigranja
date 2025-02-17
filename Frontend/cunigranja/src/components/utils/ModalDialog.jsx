@@ -1,26 +1,29 @@
-import { Dialog,DialogTitle,DialogHeader,DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-function ModalDialog({TitlePage}) {
-    const [isOpen, setIsOpen]=useState(false);
-    return ( 
-        <>
-        <Button onClick={()=>setIsOpen(true)}>
-            agregar {TitlePage}
-        </Button>
+import { Button } from "../ui/button";
 
-          <Dialog open={isOpen} onOpenChange={()=>setIsOpen(false)}>
+
+function ModalDialog({TitlePage, FormPage}) {
+    const [isOpen, setIsOpen] = useState(false);
+    return (
+        <>
+            <Button onClick={() => setIsOpen(true)}>
+                Agregar {TitlePage}
+            </Button>
+            <Dialog open={isOpen} onOpenChange={() => setIsOpen(false)}>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>Agregar {TitlePage}</DialogTitle>
+                        <DialogTitle>
+                            Agregar {TitlePage}
+                        </DialogTitle>
                     </DialogHeader>
                     <div className="">
-                        <h1>formulario</h1>
+                        <FormPage/>
                     </div>
                 </DialogContent>
-          </Dialog>
+            </Dialog>
         </>
-     );
+    );
 }
 
 export default ModalDialog;

@@ -1,9 +1,9 @@
 'use client'
 
-import { useState } from "react";
-import { useRouter } from "next/navigation"; // Importar el hook useRouter
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import axiosInstance from "@/lib/axiosInstance";
-import PublicNav from "@/components/Nav/publicnav";
+import PublicNav from "@/components/Nav/PublicNav";
 import { Card, CardContent } from "@/components/ui/card";
 
 async function SendData(Body) {
@@ -13,12 +13,12 @@ async function SendData(Body) {
 
 function Registrarse() {
     const [error, setError] = useState('');
-    const [modalMessage, setModalMessage] = useState(''); // Mensaje del modal
-    const router = useRouter(); // Inicializar useRouter
+    const [modalMessage, setModalMessage] = useState('');
+    const router = useRouter();
 
     const closeModal = () => {
         setModalMessage('');
-        router.push('/user/login'); // Redirigir al login después de cerrar el modal
+        router.push('/user/login');
     };
 
     async function handleSubmit(event) {
@@ -46,7 +46,7 @@ function Registrarse() {
         try {
             const response = await SendData(Body);
             console.log(response);
-            setModalMessage(response.data.message); // Mostrar el modal con el mensaje
+            setModalMessage(response.data.message);
         } catch (error) {
             console.log(error);
             const { errors, status } = error.response.data;
@@ -62,7 +62,7 @@ function Registrarse() {
             <PublicNav />
             <div className="flex justify-center items-center py-12 px-4 sm:px-6 lg:px-8">
                 <div className="relative w-full max-w-md">
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-200 to-purple-200 shadow-lg rounded-lg transform translate-x-2 translate-y-2"></div>
+                    <div className="absolute inset-0 bg-gray-200 shadow-lg rounded-lg transform translate-x-2 translate-y-2"></div>
                     <Card className="relative w-full shadow-xl">
                         <CardContent className="p-8">
                             <h2 className="text-2xl font-bold text-center mb-6">Registrarse</h2>
@@ -127,12 +127,20 @@ function Registrarse() {
                                     Crear cuenta 
                                 </button>
                             </form>
+                            <div className="mt-4 space-y-4">
+                <button
+                  onClick={() => router.push("/user/login")}
+                  className="w-full py-2 px-4 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold rounded-lg shadow-md transition duration-300 ease-in-out"
+                >
+                  Volver al inicio de sesión
+                </button>
+               
+              </div>
                         </CardContent>
                     </Card>
                 </div>
             </div>
 
-            {/* Modal */}
             {modalMessage && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
@@ -152,3 +160,4 @@ function Registrarse() {
 }
 
 export default Registrarse;
+

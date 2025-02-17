@@ -1,11 +1,12 @@
 'use client'
 
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axiosInstance from "@/lib/axiosInstance";
-import PublicNav from "@/components/Nav/publicnav";
+import PublicNav from "@/components/Nav/PublicNav";
 import Footer from "@/components/Nav/footer";
 import { Card, CardContent } from "@/components/ui/card";
+import { motion } from "framer-motion";
 
 async function Login(credentials) {
     const response = await axiosInstance.post('Api/User/Login', credentials);
@@ -14,7 +15,8 @@ async function Login(credentials) {
 
 function LoginPage() {
     const router = useRouter();
-    const [errorMessage, setErrorMessage] = useState(''); // Estado para el mensaje de error
+    const [errorMessage, setErrorMessage] = useState('');
+    const [showStars, setShowStars] = useState(false);
 
     const closeModal = () => {
         setErrorMessage('');
@@ -43,16 +45,34 @@ function LoginPage() {
         }
     }
 
+    useEffect(() => {
+        if (showStars) {
+            const timer = setTimeout(() => setShowStars(false), 1000);
+            return () => clearTimeout(timer);
+        }
+    }, [showStars]);
+
     return (
         <>
             <PublicNav />
             <div className="flex justify-center items-center min-h-screen bg-white p-4">
                 <div className="relative w-full max-w-4xl">
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-200 to-purple-200 shadow-lg rounded-lg transform translate-x-2 translate-y-2"></div>
+                    <div className="absolute inset-0 bg-gray-200 shadow-lg rounded-lg transform translate-x-2 translate-y-2"></div>
                     <Card className="relative w-full flex flex-col md:flex-row overflow-hidden shadow-xl">
-                        <div className="md:w-1/2 bg-gray-100 p-8 flex flex-col justify-center">
+                        <div className="md:w-1/2 bg-gray-100 p-8 flex flex-col justify-center items-center">
+                            <motion.div
+                                whileHover={{ scale: 1.2 }}
+                                onClick={() => setShowStars(true)}
+                                className="mb-8 cursor-pointer relative w-40 h-40"
+                            >
+                                <img 
+                                    src="/assets/img/CUNIGRANJA-2.png" 
+                                    alt="Logo" 
+                                    className="w-full h-full object-contain rounded-full bg-white mix-blend-multiply"
+                                />
+                            </motion.div>
                             <h2 className="text-3xl font-bold mb-4 text-gray-800">Bienvenido</h2>
-                            <p className="text-lg text-gray-600">
+                            <p className="text-lg text-gray-600 text-center">
                                 Nos alegra verte de nuevo. Inicia sesión para acceder a tu cuenta y disfrutar de nuestros servicios.
                             </p>
                         </div>
@@ -109,7 +129,6 @@ function LoginPage() {
                 </div>
             </div>
 
-            {/* Modal */}
             {errorMessage && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
@@ -130,3 +149,4 @@ function LoginPage() {
 }
 
 export default LoginPage;
+

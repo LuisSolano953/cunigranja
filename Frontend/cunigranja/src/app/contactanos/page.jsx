@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
-import PublicNav from "@/components/Nav/publicnav";
+import PublicNav from "@/components/Nav/PublicNav";
 import Footer from "@/components/Nav/footer";
 import { Mail, Phone, User } from 'lucide-react';
 

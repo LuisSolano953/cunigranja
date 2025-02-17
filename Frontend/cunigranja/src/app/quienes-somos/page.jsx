@@ -9,28 +9,28 @@ import Image from "next/image";
 const teamMembers = [
   {
     name: "Luis Alvaro Solano Mondragon",
-    role: "Pertenezco a la comunidad LGBTI",
+    role: "Analista y Desarrollador de Software",
     email: "luissolanor2022@gmail.com",
     age: 18,
     image: "/assets/img/luis.jpg",
   },
   {
     name: "Nestor Sarmiento Barrios",
-    role: "Pertenezco a la comunidad LGBTI",
+    role: "Analista y Desarrollador de Software",
     email: "nestor.sarbarrios@gmail.com",
     age: 18,
     image: "/assets/img/nestor.jpg",
   },
   {
     name: "Leidy Paola Guio Cespedes",
-    role: "Orgullo Afrodescendiente",
+    role: "Analista y Desarrollador de Software",
     email: "paolacespedes@gmail.com",
     age: 20,
     image: "/assets/img/paola.jpg",
   },
   {
     name: "Jose Gabriel Diaz Rodriguez",
-    role: "Pertenezco a la comunidad LGBTI",
+    role: "Analista y Desarrollador de Software",
     email: "gabrieldiazrodriguez2006@gmail.com",
     age: 18,
     image: "/assets/img/gabriel.jpg",
