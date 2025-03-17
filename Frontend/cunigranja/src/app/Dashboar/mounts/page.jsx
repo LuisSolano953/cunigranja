@@ -1,38 +1,36 @@
 'use client';
 
-import RegisterFeeding from './RegisterFeeding';
+import Registermounts from './Registermounts';
 import { useEffect, useState } from "react";
 import NavPrivada from "@/components/Nav/NavPrivada";
 import ContentPage from "@/components/utils/ContentPage";
 import axiosInstance from "@/lib/axiosInstance";
 
-function Feedingpage() {
-  const TitlePage = "Alimentacion";
+function Mountspage() {
+  const TitlePage = "Montas";
  
-  const [RegisterFeedingData, setRegisterFeedingData] = useState([]);
+  const [RegisterMountsData, setRegisterMountsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const titlesFood = ["ID", "Fecha", "Hora", "Cantidad", "Alimento"];
+  const titlesFood = ["ID", "Tiempo", "Fecha", "Cantidad", "Nombre"];
 
   async function fetchFeeding() {
     try {
       setIsLoading(true);
-      const response = await axiosInstance.get("/Api/Feeding/GetFeeding");
+      const response = await axiosInstance.get("/Api/Mounts/GetMounts");
       console.log("API Response:", response.data);
       
       if (response.status === 200) {
         const data = response.data.map((item) => ({
-          id: item.id_feeding,
-          fecha: item.fecha_feeding,
-          hora: item.hora_feeding,
-          cantidad: item.cantidad_feeding,
-          alimento: item.name_food  
-        
-
+          id: item.id_mounts,
+          fecha: item.fecha_mounts,
+          tiempo : item.tiempo_mounts,
+          cantidad: item.cantidad_mounts,
+          nombre: item.nombre_rabi,
         }));
         console.log("Processed data:", data);
-        setRegisterFeedingData(data);
+        setRegisterMountsData(data);
       }
     } catch (error) {
       console.error("Error al obtener los registros:", error);
@@ -51,19 +49,19 @@ function Feedingpage() {
       await axiosInstance.delete(`/Api/Feeding/DeleteFeeding?Id_feeding=${id}`);
       fetchFeeding(); // Recargar los datos después de eliminar
     } catch (error) {
-      console.error("Error al eliminar el alimento:", error);
-      setError("No se pudo eliminar el alimento.");
+      console.error("Error al eliminar la monta:", error);
+      setError("No se pudo eliminar la monta.");
     }
   };
 
-  console.log("RegisterFeedingData:", RegisterFeedingData);
+  console.log("RegisterMountsData:", RegisterMountsData);
   return (
     <NavPrivada>
       <ContentPage 
         TitlePage={TitlePage} 
-        Data={RegisterFeedingData} 
+        Data={RegisterMountsData} 
         TitlesTable={titlesFood}  
-        FormPage={RegisterFeeding}
+        FormPage={Registermounts}
         onDelete={handleDelete}
         endpoint="/Api/Feeding/DeleteFeeding"
       />
@@ -71,4 +69,4 @@ function Feedingpage() {
   );
 }
 
-export default Feedingpage;
+export default Mountspage;

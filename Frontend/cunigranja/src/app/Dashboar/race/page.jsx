@@ -1,37 +1,37 @@
-'use client';
-
-import { NavPrivada } from '../../../components/Nav/NavPrivada';
-import RegisterRace from '@/components/formularios/race/page';
+"use client"
+import { useEffect, useState } from "react";
+import NavPrivada from "@/components/Nav/NavPrivada";
+import ContentPage from "@/components/utils/ContentPage";
+import RegisterRace from "./RegisterRace";
+import axiosInstance from "@/lib/axiosInstance";
 
 function Racepage() {
-  const TitlePage = "Alimento";
+  const TitlePage = "Raza";
  
-  const [RegisterFoodData, setRegisterFoodData] = useState([]);
+  const [RegisterRaceData, setRegisterRaceData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const titlesFood = ["ID", "Nombre", "Estado", "Valor", "Unidad"];
+  const titlesRace = ["ID", "Nombre"];
 
-  async function fetchFood() {
+  async function fetchRace() {
     try {
       setIsLoading(true);
-      const response = await axiosInstance.get("/Api/Food/GetFood");
+      const response = await axiosInstance.get("/Api/Race/GetRace");
       console.log("API Response:", response.data);
-      fetchFood();
+      fetchRace();
       if (response.status === 200) {
         const data = response.data.map((item) => ({
-          id: item.id_food,
-          nombre: item.name_food,
-          estado: item.estado_food,
-          valor: item.valor_food.toString(),
-          unidad: item.unidad_food,
+          id: item.id_race,
+          nombre: item.nombre_race,
+          
         }));
         console.log("Processed data:", data);
-        setRegisterFoodData(data);
+        setRegisterRaceData(data);
       }
     } catch (error) {
       console.error("Error al obtener los registros:", error);
-      setError("No se pudieron cargar los datos de los alimentos.");
+      setError("No se pudieron cargar los datos de las razas.");
     } finally {
       setIsLoading(false);
     }
@@ -39,29 +39,29 @@ function Racepage() {
   
 
   useEffect(() => {
-    fetchFood();
+    fetchRace();
   }, []);
 
   const handleDelete = async (id) => {
     try {
-      await axiosInstance.delete(`/Api/Food/DeleteFood?Id_food=${id}`);
+      await axiosInstance.delete(`/Api/Race/DeleteRace?Id_race=${id}`);
       fetchFood(); // Recargar los datos después de eliminar
     } catch (error) {
-      console.error("Error al eliminar el alimento:", error);
-      setError("No se pudo eliminar el alimento.");
+      console.error("Error al eliminar la raza:", error);
+      setError("No se pudo eliminar la raza.");
     }
   };
 
-  console.log("RegisterFoodData:", RegisterFoodData);
+  console.log("RegisterRaceData:", RegisterRaceData);
   return (
     <NavPrivada>
       <ContentPage 
         TitlePage={TitlePage} 
-        Data={RegisterFoodData} 
-        TitlesTable={titlesFood}  
-        FormPage={RegisterFood}
+        Data={RegisterRaceData} 
+        TitlesTable={titlesRace}  
+        FormPage={RegisterRace}
         onDelete={handleDelete}
-        endpoint="/Api/Food/DeleteFood"
+        endpoint="/Api/Race/DeleteRace"
       />
     </NavPrivada>
   );

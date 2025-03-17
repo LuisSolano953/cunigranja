@@ -55,7 +55,7 @@ function Cagepage() {
     fetchFood();
   }, []);
 
-  console.log("RegisterFoodData:",RegisterCageData);
+  console.log("RegisterCageData:",RegisterCageData);
   return (
     <NavPrivada >
       <ContentPage TitlePage={TitlePage} Data={RegisterCageData} TitlesTable={titlesCage} FormPage={RegisterCage} />

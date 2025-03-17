@@ -14,7 +14,7 @@ function Reproductionpage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const titlesReproduction = ["ID", "Fecha", "Total", "Vivos", "Muertos"];
+  const titlesReproduction = ["ID", "Fecha", "Total", "Vivos", "Muertos","Fecha de Monta"];
 
   async function fetchReproduction() {
     try {
@@ -29,6 +29,7 @@ function Reproductionpage() {
           total: item.total_conejos,
           vivos: item.nacidos_vivos,
           muertos: item.nacidos_muertos,
+          Monta : item.fecha_mounts
         }));
         console.log("Processed data:", data);
         setRegisterReproductionData(data);

@@ -2,7 +2,7 @@
 import React, { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Utensils, Apple, Skull, Box, Stethoscope, Dna, Baby, Weight, BabyIcon as BabyBottle } from "lucide-react"
+import { Home, Utensils, Apple, Skull, Box, Stethoscope, Dna, Baby, Weight, BabyIcon as BabyBottle } from "lucide-react"
 import { useRouter } from "next/navigation"
 
 export function Sidebar() {
@@ -10,6 +10,7 @@ export function Sidebar() {
   const router = useRouter()
 
   const sidebarItems = [
+    { name: "Inicio", icon: <Home />, href: "/Dashboar" },
     { name: "Alimento", icon: <Utensils />, href: "/Dashboar/food" },
     { name: "Alimentación", icon: <Apple />, href: "/Dashboar/feeding" },
     { name: "Mortalidad", icon: <Skull />, href: "/Dashboar/mortality" },
@@ -19,6 +20,7 @@ export function Sidebar() {
     { name: "Reproducción", icon: <Baby />, href: "/Dashboar/reproduction" },
     { name: "Destete", icon: <BabyBottle />, href: "/Dashboar/weaning" },
     { name: "Pesaje", icon: <Weight />, href: "/Dashboar/pesaje" },
+    { name: "Montas", icon: <Weight />, href: "/Dashboar/mounts" },
   ]
 
   const handleItemClick = (href) => {
@@ -29,8 +31,7 @@ export function Sidebar() {
   return (
     <>
       <div
-        className={`
-          fixed top-0 left-0 h-screen z-50 bg-black text-white shadow-lg transition-all duration-300 
+        className={`fixed top-0 left-0 h-screen z-50 bg-black text-white shadow-lg transition-all duration-300 
           ${isExpanded ? "w-64" : "w-20"}
         `}
         onMouseEnter={() => setIsExpanded(true)}
@@ -52,19 +53,23 @@ export function Sidebar() {
                     className={`
                       w-full min-h-[4rem] flex items-center gap-6
                       text-lg font-bold rounded-lg
-                      hover:bg-gray-900 hover:text-white
                       transition-colors duration-200
+                      text-white group
+                      hover:bg-white/10
                       ${isExpanded ? "justify-start px-4" : "justify-center px-2"}
                     `}
                     onClick={() => handleItemClick(item.href)}
                   >
                     <div className="flex-shrink-0">
                       {React.cloneElement(item.icon, {
-                        className: "h-10 w-10",
-                        strokeWidth: 1.5,
+                        className: "h-10 w-10 text-white transition-colors duration-200 group-hover:text-blue-400",
                       })}
                     </div>
-                    {isExpanded && <span className="flex-1 text-left truncate">{item.name}</span>}
+                    {isExpanded && (
+                      <span className="flex-1 text-left truncate text-white transition-colors duration-200 group-hover:text-blue-400">
+                        {item.name}
+                      </span>
+                    )}
                   </Button>
                 </li>
               ))}
@@ -74,12 +79,7 @@ export function Sidebar() {
       </div>
 
       {/* Main content wrapper */}
-      <div
-        className={`
-          ml-0 transition-all duration-300 
-          ${isExpanded ? "md:ml-64" : "md:ml-20"}
-        `}
-      >
+      <div className={`ml-0 transition-all duration-300 ${isExpanded ? "md:ml-64" : "md:ml-20"}`}>
         {/* Content goes here */}
       </div>
     </>
@@ -87,4 +87,3 @@ export function Sidebar() {
 }
 
 export default Sidebar
-
