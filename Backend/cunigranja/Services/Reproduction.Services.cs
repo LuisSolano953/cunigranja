@@ -1,4 +1,5 @@
 ﻿using cunigranja.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace cunigranja.Services
 {
@@ -10,9 +11,9 @@ namespace cunigranja.Services
         {
             _context = context;
         }
-        public IEnumerable<ReproductionModel> GetReproduction()
+        public IEnumerable<ReproductionModel> GetAll()
         {
-            return _context.reproduction.ToList();
+            return _context.reproduction.Include(r => r.mountsmodel).ToList();
         }
         public void Add(ReproductionModel entity)
         {

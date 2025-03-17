@@ -1,4 +1,5 @@
 ﻿using cunigranja.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace cunigranja.Services
 {
@@ -10,9 +11,9 @@ namespace cunigranja.Services
             _context = context;
         }
 
-        public IEnumerable<EntradaModel> GetEntrada()
+        public IEnumerable<EntradaModel> GetAll()
         {
-            return _context.entrada.ToList();
+            return _context.entrada.Include(e => e.feedingmodel).ToList();
         }
 
         public EntradaModel GetEntradaById(int id)

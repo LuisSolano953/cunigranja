@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace cunigranja.Models
 {
@@ -18,5 +19,17 @@ namespace cunigranja.Models
         [Display(Name = "Fecha de Mortalidad")]
         [Required(ErrorMessage = "La fecha de mortalidad es obligatoria.")]
         public DateTime fecha_mortality { get; set; }
+
+        public int Id_rabi { get; set; }
+        [ForeignKey("Id_rabi")]
+
+        public RabiModel rabimodel { get; set; }
+
+        public int Id_user { get; set; }
+        [ForeignKey("Id_user")]
+
+        public User user { get; set; }
+
+
     }
 }

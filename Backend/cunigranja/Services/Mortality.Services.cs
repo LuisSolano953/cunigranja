@@ -12,9 +12,9 @@ namespace cunigranja.Services
             _context = context;
         }
 
-        public IEnumerable<MortalityModel> GetMortality()
+        public IEnumerable<MortalityModel> GetAll()
         {
-            return _context.mortality.ToList();
+            return _context.mortality.Include(t => t.user).Include(t=>t.rabimodel).ToList();
         }
 
         public MortalityModel GetById(int id)

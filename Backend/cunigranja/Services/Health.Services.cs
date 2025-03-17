@@ -12,9 +12,9 @@ namespace cunigranja.Services
             _context = context;
         }
 
-        public IEnumerable<HealthModel> GetHealth()
+        public IEnumerable<HealthModel> GetAll()
         {
-            return _context.health.ToList();
+            return _context.health.Include(h => h.user).ToList();
         }
 
         public HealthModel GetHealthById(int id)

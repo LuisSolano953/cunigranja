@@ -1,4 +1,5 @@
-﻿using cunigranja.Functions;
+﻿using cunigranja.DTOs;
+using cunigranja.Functions;
 using cunigranja.Models;
 using cunigranja.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -37,17 +38,33 @@ namespace cunigranja.Controllers
         }
 
         [HttpGet("GetFeeding")]
-        public ActionResult<IEnumerable<FeedingModel>> GetFeeding()
+        //public ActionResult<IEnumerable<FeedingModel>> GetFeeding()
+        //{
+        //    try
+        //    {
+        //        return Ok(_Services.GetFeeding());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        FunctionsGeneral.AddLog(ex.Message);
+        //        return StatusCode(500, ex.ToString());
+        //    }
+        //}
+        public ActionResult<IEnumerable<FeedingDTO>> GetsAllFeeding()
         {
-            try
-            {
-                return Ok(_Services.GetFeeding());
-            }
-            catch (Exception ex)
-            {
-                FunctionsGeneral.AddLog(ex.Message);
-                return StatusCode(500, ex.ToString());
-            }
+          
+                var feeding = _Services.GetAll().Select(f => new FeedingDTO
+                {
+                    Id_feeding = f.Id_feeding,            // int to int (OK)
+                    fecha_feeding = f.fecha_feeding,      // DateTime to DateTime (OK)
+                    hora_feeding = f.hora_feeding,        // string to string (OK)
+                    cantidad_feeding = f.cantidad_feeding, // string to string (OK)
+                    name_food = f.foodmodel.name_food,         // string to string (OK)
+                }).ToList();
+
+                return Ok(feeding);
+           
+            
         }
 
         [HttpGet("ConsultFeeding")]

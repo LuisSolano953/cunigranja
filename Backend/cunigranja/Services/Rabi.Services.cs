@@ -1,4 +1,5 @@
 ﻿using cunigranja.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace cunigranja.Services
 {
@@ -10,9 +11,9 @@ namespace cunigranja.Services
             _context = context;
         }
 
-        public IEnumerable<RabiModel> GetRabi()
+        public IEnumerable<RabiModel> GetAll()
         {
-            return _context.rabi.ToList();
+            return _context.rabi.Include(c=>c.cagemodel).Include(c=>c.racemodel).ToList();
         }
 
         public RabiModel GetRabiById(int id)

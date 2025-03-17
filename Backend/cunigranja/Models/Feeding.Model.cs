@@ -1,8 +1,11 @@
-﻿using System.ComponentModel;
+﻿using cunigranja.Controllers;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace cunigranja.Models
 {
+    
     public class FeedingModel
     {
         [Key]
@@ -23,6 +26,11 @@ namespace cunigranja.Models
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [StringLength(250, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
         public  string cantidad_feeding { get; set; }
+
+        public int Id_food { get; set; }
+        [ForeignKey("Id_food")]
+
+        public FoodModel foodmodel { get; set; }
 
        
     }

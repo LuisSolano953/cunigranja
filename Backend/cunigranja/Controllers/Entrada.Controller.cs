@@ -1,4 +1,5 @@
-﻿using cunigranja.Functions;
+﻿using cunigranja.DTOs;
+using cunigranja.Functions;
 using cunigranja.Models;
 using cunigranja.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -36,17 +37,19 @@ namespace cunigranja.Controllers
         }
 
         [HttpGet("GetEntrada")]
-        public ActionResult<IEnumerable<EntradaModel>> GetEntrada()
+        public ActionResult<IEnumerable<EntradaDTO>> GetAllsEntrada()
         {
-            try
+            var entrada = _Services.GetAll().Select(e => new EntradaDTO
             {
-                return Ok(_Services.GetEntrada());
-            }
-            catch (Exception ex)
-            {
-                FunctionsGeneral.AddLog(ex.Message);
-                return StatusCode(500, ex.ToString());
-            }
+               Id_entrada = e.Id_entrada,
+                cantidad_entrada =e.cantidad_entrada,
+                valor_entrada=e.valor_entrada,
+                fecha_entrada = e.fecha_entrada,
+                cantidad_feeding= e.feedingmodel.cantidad_feeding,
+
+            }).ToList();
+
+            return Ok(entrada);
         }
 
         [HttpGet("ConsultEntrada")]

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace cunigranja.Models
 {
@@ -24,6 +25,10 @@ namespace cunigranja.Models
         [Display(Name = "Valor de la entrada ")]
         public int valor_entrada { get; set; }
 
+        public int Id_feeding { get; set; }
+        [ForeignKey("Id_feeding")]
+
+        public FeedingModel feedingmodel { get; set; }
 
     }
 }

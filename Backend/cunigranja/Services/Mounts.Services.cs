@@ -1,4 +1,5 @@
 ﻿using cunigranja.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace cunigranja.Services
 {
@@ -10,9 +11,9 @@ namespace cunigranja.Services
             _context = context;
         }
 
-        public IEnumerable<MountsModel> GetMounts()
+        public IEnumerable<MountsModel> GetAll()
         {
-            return _context.mounts.ToList();
+            return _context.mounts.Include(m => m.rabimodel).ToList();
         }
 
         public MountsModel GetMountsById(int id)

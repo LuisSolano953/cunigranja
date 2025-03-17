@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace cunigranja.Models
 {
@@ -25,5 +26,9 @@ namespace cunigranja.Models
         [Range(0, 30, ErrorMessage = "La cantidad de nacidos muertos puede  ser igual omayor que 0.")]
         [Display(Name = "nacidos muertos")]
         public int nacidos_muertos { get; set; }
+        public int Id_mounts { get; set; }
+        [ForeignKey("Id_mounts")]
+
+        public MountsModel mountsmodel { get; set; }
     }
 }

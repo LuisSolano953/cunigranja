@@ -1,4 +1,5 @@
 ﻿using cunigranja.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace cunigranja.Services
 {
@@ -9,9 +10,9 @@ namespace cunigranja.Services
         {
             _context = context;
         }
-        public IEnumerable<WeighingModel> GetWeighing()
+        public IEnumerable<WeighingModel> GetAll()
         {
-            return _context.weighing.ToList();
+            return _context.weighing.Include(w => w.user).Include(w => w.rabimodel).ToList();
         }
         public void Add(WeighingModel entity)
         {

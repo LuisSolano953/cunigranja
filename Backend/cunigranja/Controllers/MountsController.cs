@@ -1,4 +1,5 @@
-﻿using cunigranja.Functions;
+﻿using cunigranja.DTOs;
+using cunigranja.Functions;
 using cunigranja.Models;
 using cunigranja.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -37,20 +38,24 @@ namespace cunigranja.Controllers
             }
 
             [HttpGet("GetMounts")]
-            public ActionResult<IEnumerable<MountsModel>> GetCage()
+            public ActionResult<IEnumerable<MountsModel>> GetsAllMounts()
             {
-                try
-                {
-                    return Ok(_Services.GetMounts());
-                }
-                catch (Exception ex)
-                {
-                    FunctionsGeneral.AddLog(ex.Message);
-                    return StatusCode(500, ex.ToString());
-                }
-            }
 
-            [HttpGet("ConsultCage")]
+            var mounts = _Services.GetAll().Select(m => new MountsDTO
+
+            {
+                Id_mounts= m.Id_mounts,
+                tiempo_mounts=m.tiempo_mounts,
+                fecha_mounts=m.fecha_mounts,
+                cantidad_mounts=m.cantidad_mounts,
+                nombre_rabi=m.rabimodel.nombre_rabi
+               
+            }).ToList();
+
+            return Ok(mounts);
+        }
+
+            [HttpGet("ConsultMounts")]
             public ActionResult<MountsModel> GetMountsById(int id)
             {
                 try

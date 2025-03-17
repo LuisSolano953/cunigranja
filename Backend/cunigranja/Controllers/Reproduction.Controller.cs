@@ -1,4 +1,5 @@
-﻿using cunigranja.Functions;
+﻿using cunigranja.DTOs;
+using cunigranja.Functions;
 using cunigranja.Models;
 using cunigranja.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -36,19 +37,24 @@ namespace cunigranja.Controllers
         }
         [HttpGet("GetReproduction")]
 
-        public ActionResult<IEnumerable<ReproductionModel>> Getreproduction()
+        public ActionResult<IEnumerable<ReproductionDTO>> GetsAllReproduction()
         {
-            try
-            {
-                return Ok( _Services.GetReproduction());
-            }
-            catch (Exception ex)
-            {
-                    FunctionsGeneral.AddLog(ex.Message);
-                    return StatusCode(500, ex.ToString());
 
-            }
+            var reproduction = _Services.GetAll().Select(r => new ReproductionDTO
+            {
+                Id_reproduction = r.Id_reproduction,            
+                fecha_nacimiento= r.fecha_nacimiento,
+                total_conejos=r.total_conejos,
+                nacidos_muertos=r.nacidos_muertos,
+                nacidos_vivos=r.nacidos_vivos,
+                fecha_mounts=r.mountsmodel.fecha_mounts,
+            }).ToList();
+
+            return Ok(reproduction);
+
+
         }
+
         [HttpGet("ConsulReproduction")]
         public ActionResult<ReproductionModel> GetReproductionById(int Id_reproduction)
         {

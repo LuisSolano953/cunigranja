@@ -1,4 +1,5 @@
-﻿using cunigranja.Functions;
+﻿using cunigranja.DTOs;
+using cunigranja.Functions;
 using cunigranja.Models;
 using cunigranja.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -37,17 +38,19 @@ namespace cunigranja.Controllers
         }
 
         [HttpGet("GetWeighing")]
-        public ActionResult<IEnumerable<WeighingModel>> Getweighing()
+        public ActionResult<IEnumerable<WeighingDTO>> GetAllWeighing()
         {
-            try
+            var weighing = _Services.GetAll().Select(w => new WeighingDTO
             {
-                return Ok(_Services.GetWeighing());
-            }
-            catch (Exception ex)
-            {
-                FunctionsGeneral.AddLog(ex.Message);
-                return StatusCode(500, ex.ToString());
-            }
+                Id_weighing= w.Id_weighing,
+                fecha_weighing=w.fecha_weighing,
+                cantidad_peso=w.cantidad_peso,
+                name_user = w.user.name_user,
+                nombre_rabi = w.rabimodel.nombre_rabi,
+
+            }).ToList();
+
+            return Ok(weighing);
         }
 
 

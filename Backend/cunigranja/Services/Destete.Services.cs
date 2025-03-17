@@ -1,4 +1,5 @@
 ﻿using cunigranja.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace cunigranja.Services
 {
@@ -10,9 +11,9 @@ namespace cunigranja.Services
             _context = context;
         }
 
-        public IEnumerable<DesteteModel> GetDestete()
+        public IEnumerable<DesteteModel> GetAll()
         {
-            return _context.destete.ToList();
+            return _context.destete.Include(d => d.rabimodel).ToList();
         }
 
         public DesteteModel GetDesteteById(int id)

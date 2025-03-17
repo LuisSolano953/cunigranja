@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace cunigranja.Models
 {
@@ -18,5 +19,15 @@ namespace cunigranja.Models
         [Range(1, 500, ErrorMessage = "La cantidad de peso debe ser mayor que 0.")]
         [Display(Name = "Cantidad de peso")]
         public int cantidad_peso { get; set; }
+
+        public int Id_rabi { get; set; }
+        [ForeignKey("Id_rabi")]
+
+        public RabiModel rabimodel { get; set; }
+
+        public int Id_user { get; set; }
+        [ForeignKey("Id_user")]
+
+        public User user { get; set; }
     }
 }

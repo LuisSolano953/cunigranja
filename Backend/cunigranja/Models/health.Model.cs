@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace cunigranja.Models
 {
@@ -28,5 +29,10 @@ namespace cunigranja.Models
         [Range(1, int.MaxValue, ErrorMessage = "valor de la sanidad mator que 0.")]
         [Display(Name = "Valor de la sanidad")]
         public int valor_health { get; set; }
+
+        public int Id_user { get; set; }
+        [ForeignKey("Id_user")]
+
+        public User? user { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using cunigranja.Services;
 using Microsoft.AspNetCore.Mvc;
 using cunigranja.Functions;
+using cunigranja.DTOs;
 
 namespace cunigranja.Controllers
 {
@@ -38,7 +39,19 @@ namespace cunigranja.Controllers
         [HttpGet("AllHealth")]
         public ActionResult<IEnumerable<HealthModel>> GetHealth()
         {
-            return Ok(_Services.GetHealth());
+            var health = _Services.GetAll().Select(h => new HealthDTO
+            {
+                Id_health = h.Id_health,
+                name_health=h.name_health,
+                fecha_health=h.fecha_health,
+                descripcion_health=h.descripcion_health,
+                valor_health=h.valor_health,
+                name_user=h.user.name_user
+                 
+
+            }).ToList();
+
+            return Ok(health);
         }
 
         // GET: api/Health/ConsulHealth?id=1

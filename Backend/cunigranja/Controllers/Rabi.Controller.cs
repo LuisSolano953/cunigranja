@@ -1,4 +1,5 @@
-﻿using cunigranja.Functions;
+﻿using cunigranja.DTOs;
+using cunigranja.Functions;
 using cunigranja.Models;
 using cunigranja.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -37,18 +38,24 @@ namespace cunigranja.Controllers
             }
 
             [HttpGet("Get Rabi")]
-            public ActionResult<IEnumerable< RabiModel>> GetRabi()
+            public ActionResult<IEnumerable< RabiDTO>> GetAllsRabi()
             {
-                try
-                {
-                    return Ok(_Services.GetRabi());
-                }
-                catch (Exception ex)
-                {
-                    FunctionsGeneral.AddLog(ex.Message);
-                    return StatusCode(500, ex.ToString());
-                }
-            }
+            var rabi = _Services.GetAll().Select(c => new RabiDTO
+            {
+                Id_rabi =c.Id_rabi,
+                fecha_salida = c.fecha_salida,
+                ganancia_peso=c.ganancia_peso,
+                nombre_rabi=c.nombre_rabi,
+                peso_inicial=c.peso_inicial,
+                sexo_rabi=c.sexo_rabi,
+                estado=c.estado,
+                name_race=c.racemodel.nombre_race,
+                estado_cage=c.cagemodel.estado_cage,
+                
+            }).ToList();
+
+            return Ok(rabi);
+        }
 
             [HttpGet("Consult Rabi")]
             public ActionResult< RabiModel> GetRabiById(int id)

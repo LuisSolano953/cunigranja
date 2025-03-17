@@ -1,4 +1,5 @@
-﻿using cunigranja.Functions;
+﻿using cunigranja.DTOs;
+using cunigranja.Functions;
 using cunigranja.Models;
 using cunigranja.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -36,17 +37,19 @@ namespace cunigranja.Controllers
         }
 
         [HttpGet("GetDestete")]
-        public ActionResult<IEnumerable<DesteteModel>> GetDestete()
+        public ActionResult<IEnumerable<DesteteDTO>> GetAllsDestete()
         {
-            try
+
+            var destete = _Services.GetAll().Select(d => new DesteteDTO
             {
-                return Ok(_Services.GetDestete());
-            }
-            catch (Exception ex)
-            {
-                FunctionsGeneral.AddLog(ex.Message);
-                return StatusCode(500, ex.ToString());
-            }
+                Id_destete = d.Id_destete,
+                fecha_destete = d.fecha_destete,
+                peso_destete = d.peso_destete,
+                nombre_rabi = d.rabimodel.nombre_rabi,
+
+            }).ToList();
+
+            return Ok(destete);
         }
 
         [HttpGet("ConsultDestete")]

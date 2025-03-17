@@ -2,6 +2,7 @@
 using cunigranja.Services;
 using Microsoft.AspNetCore.Mvc;
 using cunigranja.Functions;
+using cunigranja.DTOs;
 
 namespace cunigranja.Controllers
 {
@@ -36,9 +37,19 @@ namespace cunigranja.Controllers
             }
         }
         [HttpGet("AllMortality")]
-        public ActionResult<IEnumerable<MortalityModel>> GetMortality()
+        public ActionResult<IEnumerable<MortalityDTO>> GetAllsMortality()
         {
-            return Ok(_Services.GetMortality());
+            var mortality = _Services.GetAll().Select(t => new MortalityDTO
+            {
+                Id_mortality = t.Id_mortality,
+                cantidad_mortality = t.cantidad_mortality,
+                fecha_mortality =t.fecha_mortality,
+                name_user=t.user.name_user,
+                nombre_rabi=t.rabimodel.nombre_rabi,
+               
+            }).ToList();
+
+            return Ok(mortality);
         }
 
         [HttpGet("ConsulMortality")]
