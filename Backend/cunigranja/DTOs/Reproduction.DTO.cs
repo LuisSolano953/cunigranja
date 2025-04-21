@@ -13,8 +13,6 @@ namespace cunigranja.DTOs
         public int nacidos_vivos { get; set; }
 
         public int nacidos_muertos { get; set; }
-
-        [DataType(DataType.Date)]
-        public DateTime fecha_mounts { get; set; }
+        public string name_rabbit{ get; set; }
     }
 }

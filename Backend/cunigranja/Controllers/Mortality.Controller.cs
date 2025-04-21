@@ -42,10 +42,10 @@ namespace cunigranja.Controllers
             var mortality = _Services.GetAll().Select(t => new MortalityDTO
             {
                 Id_mortality = t.Id_mortality,
-                cantidad_mortality = t.cantidad_mortality,
+                causa_mortality = t.causa_mortality,
                 fecha_mortality =t.fecha_mortality,
                 name_user=t.user.name_user,
-                nombre_rabi=t.rabimodel.nombre_rabi,
+                name_rabbit= t.rabbitmodel.name_rabbit,
                
             }).ToList();
 

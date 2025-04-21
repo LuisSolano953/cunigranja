@@ -14,7 +14,7 @@ namespace cunigranja.Services
 
         public IEnumerable<MortalityModel> GetAll()
         {
-            return _context.mortality.Include(t => t.user).Include(t=>t.rabimodel).ToList();
+            return _context.mortality.Include(t => t.user).Include(t=>t.rabbitmodel).ToList();
         }
 
         public MortalityModel GetById(int id)

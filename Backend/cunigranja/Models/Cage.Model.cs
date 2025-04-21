@@ -11,7 +11,7 @@ namespace cunigranja.Models
         public int Id_cage { get; set; } = 0;
 
        
-
+        public int cantidad_animales { get; set; }
         
 
         [DisplayName("Estado de la Jaula")]

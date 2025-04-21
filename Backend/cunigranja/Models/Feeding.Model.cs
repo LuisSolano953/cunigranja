@@ -22,16 +22,24 @@ namespace cunigranja.Models
         [Required(ErrorMessage = "La fecha de mortalidad es obligatoria.")]
         public  string hora_feeding { get; set; }
 
-        [DisplayName("Cantidad de alimentacion")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [StringLength(250, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
-        public  string cantidad_feeding { get; set; }
+  
+        public  int cantidad_feeding { get; set; }
+        public  double existencia_actual { get; set; }
 
         public int Id_food { get; set; }
         [ForeignKey("Id_food")]
 
-        public FoodModel foodmodel { get; set; }
+        public FoodModel? foodmodel { get; set; }
+        public int Id_user { get; set; }
+        [ForeignKey("Id_user")]
 
-       
+        public User? user { get; set; }
+
+        public int Id_rabbit { get; set; }
+        [ForeignKey("Id_rabbit")]
+
+        public RabbitModel? rabbitmodel { get; set; }
+
+
     }
 }

@@ -6,20 +6,35 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
-        builder=> builder
+        builder => builder
         .AllowAnyOrigin()
         .AllowAnyMethod()
         .AllowAnyHeader());
 });
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        // Configurar opciones para manejar correctamente las fechas
+        options.JsonSerializerOptions.PropertyNamingPolicy = null;
+        options.JsonSerializerOptions.WriteIndented = true;
+        options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+
+        // Configurar para ignorar valores nulos
+        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+
+        // Configurar para manejar referencias circulares
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
+
 // Configuración de Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -70,23 +85,35 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 //            }
 //                ));
 //        }
-        
+
 //        };
 //    });
 
 // Servicios
 builder.Services.AddScoped<ReproductionServices>();
+
+// Registrar los servicios en el orden correcto para evitar la dependencia circular
+// Primero registramos WeighingServices
 builder.Services.AddScoped<WeighingServices>();
+
+// Luego registramos RabbitServices que depende de WeighingServices
+builder.Services.AddScoped<RabbitServices>();
+
+// Mantener el resto de los servicios como están
 builder.Services.AddScoped<CageServices>();
 builder.Services.AddScoped<HealthServices>();
+
+// Registrar los servicios de inventario en el orden correcto
+// Primero FoodServices ya que otros servicios dependen de él
 builder.Services.AddScoped<FoodServices>();
+// Luego los servicios que dependen de FoodServices
+builder.Services.AddScoped<EntradaServices>();
+builder.Services.AddScoped<FeedingServices>();
+
 builder.Services.AddScoped<UserServices>();
 builder.Services.AddScoped<RaceServices>();
-builder.Services.AddScoped<EntradaServices>();
-builder.Services.AddScoped<RabiServices>();
 builder.Services.AddScoped<MountsServices>();
 builder.Services.AddScoped<DesteteServices>();
-builder.Services.AddScoped<FeedingServices>();
 builder.Services.AddScoped<MortalityServices>();
 
 var app = builder.Build();

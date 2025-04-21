@@ -14,9 +14,7 @@ namespace cunigranja.Models
         [DataType(DataType.Date)]
         public DateTime fecha_entrada { get; set; }
 
-        [Required(ErrorMessage = "El campo [0] es obligatorio.")]
-        [StringLength(250, ErrorMessage = "La Unidad no puede tener más de 50 caracteres.")]
-        [Display(Name = "cantidad de")]
+      
         public int cantidad_entrada { get; set; }
 
         
@@ -25,10 +23,12 @@ namespace cunigranja.Models
         [Display(Name = "Valor de la entrada ")]
         public int valor_entrada { get; set; }
 
-        public int Id_feeding { get; set; }
-        [ForeignKey("Id_feeding")]
+        public int Id_food { get; set; }
+        [ForeignKey("Id_food")]
 
-        public FeedingModel feedingmodel { get; set; }
+        public FoodModel? foodmodel { get; set; }
+        public int existencia_actual { get; set; }
+        public int valor_total { get; set; }
 
     }
 }

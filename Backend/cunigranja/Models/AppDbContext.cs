@@ -10,7 +10,7 @@ namespace cunigranja.Models
         public DbSet<User> user { get; set; }
         public DbSet<MountsModel> mounts { get; set; }
         public DbSet<EntradaModel> entrada { get; set; }
-        public DbSet<RabiModel> rabi { get; set; }
+        public DbSet<RabbitModel> rabbit { get; set; }
         public DbSet<DesteteModel> destete { get; set; }
         public DbSet<ReproductionModel> reproduction { get; set; }
         public DbSet<WeighingModel> weighing { get; set; }

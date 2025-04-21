@@ -16,7 +16,7 @@ namespace cunigranja.DTOs
 
             public int peso_destete { get; set; }
 
-            public string nombre_rabi {  get; set; }
+            public string name_rabbit {  get; set; }
 
         
     }

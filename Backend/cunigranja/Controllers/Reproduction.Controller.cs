@@ -40,14 +40,14 @@ namespace cunigranja.Controllers
         public ActionResult<IEnumerable<ReproductionDTO>> GetsAllReproduction()
         {
 
-            var reproduction = _Services.GetAll().Select(r => new ReproductionDTO
+            var reproduction = _Services.GetAll().Select(e => new ReproductionDTO
             {
-                Id_reproduction = r.Id_reproduction,            
-                fecha_nacimiento= r.fecha_nacimiento,
-                total_conejos=r.total_conejos,
-                nacidos_muertos=r.nacidos_muertos,
-                nacidos_vivos=r.nacidos_vivos,
-                fecha_mounts=r.mountsmodel.fecha_mounts,
+                Id_reproduction = e.Id_reproduction,            
+                fecha_nacimiento= e.fecha_nacimiento,
+                total_conejos=e.total_conejos,
+                nacidos_muertos=e.nacidos_muertos,
+                nacidos_vivos=  e.nacidos_vivos,
+                name_rabbit=e.rabbitmodel.name_rabbit,
             }).ToList();
 
             return Ok(reproduction);
@@ -117,25 +117,17 @@ namespace cunigranja.Controllers
 
         }
         [HttpDelete("DeleteReproduction")]
-        public IActionResult DeleteReproductionById(int Id_reproduction)
+        public IActionResult DeleteReproductionById(int Id)
         {
             try
             {
-                if (Id_reproduction <= 0)
+                var existingReproduction = _Services.GetReproductionById(Id);
+                if (existingReproduction == null)
                 {
-                    return BadRequest("Invalid reproduction ID.");
+                    return NotFound();
                 }
-
-                var result = _Services.DeleteById(Id_reproduction);
-
-                if (result)
-                {
-                    return Ok("Feeding deleted successfully.");
-                }
-                else
-                {
-                    return NotFound("Feeding not found.");
-                }
+                _Services.DeleteById(Id);
+                return Ok();
             }
             catch (Exception ex)
             {

@@ -14,7 +14,9 @@ namespace cunigranja.DTOs
         public int cantidad_entrada { get; set; }
 
         public int valor_entrada { get; set; }
+        public int valor_total { get; set; }
 
-        public string cantidad_feeding { get; set; }
+        public string name_food { get; set; }
+        public int existencia_actual { get; set; }
     }
 }

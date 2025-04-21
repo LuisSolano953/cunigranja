@@ -4,7 +4,6 @@ using cunigranja.Models;
 using cunigranja.Services;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace cunigranja.Controllers
 {
     [ApiController]
@@ -42,17 +41,37 @@ namespace cunigranja.Controllers
         {
             var weighing = _Services.GetAll().Select(w => new WeighingDTO
             {
-                Id_weighing= w.Id_weighing,
-                fecha_weighing=w.fecha_weighing,
-                cantidad_peso=w.cantidad_peso,
+                Id_weighing = w.Id_weighing,
+                fecha_weighing = w.fecha_weighing,
+                ganancia_peso = w.ganancia_peso,
+                peso_actual = w.peso_actual,
                 name_user = w.user.name_user,
-                nombre_rabi = w.rabimodel.nombre_rabi,
+                name_rabbit = w.rabbitmodel.name_rabbit,
 
             }).ToList();
 
             return Ok(weighing);
         }
 
+        // Nuevo endpoint para obtener pesajes por ID de conejo
+        [HttpGet("GetWeighingByRabbit")]
+        public ActionResult<IEnumerable<WeighingModel>> GetWeighingByRabbit(int id_rabbit)
+        {
+            try
+            {
+                var weighings = _Services.GetWeighingByRabbitId(id_rabbit);
+                if (weighings == null || !weighings.Any())
+                {
+                    return NotFound("No se encontraron pesajes para este conejo.");
+                }
+                return Ok(weighings);
+            }
+            catch (Exception ex)
+            {
+                FunctionsGeneral.AddLog(ex.Message);
+                return StatusCode(500, ex.ToString());
+            }
+        }
 
         [HttpGet("ConsulWeighing")]
         public ActionResult<WeighingModel> GetweighingById(int Id_weighing)

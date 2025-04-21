@@ -48,8 +48,8 @@ namespace cunigranja.Controllers
                 tiempo_mounts=m.tiempo_mounts,
                 fecha_mounts=m.fecha_mounts,
                 cantidad_mounts=m.cantidad_mounts,
-                nombre_rabi=m.rabimodel.nombre_rabi
-               
+                name_rabbit=m.rabbitmodel?.name_rabbit ?? "Sin nombre"
+
             }).ToList();
 
             return Ok(mounts);

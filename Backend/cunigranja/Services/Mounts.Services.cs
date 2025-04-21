@@ -13,7 +13,7 @@ namespace cunigranja.Services
 
         public IEnumerable<MountsModel> GetAll()
         {
-            return _context.mounts.Include(m => m.rabimodel).ToList();
+            return _context.mounts.Include(m => m.rabbitmodel).ToList();
         }
 
         public MountsModel GetMountsById(int id)

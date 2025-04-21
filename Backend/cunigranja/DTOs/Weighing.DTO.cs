@@ -8,9 +8,9 @@ namespace cunigranja.DTOs
 
         [DataType(DataType.Date)]
         public DateTime fecha_weighing { get; set; }
-        public int cantidad_peso { get; set; }
-
-        public string nombre_rabi { get; set; }
+        public int ganancia_peso { get; set; }
+        public int peso_actual { get; set; }
+        public string name_rabbit { get; set; }
         public string name_user { get; set; }
     }
 }

@@ -10,25 +10,22 @@ namespace cunigranja.Models
 
         public int Id_mortality { get; set; } = 0;
 
-
-        [Range(1,40, ErrorMessage = "La cantidad de mortalidad debe ser mayor que 0.")]
-        [Display(Name = "Cantidad de Mortalidad")]
-        public int cantidad_mortality { get; set; }
+        public string causa_mortality { get; set; }
 
         [DataType(DataType.Date)]
         [Display(Name = "Fecha de Mortalidad")]
         [Required(ErrorMessage = "La fecha de mortalidad es obligatoria.")]
         public DateTime fecha_mortality { get; set; }
 
-        public int Id_rabi { get; set; }
-        [ForeignKey("Id_rabi")]
+        public int Id_rabbit { get; set; }
+        [ForeignKey("Id_rabbit")]
 
-        public RabiModel rabimodel { get; set; }
+        public RabbitModel? rabbitmodel { get; set; }
 
         public int Id_user { get; set; }
         [ForeignKey("Id_user")]
 
-        public User user { get; set; }
+        public User? user { get; set; }
 
 
     }

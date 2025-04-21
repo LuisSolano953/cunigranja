@@ -29,6 +29,7 @@ namespace cunigranja.Models
         [Range(1, 1000000, ErrorMessage = "el valor debe ser mayor que 0.")]
         [Display(Name = "Valor del alimento")]
         public int valor_food { get; set; }
+        public double saldo_existente { get; set; }
 
     }
 }

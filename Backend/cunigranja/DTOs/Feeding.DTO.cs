@@ -15,10 +15,14 @@ namespace cunigranja.DTOs
         [DataType("hora")]
         public string hora_feeding { get; set; }
 
-        public string cantidad_feeding { get; set; }
+        public int cantidad_feeding { get; set; }
+        public double existencia_actual { get; set; }
 
         public string name_food { get; set; }
-       
+        public string name_user { get; set; }
+        public string name_rabbit { get; set; }
+
+        // Añadir esta propiedad
+        public int Id_food { get; set; }
     }
 }
-    

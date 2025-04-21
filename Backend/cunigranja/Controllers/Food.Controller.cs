@@ -137,5 +137,41 @@ namespace cunigranja.Controllers
                 return StatusCode(500, ex.ToString());
             }
         }
+
+        // NUEVA CLASE: Para recibir los datos de la solicitud de recálculo
+        public class RecalculateBalanceRequest
+        {
+            public int id_food { get; set; }
+            public double new_saldo { get; set; }
+        }
+
+        // NUEVO MÉTODO: Recalcular saldos cuando cambia el saldo de un alimento
+        [HttpPost("RecalculateFoodBalance")]
+        public IActionResult RecalculateFoodBalance([FromBody] RecalculateBalanceRequest request)
+        {
+            try
+            {
+                if (request == null)
+                {
+                    return BadRequest("Los datos de recálculo son nulos");
+                }
+
+                if (request.id_food <= 0)
+                {
+                    return BadRequest("ID de alimento inválido");
+                }
+
+                // Registrar la solicitud para depuración
+                FunctionsGeneral.AddLog($"RecalculateFoodBalance: Recalculando saldo para alimento ID {request.id_food}, nuevo saldo: {request.new_saldo}");
+
+                _Services.RecalculateFoodBalance(request.id_food, request.new_saldo);
+                return Ok(new { message = "Saldo recalculado correctamente" });
+            }
+            catch (Exception ex)
+            {
+                FunctionsGeneral.AddLog($"Error en RecalculateFoodBalance: {ex.Message}");
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }

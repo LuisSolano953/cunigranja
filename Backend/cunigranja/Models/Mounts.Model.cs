@@ -25,10 +25,10 @@ namespace cunigranja.Models
         [Display(Name = "montas")]
         public int cantidad_mounts { get; set; }
 
-        public int Id_rabi { get; set; }
-        [ForeignKey("Id_rabi")]
+        public int Id_rabbit { get; set; }
+        [ForeignKey("Id_rabbit")]
 
-        public RabiModel rabimodel { get; set; }
+        public RabbitModel? rabbitmodel { get; set; }
 
     }
 }

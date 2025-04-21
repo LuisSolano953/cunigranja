@@ -14,6 +14,6 @@ namespace cunigranja.DTOs
         public DateTime fecha_mounts { get; set; }
         public int cantidad_mounts { get; set; }
 
-        public string nombre_rabi { get; set; }
+        public string name_rabbit { get; set; }
     }
 }

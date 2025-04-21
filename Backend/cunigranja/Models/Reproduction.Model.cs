@@ -26,9 +26,9 @@ namespace cunigranja.Models
         [Range(0, 30, ErrorMessage = "La cantidad de nacidos muertos puede  ser igual omayor que 0.")]
         [Display(Name = "nacidos muertos")]
         public int nacidos_muertos { get; set; }
-        public int Id_mounts { get; set; }
-        [ForeignKey("Id_mounts")]
+        public int Id_rabbit { get; set; }
+        [ForeignKey("Id_rabbit")]
 
-        public MountsModel mountsmodel { get; set; }
+        public RabbitModel? rabbitmodel { get; set; }
     }
 }

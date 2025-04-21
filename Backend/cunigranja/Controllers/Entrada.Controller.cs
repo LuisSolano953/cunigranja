@@ -3,6 +3,8 @@ using cunigranja.Functions;
 using cunigranja.Models;
 using cunigranja.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Globalization;
 
 namespace cunigranja.Controllers
 {
@@ -22,34 +24,85 @@ namespace cunigranja.Controllers
         }
 
         [HttpPost("CreateEntrada")]
-        public IActionResult Create(EntradaModel entity)
+        public IActionResult Create([FromBody] EntradaModel entity)
         {
             try
             {
+                // Validar que los datos necesarios estén presentes
+                if (entity == null)
+                {
+                    return BadRequest("Los datos de entrada son nulos");
+                }
+
+                // Registrar los datos recibidos para depuración
+                FunctionsGeneral.AddLog($"Datos recibidos: fecha={entity.fecha_entrada}, valor={entity.valor_entrada}, cantidad={entity.cantidad_entrada}, Id_food={entity.Id_food}");
+
+                // Validar que la fecha sea válida
+                if (entity.fecha_entrada == default(DateTime))
+                {
+                    FunctionsGeneral.AddLog("La fecha de entrada es inválida o no se proporcionó");
+                    return BadRequest("La fecha de entrada es inválida o no se proporcionó");
+                }
+
+                // Validar que la cantidad sea válida
+                if (entity.cantidad_entrada <= 0)
+                {
+                    FunctionsGeneral.AddLog("La cantidad debe ser mayor que cero");
+                    return BadRequest("La cantidad debe ser mayor que cero");
+                }
+
+                // Validar que el valor sea válido
+                if (entity.valor_entrada <= 0)
+                {
+                    FunctionsGeneral.AddLog("El valor debe ser mayor que cero");
+                    return BadRequest("El valor debe ser mayor que cero");
+                }
+
+                // Validar que el alimento exista
+                if (entity.Id_food <= 0)
+                {
+                    FunctionsGeneral.AddLog("Debe seleccionar un alimento válido");
+                    return BadRequest("Debe seleccionar un alimento válido");
+                }
+
                 _Services.Add(entity);
-                return Ok(new { message = "Entrada creado con extito" });
+                return Ok(new { message = "Entrada registrada con éxito" });
             }
             catch (Exception ex)
             {
-                FunctionsGeneral.AddLog(ex.Message);
-                return StatusCode(500, ex.ToString());
+                FunctionsGeneral.AddLog($"Error en CreateEntrada: {ex.Message}");
+                if (ex.InnerException != null)
+                {
+                    FunctionsGeneral.AddLog($"Inner Exception: {ex.InnerException.Message}");
+                }
+                FunctionsGeneral.AddLog($"Stack Trace: {ex.StackTrace}");
+                return StatusCode(500, ex.Message);
             }
         }
 
         [HttpGet("GetEntrada")]
         public ActionResult<IEnumerable<EntradaDTO>> GetAllsEntrada()
         {
-            var entrada = _Services.GetAll().Select(e => new EntradaDTO
+            try
             {
-               Id_entrada = e.Id_entrada,
-                cantidad_entrada =e.cantidad_entrada,
-                valor_entrada=e.valor_entrada,
-                fecha_entrada = e.fecha_entrada,
-                cantidad_feeding= e.feedingmodel.cantidad_feeding,
+                var entrada = _Services.GetAll().Select(e => new EntradaDTO
+                {
+                    Id_entrada = e.Id_entrada,
+                    cantidad_entrada = e.cantidad_entrada,
+                    valor_entrada = e.valor_entrada,
+                    fecha_entrada = e.fecha_entrada,
+                    name_food = e.foodmodel.name_food,
+                    valor_total = e.valor_total,
+                    existencia_actual = e.existencia_actual,
+                }).ToList();
 
-            }).ToList();
-
-            return Ok(entrada);
+                return Ok(entrada);
+            }
+            catch (Exception ex)
+            {
+                FunctionsGeneral.AddLog(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet("ConsultEntrada")]
@@ -67,31 +120,35 @@ namespace cunigranja.Controllers
             catch (Exception ex)
             {
                 FunctionsGeneral.AddLog(ex.Message);
-                return StatusCode(500, ex.ToString());
+                return StatusCode(500, ex.Message);
             }
         }
 
         [HttpPost("UpdateEntrada")]
-        public IActionResult UpdateEntrada(EntradaModel entity)
+        public IActionResult UpdateEntrada([FromBody] EntradaModel entity)
         {
             try
             {
-                if (entity.Id_entrada <= 0) // Verifica que el ID sea válido
+                if (entity == null)
                 {
-                    return BadRequest("Invalid Entrada ID.");
+                    return BadRequest("Los datos de entrada son nulos");
                 }
 
-                // Llamar al método de actualización en el servicio
-                _Services.UpdateEntrada(entity.Id_entrada, entity);
+                if (entity.Id_entrada <= 0)
+                {
+                    return BadRequest("ID de entrada inválido");
+                }
 
-                return Ok("Entrada updated successfully.");
+                _Services.UpdateEntrada(entity.Id_entrada, entity);
+                return Ok("Entrada actualizada con éxito");
             }
             catch (Exception ex)
             {
                 FunctionsGeneral.AddLog(ex.Message);
-                return StatusCode(500, ex.ToString());
+                return StatusCode(500, ex.Message);
             }
         }
+
         [HttpGet("GetEntradaInRange")]
         public ActionResult<IEnumerable<EntradaModel>> GetEntradaInRange(int startId, int endId)
         {
@@ -100,14 +157,14 @@ namespace cunigranja.Controllers
                 var entrada = _Services.GetEntradaInRange(startId, endId);
                 if (entrada == null || !entrada.Any())
                 {
-                    return NotFound("No Entrada found in the specified range.");
+                    return NotFound("No se encontraron entradas en el rango especificado");
                 }
                 return Ok(entrada);
             }
             catch (Exception ex)
             {
                 FunctionsGeneral.AddLog(ex.Message);
-                return StatusCode(500, ex.ToString());
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -119,15 +176,15 @@ namespace cunigranja.Controllers
                 var existingEntrada = _Services.GetEntradaById(id);
                 if (existingEntrada == null)
                 {
-                    return NotFound();
+                    return NotFound("Entrada no encontrada");
                 }
                 _Services.Delete(id);
-                return Ok();
+                return Ok("Entrada eliminada con éxito");
             }
             catch (Exception ex)
             {
                 FunctionsGeneral.AddLog(ex.Message);
-                return StatusCode(500, ex.ToString());
+                return StatusCode(500, ex.Message);
             }
         }
     }

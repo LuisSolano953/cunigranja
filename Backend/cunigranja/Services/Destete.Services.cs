@@ -13,7 +13,7 @@ namespace cunigranja.Services
 
         public IEnumerable<DesteteModel> GetAll()
         {
-            return _context.destete.Include(d => d.rabimodel).ToList();
+            return _context.destete.Include(d => d.rabbitmodel).ToList();
         }
 
         public DesteteModel GetDesteteById(int id)

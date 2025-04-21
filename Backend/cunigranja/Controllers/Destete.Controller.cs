@@ -45,7 +45,7 @@ namespace cunigranja.Controllers
                 Id_destete = d.Id_destete,
                 fecha_destete = d.fecha_destete,
                 peso_destete = d.peso_destete,
-                nombre_rabi = d.rabimodel.nombre_rabi,
+                name_rabbit = d.rabbitmodel.name_rabbit,
 
             }).ToList();
 

@@ -13,16 +13,16 @@ namespace cunigranja.Services
         }
         public IEnumerable<ReproductionModel> GetAll()
         {
-            return _context.reproduction.Include(r => r.mountsmodel).ToList();
+            return _context.reproduction.Include(e => e.rabbitmodel).ToList();
         }
         public void Add(ReproductionModel entity)
         {
             _context.reproduction.Add(entity);
             _context.SaveChanges();
         }
-        public bool DeleteById(int Id_reproduction)
+        public bool DeleteById(int Id)
         {
-            var reproduction = _context.reproduction.Find(Id_reproduction);
+            var reproduction = _context.reproduction.Find(Id);
             if (reproduction!= null)
             {
                 _context.reproduction.Remove(reproduction);
