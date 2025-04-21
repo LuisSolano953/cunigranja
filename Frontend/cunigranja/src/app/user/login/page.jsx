@@ -68,7 +68,7 @@ function LoginPage() {
                                 <img 
                                     src="/assets/img/CUNIGRANJA-2.png" 
                                     alt="Logo" 
-                                    className="w-full h-full object-contain rounded-full bg-black mix-blend-multiply"
+                                    className="w-full h-full object-contain rounded-full bg-white mix-blend-multiply"
                                 />
                             </motion.div>
                             <h2 className="text-3xl font-bold mb-4 text-gray-800">Bienvenido</h2>

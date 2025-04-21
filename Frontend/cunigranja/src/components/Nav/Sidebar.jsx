@@ -1,45 +1,69 @@
 "use client"
+
 import React, { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Home, Utensils, Apple, Skull, Box, Stethoscope, Dna, Baby, Weight, BabyIcon as BabyBottle } from "lucide-react"
+import { Home, Utensils, Carrot, Skull, Box, Stethoscope, Dna, Baby, Weight, Milk, Rabbit, HeartHandshake, PackageOpen } from 'lucide-react'
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 
-export function Sidebar() {
+export function Sidebar({ onNavigate }) {
   const [isExpanded, setIsExpanded] = useState(false)
   const router = useRouter()
 
   const sidebarItems = [
     { name: "Inicio", icon: <Home />, href: "/Dashboar" },
-    { name: "Alimento", icon: <Utensils />, href: "/Dashboar/food" },
-    { name: "Alimentación", icon: <Apple />, href: "/Dashboar/feeding" },
-    { name: "Mortalidad", icon: <Skull />, href: "/Dashboar/mortality" },
     { name: "Jaula", icon: <Box />, href: "/Dashboar/Cage" },
-    { name: "Sanidad", icon: <Stethoscope />, href: "/Dashboar/health" },
     { name: "Raza", icon: <Dna />, href: "/Dashboar/race" },
-    { name: "Reproducción", icon: <Baby />, href: "/Dashboar/reproduction" },
-    { name: "Destete", icon: <BabyBottle />, href: "/Dashboar/weaning" },
+    { name: "Conejo", icon: <Rabbit />, href: "/Dashboar/Rabbit" },
     { name: "Pesaje", icon: <Weight />, href: "/Dashboar/pesaje" },
-    { name: "Montas", icon: <Weight />, href: "/Dashboar/mounts" },
+    { name: "Alimento", icon: <Utensils />, href: "/Dashboar/food" },
+    { name: "Insumos", icon: <PackageOpen />, href: "/Dashboar/insumos" },
+    { name: "Alimentación", icon: <Carrot/>, href: "/Dashboar/feeding" },
+    { name: "Sanidad", icon: <Stethoscope />, href: "/Dashboar/health" },
+    { name: "Reproducción", icon: <Baby />, href: "/Dashboar/reproduction" },
+    { name: "Mortalidad", icon: <Skull />, href: "/Dashboar/mortality" },
+    // { name: "Destete", icon: <Milk />, href: "/Dashboar/destete" },
+    // { name: "Montas", icon: <HeartHandshake />, href: "/Dashboar/mounts" },
   ]
 
   const handleItemClick = (href) => {
     setIsExpanded(false)
+    
+    // Activar la pantalla de carga antes de navegar
+    if (typeof onNavigate === 'function') {
+      onNavigate()
+    }
+    
     router.push(href)
   }
 
   return (
     <>
       <div
-        className={`fixed top-0 left-0 h-screen z-50 bg-black text-white shadow-lg transition-all duration-300 
+        className={`fixed top-0 left-0 h-screen z-40 bg-black text-white shadow-lg transition-all duration-300 
           ${isExpanded ? "w-64" : "w-20"}
         `}
         onMouseEnter={() => setIsExpanded(true)}
         onMouseLeave={() => setIsExpanded(false)}
       >
-        {/* Header */}
-        <div className="flex items-center justify-between h-20 px-4 bg-black">
-          {isExpanded && <span className="text-3xl font-semibold"></span>}
+        {/* Header with Logo */}
+        <div className="flex items-center justify-center h-20 px-4 bg-black">
+          <div
+            className={`
+            transition-all duration-300 overflow-hidden flex justify-center items-center
+            ${isExpanded ? "w-40 h-16" : "w-12 h-12"}
+          `}
+          >
+            <Image
+              src="/assets/img/CUNIGRANJA-1.png"
+              alt="CUNIGRANJA Logo"
+              width={isExpanded ? 110 : 48}
+              height={isExpanded ? 64 : 48}
+              className="transition-all duration-300 object-contain"
+              priority
+            />
+          </div>
         </div>
 
         {/* Navigation */}

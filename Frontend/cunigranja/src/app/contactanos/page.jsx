@@ -34,11 +34,11 @@ export default function Contactanos() {
           >
             <div className="relative w-full h-full flex items-center">
               <Image
-                src="/assets/img/grupo.jpg"
+                src="/assets/img/grupo.jpeg"
                 alt="Grupo trabajando en la granja de conejos Cunigranja"
                 className="rounded-lg shadow-lg object-cover"
-                width={650}
-                height={450}
+                width={750}
+                height={550}
               />
             </div>
 

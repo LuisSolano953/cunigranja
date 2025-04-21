@@ -1,41 +1,77 @@
-"use client"
+"use client";  // ✅ NECESARIO PARA Next.js 13+ (App Router)
 
-import axiosInstance from "@/lib/axiosInstance"
-import { useState } from "react"
+import { useState, useEffect } from "react";
+import axiosInstance from "@/lib/axiosInstance";
 
-const RegisterMounts = () => {
-  const [fecha_mounts, setFechaMounts] = useState("")
-  const [tiempo_mounts, setTiempoMounts] = useState("")
-  const [cantidad_mounts, setCantidadMounts] = useState("")
-  const [errorMessage, setErrorMessage] = useState("")
-  const [successMessage, setSuccessMessage] = useState("")
+const RegisterMounts = ({ refreshData }) => {
+  const [fecha_mounts, setFechaMounts] = useState("");
+  const [tiempo_mounts, setTiempoMounts] = useState("");
+  const [cantidad_mounts, setCantidadMounts] = useState("");
+  const [id_rabbit, setIdRabbit] = useState("");
+  const [conejos, setConejos] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    async function fetchConejos() {
+      try {
+        setIsLoading(true);
+        const response = await axiosInstance.get("/Api/Rabbit/GetRabbit");
+        if (response.status === 200) {
+          setConejos(response.data);
+        }
+      } catch (error) {
+        console.error("Error al obtener conejos:", error);
+        setErrorMessage("Error al obtener conejos");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchConejos();
+  }, []);
 
   async function handlerSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
 
+    if (!fecha_mounts || !tiempo_mounts || !cantidad_mounts || !id_rabbit) {
+      setErrorMessage("Todos los campos son obligatorios.");
+      return;
+    }
+
+    setIsLoading(true);
     try {
       const response = await axiosInstance.post("/Api/Mounts/CreateMounts", {
-        fecha_mounts,
-        tiempo_mounts,
-        cantidad_mounts,
-      })
+        fecha_mounts: new Date(fecha_mounts).toISOString().split("T")[0],
+        tiempo_mounts: `${fecha_mounts}T${tiempo_mounts}:00`,
+        cantidad_mounts: parseInt(cantidad_mounts),
+        id_rabbit: parseInt(id_rabbit),
+      });
 
       if (response.status === 200) {
-        setSuccessMessage(response.data.message)
-        setFechaMounts("")
-        setTiempoMounts("")
-        setCantidadMounts("")
+        setSuccessMessage(response.data.message || "Registro exitoso");
+        setFechaMounts("");
+        setTiempoMounts("");
+        setCantidadMounts("");
+        setIdRabbit("");
       }
     } catch (error) {
-      console.error("Error al registrar la monta:", error)
-      setErrorMessage(error.response?.data?.message || "Error desconocido al registrar la monta.")
+      console.error("Error al registrar la monta:", error);
+      setErrorMessage(error.response?.data?.message || "Error desconocido al registrar la monta.");
+    } finally {
+      setIsLoading(false);
     }
   }
 
   const closeModal = () => {
-    setErrorMessage("")
-    setSuccessMessage("")
-  }
+    setErrorMessage("");
+    setSuccessMessage("");
+
+    if (successMessage && refreshData && typeof refreshData === "function") {
+      refreshData();
+    }
+  };
 
   return (
     <>
@@ -119,21 +155,41 @@ const RegisterMounts = () => {
               required
             />
           </div>
+
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Conejo:</label>
+            {isLoading && conejos.length === 0 ? (
+              <div className="text-center py-2 border border-gray-300 rounded-lg bg-gray-50">Cargando conejos...</div>
+            ) : (
+              <select
+                value={id_rabbit}
+                onChange={(e) => setIdRabbit(e.target.value)}
+                className="w-full border border-gray-400 rounded-lg p-2 bg-white focus:outline-none focus:ring-2 focus:ring-gray-600"
+                required
+              >
+                <option value="">Seleccione un conejo</option>
+                {conejos.map((conejo) => (
+                  <option key={conejo.Id_rabbit} value={conejo.id_rabbit}>
+                    {conejo.name_rabbit}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
         </div>
 
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-6">
           <button
             type="submit"
-            className="bg-black text-white font-semibold py-3 px-6 rounded-lg hover:bg-gray-600 transition-colors"
+            disabled={isLoading}
+            className="bg-black text-white font-semibold py-3 px-6 rounded-lg hover:bg-gray-600 transition-colors w-full"
           >
-            Registrar Monta
+            {isLoading ? "Registrando..." : "Registrar Monta"}
           </button>
         </div>
       </form>
     </>
-  )
-}
+  );
+};
 
-export default RegisterMounts
-
-
+export default RegisterMounts;

@@ -37,7 +37,7 @@ function PublicNav() {
             <motion.img
               src="../assets/img/CUNIGRANJA-1.png"
               alt="Logo"
-              width="95"
+              width="120"
               height="120"
               className="object-contain"
               initial={{ opacity: 0, rotate: -180 }}

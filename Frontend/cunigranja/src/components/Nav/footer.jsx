@@ -12,7 +12,7 @@ export default function Footer() {
               <Image src="/assets/img/CUNIGRANJA-1.png" alt="Logo de CUNIGRANJA" layout="fill" objectFit="contain" />
             </div>
             <div>
-              <h2 className="text-base font-bold mb-1 text-white">CUNIGRANJA</h2>
+             
               <p className="text-xs font-bold">Creando experiencias web increíbles.</p>
             </div>
           </div>

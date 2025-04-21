@@ -13,9 +13,9 @@ function Mountspage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const titlesFood = ["ID", "Tiempo", "Fecha", "Cantidad", "Nombre"];
+  const titlesFood = ["ID", "Tiempo", "Fecha", "Cantidad", "Conejo"];
 
-  async function fetchFeeding() {
+  async function FetchMounts() {
     try {
       setIsLoading(true);
       const response = await axiosInstance.get("/Api/Mounts/GetMounts");
@@ -27,7 +27,7 @@ function Mountspage() {
           fecha: item.fecha_mounts,
           tiempo : item.tiempo_mounts,
           cantidad: item.cantidad_mounts,
-          nombre: item.nombre_rabi,
+          conejo: item.name_rabbit,
         }));
         console.log("Processed data:", data);
         setRegisterMountsData(data);
@@ -36,37 +36,64 @@ function Mountspage() {
       console.error("Error al obtener los registros:", error);
       setError("No se pudieron cargar los datos de los alimentos.");
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
   }
 
   useEffect(() => {
-    fetchFeeding();
-  }, []);
+    FetchMounts();
+  }, [])
 
   const handleDelete = async (id) => {
     try {
-      await axiosInstance.delete(`/Api/Feeding/DeleteFeeding?Id_feeding=${id}`);
-      fetchFeeding(); // Recargar los datos después de eliminar
+      console.log("Intentando eliminar registro con ID:", id)
+  
+      // Asegurar que el ID sea un número válido
+      const numericId = Number(id)
+  
+      if (isNaN(numericId)) {
+        console.error("ID inválido:", id)
+        return
+      }
+  
+      // Formatear correctamente la URL
+      const url = `/Api/Mounts/DeleteMounts?id=${numericId}`
+      console.log("URL de eliminación:", url)
+  
+      const response = await axiosInstance.delete(url)
+  
+      console.log("Respuesta de eliminación:", response)
+  
+      if (response.status === 200) {
+        console.log('Registro con ID ${numericId} eliminado correctamente.')
+  
+        // Refrescar los datos después de eliminar
+        FetchMounts()
+      } else {
+        console.warn("La API no devolvió un estado 200:", response)
+      }
+  
+      return response
     } catch (error) {
-      console.error("Error al eliminar la monta:", error);
-      setError("No se pudo eliminar la monta.");
+      console.error("Error detallado al eliminar:", error.response?.data || error.message || error)
+      throw error
     }
-  };
+  }
 
-  console.log("RegisterMountsData:", RegisterMountsData);
+
+
   return (
     <NavPrivada>
       <ContentPage 
         TitlePage={TitlePage} 
         Data={RegisterMountsData} 
         TitlesTable={titlesFood}  
-        FormPage={Registermounts}
+        FormPage={() =><Registermounts refreshData={FetchMounts}/>}
         onDelete={handleDelete}
         endpoint="/Api/Feeding/DeleteFeeding"
       />
     </NavPrivada>
-  );
+  )
 }
 
-export default Mountspage;
+export default Mountspage

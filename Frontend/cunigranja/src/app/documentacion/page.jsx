@@ -1,9 +1,12 @@
 "use client";
 
 import React from "react";
+
+import Footer from "@/components/Nav/footer"
 import PublicNav from "@/components/Nav/PublicNav"; 
 const Documento = () => {
   return (
+    <>
     <div className="flex flex-col min-h-screen bg-white">
       {/* Barra de navegación en la parte superior */}
       <PublicNav />
@@ -34,6 +37,8 @@ const Documento = () => {
         </div>
       </div>
     </div>
+     <Footer />
+    </>
   );
 };
 

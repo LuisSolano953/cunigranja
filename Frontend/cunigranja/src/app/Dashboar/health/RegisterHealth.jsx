@@ -30,7 +30,7 @@ const RegisterHealth = ({ refreshData }) => {
         setIsLoading(false)
       }
     }
-
+ 
     fetchUsers()
   }, [])
 

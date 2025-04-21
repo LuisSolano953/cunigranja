@@ -1,3 +1,6 @@
+"use client"
+
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import {
@@ -8,14 +11,49 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { User, Settings, LogOut } from "lucide-react"
+import { User, Settings, LogOut, Loader2 } from 'lucide-react'
 import { Sidebar } from "./Sidebar"
 
+// Componente LoadingScreen interno
+function LoadingScreen({ isLoading }) {
+  if (!isLoading) return null
+
+  return (
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center gap-4">
+        <Loader2 className="h-16 w-16 animate-spin text-white" />
+        <p className="text-xl font-medium text-white">Cargando...</p>
+      </div>
+    </div>
+  )
+}
+
 export function NavPrivada({ children }) {
+  const [isLoading, setIsLoading] = useState(false)
+
+  // Función para iniciar la carga
+  const startLoading = () => setIsLoading(true)
+  
+  // Función para detener la carga
+  const stopLoading = () => setIsLoading(false)
+
+  // Detener la carga cuando el componente se monta (página cargada)
+  useEffect(() => {
+    // Pequeño retraso para asegurar que la UI se haya renderizado
+    const timer = setTimeout(() => {
+      stopLoading()
+    }, 500)
+
+    return () => clearTimeout(timer)
+  }, [])
+
   return (
     <div className="flex h-screen">
-      {/* Sidebar */}
-      <Sidebar />
+      {/* Pantalla de carga */}
+      <LoadingScreen isLoading={isLoading} />
+
+      {/* Sidebar con la función de carga */}
+      <Sidebar onNavigate={startLoading} />
 
       {/* Contenido principal */}
       <div className="flex-1 flex flex-col">
@@ -24,7 +62,7 @@ export function NavPrivada({ children }) {
           <div className="flex items-center justify-between px-4 py-3">
             {/* Logo */}
             <div className="relative w-40 h-16">
-              <Image src="/assets/img/CUNIGRANJA-1.png" alt="Logo de CUNIGRANJA" layout="fill" objectFit="contain" />
+              
             </div>
 
             {/* User dropdown */}
@@ -71,4 +109,3 @@ export function NavPrivada({ children }) {
 }
 
 export default NavPrivada
-

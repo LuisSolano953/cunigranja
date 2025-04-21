@@ -19,7 +19,7 @@ function Racepage() {
       setIsLoading(true);
       const response = await axiosInstance.get("/Api/Race/GetRace");
       console.log("API Response:", response.data);
-      fetchRace();
+     
       if (response.status === 200) {
         const data = response.data.map((item) => ({
           id: item.id_race,
@@ -62,6 +62,7 @@ function Racepage() {
         FormPage={RegisterRace}
         onDelete={handleDelete}
         endpoint="/Api/Race/DeleteRace"
+        refreshData={fetchRace}
       />
     </NavPrivada>
   );
