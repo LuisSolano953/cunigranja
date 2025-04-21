@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `cunigranja` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `cunigranja`;
 -- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
 --
 -- Host: localhost    Database: cunigranja
@@ -25,26 +23,11 @@ DROP TABLE IF EXISTS `cage`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cage` (
-<<<<<<< HEAD
   `Id_cage` int NOT NULL AUTO_INCREMENT,
-=======
-  `Id_cage` int NOT NULL,
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
-  `capacidad_cage` varchar(250) DEFAULT NULL,
-  `tamaño_cage` varchar(250) DEFAULT NULL,
-  `ubicacion_cage` varchar(250) DEFAULT NULL,
-  `ficha_conejo` int DEFAULT NULL,
-  `fecha_ingreso` date DEFAULT NULL,
-  `fecha_salida` date DEFAULT NULL,
-  `sexo_conejo` varchar(250) DEFAULT NULL,
-  `estado_cage` varchar(250) DEFAULT NULL,
-  `edad_conejo` int DEFAULT NULL,
+  `estado_cage` varchar(250) NOT NULL,
+  `cantidad_animales` int NOT NULL,
   PRIMARY KEY (`Id_cage`)
-<<<<<<< HEAD
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-=======
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -53,8 +36,66 @@ CREATE TABLE `cage` (
 
 LOCK TABLES `cage` WRITE;
 /*!40000 ALTER TABLE `cage` DISABLE KEYS */;
-INSERT INTO `cage` VALUES (1,'string','string','string',1,'2024-10-04','2024-10-04','string','string',3);
+INSERT INTO `cage` VALUES (1,'01',1),(2,'02',1),(3,'03',1),(5,'04',3),(6,'05',2);
 /*!40000 ALTER TABLE `cage` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `destete`
+--
+
+DROP TABLE IF EXISTS `destete`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `destete` (
+  `Id_destete` int NOT NULL AUTO_INCREMENT,
+  `fecha_destete` datetime DEFAULT NULL,
+  `peso_destete` int DEFAULT NULL,
+  `Id_rabi` int DEFAULT NULL,
+  PRIMARY KEY (`Id_destete`),
+  KEY `Id_destete_idx` (`Id_rabi`),
+  CONSTRAINT `Id_destete` FOREIGN KEY (`Id_rabi`) REFERENCES `rabbit` (`Id_rabbit`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `destete`
+--
+
+LOCK TABLES `destete` WRITE;
+/*!40000 ALTER TABLE `destete` DISABLE KEYS */;
+/*!40000 ALTER TABLE `destete` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `entrada`
+--
+
+DROP TABLE IF EXISTS `entrada`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `entrada` (
+  `Id_entrada` int NOT NULL AUTO_INCREMENT,
+  `fecha_entrada` datetime DEFAULT NULL,
+  `cantidad_entrada` int DEFAULT NULL,
+  `valor_entrada` int DEFAULT NULL,
+  `Id_food` int NOT NULL,
+  `valor_total` int DEFAULT NULL,
+  `existencia_actual` int DEFAULT NULL,
+  PRIMARY KEY (`Id_entrada`),
+  KEY `Aliments_idx` (`Id_food`),
+  CONSTRAINT `Aliments` FOREIGN KEY (`Id_food`) REFERENCES `food` (`Id_food`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `entrada`
+--
+
+LOCK TABLES `entrada` WRITE;
+/*!40000 ALTER TABLE `entrada` DISABLE KEYS */;
+INSERT INTO `entrada` VALUES (1,'2025-04-20 00:00:00',5,30000,12,150000,320);
+/*!40000 ALTER TABLE `entrada` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -65,21 +106,23 @@ DROP TABLE IF EXISTS `feeding`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `feeding` (
-<<<<<<< HEAD
   `Id_feeding` int NOT NULL AUTO_INCREMENT,
   `fecha_feeding` datetime DEFAULT NULL,
   `hora_feeding` varchar(250) DEFAULT NULL,
-  `cantidad_feeding` varchar(250) DEFAULT NULL,
-  PRIMARY KEY (`Id_feeding`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-=======
-  `Id_feeding` int NOT NULL,
-  `fecha_feeding` datetime DEFAULT NULL,
-  `hora_feeding` time DEFAULT NULL,
-  `cantidad_feeding` varchar(250) DEFAULT NULL,
-  PRIMARY KEY (`Id_feeding`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
+  `cantidad_feeding` int DEFAULT NULL,
+  `Id_food` int NOT NULL,
+  `Id_rabbit` int DEFAULT NULL,
+  `Id_user` int DEFAULT NULL,
+  `existencia_actual` float DEFAULT NULL,
+  PRIMARY KEY (`Id_feeding`),
+  KEY `Id_food_idx` (`Id_feeding`,`Id_food`),
+  KEY `Id_feeding_idx` (`Id_food`),
+  KEY `Id_rabi_idx` (`Id_rabbit`),
+  KEY `Id_user_idx` (`Id_user`),
+  CONSTRAINT `Id_feeding` FOREIGN KEY (`Id_food`) REFERENCES `food` (`Id_food`) ON DELETE RESTRICT,
+  CONSTRAINT `Id_rabi` FOREIGN KEY (`Id_rabbit`) REFERENCES `rabbit` (`Id_rabbit`) ON DELETE SET NULL,
+  CONSTRAINT `Id_user` FOREIGN KEY (`Id_user`) REFERENCES `user` (`Id_user`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -88,10 +131,7 @@ CREATE TABLE `feeding` (
 
 LOCK TABLES `feeding` WRITE;
 /*!40000 ALTER TABLE `feeding` DISABLE KEYS */;
-<<<<<<< HEAD
-INSERT INTO `feeding` VALUES (1,'2024-11-10 00:00:00','05:16','3lb');
-=======
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
+INSERT INTO `feeding` VALUES (3,'2025-04-20 00:00:00','23:02',100,12,22,1,319.7);
 /*!40000 ALTER TABLE `feeding` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -103,19 +143,14 @@ DROP TABLE IF EXISTS `food`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `food` (
-<<<<<<< HEAD
   `Id_food` int NOT NULL AUTO_INCREMENT,
   `name_food` varchar(250) DEFAULT NULL,
-  `cantidad_food` varchar(250) DEFAULT NULL,
+  `estado_food` varchar(250) DEFAULT NULL,
+  `valor_food` int DEFAULT NULL,
+  `unidad_food` varchar(250) DEFAULT NULL,
+  `saldo_existente` float DEFAULT NULL,
   PRIMARY KEY (`Id_food`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-=======
-  `Id_food` int NOT NULL,
-  `name_food` varchar(250) DEFAULT NULL,
-  `cantidad_food` varchar(250) DEFAULT NULL,
-  PRIMARY KEY (`Id_food`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,11 +159,7 @@ CREATE TABLE `food` (
 
 LOCK TABLES `food` WRITE;
 /*!40000 ALTER TABLE `food` DISABLE KEYS */;
-<<<<<<< HEAD
-INSERT INTO `food` VALUES (1,'string','string'),(2,'string','string'),(3,'string','string'),(4,'string','string'),(5,'string','string'),(10,'string','string'),(11,'rosa','12');
-=======
-INSERT INTO `food` VALUES (1,'string','string'),(2,'string','string'),(3,'string','string'),(4,'string','string'),(5,'string','string'),(10,'string','string');
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
+INSERT INTO `food` VALUES (12,'purina','Existente',35000,'kg',319.7);
 /*!40000 ALTER TABLE `food` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,19 +171,16 @@ DROP TABLE IF EXISTS `health`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `health` (
-<<<<<<< HEAD
   `Id_health` int NOT NULL AUTO_INCREMENT,
   `name_health` varchar(250) DEFAULT NULL,
   `fecha_health` date DEFAULT NULL,
-  PRIMARY KEY (`Id_health`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-=======
-  `Id_health` int NOT NULL,
-  `name_health` varchar(250) DEFAULT NULL,
-  `fecha_health` date DEFAULT NULL,
-  PRIMARY KEY (`Id_health`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
+  `descripcion_health` varchar(250) DEFAULT NULL,
+  `valor_health` int DEFAULT NULL,
+  `Id_user` int NOT NULL,
+  PRIMARY KEY (`Id_health`),
+  KEY `responsable_idx` (`Id_user`),
+  CONSTRAINT `responsable` FOREIGN KEY (`Id_user`) REFERENCES `user` (`Id_user`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,11 +189,7 @@ CREATE TABLE `health` (
 
 LOCK TABLES `health` WRITE;
 /*!40000 ALTER TABLE `health` DISABLE KEYS */;
-<<<<<<< HEAD
-INSERT INTO `health` VALUES (1,'string','2024-10-04'),(2,'string','2024-10-04'),(3,'rwrerwerw','2024-11-02');
-=======
-INSERT INTO `health` VALUES (1,'string','2024-10-04'),(2,'string','2024-10-04');
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
+INSERT INTO `health` VALUES (5,'vacunacion','2025-04-08','aplicacion de vitaminas',25000,1);
 /*!40000 ALTER TABLE `health` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -177,20 +201,17 @@ DROP TABLE IF EXISTS `mortality`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `mortality` (
-<<<<<<< HEAD
   `Id_mortality` int NOT NULL AUTO_INCREMENT,
-=======
-  `Id_mortality` int NOT NULL,
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
   `causa_mortality` varchar(250) DEFAULT NULL,
-  `cantidad_mortality` int DEFAULT NULL,
   `fecha_mortality` datetime DEFAULT NULL,
-  PRIMARY KEY (`Id_mortality`)
-<<<<<<< HEAD
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-=======
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
+  `Id_rabbit` int DEFAULT NULL,
+  `Id_user` int DEFAULT NULL,
+  PRIMARY KEY (`Id_mortality`),
+  KEY `encargado_idx` (`Id_user`),
+  KEY `conejo_idx` (`Id_rabbit`),
+  CONSTRAINT `conejo` FOREIGN KEY (`Id_rabbit`) REFERENCES `rabbit` (`Id_rabbit`) ON DELETE SET NULL,
+  CONSTRAINT `encargado` FOREIGN KEY (`Id_user`) REFERENCES `user` (`Id_user`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -199,11 +220,72 @@ CREATE TABLE `mortality` (
 
 LOCK TABLES `mortality` WRITE;
 /*!40000 ALTER TABLE `mortality` DISABLE KEYS */;
-<<<<<<< HEAD
-INSERT INTO `mortality` VALUES (1,'asad',2,'2024-11-06 00:00:00');
-=======
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
+INSERT INTO `mortality` VALUES (1,'suicidio mortal','2025-04-16 00:00:00',24,1),(2,'infarto','2025-04-16 00:00:00',22,1),(3,'hh','2025-04-16 00:00:00',22,1),(4,'ewe','2025-04-16 00:00:00',22,1),(5,'yyy','2025-04-16 00:00:00',22,1),(6,'kk','2025-04-16 00:00:00',23,1);
 /*!40000 ALTER TABLE `mortality` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `mounts`
+--
+
+DROP TABLE IF EXISTS `mounts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mounts` (
+  `Id_mounts` int NOT NULL AUTO_INCREMENT,
+  `tiempo_mounts` datetime DEFAULT NULL,
+  `fecha_mounts` datetime DEFAULT NULL,
+  `cantidad_mounts` int DEFAULT NULL,
+  `Id_rabbit` int DEFAULT NULL,
+  PRIMARY KEY (`Id_mounts`),
+  KEY `animal_idx` (`Id_rabbit`),
+  CONSTRAINT `animal` FOREIGN KEY (`Id_rabbit`) REFERENCES `rabbit` (`Id_rabbit`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `mounts`
+--
+
+LOCK TABLES `mounts` WRITE;
+/*!40000 ALTER TABLE `mounts` DISABLE KEYS */;
+INSERT INTO `mounts` VALUES (5,'2025-04-06 13:22:00','2025-04-06 00:00:00',3,22);
+/*!40000 ALTER TABLE `mounts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rabbit`
+--
+
+DROP TABLE IF EXISTS `rabbit`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `rabbit` (
+  `Id_rabbit` int NOT NULL AUTO_INCREMENT,
+  `name_rabbit` varchar(250) DEFAULT NULL,
+  `fecha_registro` datetime DEFAULT NULL,
+  `peso_inicial` int DEFAULT NULL,
+  `sexo_rabbit` varchar(250) DEFAULT NULL,
+  `estado` varchar(250) DEFAULT NULL,
+  `peso_actual` int DEFAULT NULL,
+  `Id_race` int NOT NULL,
+  `Id_cage` int NOT NULL,
+  PRIMARY KEY (`Id_rabbit`),
+  KEY `raza_idx` (`Id_race`),
+  KEY `corral_idx` (`Id_cage`),
+  CONSTRAINT `jaula` FOREIGN KEY (`Id_cage`) REFERENCES `cage` (`Id_cage`),
+  CONSTRAINT `raza` FOREIGN KEY (`Id_race`) REFERENCES `race` (`Id_race`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rabbit`
+--
+
+LOCK TABLES `rabbit` WRITE;
+/*!40000 ALTER TABLE `rabbit` DISABLE KEYS */;
+INSERT INTO `rabbit` VALUES (22,'olivia','2025-04-12 00:00:00',12,'Hembra','Activo',12,9,1),(23,'marlon','2025-04-12 00:00:00',5,'Macho','Activo',20,1,5),(24,'kevin','2025-04-16 00:00:00',12,'Macho','Activo',12,9,6),(25,'carla','2025-04-16 00:00:00',12,'Hembra','Activo',12,9,5);
+/*!40000 ALTER TABLE `rabbit` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -214,14 +296,10 @@ DROP TABLE IF EXISTS `race`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `race` (
-<<<<<<< HEAD
   `Id_race` int NOT NULL AUTO_INCREMENT,
-=======
-  `Id_race` int NOT NULL,
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
   `nombre_race` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`Id_race`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -230,6 +308,7 @@ CREATE TABLE `race` (
 
 LOCK TABLES `race` WRITE;
 /*!40000 ALTER TABLE `race` DISABLE KEYS */;
+INSERT INTO `race` VALUES (1,'chinchilla'),(3,'string'),(4,'string'),(9,'Ruso Californiano');
 /*!40000 ALTER TABLE `race` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -241,17 +320,15 @@ DROP TABLE IF EXISTS `reproduction`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `reproduction` (
-<<<<<<< HEAD
   `Id_reproduction` int NOT NULL AUTO_INCREMENT,
-  `fecha_reproduction` date DEFAULT NULL,
-  PRIMARY KEY (`Id_reproduction`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-=======
-  `Id_reproduction` int NOT NULL,
-  `fecha__reproduction` date DEFAULT NULL,
-  PRIMARY KEY (`Id_reproduction`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
+  `fecha_nacimiento` date DEFAULT NULL,
+  `total_conejos` int DEFAULT NULL,
+  `nacidos_vivos` int DEFAULT NULL,
+  `nacidos_muertos` int DEFAULT NULL,
+  `Id_rabbit` int DEFAULT NULL,
+  PRIMARY KEY (`Id_reproduction`),
+  KEY `animal_idx` (`Id_rabbit`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -260,11 +337,7 @@ CREATE TABLE `reproduction` (
 
 LOCK TABLES `reproduction` WRITE;
 /*!40000 ALTER TABLE `reproduction` DISABLE KEYS */;
-<<<<<<< HEAD
-INSERT INTO `reproduction` VALUES (1,'2024-11-08');
-=======
-INSERT INTO `reproduction` VALUES (1,'2024-10-04'),(2,'2024-10-04');
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
+INSERT INTO `reproduction` VALUES (1,'2025-04-03',4,2,2,22);
 /*!40000 ALTER TABLE `reproduction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -287,7 +360,7 @@ CREATE TABLE `user` (
   `salt` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`Id_user`),
   UNIQUE KEY `email_user_UNIQUE` (`email_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -296,7 +369,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'$2a$11$Tbt2UJE6H.C8EPhCylH41.xTkhWg5cnH0SKz1H6wmcQY/bUZOYBKK','luisa',NULL,'',0,NULL,'luisa@gmail','$2a$11$BGle7tBywwQFSwx0Fg3B2u'),(3,'$2a$11$TrfK.MuiCSWPnPVJ5j0zGOOLKZRmKyGyPnuiU4.QW45HLTC6lyqrS','luis',NULL,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyIjoibHVpc0BnbWFpbCIsIm5iZiI6MTczMTkzNzU0NiwiZXhwIjoxNzMxOTQxMTQ2LCJpYXQiOjE3MzE5Mzc1NDZ9.RqLjSiIO3zPzFI3T2lmQPL5iMNtxid6ep0l9Ob385vE',0,NULL,'luis@gmail','$2a$11$mvjrLpltimr7XAeTV9IDm.'),(4,'$2a$11$l4X54DhtBuQO/SdPczZpcOd.2oFWgenm3esbunCKx9siqQGFSgVpi','carla',NULL,'',0,NULL,'carla@gmail','$2a$11$Tvq4CjY/NfNeYFBcLexRZO');
+INSERT INTO `user` VALUES (1,'luis200513','luis',0,'string',0,'string','luissolanor860@gmail.com','string'),(3,'string','gabriel',0,'string',0,'string','string','string'),(4,'$2a$11$uVV5JVrKBqkXECtMYq8b7.u5CwTOq7oBnJdOzqxK/FH/KPjCq8oTu','nestor',0,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyIjoibmVzdG9yQGdtYWlsIiwibmJmIjoxNzQ0MTY4NzgxLCJleHAiOjE3NDQxNzIzODAsImlhdCI6MTc0NDE2ODc4MX0.VLOTDLmoEAST-B5PeY0FEPOhK_NyWurqtLJ8GRnaupo',0,NULL,'nestor@gmail','$2a$11$.jKjxf0H.jeoZgyKudVKme'),(5,'$2a$11$xY0JZ5dnrGRshUX9Mj5Y4OVR/5m/NZKbku7pssgxyk9Tp86q2gEcm','paola',NULL,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyIjoibHVpc3NvbGFub3IyMDIyQGdtYWlsLmNvbSIsIm5iZiI6MTc0NTEwMzY4NiwiZXhwIjoxNzQ1MTA3Mjg2LCJpYXQiOjE3NDUxMDM2ODZ9.lU_AGEj9JyH3Uy6cpMQ0QNy62IKOv7Sykeb1i2Gr_UI',0,NULL,'luissolanor2022@gmail.com','$2a$11$x.RTzOXM2adw2HFwflAJaO');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -308,20 +381,18 @@ DROP TABLE IF EXISTS `weighing`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `weighing` (
-<<<<<<< HEAD
   `Id_weighing` int NOT NULL AUTO_INCREMENT,
-=======
-  `Id_weighing` int NOT NULL,
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
   `fecha_weighing` datetime DEFAULT NULL,
-  `peso_actual` varchar(250) DEFAULT NULL,
-  `ganancia_peso` varchar(250) DEFAULT NULL,
-  PRIMARY KEY (`Id_weighing`)
-<<<<<<< HEAD
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-=======
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
+  `ganancia_peso` int DEFAULT NULL,
+  `Id_rabbit` int DEFAULT NULL,
+  `Id_user` int DEFAULT NULL,
+  `peso_actual` int DEFAULT NULL,
+  PRIMARY KEY (`Id_weighing`),
+  KEY `trabajador_idx` (`Id_user`),
+  KEY `Conejos_idx` (`Id_rabbit`),
+  CONSTRAINT `Conejos` FOREIGN KEY (`Id_rabbit`) REFERENCES `rabbit` (`Id_rabbit`) ON DELETE SET NULL,
+  CONSTRAINT `trabajador` FOREIGN KEY (`Id_user`) REFERENCES `user` (`Id_user`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -330,7 +401,7 @@ CREATE TABLE `weighing` (
 
 LOCK TABLES `weighing` WRITE;
 /*!40000 ALTER TABLE `weighing` DISABLE KEYS */;
-INSERT INTO `weighing` VALUES (1,'2024-10-22 16:59:40','string','string');
+INSERT INTO `weighing` VALUES (18,'2025-04-17 05:01:00',7,23,1,12),(19,'2025-04-17 15:37:00',8,23,1,13);
 /*!40000 ALTER TABLE `weighing` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -343,8 +414,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-<<<<<<< HEAD
--- Dump completed on 2024-11-21  0:22:17
-=======
--- Dump completed on 2024-11-18 12:18:23
->>>>>>> 56dc09bf91636aff202dfdb3c8894fd5a85467d4
+-- Dump completed on 2025-04-20 23:35:00
