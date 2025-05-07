@@ -67,7 +67,8 @@ namespace cunigranja.Services
                     }
                 }
 
-                bool pesoInicialChanged = rabbit.peso_inicial != updatedRabbit.peso_inicial;
+                // Guardar el peso inicial anterior para verificar si cambió
+                int previousPesoInicial = rabbit.peso_inicial;
 
                 rabbit.name_rabbit = updatedRabbit.name_rabbit;
                 rabbit.fecha_registro = updatedRabbit.fecha_registro;
@@ -80,14 +81,12 @@ namespace cunigranja.Services
 
                 _context.SaveChanges();
 
-                // Si cambió el peso inicial, recalcular el peso actual y las ganancias de los pesajes
-                if (pesoInicialChanged)
+                // Siempre recalcular el peso actual y las ganancias de los pesajes
+                // independientemente de si cambió el peso inicial o no
+                using (var scope = _serviceProvider.CreateScope())
                 {
-                    using (var scope = _serviceProvider.CreateScope())
-                    {
-                        var weighingService = scope.ServiceProvider.GetRequiredService<WeighingServices>();
-                        weighingService.RecalculateRabbitCurrentWeight(Id, updatedRabbit.peso_inicial);
-                    }
+                    var weighingService = scope.ServiceProvider.GetRequiredService<WeighingServices>();
+                    weighingService.RecalculateRabbitCurrentWeight(Id, updatedRabbit.peso_inicial);
                 }
 
                 return true;

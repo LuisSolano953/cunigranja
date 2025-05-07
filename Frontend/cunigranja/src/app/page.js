@@ -188,16 +188,16 @@ const StoriesGallery = () => {
               <img src="./assets/img/f1.JPEG" alt="grupo" className="w-full h-96 object-cover rounded-xl" />
             </div>
             <div>
-              <img src="./assets/img/f2.PNG" alt="grupo" className="w-full h-96 object-cover rounded-xl" />
+              <img src="./assets/img/f2.JPEG" alt="grupo" className="w-full h-96 object-cover rounded-xl" />
             </div>
             <div>
               <img src="./assets/img/f3.JPEG" alt="unidad" className="w-full h-96 object-cover rounded-xl" />
             </div>
             <div>
-              <img src="./assets/img/f4.PNG" alt="grupo" className="w-full h-96 object-cover rounded-xl" />
+              <img src="./assets/img/f4.JPEG" alt="grupo" className="w-full h-96 object-cover rounded-xl" />
             </div>
             <div>
-              <img src="./assets/img/f5.PNG" alt="grupo" className="w-full h-96 object-cover rounded-xl" />
+              <img src="./assets/img/f5.JPEG" alt="grupo" className="w-full h-96 object-cover rounded-xl" />
             </div>
           </Slider>
         </div>

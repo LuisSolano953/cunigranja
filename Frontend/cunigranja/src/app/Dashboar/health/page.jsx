@@ -28,7 +28,7 @@ export function Healthpage() {
 
       if (response.status === 200) {
         const data = response.data.map((item) => ({
-          id: item.id_health,
+          id: item.Id_health,
           nombre: item.name_health,
           fecha: new Date(item.fecha_health).toLocaleDateString("es-ES"),
           descripcion: item.descripcion_health,
@@ -40,7 +40,7 @@ export function Healthpage() {
           fecha_health: item.fecha_health,
           descripcion_health: item.descripcion_health,
           valor_health: item.valor_health,
-          Id_user: item.id_user,
+          Id_user: item.Id_user,
         }))
         console.log("Processed data:", data)
         setRegisterHealthData(data)

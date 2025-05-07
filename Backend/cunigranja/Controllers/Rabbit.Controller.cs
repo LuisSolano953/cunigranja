@@ -133,11 +133,11 @@ namespace cunigranja.Controllers
 
                 if (success)
                 {
-                    return Ok("Conejo actualizado correctamente.");
+                    return Ok(new { message = "Conejo actualizado correctamente. Se ha recalculado el peso actual." });
                 }
                 else
                 {
-                    return BadRequest("No se pudo actualizar el conejo. Verifica la capacidad de la jaula.");
+                    return BadRequest(new { message = "No se pudo actualizar el conejo. Verifica la capacidad de la jaula." });
                 }
             }
             catch (Exception ex)

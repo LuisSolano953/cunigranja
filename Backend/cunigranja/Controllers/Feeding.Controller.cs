@@ -128,35 +128,35 @@ namespace cunigranja.Controllers
                         throw new Exception("El alimento está inactivo y no puede ser utilizado.");
                     }
 
-                    // 3. Convertir la cantidad de alimentación de gramos a kilogramos
-                    double cantidadAlimentacionKg = entity.cantidad_feeding / 1000.0;
-                    cantidadAlimentacionKg = Math.Round(cantidadAlimentacionKg, 2);
+                    // 3. Ya no convertimos a kilogramos, usamos directamente los gramos
+                    double cantidadAlimentacion = entity.cantidad_feeding;
+                    cantidadAlimentacion = Math.Round(cantidadAlimentacion, 2);
 
                     // 4. Validar que haya suficiente alimento
-                    if (food.saldo_existente < cantidadAlimentacionKg)
+                    if (food.saldo_existente < cantidadAlimentacion)
                     {
-                        throw new Exception($"No hay suficiente alimento. Saldo disponible: {Math.Round(food.saldo_existente, 1)} kg");
+                        throw new Exception($"No hay suficiente alimento. Saldo disponible: {Math.Round(food.saldo_existente, 1)} g");
                     }
 
-                    // 5. Calcular el nuevo saldo en kilogramos
-                    double nuevoSaldoKg = Math.Round(food.saldo_existente - cantidadAlimentacionKg, 2);
+                    // 5. Calcular el nuevo saldo en gramos
+                    double nuevoSaldo = Math.Round(food.saldo_existente - cantidadAlimentacion, 2);
 
                     // 6. Actualizar la existencia actual en la entidad de alimentación
-                    entity.existencia_actual = Math.Round(nuevoSaldoKg, 1);
+                    entity.existencia_actual = Math.Round(nuevoSaldo, 1);
 
                     // 7. Registrar la alimentación
                     _context.feeding.Add(entity);
                     _context.SaveChanges();
 
                     // 8. Actualizar el saldo del alimento
-                    food.saldo_existente = nuevoSaldoKg;
+                    food.saldo_existente = nuevoSaldo;
 
                     // 9. Actualizar el estado del alimento según el saldo
                     if (food.saldo_existente <= 0)
                     {
                         food.estado_food = "Inactivo";
                     }
-                    else if (food.saldo_existente <= 5)
+                    else if (food.saldo_existente <= 5000) // 5kg = 5000g
                     {
                         food.estado_food = "Casi por acabar";
                     }
@@ -170,7 +170,7 @@ namespace cunigranja.Controllers
                     // 10. Confirmar la transacción
                     transaction.Commit();
 
-                    FunctionsGeneral.AddLog($"CreateFeedingDirectly: Registro creado exitosamente. Nuevo saldo: {nuevoSaldoKg}");
+                    FunctionsGeneral.AddLog($"CreateFeedingDirectly: Registro creado exitosamente. Nuevo saldo: {nuevoSaldo}");
                 }
                 catch (Exception ex)
                 {
@@ -273,14 +273,14 @@ namespace cunigranja.Controllers
                 var food = _foodServices.GetFoodById(feeding.Id_food);
                 if (food != null)
                 {
-                    // Convertir la cantidad de alimentación de gramos a kilogramos
-                    double cantidadAlimentacionKg = _foodServices.GramosAKilogramos(feeding.cantidad_feeding);
+                    // Ya no convertimos a kilogramos, usamos directamente los gramos
+                    double cantidadAlimentacion = feeding.cantidad_feeding;
 
                     // Registrar los valores para depuración
-                    FunctionsGeneral.AddLog($"ConsultFeeding: ID={id}, Alimento ID={feeding.Id_food}, Saldo alimento={food.saldo_existente}, Cantidad={cantidadAlimentacionKg}");
+                    FunctionsGeneral.AddLog($"ConsultFeeding: ID={id}, Alimento ID={feeding.Id_food}, Saldo alimento={food.saldo_existente}, Cantidad={cantidadAlimentacion}");
 
                     // Actualizar la existencia actual con el saldo actual del alimento MENOS esta alimentación
-                    double saldoDespuesDeAlimentacion = Math.Round(food.saldo_existente - cantidadAlimentacionKg, 2);
+                    double saldoDespuesDeAlimentacion = Math.Round(food.saldo_existente - cantidadAlimentacion, 2);
                     feeding.existencia_actual = Math.Round(saldoDespuesDeAlimentacion, 1);
 
                     // No guardamos los cambios en la base de datos, solo actualizamos el objeto que se devuelve
@@ -319,7 +319,8 @@ namespace cunigranja.Controllers
                 // Ignorar el valor de existencia_actual enviado desde el cliente
                 // El valor correcto será calculado por el servicio
 
-                _Services.UpdateFeeding(entity.Id_feeding, entity);
+                // Usar un enfoque directo para actualizar sin transacciones anidadas
+                UpdateFeedingDirectly(entity, originalFeeding);
 
                 // Obtener el registro actualizado con los valores correctos
                 var updatedFeeding = _Services.GetFeedingById(entity.Id_feeding);
@@ -334,6 +335,153 @@ namespace cunigranja.Controllers
             {
                 FunctionsGeneral.AddLog($"Error en UpdateFeeding: {ex.Message}");
                 return StatusCode(500, ex.Message);
+            }
+        }
+
+        // Método para actualizar un registro de alimentación directamente sin usar transacciones anidadas
+        private void UpdateFeedingDirectly(FeedingModel updatedFeeding, FeedingModel originalFeeding)
+        {
+            FunctionsGeneral.AddLog("Usando método UpdateFeedingDirectly");
+
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    // Obtener los alimentos involucrados
+                    int originalFoodId = originalFeeding.Id_food;
+                    int newFoodId = updatedFeeding.Id_food;
+
+                    // Obtener el alimento original
+                    var originalFood = _context.food.Find(originalFoodId);
+                    if (originalFood == null)
+                    {
+                        throw new Exception($"El alimento original con ID {originalFoodId} no existe.");
+                    }
+
+                    // Obtener el nuevo alimento (si es diferente)
+                    var newFood = originalFoodId == newFoodId ? originalFood : _context.food.Find(newFoodId);
+                    if (newFood == null)
+                    {
+                        throw new Exception($"El nuevo alimento con ID {newFoodId} no existe.");
+                    }
+
+                    // Validar que el alimento no esté inactivo (a menos que sea el mismo registro)
+                    if (newFood.estado_food == "Inactivo" && originalFoodId != newFoodId)
+                    {
+                        throw new Exception("El alimento está inactivo y no puede ser utilizado.");
+                    }
+
+                    // Ya no convertimos a kilogramos, usamos directamente los gramos
+                    double cantidadOriginal = originalFeeding.cantidad_feeding;
+                    double nuevaCantidad = updatedFeeding.cantidad_feeding;
+
+                    // Redondear a 2 decimales para cálculos internos
+                    cantidadOriginal = Math.Round(cantidadOriginal, 2);
+                    nuevaCantidad = Math.Round(nuevaCantidad, 2);
+
+                    FunctionsGeneral.AddLog($"UpdateFeedingDirectly: ID={updatedFeeding.Id_feeding}, Alimento original ID={originalFoodId}, Nuevo alimento ID={newFoodId}, Cantidad original={cantidadOriginal}, Nueva cantidad={nuevaCantidad}");
+
+                    // Si el alimento ha cambiado, necesitamos actualizar ambos alimentos
+                    if (originalFoodId != newFoodId)
+                    {
+                        // 1. Devolver la cantidad original al alimento original
+                        double nuevoSaldoOriginal = Math.Round(originalFood.saldo_existente + cantidadOriginal, 2);
+
+                        // 2. Restar la nueva cantidad del nuevo alimento
+                        if (newFood.saldo_existente < nuevaCantidad)
+                        {
+                            throw new Exception($"No hay suficiente alimento. Saldo disponible: {Math.Round(newFood.saldo_existente, 1)} g");
+                        }
+
+                        double nuevoSaldoNuevo = Math.Round(newFood.saldo_existente - nuevaCantidad, 2);
+
+                        FunctionsGeneral.AddLog($"UpdateFeedingDirectly: Alimento original ID={originalFoodId} nuevo saldo={nuevoSaldoOriginal}, Nuevo alimento ID={newFoodId} nuevo saldo={nuevoSaldoNuevo}");
+
+                        // Actualizar la alimentación
+                        updatedFeeding.existencia_actual = Math.Round(nuevoSaldoNuevo, 1);
+                        _context.Entry(originalFeeding).CurrentValues.SetValues(updatedFeeding);
+                        _context.SaveChanges();
+
+                        // Actualizar ambos alimentos
+                        originalFood.saldo_existente = nuevoSaldoOriginal;
+                        if (originalFood.saldo_existente <= 0)
+                        {
+                            originalFood.estado_food = "Inactivo";
+                        }
+                        else if (originalFood.saldo_existente <= 5000) // 5kg = 5000g
+                        {
+                            originalFood.estado_food = "Casi por acabar";
+                        }
+                        else
+                        {
+                            originalFood.estado_food = "Existente";
+                        }
+                        _context.SaveChanges();
+
+                        newFood.saldo_existente = nuevoSaldoNuevo;
+                        if (newFood.saldo_existente <= 0)
+                        {
+                            newFood.estado_food = "Inactivo";
+                        }
+                        else if (newFood.saldo_existente <= 5000) // 5kg = 5000g
+                        {
+                            newFood.estado_food = "Casi por acabar";
+                        }
+                        else
+                        {
+                            newFood.estado_food = "Existente";
+                        }
+                        _context.SaveChanges();
+                    }
+                    else
+                    {
+                        // El alimento no ha cambiado, solo la cantidad
+                        // Calcular la diferencia de cantidad en gramos
+                        double diferencia = nuevaCantidad - cantidadOriginal;
+                        diferencia = Math.Round(diferencia, 2);
+
+                        // Si la cantidad aumenta, verificar si hay suficiente alimento
+                        if (diferencia > 0 && newFood.saldo_existente < diferencia)
+                        {
+                            throw new Exception($"No hay suficiente alimento. Saldo disponible: {Math.Round(newFood.saldo_existente, 1)} g");
+                        }
+
+                        // Calcular el nuevo saldo en gramos
+                        double nuevoSaldo = Math.Round(newFood.saldo_existente - diferencia, 2);
+
+                        FunctionsGeneral.AddLog($"UpdateFeedingDirectly: Mismo alimento ID={newFoodId}, Diferencia={diferencia}, Nuevo saldo={nuevoSaldo}");
+
+                        // Actualizar la alimentación
+                        updatedFeeding.existencia_actual = Math.Round(nuevoSaldo, 1);
+                        _context.Entry(originalFeeding).CurrentValues.SetValues(updatedFeeding);
+                        _context.SaveChanges();
+
+                        // Actualizar el saldo existente en la tabla de alimentos
+                        newFood.saldo_existente = nuevoSaldo;
+                        if (newFood.saldo_existente <= 0)
+                        {
+                            newFood.estado_food = "Inactivo";
+                        }
+                        else if (newFood.saldo_existente <= 5000) // 5kg = 5000g
+                        {
+                            newFood.estado_food = "Casi por acabar";
+                        }
+                        else
+                        {
+                            newFood.estado_food = "Existente";
+                        }
+                        _context.SaveChanges();
+                    }
+
+                    transaction.Commit();
+                    FunctionsGeneral.AddLog($"UpdateFeedingDirectly: Transacción completada con éxito");
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    FunctionsGeneral.AddLog($"Error en UpdateFeedingDirectly: {ex.Message}");
+                    throw;
+                }
             }
         }
 

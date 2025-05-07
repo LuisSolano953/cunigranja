@@ -138,43 +138,58 @@ export default function RegisterReproduction({ refreshData, onCloseForm }) {
   }
 
   const closeModal = () => {
-    if (successMessage && onCloseForm) {
-      onCloseForm()
-    }
     setSuccessMessage("")
     setErrorMessage("")
+    if (typeof onUpdate === "function") {
+      onUpdate() // Actualiza datos globales (ej. recarga tabla)
+    }
+    if (typeof onClose === "function") {
+      onClose()
+    }
   }
 
   return (
     <>
-      {errorMessage && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
-            <h2 className="text-xl font-semibold text-center mb-4 text-red-600">Error</h2>
-            <p className="text-center mb-6">{errorMessage}</p>
-            <button
-              onClick={() => setErrorMessage("")}
-              className="w-full py-2 px-4 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-md transition duration-300 ease-in-out"
-            >
-              Cerrar
-            </button>
-          </div>
-        </div>
-      )}
+      {(errorMessage || successMessage) && (
+        <>
+          {/* Overlay con cobertura extendida */}
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-50"
+            style={{
+              height: "125vh",
+              width: "100%",
+              top: 0,
+              left: 0,
+              position: "fixed",
+              overflow: "hidden",
+            }}
+          ></div>
 
-      {successMessage && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
-            <h2 className="text-xl font-semibold text-center mb-4 text-blue-600">Éxito</h2>
-            <p className="text-center mb-6">{successMessage}</p>
-            <button
-              onClick={closeModal}
-              className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-300 ease-in-out"
+          {/* Contenedor del modal con posición ajustada */}
+          <div className="fixed inset-0 z-50 flex items-start justify-center pointer-events-none">
+            <div
+              className="bg-white rounded-lg shadow-2xl p-6 max-w-md w-full pointer-events-auto"
+              style={{
+                marginTop: "350px",
+              }}
             >
-              Cerrar
-            </button>
+              <h2 className="text-xl font-semibold text-center mb-4">{errorMessage ? "Error" : "Éxito"}</h2>
+              <p className="text-center mb-6">
+                {errorMessage
+                  ? "Ha ocurrido un error en la operación. Por favor, inténtelo de nuevo."
+                  : "La operación se ha completado con éxito."}
+              </p>
+              <button
+                onClick={closeModal}
+                className={`w-full py-2 px-4 ${
+                  errorMessage ? "bg-red-600 hover:bg-red-700" : "bg-blue-600 hover:bg-blue-700"
+                } text-white font-semibold rounded-lg shadow-md transition duration-300`}
+              >
+                Cerrar
+              </button>
+            </div>
           </div>
-        </div>
+        </>
       )}
 
       <form

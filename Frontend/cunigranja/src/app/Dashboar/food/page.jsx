@@ -119,6 +119,7 @@ function Foodpage() {
         isLoading={isLoading}
         error={error}
         refreshData={fetchFood}
+        showDeleteButton={false}
       />
       {/* Edit Modal */}
       <Dialog open={isEditModalOpen} onOpenChange={handleCloseEditModal}>

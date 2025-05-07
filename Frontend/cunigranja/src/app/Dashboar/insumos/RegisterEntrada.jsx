@@ -17,10 +17,10 @@ const RegisterEntrada = ({ refreshData }) => {
 
   // Campos calculados automáticamente - solo para mostrar al usuario
   const [valor_total, setValorTotal] = useState("")
-  const [existencia_actual_kg, setExistenciaActualKg] = useState("")
+  const [existencia_actual_g, setExistenciaActualG] = useState("")
 
   // Constante para la conversión
-  const KILOS_POR_BULTO = 40
+  const GRAMOS_POR_BULTO = 40000 // 40kg = 40000g
 
   useEffect(() => {
     async function fetchFood() {
@@ -56,24 +56,24 @@ const RegisterEntrada = ({ refreshData }) => {
     }
   }, [valor_entrada, cantidad_entrada])
 
-  // Calcular existencia actual en kilogramos cuando cambia la cantidad o el alimento seleccionado
+  // Calcular existencia actual en gramos cuando cambia la cantidad o el alimento seleccionado
   useEffect(() => {
     if (cantidad_entrada && selectedFood) {
-      // La cantidad_entrada está en bultos, convertir a kilogramos
+      // La cantidad_entrada está en bultos, convertir a gramos
       const cantidadBultos = Number(cantidad_entrada)
-      const cantidadKg = cantidadBultos * KILOS_POR_BULTO
+      const cantidadGramos = cantidadBultos * GRAMOS_POR_BULTO
 
       // Obtener el saldo existente actual del alimento
       const saldoExistenteActual = selectedFood.saldo_existente
 
       // Calcular el nuevo saldo total (saldo existente + cantidad entrada) y redondear a 2 decimales
-      const nuevoSaldoTotal = Math.round((saldoExistenteActual + cantidadKg) * 100) / 100
+      const nuevoSaldoTotal = Math.round((saldoExistenteActual + cantidadGramos) * 100) / 100
       // Convertir a string y eliminar ceros finales innecesarios después del punto decimal
       const nuevoSaldoStr = nuevoSaldoTotal.toString()
       // Si tiene decimales, mostrar solo los necesarios (como en la tabla de alimentos)
-      setExistenciaActualKg(nuevoSaldoStr.includes(".") ? nuevoSaldoStr.replace(/\.?0+$/, "") : nuevoSaldoStr)
+      setExistenciaActualG(nuevoSaldoStr.includes(".") ? nuevoSaldoStr.replace(/\.?0+$/, "") : nuevoSaldoStr)
     } else {
-      setExistenciaActualKg("")
+      setExistenciaActualG("")
     }
   }, [cantidad_entrada, selectedFood])
 
@@ -170,7 +170,7 @@ const RegisterEntrada = ({ refreshData }) => {
         Id_food: Number(Id_food),
         // Agregar estos valores, aunque serán recalculados en el backend
         valor_total: Number(valor_total) || 0,
-        existencia_actual: Number(existencia_actual_kg) || 0,
+        existencia_actual: Number(existencia_actual_g) || 0,
       }
 
       console.log("Datos a enviar:", entradaData)
@@ -184,7 +184,7 @@ const RegisterEntrada = ({ refreshData }) => {
         setCantidadEntrada("")
         setIdFood("")
         setValorTotal("")
-        setExistenciaActualKg("")
+        setExistenciaActualG("")
         setSelectedFood(null)
 
         if (refreshData && typeof refreshData === "function") {
@@ -280,7 +280,7 @@ const RegisterEntrada = ({ refreshData }) => {
                       item &&
                       (item.Id_food || item.id_food) && (
                         <option key={item.Id_food || item.id_food} value={item.Id_food || item.id_food}>
-                          {item.name_food} ({item.saldo_existente.toFixed(2)} kg)
+                          {item.name_food} ({item.saldo_existente.toFixed(2)} g)
                         </option>
                       ),
                   )}
@@ -302,7 +302,7 @@ const RegisterEntrada = ({ refreshData }) => {
               min="1"
               step="1" // Solo números enteros
             />
-            <small className="text-gray-500">1 bulto = {KILOS_POR_BULTO} kg</small>
+            <small className="text-gray-500">1 bulto = {GRAMOS_POR_BULTO} g</small>
           </div>
 
           <div>
@@ -342,11 +342,11 @@ const RegisterEntrada = ({ refreshData }) => {
             <input
               type="text"
               id="existencia_actual"
-              value={existencia_actual_kg ? `${existencia_actual_kg} kg` : ""}
+              value={existencia_actual_g ? `${existencia_actual_g} g` : ""}
               readOnly
               className="w-full border border-gray-400 rounded-lg p-2 bg-gray-100 focus:outline-none"
             />
-            <small className="text-gray-500">Saldo existente + nueva entrada (en kg)</small>
+            <small className="text-gray-500">Saldo existente + nueva entrada (en g)</small>
           </div>
         </div>
 

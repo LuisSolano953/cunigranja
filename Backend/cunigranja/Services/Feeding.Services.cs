@@ -83,28 +83,28 @@ namespace cunigranja.Services
                             throw new Exception("El alimento está inactivo y no puede ser utilizado.");
                         }
 
-                        // Convertir la cantidad de alimentación de gramos a kilogramos
-                        double cantidadAlimentacionKg = _foodServices.GramosAKilogramos(entity.cantidad_feeding);
+                        // Ya no convertimos a kilogramos, usamos directamente los gramos
+                        double cantidadAlimentacion = entity.cantidad_feeding;
 
                         // Redondear a 2 decimales para los cálculos internos
-                        cantidadAlimentacionKg = Math.Round(cantidadAlimentacionKg, 2);
+                        cantidadAlimentacion = Math.Round(cantidadAlimentacion, 2);
 
                         // Validar que haya suficiente alimento
-                        if (food.saldo_existente < cantidadAlimentacionKg)
+                        if (food.saldo_existente < cantidadAlimentacion)
                         {
-                            throw new Exception($"No hay suficiente alimento. Saldo disponible: {Math.Round(food.saldo_existente, 1)} kg");
+                            throw new Exception($"No hay suficiente alimento. Saldo disponible: {Math.Round(food.saldo_existente, 1)} g");
                         }
 
-                        // Calcular el nuevo saldo en kilogramos y redondear a 2 decimales para cálculos internos
-                        double nuevoSaldoKg = Math.Round(food.saldo_existente - cantidadAlimentacionKg, 2);
+                        // Calcular el nuevo saldo en gramos y redondear a 2 decimales para cálculos internos
+                        double nuevoSaldo = Math.Round(food.saldo_existente - cantidadAlimentacion, 2);
 
                         // IMPORTANTE: Actualizar la existencia actual en la entidad de alimentación
                         // Debe ser el saldo DESPUÉS de restar esta alimentación
-                        entity.existencia_actual = Math.Round(nuevoSaldoKg, 1);
+                        entity.existencia_actual = Math.Round(nuevoSaldo, 1);
 
                         if (FunctionsGeneral != null)
                         {
-                            FunctionsGeneral.AddLog($"Add: Alimento ID={entity.Id_food}, Saldo anterior={food.saldo_existente}, Cantidad={cantidadAlimentacionKg}, Nuevo saldo={nuevoSaldoKg}, Existencia actual={entity.existencia_actual}");
+                            FunctionsGeneral.AddLog($"Add: Alimento ID={entity.Id_food}, Saldo anterior={food.saldo_existente}, Cantidad={cantidadAlimentacion}, Nuevo saldo={nuevoSaldo}, Existencia actual={entity.existencia_actual}");
                         }
 
                         // Registrar la alimentación
@@ -112,7 +112,7 @@ namespace cunigranja.Services
                         _context.SaveChanges();
 
                         // Actualizar el saldo del alimento
-                        food.saldo_existente = nuevoSaldoKg;
+                        food.saldo_existente = nuevoSaldo;
                         _foodServices.UpdateFoodState(food);
                         _context.SaveChanges();
 
@@ -179,32 +179,32 @@ namespace cunigranja.Services
                             throw new Exception("El alimento está inactivo y no puede ser utilizado.");
                         }
 
-                        // Convertir las cantidades de alimentación de gramos a kilogramos
-                        double cantidadOriginalKg = _foodServices.GramosAKilogramos(feeding.cantidad_feeding);
-                        double nuevaCantidadKg = _foodServices.GramosAKilogramos(updatedFeeding.cantidad_feeding);
+                        // Ya no convertimos a kilogramos, usamos directamente los gramos
+                        double cantidadOriginal = feeding.cantidad_feeding;
+                        double nuevaCantidad = updatedFeeding.cantidad_feeding;
 
                         // Redondear a 2 decimales para cálculos internos
-                        cantidadOriginalKg = Math.Round(cantidadOriginalKg, 2);
-                        nuevaCantidadKg = Math.Round(nuevaCantidadKg, 2);
+                        cantidadOriginal = Math.Round(cantidadOriginal, 2);
+                        nuevaCantidad = Math.Round(nuevaCantidad, 2);
 
                         if (FunctionsGeneral != null)
                         {
-                            FunctionsGeneral.AddLog($"UpdateFeeding: ID={Id}, Alimento original ID={originalFoodId}, Nuevo alimento ID={newFoodId}, Cantidad original={cantidadOriginalKg}, Nueva cantidad={nuevaCantidadKg}");
+                            FunctionsGeneral.AddLog($"UpdateFeeding: ID={Id}, Alimento original ID={originalFoodId}, Nuevo alimento ID={newFoodId}, Cantidad original={cantidadOriginal}, Nueva cantidad={nuevaCantidad}");
                         }
 
                         // Si el alimento ha cambiado, necesitamos actualizar ambos alimentos
                         if (originalFoodId != newFoodId)
                         {
                             // 1. Devolver la cantidad original al alimento original
-                            double nuevoSaldoOriginal = Math.Round(originalFood.saldo_existente + cantidadOriginalKg, 2);
+                            double nuevoSaldoOriginal = Math.Round(originalFood.saldo_existente + cantidadOriginal, 2);
 
                             // 2. Restar la nueva cantidad del nuevo alimento
-                            if (newFood.saldo_existente < nuevaCantidadKg)
+                            if (newFood.saldo_existente < nuevaCantidad)
                             {
-                                throw new Exception($"No hay suficiente alimento. Saldo disponible: {Math.Round(newFood.saldo_existente, 1)} kg");
+                                throw new Exception($"No hay suficiente alimento. Saldo disponible: {Math.Round(newFood.saldo_existente, 1)} g");
                             }
 
-                            double nuevoSaldoNuevo = Math.Round(newFood.saldo_existente - nuevaCantidadKg, 2);
+                            double nuevoSaldoNuevo = Math.Round(newFood.saldo_existente - nuevaCantidad, 2);
 
                             if (FunctionsGeneral != null)
                             {
@@ -232,36 +232,36 @@ namespace cunigranja.Services
                         else
                         {
                             // El alimento no ha cambiado, solo la cantidad
-                            // Calcular la diferencia de cantidad en kilogramos
-                            double diferenciaKg = nuevaCantidadKg - cantidadOriginalKg;
-                            diferenciaKg = Math.Round(diferenciaKg, 2);
+                            // Calcular la diferencia de cantidad en gramos
+                            double diferencia = nuevaCantidad - cantidadOriginal;
+                            diferencia = Math.Round(diferencia, 2);
 
                             // Si la cantidad aumenta, verificar si hay suficiente alimento
-                            if (diferenciaKg > 0 && newFood.saldo_existente < diferenciaKg)
+                            if (diferencia > 0 && newFood.saldo_existente < diferencia)
                             {
-                                throw new Exception($"No hay suficiente alimento. Saldo disponible: {Math.Round(newFood.saldo_existente, 1)} kg");
+                                throw new Exception($"No hay suficiente alimento. Saldo disponible: {Math.Round(newFood.saldo_existente, 1)} g");
                             }
 
-                            // Calcular el nuevo saldo en kilogramos
-                            double nuevoSaldoKg = Math.Round(newFood.saldo_existente - diferenciaKg, 2);
+                            // Calcular el nuevo saldo en gramos
+                            double nuevoSaldo = Math.Round(newFood.saldo_existente - diferencia, 2);
 
                             if (FunctionsGeneral != null)
                             {
-                                FunctionsGeneral.AddLog($"UpdateFeeding: Mismo alimento ID={newFoodId}, Diferencia={diferenciaKg}, Nuevo saldo={nuevoSaldoKg}");
+                                FunctionsGeneral.AddLog($"UpdateFeeding: Mismo alimento ID={newFoodId}, Diferencia={diferencia}, Nuevo saldo={nuevoSaldo}");
                             }
 
                             // Actualizar la alimentación
-                            updatedFeeding.existencia_actual = Math.Round(nuevoSaldoKg, 1);
+                            updatedFeeding.existencia_actual = Math.Round(nuevoSaldo, 1);
                             _context.Entry(feeding).CurrentValues.SetValues(updatedFeeding);
                             _context.SaveChanges();
 
                             // Actualizar el saldo existente en la tabla de alimentos
-                            newFood.saldo_existente = nuevoSaldoKg;
+                            newFood.saldo_existente = nuevoSaldo;
                             _foodServices.UpdateFoodState(newFood);
                             _context.SaveChanges();
 
                             // Recalcular todos los registros de alimentación relacionados
-                            _foodServices.RecalculateFoodBalance(newFoodId, nuevoSaldoKg);
+                            _foodServices.RecalculateFoodBalance(newFoodId, nuevoSaldo);
                         }
 
                         transaction.Commit();
@@ -302,18 +302,18 @@ namespace cunigranja.Services
                             var food = _foodServices.GetFoodById(feeding.Id_food);
                             if (food != null)
                             {
-                                // Convertir la cantidad de alimentación de gramos a kilogramos
-                                double cantidadKg = _foodServices.GramosAKilogramos(feeding.cantidad_feeding);
+                                // Ya no convertimos a kilogramos, usamos directamente los gramos
+                                double cantidadGramos = feeding.cantidad_feeding;
 
                                 // Redondear a 2 decimales para cálculos internos
-                                cantidadKg = Math.Round(cantidadKg, 2);
+                                cantidadGramos = Math.Round(cantidadGramos, 2);
 
                                 // Devolver la cantidad de alimentación al saldo existente y redondear
-                                double nuevoSaldo = Math.Round(food.saldo_existente + cantidadKg, 2);
+                                double nuevoSaldo = Math.Round(food.saldo_existente + cantidadGramos, 2);
 
                                 if (FunctionsGeneral != null)
                                 {
-                                    FunctionsGeneral.AddLog($"DeleteById: ID={Id}, Alimento ID={feeding.Id_food}, Cantidad devuelta={cantidadKg}, Nuevo saldo={nuevoSaldo}");
+                                    FunctionsGeneral.AddLog($"DeleteById: ID={Id}, Alimento ID={feeding.Id_food}, Cantidad devuelta={cantidadGramos}, Nuevo saldo={nuevoSaldo}");
                                 }
 
                                 // Guardar el ID del alimento y el nuevo saldo para recalcular después de eliminar

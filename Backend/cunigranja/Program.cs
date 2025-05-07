@@ -138,5 +138,7 @@ app.UseAuthorization();
 
 // Mapea los controladores
 app.MapControllers();
+app.UseStaticFiles(); // Activa la carpeta wwwroot como pública
+
 
 app.Run();

@@ -1,38 +1,77 @@
-import DataTable from "./DataTable"
-import ModalDialog from "./ModalDialog"
+"use client"
 
-function ContentPage({
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { PlusCircle } from "lucide-react"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { MODAL_STYLE_CLASSES } from "@/components/utils/ModalDialog"
+import DataTable from "@/components/utils/DataTable" // Import the updated DataTable
+
+export default function ContentPage({
   TitlePage,
   Data,
   TitlesTable,
   FormPage,
-  Actions,
   onDelete,
   onUpdate,
-  refreshData,
   endpoint,
-  showDeleteButton = true, // Valor predeterminado es true
+  refreshData,
+  isLoading,
+  error,
+  showDeleteButton = true,
+  showChartButton = false, // Add this prop
+  CustomDataTable = null, // Add this prop to allow custom DataTable component
 }) {
-  return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">{TitlePage}</h1>
+  const [isFormOpen, setIsFormOpen] = useState(false)
 
-      <div className="mb-5">
-        <ModalDialog TitlePage={TitlePage} FormPage={FormPage} refreshData={refreshData} />
+  const handleOpenForm = () => {
+    setIsFormOpen(true)
+  }
+
+  const handleCloseForm = () => {
+    setIsFormOpen(false)
+    if (refreshData) refreshData()
+  }
+
+  // Use the custom DataTable if provided, otherwise use the default one
+  const TableComponent = CustomDataTable || DataTable
+
+  return (
+    <div className="container mx-auto p-4">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">{TitlePage}</h1>
+        <Button onClick={handleOpenForm} className="bg-black hover:bg-gray-800 text-white">
+          <PlusCircle className="mr-2 h-4 w-4" />
+          Agregar
+        </Button>
       </div>
 
-      <DataTable
-        Data={Data}
-        TitlesTable={TitlesTable}
-        Actions={Actions}
-        onDelete={typeof onDelete === "function" ? onDelete : () => console.warn("onDelete no es una función válida")}
-        onUpdate={typeof onUpdate === "function" ? onUpdate : () => console.warn("onUpdate no es una función válida")}
-        endpoint={endpoint}
-        refreshData={refreshData}
-        showDeleteButton={showDeleteButton} // Pasar la prop al DataTable
-      />
+      {isLoading ? (
+        <div className="text-center py-8">Cargando datos...</div>
+      ) : error ? (
+        <div className="text-center py-8 text-red-500">{error}</div>
+      ) : (
+        <TableComponent
+          Data={Data}
+          TitlesTable={TitlesTable}
+          onDelete={onDelete}
+          onUpdate={onUpdate}
+          endpoint={endpoint}
+          refreshData={refreshData}
+          showDeleteButton={showDeleteButton}
+          showChartButton={showChartButton} // Pass the showChartButton prop
+        />
+      )}
+
+      {/* Form Modal */}
+      <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
+        <DialogContent className={MODAL_STYLE_CLASSES}>
+          <DialogHeader>
+            <DialogTitle>Agregar {TitlePage}</DialogTitle>
+          </DialogHeader>
+          <div className="mt-4">{FormPage && <FormPage refreshData={refreshData} onCloseForm={handleCloseForm} />}</div>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
-
-export default ContentPage

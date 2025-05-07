@@ -87,6 +87,7 @@ function WeighingPage() {
         isLoading={isLoading}
         error={error}
         refreshData={FetchWeighing}
+        showDeleteButton={false}
       />
     </NavPrivada>
   )

@@ -449,8 +449,8 @@ const UpdateRabbit = ({ rabbitData, onClose, onUpdate }) => {
           <div className="mb-4 px-3">
             <p className="text-sm font-medium mb-2">Registros de pesaje ({weighingRecords.length}):</p>
             <div className="text-xs text-gray-600 max-h-32 overflow-y-auto border rounded p-2">
-              {weighingRecords.map((record, index) => (
-                <div key={record.id_weighing} className="mb-1 pb-1 border-b border-gray-100 last:border-0">
+            {weighingRecords.map((record, index) => (
+            <div key={record.id_weighing || `record-${index}`} className="mb-1 pb-1 border-b border-gray-100 last:border-0">
                   <span className="font-medium">{new Date(record.fecha_weighing).toLocaleDateString()}:</span> Peso:{" "}
                   {record.peso_actual}kg, Ganancia: {record.ganancia_peso}kg
                 </div>

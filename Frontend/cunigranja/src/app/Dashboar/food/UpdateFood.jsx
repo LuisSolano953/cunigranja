@@ -7,7 +7,7 @@ const UpdateFood = ({ foodData, onClose, onUpdate }) => {
   const [name_food, setNameFood] = useState("")
   const [estado_food, setEstadoFood] = useState("Existente")
   const [valor_food, setValorFood] = useState("")
-  const [unidad_food, setUnidadFood] = useState("kg") // Default to kg
+  const [unidad_food, setUnidadFood] = useState("g") // Default to g
   const [saldo_existente, setSaldoExistente] = useState("")
   const [originalSaldo, setOriginalSaldo] = useState("") // To compare changes
   const [errorMessage, setErrorMessage] = useState("")
@@ -25,7 +25,7 @@ const UpdateFood = ({ foodData, onClose, onUpdate }) => {
       setOriginalSaldo(foodData.saldo_existente || "") // Save original balance
       setEstadoFood(foodData.estado_food || "Existente")
       setValorFood(foodData.valor_food || "")
-      setUnidadFood(foodData.unidad_food || "kg") // Initialize unit
+      setUnidadFood(foodData.unidad_food || "g") // Initialize unit to g
     }
   }, [foodData])
 
@@ -79,7 +79,8 @@ const UpdateFood = ({ foodData, onClose, onUpdate }) => {
     // Update status automatically based on balance
     if (numericValue <= 0) {
       setEstadoFood("Inactivo")
-    } else if (numericValue <= 5) {
+    } else if (numericValue <= 5000) {
+      // 5kg = 5000g
       setEstadoFood("Casi por acabar")
     } else {
       setEstadoFood("Existente")
@@ -294,24 +295,23 @@ const UpdateFood = ({ foodData, onClose, onUpdate }) => {
               className="w-full border border-gray-400 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-gray-600"
               required
             >
-              <option value="kg">Kilogramos (kg)</option>
               <option value="g">Gramos (g)</option>
             </select>
           </div>
 
           <div className="sm:col-span-2">
-            <label className="block text-gray-800 font-medium mb-2">Saldo existente (kg):</label>
+            <label className="block text-gray-800 font-medium mb-2">Saldo existente (gramos):</label>
             <input
               type="number"
               value={saldo_existente}
               onChange={(e) => handleSaldoChange(e.target.value)}
               className="w-full border border-gray-400 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-gray-600"
               required
-              placeholder="Ingrese el saldo en kg"
+              placeholder="Ingrese el saldo en gramos"
               min="0"
-              step="0.01" // Allow decimals (2 decimals)
+              step="1" // Permitir solo números enteros para gramos
             />
-            <small className="text-gray-500">Ingrese el saldo en kilogramos. Saldo original: {originalSaldo} kg</small>
+            <small className="text-gray-500">Ingrese el saldo en gramos. Saldo original: {originalSaldo} g</small>
           </div>
         </div>
 

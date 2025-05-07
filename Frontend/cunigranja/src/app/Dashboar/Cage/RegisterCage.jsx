@@ -68,7 +68,7 @@
         )}
 
         <form onSubmit={handlerSubmit} className="p-6 bg-white shadow-md rounded-lg max-w-md mx-auto mt-10 border border-gray-200">
-          <h2 className="text-xl font-bold text-center mb-4">Registrar Jaula</h2>
+          
 
           <div className="mb-3">
             <label className="block text-gray-700 font-medium mb-2">Numero de jaula:</label>

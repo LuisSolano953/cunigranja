@@ -36,10 +36,10 @@ namespace cunigranja.Services
 
         public void Add(FoodModel entity)
         {
-            // Asegurarse de que la unidad_food siempre sea "kg"
+            // Asegurarse de que la unidad_food siempre sea "g" (gramos)
             if (string.IsNullOrEmpty(entity.unidad_food))
             {
-                entity.unidad_food = "kg";
+                entity.unidad_food = "g";
             }
 
             // Redondear el saldo existente a 2 decimales
@@ -146,7 +146,7 @@ namespace cunigranja.Services
             {
                 food.estado_food = "Inactivo"; // Cuando el saldo es 0, el estado es Inactivo
             }
-            else if (food.saldo_existente <= 5)
+            else if (food.saldo_existente <= 5000) // 5kg = 5000g
             {
                 food.estado_food = "Casi por acabar";
             }
@@ -179,17 +179,19 @@ namespace cunigranja.Services
             return 40;
         }
 
-        // Método para convertir bultos a kilogramos
+        // Método para convertir bultos a gramos
         public int BultosAKilogramos(int bultos)
         {
-            return bultos * KilosPorBulto();
+            // Ahora convertimos bultos a gramos (40kg = 40000g por bulto)
+            return bultos * KilosPorBulto() * 1000;
         }
 
-        // Método para convertir gramos a kilogramos
+        // Método para convertir gramos a kilogramos (ahora devuelve gramos)
         public double GramosAKilogramos(int gramos)
         {
-            // Convertir y redondear a 2 decimales
-            return Math.Round(gramos / 1000.0, 2);
+            // Ya no convertimos a kilogramos, simplemente devolvemos los gramos
+            // Mantenemos el nombre del método para no romper referencias existentes
+            return gramos;
         }
 
         // Método mejorado para recalcular saldos cuando cambia el saldo de un alimento
@@ -272,8 +274,9 @@ namespace cunigranja.Services
                             var latestFeeding = feedingRecords.First();
 
                             // Restar la cantidad de alimentación del registro más reciente
-                            double cantidadKg = GramosAKilogramos(latestFeeding.cantidad_feeding);
-                            saldoFinal = Math.Round(newSaldo - cantidadKg, 2);
+                            // Ya no convertimos a kg, usamos directamente los gramos
+                            double cantidadGramos = latestFeeding.cantidad_feeding;
+                            saldoFinal = Math.Round(newSaldo - cantidadGramos, 2);
 
                             // La existencia actual en alimentación debe ser el saldo después de restar esta alimentación
                             latestFeeding.existencia_actual = Math.Round(saldoFinal, 1);
@@ -290,8 +293,8 @@ namespace cunigranja.Services
                             {
                                 // Para cada registro anterior, sumar la cantidad del registro actual
                                 // (porque estamos yendo hacia atrás en el tiempo)
-                                double cantidadActualKg = GramosAKilogramos(feedingRecords[i].cantidad_feeding);
-                                runningBalance = Math.Round(runningBalance + cantidadActualKg, 2);
+                                double cantidadActualGramos = feedingRecords[i].cantidad_feeding;
+                                runningBalance = Math.Round(runningBalance + cantidadActualGramos, 2);
 
                                 // Redondear a 1 decimal para visualización
                                 feedingRecords[i].existencia_actual = Math.Round(runningBalance, 1);

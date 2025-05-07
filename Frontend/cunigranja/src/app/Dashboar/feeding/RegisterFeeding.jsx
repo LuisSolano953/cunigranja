@@ -22,15 +22,15 @@ const RegisterFeeding = ({ refreshData, onCloseForm }) => {
   const MAX_RETRIES = 3
 
   // Campo calculado automáticamente - solo para mostrar al usuario
-  const [existencia_actual_kg, setExistenciaActualKg] = useState("")
+  const [existencia_actual_g, setExistenciaActualG] = useState("")
 
-  // Función para formatear números con 1 decimal máximo
+  // Función para formatear números con 2 decimales
   const formatDecimal = (num) => {
     if (num === null || num === undefined) return ""
     // Convertir a número para asegurar el formato correcto
     const numValue = Number.parseFloat(num)
-    // Redondear a 1 decimal
-    return Math.round(numValue * 10) / 10
+    // Redondear a 2 decimales
+    return Math.round(numValue * 100) / 100
   }
 
   // Función para extraer el mensaje de error de diferentes formatos de respuesta
@@ -151,7 +151,7 @@ const RegisterFeeding = ({ refreshData, onCloseForm }) => {
 
       // Resetear cantidad si se cambia el alimento
       setCantidadFeeding("100") // Por defecto 100 gramos
-      setExistenciaActualKg("")
+      setExistenciaActualG("")
     } else {
       setSelectedFood(null)
     }
@@ -162,27 +162,27 @@ const RegisterFeeding = ({ refreshData, onCloseForm }) => {
     if (selectedFood && cantidad_feeding) {
       const cantidadGramos = Number(cantidad_feeding)
 
-      // Convertir la cantidad de alimentación de gramos a kilogramos
-      const cantidadAlimentacionKg = cantidadGramos / 1000
+      // Ya no convertimos a kilogramos, usamos directamente los gramos
+      const cantidadAlimentacion = cantidadGramos
 
-      // Saldo existente ya está en kilogramos
-      const saldoExistenteKg = Number(selectedFood.saldo_existente)
+      // Saldo existente ya está en gramos
+      const saldoExistente = Number(selectedFood.saldo_existente)
 
       // Verificar si hay suficiente alimento
-      if (cantidadAlimentacionKg > saldoExistenteKg) {
-        setErrorMessage(`No hay suficiente alimento. Saldo disponible: ${formatDecimal(saldoExistenteKg)} kg`)
-        setExistenciaActualKg("")
+      if (cantidadAlimentacion > saldoExistente) {
+        setErrorMessage(`No hay suficiente alimento. Saldo disponible: ${formatDecimal(saldoExistente)} g`)
+        setExistenciaActualG("")
       } else {
         setErrorMessage("")
 
-        // Calcular el nuevo saldo en kilogramos
-        const nuevoSaldoKg = saldoExistenteKg - cantidadAlimentacionKg
+        // Calcular el nuevo saldo en gramos
+        const nuevoSaldo = saldoExistente - cantidadAlimentacion
 
-        // Formatear el número para mostrar máximo 1 decimal
-        setExistenciaActualKg(formatDecimal(nuevoSaldoKg))
+        // Formatear el número para mostrar 2 decimales
+        setExistenciaActualG(formatDecimal(nuevoSaldo))
       }
     } else {
-      setExistenciaActualKg("")
+      setExistenciaActualG("")
     }
   }, [selectedFood, cantidad_feeding])
 
@@ -235,13 +235,12 @@ const RegisterFeeding = ({ refreshData, onCloseForm }) => {
 
         // Calcular el nuevo saldo
         const cantidadGramos = Number(feedingData.cantidad_feeding)
-        const cantidadAlimentacionKg = cantidadGramos / 1000
-        const saldoExistenteKg = Number(selectedFood.saldo_existente)
-        const nuevoSaldoKg = saldoExistenteKg - cantidadAlimentacionKg
+        const saldoExistente = Number(selectedFood.saldo_existente)
+        const nuevoSaldo = saldoExistente - cantidadGramos
 
         // Intentar actualizar directamente el saldo del alimento
         try {
-          await updateFoodBalance(feedingData.Id_food, nuevoSaldoKg)
+          await updateFoodBalance(feedingData.Id_food, nuevoSaldo)
 
           // Reintentar la creación del registro de alimentación
           const retryResponse = await axiosInstance.post("/Api/Feeding/CreateFeeding", feedingData)
@@ -284,12 +283,11 @@ const RegisterFeeding = ({ refreshData, onCloseForm }) => {
 
       // Calcular el nuevo saldo para enviarlo al backend
       const cantidadGramos = Number(cantidad_feeding)
-      const cantidadAlimentacionKg = cantidadGramos / 1000
-      const saldoExistenteKg = Number(selectedFood.saldo_existente)
-      const nuevoSaldoKg = saldoExistenteKg - cantidadAlimentacionKg
+      const saldoExistente = Number(selectedFood.saldo_existente)
+      const nuevoSaldo = saldoExistente - cantidadGramos
 
-      // Redondear a 1 decimal para evitar problemas con muchos decimales
-      const nuevoSaldoRedondeado = Math.round(nuevoSaldoKg * 10) / 10
+      // Redondear a 2 decimales para evitar problemas con muchos decimales
+      const nuevoSaldoRedondeado = Math.round(nuevoSaldo * 100) / 100
 
       // Preparar los datos para enviar al backend
       // IMPORTANTE: Usar mayúsculas en los nombres de propiedades para que coincidan con el modelo del backend
@@ -316,7 +314,7 @@ const RegisterFeeding = ({ refreshData, onCloseForm }) => {
         setFechaFeeding("")
         setHoraFeeding("")
         setCantidadFeeding("100") // Volver al valor por defecto
-        setExistenciaActualKg("")
+        setExistenciaActualG("")
         setIdFood("")
         setIdRabbit("")
         setIdUser("")
@@ -444,7 +442,7 @@ const RegisterFeeding = ({ refreshData, onCloseForm }) => {
               {food && food.length > 0 ? (
                 food.map((item) => (
                   <option key={item.Id_food || item.id_food} value={item.Id_food || item.id_food}>
-                    {item.name_food} ({formatDecimal(item.saldo_existente)} kg)
+                    {item.name_food} ({formatDecimal(item.saldo_existente)} g)
                   </option>
                 ))
               ) : (
@@ -469,10 +467,7 @@ const RegisterFeeding = ({ refreshData, onCloseForm }) => {
               step="1"
             />
             {selectedFood && (
-              <small className="text-gray-500">
-                Disponible: {formatDecimal(selectedFood.saldo_existente)} kg (aproximadamente{" "}
-                {(selectedFood.saldo_existente * 1000).toFixed(0)} gramos)
-              </small>
+              <small className="text-gray-500">Disponible: {formatDecimal(selectedFood.saldo_existente)} g</small>
             )}
           </div>
 
@@ -525,7 +520,7 @@ const RegisterFeeding = ({ refreshData, onCloseForm }) => {
             <label className="block text-gray-700 font-medium mb-2">Existencia después de alimentación:</label>
             <input
               type="text"
-              value={existencia_actual_kg ? `${existencia_actual_kg} kg` : ""}
+              value={existencia_actual_g ? `${existencia_actual_g} g` : ""}
               readOnly
               className="w-full border border-gray-400 rounded-lg p-2 bg-gray-100 focus:outline-none h-10"
             />
@@ -536,9 +531,9 @@ const RegisterFeeding = ({ refreshData, onCloseForm }) => {
         <div className="flex justify-center mt-6">
           <button
             type="submit"
-            disabled={isSubmitting || !existencia_actual_kg}
+            disabled={isSubmitting || !existencia_actual_g}
             className={`text-white font-semibold py-3 px-6 rounded-lg transition-colors w-full ${
-              isSubmitting || !existencia_actual_kg ? "bg-gray-400" : "bg-black hover:bg-gray-600"
+              isSubmitting || !existencia_actual_g ? "bg-gray-400" : "bg-black hover:bg-gray-600"
             }`}
           >
             {isSubmitting

@@ -13,6 +13,13 @@ const RegisterHealth = ({ refreshData }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
   const [successMessage, setSuccessMessage] = useState("")
+  const [debugInfo, setDebugInfo] = useState("")
+
+  // Establecer la fecha actual al cargar el componente
+  useEffect(() => {
+    const today = new Date().toISOString().split("T")[0]
+    setFechaHealth(today)
+  }, [])
 
   // Fetch users when component mounts
   useEffect(() => {
@@ -30,37 +37,74 @@ const RegisterHealth = ({ refreshData }) => {
         setIsLoading(false)
       }
     }
- 
+
     fetchUsers()
   }, [])
 
   async function handlerSubmit(e) {
     e.preventDefault()
+    setErrorMessage("")
+    setSuccessMessage("")
+    setDebugInfo("")
+
+    if (!name_health || !fecha_health || !descripcion_health || !valor_health || !Id_user) {
+      setErrorMessage("Todos los campos son obligatorios")
+      return
+    }
 
     try {
-      const response = await axiosInstance.post("/Api/Health/CreateHealth", {
+      // Formatear la fecha correctamente para el backend
+      const formattedDate = new Date(fecha_health).toISOString().split("T")[0]
+
+      // Crear el objeto de datos
+      const healthData = {
+        Id_health: 0, // El backend asignará el ID real
         name_health,
-        fecha_health,
+        fecha_health: formattedDate,
         descripcion_health,
-        valor_health,
-        Id_user: Number.parseInt(Id_user), // Convertir a número
-      })
+        valor_health: Number(valor_health), // Convertir a número
+        Id_user: Number(Id_user), // Convertir a número
+      }
+
+      // Mostrar los datos que se enviarán para depuración
+      setDebugInfo(JSON.stringify(healthData, null, 2))
+
+      console.log("Enviando datos:", healthData)
+
+      const response = await axiosInstance.post("/Api/Health/CreateHealth", healthData)
 
       if (response.status === 200) {
         setSuccessMessage(response.data.message || "Registro exitoso")
         // Limpiar los campos después de un registro exitoso
         setNameHealth("")
-        setFechaHealth("")
+        setFechaHealth(new Date().toISOString().split("T")[0])
         setValorHealth("")
         setDescripcionHealth("")
         setIdUser("")
-        
-        // Ya no refrescamos automáticamente aquí
-        // El refreshData() se llamará solo cuando el usuario cierre el modal
+
+        // No refrescamos los datos automáticamente, esperamos a que el usuario cierre la alerta
       }
     } catch (error) {
       console.error("Error al registrar la salud:", error)
-      setErrorMessage(error.response?.data?.message || "Error desconocido al registrar la salud.")
+
+      // Extraer mensaje de error detallado
+      let errorMsg = "Error desconocido al registrar la salud."
+
+      if (error.response) {
+        if (error.response.data && typeof error.response.data === "string") {
+          errorMsg = error.response.data
+        } else if (error.response.data && error.response.data.message) {
+          errorMsg = error.response.data.message
+        } else if (error.response.data && error.response.data.errors) {
+          // Formatear errores de validación
+          const validationErrors = Object.entries(error.response.data.errors)
+            .map(([key, value]) => `${key}: ${value.join(", ")}`)
+            .join("; ")
+          errorMsg = `Errores de validación: ${validationErrors}`
+        }
+      }
+
+      setErrorMessage(errorMsg)
     }
   }
 
@@ -68,52 +112,64 @@ const RegisterHealth = ({ refreshData }) => {
     // Primero limpiamos los mensajes
     setErrorMessage("")
     setSuccessMessage("")
+    setDebugInfo("")
 
-    // Luego refrescamos los datos, pero solo si había un mensaje de éxito
-    if (successMessage && refreshData && typeof refreshData === "function") {
+    // Luego refrescamos los datos si es necesario
+    if (refreshData && typeof refreshData === "function") {
       refreshData()
     }
   }
 
   return (
     <>
-      {/* Modales de error y éxito */}
-      {errorMessage && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
-            <h2 className="text-xl font-semibold text-center mb-4">Error</h2>
-            <p className="text-center mb-6">{errorMessage}</p>
-            <button
-              onClick={closeModal}
-              className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-300 ease-in-out"
-            >
-              Cerrar
-            </button>
-          </div>
-        </div>
-      )}
+      {(errorMessage || successMessage) && (
+        <>
+          {/* Overlay con cobertura extendida */}
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-50"
+            style={{
+              height: "85vh",
+              width: "100%",
+              top: 0,
+              left: 0,
+              position: "fixed",
+              overflow: "hidden",
+            }}
+          ></div>
 
-      {successMessage && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
-            <h2 className="text-xl font-semibold text-center mb-4">Éxito</h2>
-            <p className="text-center mb-6">{successMessage}</p>
-            <button
-              onClick={closeModal}
-              className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-300 ease-in-out"
+          {/* Contenedor del modal con posición ajustada */}
+          <div className="fixed inset-0 z-50 flex items-start justify-center pointer-events-none">
+            <div
+              className="bg-white rounded-lg shadow-2xl p-6 max-w-md w-full pointer-events-auto"
+              style={{
+                marginTop: "200px",
+              }}
             >
-              Cerrar
-            </button>
+              <h2 className="text-xl font-semibold text-center mb-4">{errorMessage ? "Error" : "Éxito"}</h2>
+              <p className="text-center mb-6">
+                {errorMessage
+                  ? "Ha ocurrido un error en la operación. Por favor, inténtelo de nuevo."
+                  : "La operación se ha completado con éxito."}
+              </p>
+              <button
+                onClick={closeModal}
+                className={`w-full py-2 px-4 ${
+                  errorMessage ? "bg-red-600 hover:bg-red-700" : "bg-blue-600 hover:bg-blue-700"
+                } text-white font-semibold rounded-lg shadow-md transition duration-300`}
+              >
+                Cerrar
+              </button>
+            </div>
           </div>
-        </div>
+        </>
       )}
-
+     
       {/* Formulario */}
       <form
         onSubmit={handlerSubmit}
         className="p-5 bg-white shadow-lg rounded-lg max-w-md mx-auto mt-10 border border-gray-400"
       >
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Registrar Salud</h2>
+        
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
           <div>
@@ -177,7 +233,7 @@ const RegisterHealth = ({ refreshData }) => {
             >
               <option value="">Seleccione un responsable</option>
               {users.map((user) => (
-                <option key={user.id_user} value={user.id_user}>
+                <option key={user.id_user || user.Id_user} value={user.id_user || user.Id_user}>
                   {user.name_user}
                 </option>
               ))}

@@ -151,6 +151,7 @@ function Feedingpage() {
         isLoading={isLoading}
         error={error}
         refreshData={fetchFeeding}
+        showDeleteButton={false}
       />
       {/* Edit Modal */}
       <Dialog open={isEditModalOpen} onOpenChange={handleCloseEditModal}>

@@ -8,6 +8,7 @@ import axiosInstance from "@/lib/axiosInstance"
 import UpdateRabbit from "./UpdateRabbit"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { MODAL_STYLE_CLASSES } from "@/components/utils/ModalDialog"
+import DataTable from "@/components/utils/DataTable" // Import the updated DataTable component
 
 export function RabbitPage() {
   const TitlePage = "Conejos"
@@ -127,6 +128,9 @@ export function RabbitPage() {
         onUpdate={handleUpdate}
         isLoading={isLoading}
         error={error}
+        showDeleteButton={false}
+        showChartButton={true} // Add this prop to show the chart button
+        CustomDataTable={DataTable} // Use the custom DataTable component
       />
       {/* Edit Modal */}
       <Dialog open={isEditModalOpen} onOpenChange={handleCloseEditModal}>

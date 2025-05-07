@@ -117,6 +117,7 @@ function Entradapage() {
         onDelete={handleDelete}
         onUpdate={handleUpdate}
         endpoint="/Api/Entrada/DeleteEntrada"
+        showDeleteButton={false}
       />
       {/* Edit Modal */}
       <Dialog open={isEditModalOpen} onOpenChange={handleCloseEditModal}>

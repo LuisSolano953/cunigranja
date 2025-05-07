@@ -45,8 +45,8 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
     if (num === null || num === undefined) return ""
     // Convertir a número para asegurar el formato correcto
     const numValue = Number.parseFloat(num)
-    // Redondear a 1 decimal
-    return Math.round(numValue * 10) / 10
+    // Redondear a 2 decimales
+    return Math.round(numValue * 100) / 100
   }
 
   // Función para extraer el mensaje de error de diferentes formatos de respuesta
@@ -218,11 +218,11 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
       // Guardar valores originales para cálculos posteriores
       setOriginalCantidad(feedingData.cantidad_feeding?.toString() || "")
 
-      // Formatear existencia_actual para eliminar decimales innecesarios
+      // Formatear existencia_actual para mostrar 2 decimales
       if (feedingData.existencia_actual !== undefined) {
         const existenciaNum = Number(feedingData.existencia_actual)
-        // Redondear a 1 decimal y eliminar ceros finales
-        const existenciaStr = existenciaNum.toFixed(1).replace(/\.0$/, "")
+        // Redondear a 2 decimales
+        const existenciaStr = existenciaNum.toFixed(2)
         setExistenciaActual(existenciaStr)
       } else {
         setExistenciaActual("")
@@ -298,8 +298,8 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
       if (diferencia > 0) {
         const saldoDisponible = Number.parseFloat(selectedFood.saldo_existente) || 0
 
-        if (diferencia / 1000 > saldoDisponible) {
-          setErrorMessage(`No hay suficiente alimento. Saldo disponible: ${formatDecimal(saldoDisponible)} kg`)
+        if (diferencia > saldoDisponible) {
+          setErrorMessage(`No hay suficiente alimento. Saldo disponible: ${formatDecimal(saldoDisponible)} g`)
           return
         }
       }
@@ -309,9 +309,11 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
       // Si la cantidad disminuye, el saldo disminuye menos (o aumenta relativamente)
       const saldoActual = Number.parseFloat(selectedFood?.saldo_existente) || 0
 
-      const nuevaExistencia = saldoActual - diferencia / 1000
+      // Aquí está el problema: estamos calculando incorrectamente la nueva existencia
+      // Debemos usar la diferencia, no la cantidad nueva completa
+      const nuevaExistencia = saldoActual - diferencia
 
-      // Formatear el número para mostrar máximo 1 decimal
+      // Formatear el número para mostrar 2 decimales
       setExistenciaActual(formatDecimal(nuevaExistencia))
 
       setErrorMessage("")
@@ -354,7 +356,7 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
         Id_food: Number.parseInt(Id_food),
         Id_rabbit: Number.parseInt(Id_rabbit),
         Id_user: Number.parseInt(Id_user),
-        existencia_actual: Math.round(Number(existencia_actual) * 10) / 10, // Redondear a 1 decimal
+        existencia_actual: Math.round(Number(existencia_actual) * 100) / 100, // Redondear a 2 decimales
       }
 
       console.log("Enviando datos de actualización:", payload)
@@ -441,7 +443,7 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
         onSubmit={HandleSubmit}
         className="p-8 bg-white shadow-lg rounded-lg max-w-md mx-auto mt-10 border border-gray-400 relative"
       >
-       
+        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Actualizar Alimentación</h2>
 
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div>
@@ -535,7 +537,7 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
           <label className="block text-gray-700 font-medium mb-2">Existencia después de alimentación:</label>
           <input
             type="text"
-            value={existencia_actual ? `${existencia_actual} kg` : ""}
+            value={existencia_actual ? `${existencia_actual} g` : ""}
             disabled
             readOnly
             className="w-full border border-gray-400 rounded-lg p-2 bg-gray-100 focus:ring-2 focus:ring-gray-600 h-10"

@@ -2,17 +2,29 @@
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Search, Edit, ChevronLeft, ChevronRight } from "lucide-react"
+import { Search, Edit, ChevronLeft, ChevronRight, BarChart2 } from "lucide-react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import DeleteRecord from "./Delete"
+import GraficoConejo from "./graficos"
 
-function DataTable({ Data, TitlesTable, onDelete, onUpdate, endpoint, refreshData, showDeleteButton = true }) {
+function DataTable({
+  Data,
+  TitlesTable,
+  onDelete,
+  onUpdate,
+  endpoint,
+  refreshData,
+  showDeleteButton = true,
+  showChartButton = false,
+}) {
   const [searchTerm, setSearchTerm] = useState("")
   const [currentPage, setCurrentPage] = useState(1)
   const [filteredData, setFilteredData] = useState([])
   const [currentItems, setCurrentItems] = useState([])
+  const [selectedRabbitId, setSelectedRabbitId] = useState(null)
+  const [isChartOpen, setIsChartOpen] = useState(false)
   const itemsPerPage = 5
 
   // Move filtering logic to useEffect to avoid state updates during render
@@ -44,6 +56,15 @@ function DataTable({ Data, TitlesTable, onDelete, onUpdate, endpoint, refreshDat
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber)
+  }
+
+  const handleOpenChart = (rabbitId) => {
+    setSelectedRabbitId(rabbitId)
+    setIsChartOpen(true)
+  }
+
+  const handleCloseChart = () => {
+    setIsChartOpen(false)
   }
 
   const totalPages = Math.ceil(filteredData.length / itemsPerPage)
@@ -118,6 +139,17 @@ function DataTable({ Data, TitlesTable, onDelete, onUpdate, endpoint, refreshDat
                                 refreshData={refreshData}
                               />
                             )}
+                            {showChartButton && (
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => handleOpenChart(row.Id || row.id)}
+                                className="text-green-600 hover:text-green-800"
+                              >
+                                <BarChart2 className="w-4 h-4 mr-1" />
+                                Gráfico
+                              </Button>
+                            )}
                           </div>
                         </TableCell>
                       </TableRow>
@@ -172,6 +204,9 @@ function DataTable({ Data, TitlesTable, onDelete, onUpdate, endpoint, refreshDat
           </>
         )}
       </CardFooter>
+
+      {/* Chart Modal */}
+      {isChartOpen && <GraficoConejo rabbitId={selectedRabbitId} isOpen={isChartOpen} onClose={handleCloseChart} />}
     </Card>
   )
 }

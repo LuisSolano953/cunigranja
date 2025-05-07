@@ -45,9 +45,21 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
       }
 
       try {
-        // Importante: Añadir un parámetro de timestamp para evitar caché
+        // Importante: Asegurarse de que el ID sea un número entero
+        const rabbitId = Number.parseInt(id_rabbit, 10)
+
+        if (isNaN(rabbitId)) {
+          console.error("ID de conejo inválido:", id_rabbit)
+          setErrorMessage("ID de conejo inválido")
+          return
+        }
+
+        // Añadir un parámetro de timestamp para evitar caché
         const timestamp = new Date().getTime()
-        const response = await axiosInstance.get(`/Api/Rabbit/ConsultRabbit?id=${id_rabbit}&_t=${timestamp}`)
+
+        // Usar el formato correcto para el endpoint: id=123 (sin llaves)
+        const response = await axiosInstance.get(`/Api/Rabbit/ConsultRabbit?id=${rabbitId}&_t=${timestamp}`)
+
         if (response.status === 200) {
           console.log("Datos del conejo seleccionado:", response.data)
           setSelectedRabbitData(response.data)
@@ -57,6 +69,20 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
         }
       } catch (error) {
         console.error("Error al obtener datos del conejo:", error)
+        // Mostrar información más detallada sobre el error
+        if (error.response) {
+          console.log("Detalles del error:", error.response.data)
+
+          // Si hay errores específicos de validación, mostrarlos
+          if (error.response.data && error.response.data.errors) {
+            const errorDetails = JSON.stringify(error.response.data.errors)
+            setErrorMessage(`Error de validación: ${errorDetails}`)
+          } else {
+            setErrorMessage(`Error al obtener datos del conejo: ${error.response.status} ${error.response.statusText}`)
+          }
+        } else {
+          setErrorMessage(`Error al obtener datos del conejo: ${error.message}`)
+        }
       }
     }
 
@@ -82,7 +108,15 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
   async function verifyRabbitUpdate(rabbitId) {
     try {
       const timestamp = new Date().getTime()
-      const response = await axiosInstance.get(`/Api/Rabbit/ConsultRabbit?id=${rabbitId}&_t=${timestamp}`)
+      // Asegurarse de que el ID sea un número entero
+      const numericId = Number.parseInt(rabbitId, 10)
+
+      if (isNaN(numericId)) {
+        console.error("ID de conejo inválido para verificación:", rabbitId)
+        return null
+      }
+
+      const response = await axiosInstance.get(`/Api/Rabbit/ConsultRabbit?id=${numericId}&_t=${timestamp}`)
       if (response.status === 200) {
         const updatedRabbit = response.data
         console.log("Datos del conejo después de la actualización:", updatedRabbit)
@@ -112,7 +146,14 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
     try {
       // Obtener los datos más recientes del conejo antes de actualizar
       const timestamp = new Date().getTime()
-      const rabbitResponse = await axiosInstance.get(`/Api/Rabbit/ConsultRabbit?id=${id_rabbit}&_t=${timestamp}`)
+      // Asegurarse de que el ID sea un número entero
+      const rabbitId = Number.parseInt(id_rabbit, 10)
+
+      if (isNaN(rabbitId)) {
+        throw new Error("ID de conejo inválido")
+      }
+
+      const rabbitResponse = await axiosInstance.get(`/Api/Rabbit/ConsultRabbit?id=${rabbitId}&_t=${timestamp}`)
       const freshRabbitData = rabbitResponse.data
 
       console.log("Datos frescos del conejo antes de actualizar:", freshRabbitData)
@@ -124,7 +165,7 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
         fecha_weighing: new Date(fecha_weighing).toISOString(),
         ganancia_peso: Number.parseFloat(ganancia_peso) || 0,
         peso_actual: Number.parseFloat(peso_actual) || 0,
-        Id_rabbit: Number.parseInt(id_rabbit, 10) || 0,
+        Id_rabbit: rabbitId,
         Id_user: Number.parseInt(id_user, 10) || 0,
       }
 
@@ -147,17 +188,25 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
 
         debugText += `Cálculo: ${currentPesoActual} + ${weightGain} = ${newPesoActual}\n`
 
+        // Asegurarse de que todos los IDs sean números enteros
+        const rabbitCageId = Number.parseInt(freshRabbitData.id_cage || freshRabbitData.Id_cage, 10)
+        const rabbitRaceId = Number.parseInt(freshRabbitData.id_race || freshRabbitData.Id_race, 10)
+
+        if (isNaN(rabbitCageId) || isNaN(rabbitRaceId)) {
+          throw new Error("ID de jaula o raza inválido")
+        }
+
         // Crear un objeto con solo los campos necesarios para actualizar el conejo
         const rabbitUpdateData = {
-          Id_rabbit: Number.parseInt(id_rabbit, 10),
+          Id_rabbit: rabbitId,
           name_rabbit: freshRabbitData.name_rabbit,
           fecha_registro: freshRabbitData.fecha_registro,
           peso_inicial: Number.parseFloat(freshRabbitData.peso_inicial),
           sexo_rabbit: freshRabbitData.sexo_rabbit,
           estado: freshRabbitData.estado,
           peso_actual: newPesoActual, // Usar el peso acumulado
-          Id_cage: Number.parseInt(freshRabbitData.id_cage || freshRabbitData.Id_cage),
-          Id_race: Number.parseInt(freshRabbitData.id_race || freshRabbitData.Id_race),
+          Id_cage: rabbitCageId,
+          Id_race: rabbitRaceId,
         }
 
         console.log("Enviando datos de actualización del conejo:", rabbitUpdateData)
@@ -210,7 +259,7 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
       }
     } catch (error) {
       console.error("Error completo:", error)
-      const errorMsg = error.response?.data?.message || "Error al registrar pesaje"
+      const errorMsg = error.response?.data?.message || error.message || "Error al registrar pesaje"
       setErrorMessage(errorMsg)
     } finally {
       setIsSubmitting(false)
@@ -262,7 +311,7 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
 
       <form
         onSubmit={handleSubmit}
-        className="p-8 bg-white shadow-lg rounded-lg max-w-md mx-auto mt-10 border border-gray-400 relative"
+        className="p-8 bg-white shadow-lg rounded-lg max-w-md mx-auto border border-gray-400 relative"
       >
         <h2 className="text-xl font-bold text-center mb-6">Registrar Pesaje</h2>
 
@@ -284,7 +333,7 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
             >
               <option value="">Seleccione</option>
               {rabbit.map((r) => (
-                <option key={r.id_rabbit} value={r.id_rabbit}>
+                <option key={r.id_rabbit || r.Id_rabbit} value={r.id_rabbit || r.Id_rabbit}>
                   {r.name_rabbit}
                 </option>
               ))}
@@ -338,7 +387,7 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
             >
               <option value="">Seleccione</option>
               {users.map((u) => (
-                <option key={u.id_user} value={u.id_user}>
+                <option key={u.id_user || u.Id_user} value={u.id_user || u.Id_user}>
                   {u.name_user}
                 </option>
               ))}

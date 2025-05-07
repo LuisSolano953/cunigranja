@@ -77,6 +77,7 @@ namespace cunigranja.Controllers
                 return StatusCode(500, ex.ToString());
             }
         }
+        
         [HttpPost("ResetPassUser")]
         public async Task<IActionResult> ResetPassword(ResetPassUser user)
         {
@@ -87,15 +88,20 @@ namespace cunigranja.Controllers
                     return BadRequest("El Email proporcionado no es válido.");
                 }
 
-                // Generar un token único para el restablecimiento de contraseña
-                var resetToken = Guid.NewGuid().ToString();
-
-                // Guardar el token en la base de datos (asociado al usuario)
+                // Verificar si el usuario existe
                 var dbUser = _Services.GetByEmail(user.Email);
                 if (dbUser == null)
                 {
                     return NotFound("Usuario no encontrado.");
                 }
+
+                // Generar un token único para el restablecimiento de contraseña
+                var resetToken = Guid.NewGuid().ToString();
+                
+                // Guardar el token en la base de datos
+                dbUser.ResetToken = resetToken;
+                dbUser.ResetTokenExpiration = DateTime.UtcNow.AddMinutes(30); // Expira en 30 minutos
+                _Services.UpdateUser(dbUser.Id_user, dbUser);
                 
                 // Enviar el correo con el token
                 var result = await FunctionsGeneral.SendEmail(user.Email, resetToken);
@@ -115,8 +121,74 @@ namespace cunigranja.Controllers
                 return StatusCode(500, ex.ToString());
             }
         }
+        
+        [HttpPost("ValidateToken")]
+        public IActionResult ValidateToken([FromBody] TokenRequest model)
+        {
+            if (string.IsNullOrEmpty(model.Token))
+                return Unauthorized(new { message = "Token no proporcionado" });
+
+            try
+            {
+                var user = _Services.GetUsers().FirstOrDefault(u => 
+                    u.ResetToken == model.Token && 
+                    u.ResetTokenExpiration > DateTime.UtcNow);
+
+                if (user == null)
+                {
+                    return Unauthorized(new { message = "Token inválido o expirado" });
+                }
+
+                return Ok(new { message = "Token válido", email = user.email_user });
+            }
+            catch (Exception ex)
+            {
+                FunctionsGeneral.AddLog(ex.ToString());
+                return StatusCode(500, new { message = "Error en el servidor", error = ex.Message });
+            }
+        }
+
+        [HttpPost("ResetPasswordConfirm")]
+        public IActionResult ResetPasswordConfirm([FromBody] ResetPasswordModel model)
+        {
+            if (string.IsNullOrEmpty(model.Token) || string.IsNullOrEmpty(model.NewPassword))
+            {
+                return BadRequest(new { message = "Token y nueva contraseña son obligatorios." });
+            }
+
+            try
+            {
+                var user = _Services.GetUsers().FirstOrDefault(u => 
+                    u.ResetToken == model.Token && 
+                    u.ResetTokenExpiration > DateTime.UtcNow);
+
+                if (user == null)
+                {
+                    return BadRequest(new { message = "Token inválido o expirado." });
+                }
+
+                // Generar nuevo hash de contraseña
+                string salt = BCrypt.Net.BCrypt.GenerateSalt();
+                user.password_user = BCrypt.Net.BCrypt.HashPassword(model.NewPassword + salt);
+                user.salt = salt;
+
+                // Borrar el token de restablecimiento después de cambiar la contraseña
+                user.ResetToken = null;
+                user.ResetTokenExpiration = null;
+
+                // Guardar cambios en la base de datos
+                _Services.UpdateUser(user.Id_user, user);
+
+                return Ok(new { message = "Contraseña restablecida correctamente." });
+            }
+            catch (Exception ex)
+            {
+                FunctionsGeneral.AddLog(ex.ToString());
+                return StatusCode(500, new { message = "Error en el servidor", error = ex.Message });
+            }
+        }
+        
         [HttpGet("AllUser")]
-       
         public ActionResult<IEnumerable<User>> GetUsers()
         {
             try
@@ -131,41 +203,38 @@ namespace cunigranja.Controllers
             }
 
         }
+        
         [HttpPost("CreateUser")]
         public IActionResult CreateUser([FromBody]User entity)
         {
             try
             {
-                //if(entity.Id_user<=0)
-                //{
-                //    return BadRequest("El Id del usuario de ser un valor aceptable");
-                //}
-
                 // Generar salt
                 string salt = BCrypt.Net.BCrypt.GenerateSalt();
                 // Hashear la contraseña
                 string hashedPassword = BCrypt.Net.BCrypt.HashPassword(entity.password_user + salt);
-                entity.salt = salt;                    // Usa entity.salt en lugar de User.salt
-                entity.password_user = hashedPassword; // Usa entity.password_user para almacenar la contraseña hasheada
+                entity.salt = salt;                    
+                entity.password_user = hashedPassword; 
                 entity.token_user = "";
+        
+                // Asegurarse de que los campos de restablecimiento de contraseña sean nulos
+                entity.ResetToken = null;
+                entity.ResetTokenExpiration = null;
+        
                 _Services.Add(entity);
                 return Ok(new
                 {
                     message = "User creado con éxito"
                 });
-                //}
-                //return BadRequest(errores);
             }
             catch (Exception ex)
             {
                 FunctionsGeneral.AddLog(ex.ToString());
                 return StatusCode(500, ex.ToString());
             }
-
         }
         
         [HttpGet("ConsulUser")]
-       
         public ActionResult<User> GetUserById(int Id_user)
         {
             try
@@ -187,8 +256,8 @@ namespace cunigranja.Controllers
                 return StatusCode(500, ex.ToString());
             }
         }
+        
         [HttpPost("UpdateUser")]
-     
         public IActionResult UpdateUser(User entity)
         {
             try
@@ -209,8 +278,8 @@ namespace cunigranja.Controllers
                 return StatusCode(500, ex.ToString());
             }
         }
-        [HttpGet("ConsulUsersInRange")]
         
+        [HttpGet("ConsulUsersInRange")]
         public ActionResult<IEnumerable<User>> GetUsersInRange(int startId, int endId)
         {
             try
@@ -230,7 +299,6 @@ namespace cunigranja.Controllers
         }
 
         [HttpDelete("DeleteUser")]
-        
         public IActionResult DeleteUserById(int Id_user)
         {
             try

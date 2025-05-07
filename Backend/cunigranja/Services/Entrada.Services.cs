@@ -45,14 +45,14 @@ namespace cunigranja.Services
                 // Calcular automáticamente el valor total
                 entity.valor_total = entity.cantidad_entrada * entity.valor_entrada;
 
-                // Convertir la cantidad de entrada (bultos) a kilogramos
-                int cantidadEntradaKg = _foodServices.BultosAKilogramos(entity.cantidad_entrada);
+                // Convertir la cantidad de entrada (bultos) a gramos
+                int cantidadEntradaGramos = _foodServices.BultosAKilogramos(entity.cantidad_entrada);
 
                 // Obtener el saldo existente actual del alimento
                 double saldoExistenteActual = food.saldo_existente;
 
                 // Calcular el nuevo saldo total (saldo existente + cantidad entrada)
-                double nuevoSaldoTotal = Math.Round(saldoExistenteActual + cantidadEntradaKg, 2);
+                double nuevoSaldoTotal = Math.Round(saldoExistenteActual + cantidadEntradaGramos, 2);
 
                 // Guardar el saldo total resultante en existencia_actual
                 entity.existencia_actual = (int)nuevoSaldoTotal;
@@ -61,7 +61,7 @@ namespace cunigranja.Services
                 _context.entrada.Add(entity);
                 _context.SaveChanges();
 
-                // Actualizar el saldo existente en la tabla de alimentos (en kilogramos)
+                // Actualizar el saldo existente en la tabla de alimentos (en gramos)
                 food.saldo_existente = nuevoSaldoTotal;
 
                 // Actualizar el estado del alimento según el saldo
@@ -69,7 +69,7 @@ namespace cunigranja.Services
                 {
                     food.estado_food = "Inactivo";
                 }
-                else if (food.saldo_existente <= 5 * _foodServices.KilosPorBulto()) // 5 bultos en kg
+                else if (food.saldo_existente <= 5000) // 5kg = 5000g
                 {
                     food.estado_food = "Casi por acabar";
                 }
@@ -113,16 +113,16 @@ namespace cunigranja.Services
                     throw new Exception($"El alimento con ID {updatedEntrada.Id_food} no existe.");
                 }
 
-                // Calcular la diferencia de cantidad en kilogramos
-                int cantidadOriginalKg = _foodServices.BultosAKilogramos(entrada.cantidad_entrada);
-                int nuevaCantidadKg = _foodServices.BultosAKilogramos(updatedEntrada.cantidad_entrada);
-                int diferenciaKg = nuevaCantidadKg - cantidadOriginalKg;
+                // Calcular la diferencia de cantidad en gramos
+                int cantidadOriginalGramos = _foodServices.BultosAKilogramos(entrada.cantidad_entrada);
+                int nuevaCantidadGramos = _foodServices.BultosAKilogramos(updatedEntrada.cantidad_entrada);
+                int diferenciaGramos = nuevaCantidadGramos - cantidadOriginalGramos;
 
                 // Calcular automáticamente el valor total
                 updatedEntrada.valor_total = updatedEntrada.cantidad_entrada * updatedEntrada.valor_entrada;
 
                 // Calcular el nuevo saldo total
-                double nuevoSaldoTotal = Math.Round(food.saldo_existente + diferenciaKg, 2);
+                double nuevoSaldoTotal = Math.Round(food.saldo_existente + diferenciaGramos, 2);
 
                 // Actualizar la existencia actual con el saldo total resultante
                 updatedEntrada.existencia_actual = (int)nuevoSaldoTotal;
@@ -131,7 +131,7 @@ namespace cunigranja.Services
                 _context.Entry(entrada).CurrentValues.SetValues(updatedEntrada);
                 _context.SaveChanges();
 
-                // Actualizar el saldo existente en la tabla de alimentos (en kilogramos)
+                // Actualizar el saldo existente en la tabla de alimentos (en gramos)
                 food.saldo_existente = nuevoSaldoTotal;
 
                 // Asegurarse de que el saldo no sea negativo
@@ -145,7 +145,7 @@ namespace cunigranja.Services
                 {
                     food.estado_food = "Inactivo";
                 }
-                else if (food.saldo_existente <= 5 * _foodServices.KilosPorBulto()) // 5 bultos en kg
+                else if (food.saldo_existente <= 5000) // 5kg = 5000g
                 {
                     food.estado_food = "Casi por acabar";
                 }
@@ -181,11 +181,11 @@ namespace cunigranja.Services
                     var food = _foodServices.GetFoodById(entrada.Id_food);
                     if (food != null)
                     {
-                        // Restar la cantidad de la entrada (en kilogramos) del saldo existente
-                        int cantidadEntradaKg = _foodServices.BultosAKilogramos(entrada.cantidad_entrada);
+                        // Restar la cantidad de la entrada (en gramos) del saldo existente
+                        int cantidadEntradaGramos = _foodServices.BultosAKilogramos(entrada.cantidad_entrada);
 
                         // Restar y redondear a 2 decimales
-                        food.saldo_existente = Math.Round(food.saldo_existente - cantidadEntradaKg, 2);
+                        food.saldo_existente = Math.Round(food.saldo_existente - cantidadEntradaGramos, 2);
 
                         // Asegurarse de que el saldo no sea negativo
                         if (food.saldo_existente < 0)
@@ -198,7 +198,7 @@ namespace cunigranja.Services
                         {
                             food.estado_food = "Inactivo";
                         }
-                        else if (food.saldo_existente <= 5 * _foodServices.KilosPorBulto()) // 5 bultos en kg
+                        else if (food.saldo_existente <= 5000) // 5kg = 5000g
                         {
                             food.estado_food = "Casi por acabar";
                         }

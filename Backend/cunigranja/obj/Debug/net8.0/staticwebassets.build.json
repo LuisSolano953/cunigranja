@@ -1,11 +1,39 @@
 {
   "Version": 1,
-  "Hash": "htI1e5rMNol+KwrGv+6gjwkSiDQWVNC3fgudtlE2H/w=",
+  "Hash": "YE0ZjWq+pYBvYgjZ8Ex6a5uyLo6VdTF7SVcY+eGwgD4=",
   "Source": "cunigranja",
   "BasePath": "_content/cunigranja",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "cunigranja\\wwwroot",
+      "Source": "cunigranja",
+      "ContentRoot": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\wwwroot\\",
+      "BasePath": "_content/cunigranja",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\wwwroot\\images\\logo_cuni.png",
+      "SourceId": "cunigranja",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\wwwroot\\",
+      "BasePath": "_content/cunigranja",
+      "RelativePath": "images/logo_cuni.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\logo_cuni.png"
+    }
+  ]
 }

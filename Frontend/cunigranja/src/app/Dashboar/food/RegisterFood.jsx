@@ -60,8 +60,8 @@ const RegisterFood = () => {
   async function handlerSubmit(e) {
     e.preventDefault()
 
-    // Siempre usar kg como unidad
-    const unidad_food = "kg"
+    // Siempre usar g como unidad
+    const unidad_food = "g"
 
     try {
       // Redondear el saldo existente a 2 decimales
@@ -92,10 +92,11 @@ const RegisterFood = () => {
   const handleSaldoChange = (value) => {
     setSaldoExistente(value)
     const saldoNum = Number(value)
-    
+
     if (saldoNum <= 0) {
       setEstadoFood("Inactivo")
-    } else if (saldoNum <= 5) {
+    } else if (saldoNum <= 5000) {
+      // 5kg = 5000g
       setEstadoFood("Casi por acabar")
     } else {
       setEstadoFood("Existente")
@@ -185,18 +186,18 @@ const RegisterFood = () => {
           </div>
 
           <div>
-            <label className="block text-gray-800 font-medium mb-2">Saldo existente (kg):</label>
+            <label className="block text-gray-800 font-medium mb-2">Saldo existente (gramos):</label>
             <input
               type="number"
               value={saldo_existente}
               onChange={(e) => handleSaldoChange(e.target.value)}
               className="w-full border border-gray-400 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-gray-600"
               required
-              placeholder="Ingrese el saldo inicial en kg"
+              placeholder="Ingrese el saldo inicial en gramos"
               min="0"
-              step="0.01" // Permitir decimales (2 decimales)
+              step="1" // Permitir solo números enteros para gramos
             />
-            <small className="text-gray-500">Ingrese el saldo en kilogramos</small>
+            <small className="text-gray-500">Ingrese el saldo en gramos</small>
           </div>
         </div>
 
