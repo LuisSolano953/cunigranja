@@ -2,6 +2,7 @@
 
 import axiosInstance from "@/lib/axiosInstance"
 import { useEffect, useState } from "react"
+import AlertModal from "@/components/utils/AlertModal"
 
 const UpdateFood = ({ foodData, onClose, onUpdate }) => {
   const [name_food, setNameFood] = useState("")
@@ -12,6 +13,8 @@ const UpdateFood = ({ foodData, onClose, onUpdate }) => {
   const [originalSaldo, setOriginalSaldo] = useState("") // To compare changes
   const [errorMessage, setErrorMessage] = useState("")
   const [successMessage, setSuccessMessage] = useState("")
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false)
+  const [showErrorAlert, setShowErrorAlert] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [affectedRecords, setAffectedRecords] = useState([])
   const [showAffectedWarning, setShowAffectedWarning] = useState(false)
@@ -117,6 +120,7 @@ const UpdateFood = ({ foodData, onClose, onUpdate }) => {
     } catch (error) {
       console.error("Error al recalcular saldos:", error)
       setErrorMessage("Error al recalcular saldos: " + (error.message || "Error desconocido"))
+      setShowErrorAlert(true)
       return false
     } finally {
       setIsLoading(false)
@@ -127,6 +131,7 @@ const UpdateFood = ({ foodData, onClose, onUpdate }) => {
     e.preventDefault()
     setIsLoading(true)
     setErrorMessage("")
+    setSuccessMessage("")
 
     try {
       // Asegurarse de que el ID sea un número
@@ -171,68 +176,42 @@ const UpdateFood = ({ foodData, onClose, onUpdate }) => {
 
       if (response && response.status === 200) {
         setSuccessMessage("Alimento actualizado correctamente")
-
-        // Call the onUpdate callback to refresh the data
-        if (typeof onUpdate === "function") {
-          // Actualizar datos inmediatamente
-          onUpdate()
-
-          // Cerrar el modal después de un breve retraso
-          setTimeout(() => {
-            if (typeof onClose === "function") {
-              onClose()
-            }
-          }, 1500)
-        }
+        setShowSuccessAlert(true)
       }
     } catch (error) {
       console.error("Error al actualizar el alimento:", error)
       setErrorMessage(error.response?.data?.message || error.message || "Error desconocido al actualizar el alimento.")
+      setShowErrorAlert(true)
     } finally {
       setIsLoading(false)
     }
   }
 
-  const closeModal = () => {
+  const handleCloseSuccessAlert = () => {
+    setShowSuccessAlert(false)
     setSuccessMessage("")
-    setErrorMessage("")
+    // Call the onUpdate callback to refresh the data
+    if (typeof onUpdate === "function") {
+      onUpdate()
+    }
+    // Cerrar el modal después de un breve retraso
     if (typeof onClose === "function") {
       onClose()
     }
   }
 
+  const handleCloseErrorAlert = () => {
+    setShowErrorAlert(false)
+    setErrorMessage("")
+  }
+
   return (
     <>
-      {/* Error and success modals */}
-      {errorMessage && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
-            <h2 className="text-xl font-semibold text-center mb-4">Error</h2>
-            <p className="text-center mb-6">{errorMessage}</p>
-            <button
-              onClick={closeModal}
-              className="w-full py-2 px-4 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-md transition duration-300 ease-in-out"
-            >
-              Cerrar
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Alerta de éxito */}
+      <AlertModal type="success" message={successMessage} isOpen={showSuccessAlert} onClose={handleCloseSuccessAlert} />
 
-      {successMessage && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
-            <h2 className="text-xl font-semibold text-center mb-4">Éxito</h2>
-            <p className="text-center mb-6">{successMessage}</p>
-            <button
-              onClick={closeModal}
-              className="w-full py-2 px-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-md transition duration-300 ease-in-out"
-            >
-              Cerrar
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Alerta de error */}
+      <AlertModal type="error" message={errorMessage} isOpen={showErrorAlert} onClose={handleCloseErrorAlert} />
 
       {/* Form */}
       <form

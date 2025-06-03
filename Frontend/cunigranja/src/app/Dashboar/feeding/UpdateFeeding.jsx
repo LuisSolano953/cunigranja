@@ -2,6 +2,7 @@
 
 import axiosInstance from "@/lib/axiosInstance"
 import { useEffect, useState } from "react"
+import AlertModal from "@/components/utils/AlertModal"
 
 const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
   const [fecha_feeding, setFechaFeeding] = useState("")
@@ -16,6 +17,8 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
   const [isLoading, setIsLoading] = useState({ users: false, rabbit: false, food: false })
   const [errorMessage, setErrorMessage] = useState("")
   const [successMessage, setSuccessMessage] = useState("")
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false)
+  const [showErrorAlert, setShowErrorAlert] = useState(false)
   const [selectedFood, setSelectedFood] = useState(null)
   const [originalCantidad, setOriginalCantidad] = useState("")
   const [originalFoodId, setOriginalFoodId] = useState("")
@@ -126,6 +129,7 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
       } catch (err) {
         console.error("Error al cargar datos:", err)
         setErrorMessage(extractErrorMessage(err))
+        setShowErrorAlert(true)
       } finally {
         setIsLoading({ users: false, rabbit: false, food: false })
       }
@@ -277,6 +281,7 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
     // Por simplicidad, no permitiremos cambiar el alimento en la edición
     if (foodId !== originalFoodId) {
       setErrorMessage("No se permite cambiar el alimento en la edición. Por favor, cree un nuevo registro.")
+      setShowErrorAlert(true)
       setIdFood(originalFoodId)
       return
     }
@@ -300,6 +305,7 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
 
         if (diferencia > saldoDisponible) {
           setErrorMessage(`No hay suficiente alimento. Saldo disponible: ${formatDecimal(saldoDisponible)} g`)
+          setShowErrorAlert(true)
           return
         }
       }
@@ -317,6 +323,7 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
       setExistenciaActual(formatDecimal(nuevaExistencia))
 
       setErrorMessage("")
+      setShowErrorAlert(false)
     }
   }, [selectedFood, cantidad_feeding, originalCantidad])
 
@@ -366,77 +373,40 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
 
       if (response.status === 200) {
         setSuccessMessage("Alimentación actualizada correctamente.")
-
-        // Llamar a onUpdate si existe para actualizar los datos sin recargar la página
-        if (typeof onUpdate === "function") {
-          onUpdate()
-        }
-
-        // No recargamos la página, solo cerramos el modal después de 1.5 segundos
-        setTimeout(() => {
-          if (typeof onClose === "function") {
-            onClose()
-          }
-        }, 1500)
+        setShowSuccessAlert(true)
       }
     } catch (error) {
       console.error("Error al actualizar la alimentación:", error)
       setErrorMessage(extractErrorMessage(error))
+      setShowErrorAlert(true)
     } finally {
       setIsSubmitting(false)
     }
   }
 
-  const closeModal = () => {
+  const handleCloseSuccessAlert = () => {
+    setShowSuccessAlert(false)
     setSuccessMessage("")
-    setErrorMessage("")
-    if (typeof onClose === "function") {
-      onClose()
-    }
     if (typeof onUpdate === "function") {
       onUpdate() // Actualiza datos globales (ej. recarga tabla)
     }
+    if (typeof onClose === "function") {
+      onClose()
+    }
+  }
+
+  const handleCloseErrorAlert = () => {
+    setShowErrorAlert(false)
+    setErrorMessage("")
   }
 
   return (
     <>
-      {(errorMessage || successMessage) && (
-        <>
-          {/* Overlay con cobertura extendida */}
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-50"
-            style={{
-              height: "125vh",
-              width: "100%",
-              top: 0,
-              left: 0,
-              position: "fixed",
-              overflow: "hidden",
-            }}
-          ></div>
+      {/* Alerta de éxito */}
+      <AlertModal type="success" message={successMessage} isOpen={showSuccessAlert} onClose={handleCloseSuccessAlert} />
 
-          {/* Contenedor del modal con posición ajustada */}
-          <div className="fixed inset-0 z-50 flex items-start justify-center pointer-events-none">
-            <div
-              className="bg-white rounded-lg shadow-2xl p-6 max-w-md w-full pointer-events-auto"
-              style={{
-                marginTop: "350px",
-              }}
-            >
-              <h2 className="text-xl font-semibold text-center mb-4">{errorMessage ? "Error" : "Éxito"}</h2>
-              <p className="text-center mb-6">{errorMessage || successMessage}</p>
-              <button
-                onClick={closeModal}
-                className={`w-full py-2 px-4 ${
-                  errorMessage ? "bg-red-600 hover:bg-red-700" : "bg-blue-600 hover:bg-blue-700"
-                } text-white font-semibold rounded-lg shadow-md transition duration-300`}
-              >
-                Cerrar
-              </button>
-            </div>
-          </div>
-        </>
-      )}
+      {/* Alerta de error */}
+      <AlertModal type="error" message={errorMessage} isOpen={showErrorAlert} onClose={handleCloseErrorAlert} />
 
       {/* Formulario */}
       <form

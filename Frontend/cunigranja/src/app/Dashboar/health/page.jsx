@@ -109,7 +109,8 @@ export function Healthpage() {
         TitlePage={TitlePage}
         Data={RegisterHealthData}
         TitlesTable={titlesHealth}
-        FormPage={() => <RegisterHealth refreshData={fetchHealth} />}
+        FormPage={RegisterHealth }
+        refreshData={fetchHealth}
         onDelete={handleDelete}
         onUpdate={handleUpdate}
         endpoint="/Api/Health/DeleteHealth"
@@ -121,7 +122,7 @@ export function Healthpage() {
       <Dialog open={isEditModalOpen} onOpenChange={handleCloseEditModal}>
         <DialogContent className={MODAL_STYLE_CLASSES}>
           <DialogHeader>
-            <DialogTitle>Editar Sanidad</DialogTitle>
+            <DialogTitle>Actualizar Sanidad</DialogTitle>
           </DialogHeader>
           <div className="">
             {selectedHealth && (

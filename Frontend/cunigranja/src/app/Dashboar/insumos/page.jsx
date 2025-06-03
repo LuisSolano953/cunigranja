@@ -28,7 +28,8 @@ function Entradapage() {
 
       if (response.status === 200) {
         const data = response.data.map((item) => ({
-          ID: item.Id_entrada,
+    
+          Id_entrada: item.Id_entrada, // ← AGREGAR ESTA LÍNEA para mantener el ID original
           Alimento: item.foodmodel?.name_food || item.name_food || "N/A",
           Fecha: item.fecha_entrada,
           Cantidad: item.cantidad_entrada,
@@ -113,7 +114,8 @@ function Entradapage() {
         TitlePage={TitlePage}
         Data={RegisterEntradaData}
         TitlesTable={titlesFood}
-        FormPage={() => <RegisterEntrada refreshData={FetchEntrada} />}
+        FormPage={RegisterEntrada }
+        refreshData={FetchEntrada}
         onDelete={handleDelete}
         onUpdate={handleUpdate}
         endpoint="/Api/Entrada/DeleteEntrada"

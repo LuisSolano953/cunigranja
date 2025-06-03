@@ -19,8 +19,12 @@ export default function ContentPage({
   isLoading,
   error,
   showDeleteButton = true,
-  showChartButton = false, // Add this prop
-  CustomDataTable = null, // Add this prop to allow custom DataTable component
+  showEditButton = true, // Nueva prop para mostrar/ocultar el botón de editar
+  showChartButton = false,
+  showUserStatusButton = false,
+  onToggleUserStatus = null,
+  isUserTable = false, // Nueva prop para identificar si es la tabla de usuarios
+  CustomDataTable = null,
 }) {
   const [isFormOpen, setIsFormOpen] = useState(false)
 
@@ -40,10 +44,13 @@ export default function ContentPage({
     <div className="container mx-auto p-4">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">{TitlePage}</h1>
-        <Button onClick={handleOpenForm} className="bg-black hover:bg-gray-800 text-white">
-          <PlusCircle className="mr-2 h-4 w-4" />
-          Agregar
-        </Button>
+        {/* Solo mostrar el botón de agregar si no es la tabla de usuarios y hay un FormPage */}
+        {!isUserTable && FormPage && (
+          <Button onClick={handleOpenForm} className="bg-black hover:bg-gray-800 text-white">
+            <PlusCircle className="mr-2 h-4 w-4" />
+            Agregar
+          </Button>
+        )}
       </div>
 
       {isLoading ? (
@@ -59,19 +66,27 @@ export default function ContentPage({
           endpoint={endpoint}
           refreshData={refreshData}
           showDeleteButton={showDeleteButton}
-          showChartButton={showChartButton} // Pass the showChartButton prop
+          showEditButton={showEditButton} // Pasar la prop al DataTable
+          showChartButton={showChartButton}
+          showUserStatusButton={showUserStatusButton}
+          onToggleUserStatus={onToggleUserStatus}
+          isUserTable={isUserTable} // Pasar la prop al DataTable
         />
       )}
 
-      {/* Form Modal */}
-      <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-        <DialogContent className={MODAL_STYLE_CLASSES}>
-          <DialogHeader>
-            <DialogTitle>Agregar {TitlePage}</DialogTitle>
-          </DialogHeader>
-          <div className="mt-4">{FormPage && <FormPage refreshData={refreshData} onCloseForm={handleCloseForm} />}</div>
-        </DialogContent>
-      </Dialog>
+      {/* Form Modal - Solo mostrar si hay un FormPage */}
+      {FormPage && (
+        <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
+          <DialogContent className={MODAL_STYLE_CLASSES}>
+            <DialogHeader>
+              <DialogTitle>Agregar {TitlePage}</DialogTitle>
+            </DialogHeader>
+            <div className="mt-4">
+              {FormPage && <FormPage refreshData={refreshData} onCloseForm={handleCloseForm} />}
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   )
 }

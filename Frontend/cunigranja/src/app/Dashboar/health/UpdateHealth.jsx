@@ -2,36 +2,34 @@
 
 import axiosInstance from "@/lib/axiosInstance"
 import { useEffect, useState } from "react"
+import AlertModal from "@/components/utils/AlertModal"
 
 const UpdateHealth = ({ healthData, onClose, onUpdate }) => {
-    const [name_health, setNameHealth] = useState("")
-    const [fecha_health, setFechaHealth] = useState("")
-    const [descripcion_health, setDescripcionHealth] = useState("")
-    const [valor_health, setValorHealth] = useState("")
-    const [Id_user, setIdUser] = useState("")
-    const [users, setUsers] = useState([])
-    const [isLoading, setIsLoading] = useState(false)
-    const [errorMessage, setErrorMessage] = useState("")
-    const [successMessage, setSuccessMessage] = useState("")
-  
-
-
+  const [name_health, setNameHealth] = useState("")
+  const [fecha_health, setFechaHealth] = useState("")
+  const [descripcion_health, setDescripcionHealth] = useState("")
+  const [valor_health, setValorHealth] = useState("")
+  const [Id_user, setIdUser] = useState("")
+  const [users, setUsers] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("")
+  const [successMessage, setSuccessMessage] = useState("")
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false)
+  const [showErrorAlert, setShowErrorAlert] = useState(false)
 
   // Initialize form with Health data when component mounts
   useEffect(() => {
     if (healthData) {
-        setNameHealth(healthData.name_health || "")
-        setFechaHealth(healthData.fecha_health ||"")
-        setValorHealth(healthData.valor_health ||"")
-        setDescripcionHealth(healthData.descripcion_health ||"")
-        setIdUser(healthData.Id_user ||"")
-      
+      setNameHealth(healthData.name_health || "")
+      setFechaHealth(healthData.fecha_health || "")
+      setValorHealth(healthData.valor_health || "")
+      setDescripcionHealth(healthData.descripcion_health || "")
+      setIdUser(healthData.Id_user || "")
     }
   }, [healthData])
 
-
- // Fetch users when component mounts
- useEffect(() => {
+  // Fetch users when component mounts
+  useEffect(() => {
     async function fetchUsers() {
       try {
         setIsLoading(true)
@@ -42,16 +40,15 @@ const UpdateHealth = ({ healthData, onClose, onUpdate }) => {
       } catch (error) {
         console.error("Error al obtener usuarios:", error)
         setErrorMessage("Error al obtener usuarios")
+        setShowErrorAlert(true)
       } finally {
         setIsLoading(false)
       }
     }
- 
+
     fetchUsers()
-  }, []) 
+  }, [])
 
-
-  
   async function HandleSubmit(e) {
     e.preventDefault()
 
@@ -60,53 +57,56 @@ const UpdateHealth = ({ healthData, onClose, onUpdate }) => {
       const numericId = Number.parseInt(healthData.id, 10)
 
       console.log("Intentando actualizar sanidad con ID:", numericId)
-      console.log("Datos a enviar:",{
+      console.log("Datos a enviar:", {
         name_health,
         fecha_health,
         descripcion_health,
         valor_health,
         Id_user: Number.parseInt(Id_user), // Convertir a número
-
       })
 
       // Alternativa 1: Enviar el ID en el cuerpo de la solicitud
       const response = await axiosInstance.post(`/Api/Health/UpdateHealth`, {
-        Id_health:numericId,
+        Id_health: numericId,
         name_health,
         fecha_health,
         descripcion_health,
         valor_health,
         Id_user: Number.parseInt(Id_user), // Convertir a número
-      });
-
-     
+      })
 
       if (response.status === 200) {
-        setSuccessMessage("sanidad actualizada correctamente: " )
-
-        // Call the onUpdate callback to refresh the data
-        if (typeof onUpdate === "function") {
-          setTimeout(() => {
-            onUpdate()
-            if (typeof onClose === "function") {
-              onClose()
-            }
-          }, 1500)
-        }
+        setSuccessMessage("Sanidad actualizada correctamente")
+        setShowSuccessAlert(true)
       }
     } catch (error) {
       console.error("Error al actualizar la sanidad:", error)
       setErrorMessage(error.response?.data?.message || "Error desconocido al actualizar la sanidad.")
+      setShowErrorAlert(true)
     }
   }
 
-  const closeModal = () => {
+  const handleCloseSuccessAlert = () => {
+    setShowSuccessAlert(false)
     setSuccessMessage("")
-    setErrorMessage("")
+    // Call the onUpdate callback to refresh the data
+    if (typeof onUpdate === "function") {
+      onUpdate()
+    }
     if (typeof onClose === "function") {
       onClose()
     }
   }
+
+  const handleCloseErrorAlert = () => {
+    setShowErrorAlert(false)
+    setErrorMessage("")
+     if (typeof onClose === "function") {
+      console.log("Cerrando formulario de raza...")
+      onCloseForm()
+    }
+  }
+
   // Formatear la fecha para el input date (YYYY-MM-DD)
   const formatDateForInput = (dateString) => {
     if (!dateString) return ""
@@ -116,36 +116,11 @@ const UpdateHealth = ({ healthData, onClose, onUpdate }) => {
 
   return (
     <>
-       {/* Modales de error y éxito */}
-       {errorMessage && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
-            <h2 className="text-xl font-semibold text-center mb-4">Error</h2>
-            <p className="text-center mb-6">{errorMessage}</p>
-            <button
-              onClick={closeModal}
-              className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-300 ease-in-out"
-            >
-              Cerrar
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Alerta de éxito */}
+      <AlertModal type="success" message={successMessage} isOpen={showSuccessAlert} onClose={handleCloseSuccessAlert} />
 
-      {successMessage && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
-            <h2 className="text-xl font-semibold text-center mb-4">Éxito</h2>
-            <p className="text-center mb-6">{successMessage}</p>
-            <button
-              onClick={closeModal}
-              className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-300 ease-in-out"
-            >
-              Cerrar
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Alerta de error */}
+      <AlertModal type="error" message={errorMessage} isOpen={showErrorAlert} onClose={handleCloseErrorAlert} />
 
       {/* Formulario */}
       <form
@@ -238,4 +213,3 @@ const UpdateHealth = ({ healthData, onClose, onUpdate }) => {
 }
 
 export default UpdateHealth
-

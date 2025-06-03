@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import axiosInstance from "@/lib/axiosInstance"
+import AlertModal from "@/components/utils/AlertModal"
 
 export default function RegisterReproduction({ refreshData, onCloseForm }) {
   const [fecha_nacimiento, setFechaNacimiento] = useState("")
@@ -13,6 +14,8 @@ export default function RegisterReproduction({ refreshData, onCloseForm }) {
   const [isLoading, setIsLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
   const [successMessage, setSuccessMessage] = useState("")
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false)
+  const [showErrorAlert, setShowErrorAlert] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   // Cargar datos de conejos para el dropdown
@@ -33,6 +36,7 @@ export default function RegisterReproduction({ refreshData, onCloseForm }) {
       } catch (error) {
         console.error("Error al obtener los conejos:", error)
         setErrorMessage("Error al obtener los conejos")
+        setShowErrorAlert(true)
       } finally {
         setIsLoading(false)
       }
@@ -85,6 +89,7 @@ export default function RegisterReproduction({ refreshData, onCloseForm }) {
     // Validaciones
     if (!fecha_nacimiento || !total_conejos || !nacidos_vivos || !Id_rabbit) {
       setErrorMessage("Todos los campos son obligatorios")
+      setShowErrorAlert(true)
       setIsSubmitting(false)
       return
     }
@@ -94,6 +99,7 @@ export default function RegisterReproduction({ refreshData, onCloseForm }) {
 
     if (vivos > total) {
       setErrorMessage("Los nacidos vivos no pueden exceder el total de conejos")
+      setShowErrorAlert(true)
       setIsSubmitting(false)
       return
     }
@@ -114,6 +120,7 @@ export default function RegisterReproduction({ refreshData, onCloseForm }) {
 
       if (response.status === 200) {
         setSuccessMessage(response.data.message || "Registro exitoso")
+        setShowSuccessAlert(true)
 
         // Limpiar formulario
         setFechaNacimiento("")
@@ -132,65 +139,32 @@ export default function RegisterReproduction({ refreshData, onCloseForm }) {
     } catch (error) {
       console.error("Error al registrar reproducción:", error)
       setErrorMessage(error.response?.data?.message || "Error al registrar la reproducción")
+      setShowErrorAlert(true)
     } finally {
       setIsSubmitting(false)
     }
   }
 
-  const closeModal = () => {
+ const handleCloseSuccessAlert = () => {
+    setShowSuccessAlert(false)
     setSuccessMessage("")
-    setErrorMessage("")
-    if (typeof onUpdate === "function") {
-      onUpdate() // Actualiza datos globales (ej. recarga tabla)
-    }
-    if (typeof onClose === "function") {
-      onClose()
-    }
+    // Cerrar el formulario cuando se cierra la alerta de éxito
+    if (onCloseForm) onCloseForm()
   }
 
+  const handleCloseErrorAlert = () => {
+    setShowErrorAlert(false)
+    setErrorMessage("")
+    // También cerrar el formulario cuando se cierra la alerta de error
+    if (onCloseForm) onCloseForm()
+  }
   return (
     <>
-      {(errorMessage || successMessage) && (
-        <>
-          {/* Overlay con cobertura extendida */}
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-50"
-            style={{
-              height: "125vh",
-              width: "100%",
-              top: 0,
-              left: 0,
-              position: "fixed",
-              overflow: "hidden",
-            }}
-          ></div>
+      {/* Alerta de éxito */}
+      <AlertModal type="success" message={successMessage} isOpen={showSuccessAlert} onClose={handleCloseSuccessAlert} />
 
-          {/* Contenedor del modal con posición ajustada */}
-          <div className="fixed inset-0 z-50 flex items-start justify-center pointer-events-none">
-            <div
-              className="bg-white rounded-lg shadow-2xl p-6 max-w-md w-full pointer-events-auto"
-              style={{
-                marginTop: "350px",
-              }}
-            >
-              <h2 className="text-xl font-semibold text-center mb-4">{errorMessage ? "Error" : "Éxito"}</h2>
-              <p className="text-center mb-6">
-                {errorMessage
-                  ? "Ha ocurrido un error en la operación. Por favor, inténtelo de nuevo."
-                  : "La operación se ha completado con éxito."}
-              </p>
-              <button
-                onClick={closeModal}
-                className={`w-full py-2 px-4 ${
-                  errorMessage ? "bg-red-600 hover:bg-red-700" : "bg-blue-600 hover:bg-blue-700"
-                } text-white font-semibold rounded-lg shadow-md transition duration-300`}
-              >
-                Cerrar
-              </button>
-            </div>
-          </div>
-        </>
-      )}
+      {/* Alerta de error */}
+      <AlertModal type="error" message={errorMessage} isOpen={showErrorAlert} onClose={handleCloseErrorAlert} />
 
       <form
         onSubmit={handleSubmit}

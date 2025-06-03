@@ -106,7 +106,7 @@ function Cagepage() {
       <Dialog open={isEditModalOpen} onOpenChange={handleCloseEditModal}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Editar Jaula</DialogTitle>
+            <DialogTitle>Actualizar Jaula</DialogTitle>
           </DialogHeader>
           <div className="">
             {selectedCage && (

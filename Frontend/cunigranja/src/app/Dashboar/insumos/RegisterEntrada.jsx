@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react"
 import axiosInstance from "@/lib/axiosInstance"
+import AlertModal from "@/components/utils/AlertModal"
 
-const RegisterEntrada = ({ refreshData }) => {
+const RegisterEntrada = ({ refreshData, onCloseForm }) => {
   const [fecha_entrada, setFechaEntrada] = useState("")
   const [valor_entrada, setValorEntrada] = useState("")
   const [cantidad_entrada, setCantidadEntrada] = useState("")
@@ -11,6 +12,8 @@ const RegisterEntrada = ({ refreshData }) => {
   const [food, setFood] = useState([])
   const [errorMessage, setErrorMessage] = useState("")
   const [successMessage, setSuccessMessage] = useState("")
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false)
+  const [showErrorAlert, setShowErrorAlert] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [loadingFood, setLoadingFood] = useState(true)
   const [selectedFood, setSelectedFood] = useState(null)
@@ -38,6 +41,7 @@ const RegisterEntrada = ({ refreshData }) => {
       } catch (error) {
         console.error("Error al obtener food:", error)
         setErrorMessage("Error al obtener food")
+        setShowErrorAlert(true)
       } finally {
         setLoadingFood(false)
       }
@@ -143,6 +147,7 @@ const RegisterEntrada = ({ refreshData }) => {
 
     if (!fecha_entrada || !valor_entrada || !cantidad_entrada || !Id_food) {
       setErrorMessage("Todos los campos son obligatorios.")
+      setShowErrorAlert(true)
       return
     }
 
@@ -179,6 +184,7 @@ const RegisterEntrada = ({ refreshData }) => {
 
       if (response.status === 200) {
         setSuccessMessage(response.data.message || "Registro exitoso")
+        setShowSuccessAlert(true)
         setFechaEntrada("")
         setValorEntrada("")
         setCantidadEntrada("")
@@ -186,59 +192,41 @@ const RegisterEntrada = ({ refreshData }) => {
         setValorTotal("")
         setExistenciaActualG("")
         setSelectedFood(null)
-
-        if (refreshData && typeof refreshData === "function") {
-          refreshData()
-        }
       }
     } catch (error) {
       console.error("Error al registrar la entrada:", error)
       setErrorMessage(extractErrorMessage(error))
+      setShowErrorAlert(true)
     } finally {
       setIsLoading(false)
     }
   }
 
-  const closeModal = () => {
-    setErrorMessage("")
+  const handleCloseSuccessAlert = () => {
+    setShowSuccessAlert(false)
     setSuccessMessage("")
 
-    if (successMessage && refreshData && typeof refreshData === "function") {
+    if (refreshData && typeof refreshData === "function") {
       refreshData()
     }
+
+    if (onCloseForm && typeof onCloseForm === "function") {
+      onCloseForm()
+    }
+  }
+
+  const handleCloseErrorAlert = () => {
+    setShowErrorAlert(false)
+    setErrorMessage("")
   }
 
   return (
     <>
-      {errorMessage && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
-            <h2 className="text-xl font-semibold text-center mb-4">Error</h2>
-            <p className="text-center mb-6">{errorMessage}</p>
-            <button
-              onClick={closeModal}
-              className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-300 ease-in-out"
-            >
-              Cerrar
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Alerta de éxito */}
+      <AlertModal type="success" message={successMessage} isOpen={showSuccessAlert} onClose={handleCloseSuccessAlert} />
 
-      {successMessage && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
-            <h2 className="text-xl font-semibold text-center mb-4">Éxito</h2>
-            <p className="text-center mb-6">{successMessage}</p>
-            <button
-              onClick={closeModal}
-              className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-300 ease-in-out"
-            >
-              Cerrar
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Alerta de error */}
+      <AlertModal type="error" message={errorMessage} isOpen={showErrorAlert} onClose={handleCloseErrorAlert} />
 
       <form
         onSubmit={handlerSubmit}

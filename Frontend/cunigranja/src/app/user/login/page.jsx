@@ -1,27 +1,34 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
-import axiosInstance from "@/lib/axiosInstance"
 import PublicNav from "@/components/Nav/PublicNav"
 import Footer from "@/components/Nav/footer"
 import { Card, CardContent } from "@/components/ui/card"
 import { motion } from "framer-motion"
-import { Loader2 } from "lucide-react"
-
-async function Login(credentials) {
-  const response = await axiosInstance.post("Api/User/Login", credentials)
-  return response
-}
+import { Loader2, Eye, EyeOff } from "lucide-react"
+import { useAuth } from "@/context/authContext"
+import Link from "next/link"
+import axiosInstance from "@/lib/axiosInstance"
 
 function LoginPage() {
   const router = useRouter()
+  const { login } = useAuth()
   const [errorMessage, setErrorMessage] = useState("")
+  const [successMessage, setSuccessMessage] = useState("")
   const [showStars, setShowStars] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const closeModal = () => {
     setErrorMessage("")
+  }
+
+  const closeSuccessModal = () => {
+    setSuccessMessage("")
+    // Activar el loading del layout y navegar al dashboard
+    router.push("/Dashboar")
   }
 
   async function handleSubmit(event) {
@@ -37,15 +44,46 @@ function LoginPage() {
     const password = formLogin.get("password")
 
     const credentials = {
-      email: email,
-      password: password,
+      Email: email,
+      Password: password,
     }
     try {
-      const responseLogin = await Login(credentials)
-      console.log(responseLogin)
-      if (responseLogin.status === 200) {
-        localStorage.setItem("token", responseLogin.data.token)
-        router.push("/Dashboar")
+      // Hacer la petición directamente
+      const response = await axiosInstance.post("Api/User/Login", credentials)
+
+      if (response.status === 200) {
+        // Verificar si el usuario está activo
+        try {
+          // Buscar el usuario por email para verificar su estado
+          const usersResponse = await axiosInstance.get("Api/User/AllUser")
+          const users = usersResponse.data
+
+          // Encontrar el usuario actual por su email
+          const currentUser = users.find((user) => user.email_user === email)
+
+          // Verificar si el usuario está inactivo
+          if (currentUser && (currentUser.blockard === 1 || currentUser.estado === "Inactivo")) {
+            setErrorMessage("Tu cuenta está inactiva. Por favor, contacta al administrador.")
+            setIsSubmitting(false)
+            // Limpiar el token si se había guardado
+            localStorage.removeItem("token")
+            return
+          }
+
+          // Si el usuario está activo, continuar con el proceso de login
+          localStorage.setItem("token", response.data.token)
+
+          // Actualizar el estado de autenticación
+          await login(credentials)
+
+          // Mostrar mensaje de éxito
+          setSuccessMessage("¡Inicio de sesión exitoso! Bienvenido de vuelta.")
+          setIsSubmitting(false)
+        } catch (userCheckError) {
+          console.error("Error al verificar el estado del usuario:", userCheckError)
+          setErrorMessage("Error al verificar el estado de tu cuenta. Por favor, intenta nuevamente.")
+          setIsSubmitting(false)
+        }
       }
     } catch (error) {
       console.log(error)
@@ -61,69 +99,122 @@ function LoginPage() {
     }
   }, [showStars])
 
+  // Add this useEffect to generate stars on the client side only
+  useEffect(() => {
+    const starContainer = document.getElementById("star-container")
+    if (starContainer) {
+      // Clear any existing stars
+      starContainer.innerHTML = ""
+
+      // Generate 20 stars with random properties
+      for (let i = 0; i < 20; i++) {
+        const star = document.createElement("div")
+        star.className = "absolute rounded-full bg-white"
+
+        // Set random styles
+        const width = Math.random() * 8 + 2
+        star.style.width = `${width}px`
+        star.style.height = `${width}px`
+        star.style.top = `${Math.random() * 100}%`
+        star.style.left = `${Math.random() * 100}%`
+        star.style.animation = `twinkle ${Math.random() * 5 + 2}s infinite alternate`
+
+        starContainer.appendChild(star)
+      }
+    }
+  }, []) // Empty dependency array means this runs once after initial render
+
   return (
     <>
       <PublicNav />
-      <div className="flex justify-center items-center min-h-screen bg-white p-4">
+      <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4">
         <div className="relative w-full max-w-4xl">
-          <div className="absolute inset-0 bg-gray-200 shadow-lg rounded-lg transform translate-x-2 translate-y-2"></div>
-          <Card className="relative w-full flex flex-col md:flex-row overflow-hidden shadow-xl">
-            <div className="md:w-1/2 bg-gray-100 p-8 flex flex-col justify-center items-center">
+          {/* Efecto de sombra decorativa */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-black/10 shadow-2xl rounded-2xl transform translate-x-2 translate-y-2"></div>
+
+          <Card className="relative w-full flex flex-col md:flex-row overflow-hidden rounded-2xl border-0 shadow-2xl">
+            {/* Panel izquierdo con logo y mensaje de bienvenida */}
+            <div className="md:w-1/2 bg-gradient-to-br from-gray-900 to-blue-900 p-8 flex flex-col justify-center items-center text-white">
+              <div className="absolute top-0 left-0 w-full h-full opacity-10" id="star-container">
+                {/* Stars will be added via useEffect */}
+              </div>
+
               <motion.div
-                whileHover={{ scale: 1.2 }}
+                whileHover={{ scale: 1.05, rotate: 5 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => setShowStars(true)}
-                className="mb-8 cursor-pointer relative w-40 h-40"
+                className="mb-8 cursor-pointer relative w-40 h-40 group"
               >
+                <div className="absolute inset-0 rounded-full bg-white/30 backdrop-blur-sm group-hover:bg-white/40 transition-all duration-300 transform group-hover:scale-110"></div>
                 <img
                   src="/assets/img/CUNIGRANJA-2.png"
                   alt="Logo"
-                  className="w-full h-full object-contain rounded-full bg-white mix-blend-multiply"
+                  className="w-full h-full object-contain rounded-full p-2 relative z-10 drop-shadow-lg"
                 />
               </motion.div>
-              <h2 className="text-3xl font-bold mb-4 text-gray-800">Bienvenido</h2>
-              <p className="text-lg text-gray-600 text-center">
+
+              <h2 className="text-3xl font-bold mb-4 text-white drop-shadow-md">Bienvenido</h2>
+              <p className="text-lg text-gray-100/90 text-center leading-relaxed">
                 Nos alegra verte de nuevo. Inicia sesión para acceder a tu cuenta y disfrutar de nuestros servicios.
               </p>
             </div>
-            <CardContent className="md:w-1/2 p-8">
-              <form
-                onSubmit={handleSubmit}
-                className="w-full max-w-md mx-auto space-y-6 shadow-lg p-6 rounded-lg bg-white"
-                style={{ boxShadow: "0 0px 60px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)" }}
-              >
-                <h1 className="text-2xl font-bold mb-6 text-center">Iniciar Sesión</h1>
 
-                <div className="mb-4">
-                  <input
-                    type="text"
-                    name="email"
-                    id="login"
-                    placeholder="Correo electrónico"
-                    className="w-full p-2 border-2 border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                    disabled={isSubmitting}
-                  />
+            {/* Panel derecho con formulario */}
+            <CardContent className="md:w-1/2 p-8 bg-white flex items-center justify-center">
+              <form onSubmit={handleSubmit} className="w-full max-w-md mx-auto space-y-6 p-6 rounded-xl">
+                <h1 className="text-2xl font-bold mb-6 text-center text-gray-800 relative">
+                  Iniciar Sesión
+                  <span className="block h-1 w-20 bg-blue-600 mx-auto mt-2 rounded-full"></span>
+                </h1>
+
+                <div className="mb-4 group">
+                  <label htmlFor="login" className="block text-sm font-medium text-gray-700 mb-1 ml-1">
+                    Correo electrónico
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      name="email"
+                      id="login"
+                      placeholder="ejemplo@correo.com"
+                      className="w-full p-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 bg-gray-50 hover:bg-white"
+                      disabled={isSubmitting}
+                    />
+                  </div>
                 </div>
 
-                <div className="mb-6">
-                  <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="Contraseña"
-                    className="w-full p-2 border-2 border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                    disabled={isSubmitting}
-                  />
+                <div className="mb-6 group">
+                  <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1 ml-1">
+                    Contraseña
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      id="password"
+                      placeholder="••••••••"
+                      className="w-full p-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 bg-gray-50 hover:bg-white pr-10"
+                      disabled={isSubmitting}
+                    />
+                    <button
+                      type="button"
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                    </button>
+                  </div>
                 </div>
 
                 <div className="mb-4">
                   <button
                     type="submit"
-                    className="w-full py-2 px-4 bg-black hover:bg-gray-800 text-white font-semibold rounded-lg shadow-md transition duration-300 ease-in-out disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="w-full py-3 px-4 bg-gradient-to-r from-gray-900 to-black hover:from-black hover:to-gray-800 text-white font-semibold rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
                       <span className="flex items-center justify-center">
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                         Iniciando sesión...
                       </span>
                     ) : (
@@ -135,19 +226,27 @@ function LoginPage() {
                 <div className="mb-4">
                   <a
                     href="/user/register"
-                    className={`block w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md text-center transition duration-300 ease-in-out ${isSubmitting ? "opacity-70 pointer-events-none" : ""}`}
+                    className={`block w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-lg shadow-lg text-center transition duration-300 ease-in-out transform hover:-translate-y-1 ${isSubmitting ? "opacity-70 pointer-events-none" : ""}`}
                   >
                     Crear cuenta nueva
                   </a>
                 </div>
-
-                <div className="text-center">
-                  <a
+                <div className="mb-4">
+                  <Link
                     href="/user/password"
-                    className={`text-sm text-gray-600 hover:text-pink-600 ${isSubmitting ? "opacity-70 pointer-events-none" : ""}`}
+                    className={`
+      block w-full py-3 px-4
+      bg-gray-100 hover:bg-gray-200
+      text-black font-semibold
+      rounded-lg shadow-lg
+      text-center
+      transition duration-300 ease-in-out transform
+      hover:-translate-y-1
+      ${isSubmitting ? "opacity-70 pointer-events-none" : ""}
+    `}
                   >
                     ¿Olvidaste tu contraseña?
-                  </a>
+                  </Link>
                 </div>
               </form>
             </CardContent>
@@ -155,20 +254,93 @@ function LoginPage() {
         </div>
       </div>
 
+      {/* Modal de error mejorado */}
       {errorMessage && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
-            <h2 className="text-xl font-semibold text-center mb-4">Error</h2>
-            <p className="text-center mb-6">{errorMessage}</p>
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn">
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="bg-white rounded-xl shadow-2xl p-6 max-w-md w-full mx-4"
+          >
+            <div className="flex items-center justify-center mb-4 text-red-500">
+              <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <h2 className="text-xl font-semibold text-center mb-4 text-gray-800">Error</h2>
+            <p className="text-center mb-6 text-gray-600">{errorMessage}</p>
             <button
               onClick={closeModal}
-              className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-300 ease-in-out"
+              className="w-full py-3 px-4 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold rounded-lg shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1"
             >
               Cerrar
             </button>
-          </div>
+          </motion.div>
         </div>
       )}
+
+      {/* Modal de éxito mejorado */}
+      {successMessage && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn">
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="bg-white rounded-xl shadow-2xl p-6 max-w-md w-full mx-4"
+          >
+            <div className="flex items-center justify-center mb-4 text-green-500">
+              <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            </div>
+            <h2 className="text-xl font-semibold text-center mb-4 text-gray-800">¡Éxito!</h2>
+            <p className="text-center mb-6 text-gray-600">{successMessage}</p>
+            <button
+              onClick={closeSuccessModal}
+              className="w-full py-3 px-4 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold rounded-lg shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1"
+            >
+              Continuar al Dashboard
+            </button>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Estilos para la animación de estrellas */}
+      <style jsx global>{`
+        @keyframes twinkle {
+          0% { opacity: 0.3; }
+          100% { opacity: 1; }
+        }
+        
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        
+        .animate-fadeIn {
+          animation: fadeIn 0.3s ease-out;
+        }
+      `}</style>
       <Footer />
     </>
   )

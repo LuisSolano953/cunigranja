@@ -144,7 +144,8 @@ function Feedingpage() {
         TitlePage={TitlePage}
         Data={RegisterFeedingData}
         TitlesTable={titlesFood}
-        FormPage={() => <RegisterFeeding onRegisterSuccess={fetchFeeding} />}
+        FormPage={RegisterFeeding }
+        onRegisterSuccess={fetchFeeding}
         onDelete={handleDelete}
         onUpdate={handleUpdate}
         endpoint="/Api/Feeding/DeleteFeeding"

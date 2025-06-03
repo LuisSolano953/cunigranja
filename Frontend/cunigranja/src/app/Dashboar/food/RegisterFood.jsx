@@ -2,14 +2,17 @@
 
 import axiosInstance from "@/lib/axiosInstance"
 import { useState } from "react"
+import AlertModal from "@/components/utils/AlertModal"
 
-const RegisterFood = () => {
+const RegisterFood = ({ onCloseForm }) => {
   const [name_food, setNameFood] = useState("")
   const [estado_food, setEstadoFood] = useState("Existente") // Valor por defecto
   const [valor_food, setValorFood] = useState("")
   const [saldo_existente, setSaldoExistente] = useState("")
   const [errorMessage, setErrorMessage] = useState("")
   const [successMessage, setSuccessMessage] = useState("")
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false)
+  const [showErrorAlert, setShowErrorAlert] = useState(false)
 
   // Función para extraer el mensaje de error de diferentes formatos de respuesta
   const extractErrorMessage = (error) => {
@@ -77,6 +80,7 @@ const RegisterFood = () => {
 
       if (response.status === 200) {
         setSuccessMessage(response.data.message || "Alimento registrado con éxito")
+        setShowSuccessAlert(true)
         setNameFood("")
         setSaldoExistente("")
         setEstadoFood("Existente")
@@ -85,6 +89,7 @@ const RegisterFood = () => {
     } catch (error) {
       console.error("Error al registrar el alimento:", error)
       setErrorMessage(extractErrorMessage(error))
+      setShowErrorAlert(true)
     }
   }
 
@@ -103,43 +108,29 @@ const RegisterFood = () => {
     }
   }
 
-  const closeModal = () => {
-    setErrorMessage("")
+  const handleCloseSuccessAlert = () => {
+    setShowSuccessAlert(false)
     setSuccessMessage("")
+    if (onCloseForm) onCloseForm()
+  }
+
+  const handleCloseErrorAlert = () => {
+    setShowErrorAlert(false)
+    setErrorMessage("")
   }
 
   return (
     <>
-      {/* Modales de error y éxito */}
-      {errorMessage && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
-            <h2 className="text-xl font-semibold text-center mb-4">Error</h2>
-            <p className="text-center mb-6">{errorMessage}</p>
-            <button
-              onClick={closeModal}
-              className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-300 ease-in-out"
-            >
-              Cerrar
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Alerta de éxito */}
+      <AlertModal type="success" message={successMessage} isOpen={showSuccessAlert} onClose={handleCloseSuccessAlert} />
 
-      {successMessage && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
-            <h2 className="text-xl font-semibold text-center mb-4">Éxito</h2>
-            <p className="text-center mb-6">{successMessage}</p>
-            <button
-              onClick={closeModal}
-              className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-300 ease-in-out"
-            >
-              Cerrar
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Alerta de error */}
+      <AlertModal
+        type="error"
+        message={errorMessage}
+        isOpen={showErrorAlert}
+        onClose={handleCloseErrorAlert}
+      />
 
       {/* Formulario */}
       <form

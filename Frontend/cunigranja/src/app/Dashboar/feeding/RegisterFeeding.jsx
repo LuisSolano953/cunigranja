@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import axiosInstance from "@/lib/axiosInstance"
+import AlertModal from "@/components/utils/AlertModal"
 
 const RegisterFeeding = ({ refreshData, onCloseForm }) => {
   const [fecha_feeding, setFechaFeeding] = useState("")
@@ -16,6 +17,8 @@ const RegisterFeeding = ({ refreshData, onCloseForm }) => {
   const [isLoading, setIsLoading] = useState({ users: false, rabbit: false, food: false })
   const [errorMessage, setErrorMessage] = useState("")
   const [successMessage, setSuccessMessage] = useState("")
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false)
+  const [showErrorAlert, setShowErrorAlert] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [selectedFood, setSelectedFood] = useState(null)
   const [retryCount, setRetryCount] = useState(0)
@@ -92,7 +95,15 @@ const RegisterFeeding = ({ refreshData, onCloseForm }) => {
         ])
 
         if (usersRes.status === 200) {
-          setUsers(usersRes.data)
+          // Filtrar solo usuarios activos (blockard = 0 o estado != "Inactivo")
+          const allUsers = usersRes.data || []
+          const activeUsers = allUsers.filter(
+            (user) =>
+              (user.blockard === 0 || user.blockard === undefined || user.blockard === null) &&
+              user.estado !== "Inactivo",
+          )
+          console.log("Usuarios totales:", allUsers.length, "Usuarios activos:", activeUsers.length)
+          setUsers(activeUsers)
         }
 
         if (rabbitRes.status === 200) {
@@ -121,10 +132,12 @@ const RegisterFeeding = ({ refreshData, onCloseForm }) => {
           } catch (foodErr) {
             console.error("Error al cargar alimentos:", foodErr)
             setErrorMessage(extractErrorMessage(foodErr))
+            setShowErrorAlert(true)
           }
         } else {
           console.error("Error al cargar datos:", err)
           setErrorMessage(extractErrorMessage(err))
+          setShowErrorAlert(true)
         }
       } finally {
         setIsLoading({ users: false, rabbit: false, food: false })
@@ -171,9 +184,11 @@ const RegisterFeeding = ({ refreshData, onCloseForm }) => {
       // Verificar si hay suficiente alimento
       if (cantidadAlimentacion > saldoExistente) {
         setErrorMessage(`No hay suficiente alimento. Saldo disponible: ${formatDecimal(saldoExistente)} g`)
+        setShowErrorAlert(true)
         setExistenciaActualG("")
       } else {
         setErrorMessage("")
+        setShowErrorAlert(false)
 
         // Calcular el nuevo saldo en gramos
         const nuevoSaldo = saldoExistente - cantidadAlimentacion
@@ -264,6 +279,7 @@ const RegisterFeeding = ({ refreshData, onCloseForm }) => {
 
     if (!fecha_feeding || !hora_feeding || !cantidad_feeding || !Id_food || !Id_rabbit || !Id_user) {
       setErrorMessage("Todos los campos son obligatorios.")
+      setShowErrorAlert(true)
       setIsSubmitting(false)
       return
     }
@@ -309,6 +325,7 @@ const RegisterFeeding = ({ refreshData, onCloseForm }) => {
 
       if (response && response.status === 200) {
         setSuccessMessage(response.data.message || "Registro exitoso")
+        setShowSuccessAlert(true)
 
         // Limpiar el formulario
         setFechaFeeding("")
@@ -320,18 +337,6 @@ const RegisterFeeding = ({ refreshData, onCloseForm }) => {
         setIdUser("")
         setSelectedFood(null)
         setRetryCount(0) // Resetear contador de reintentos
-
-        // Actualizar los datos sin recargar la página
-        if (refreshData) {
-          refreshData()
-        }
-
-        // Cerrar el formulario después de 1.5 segundos
-        setTimeout(() => {
-          if (onCloseForm) {
-            onCloseForm()
-          }
-        }, 1500)
       }
     } catch (error) {
       console.error("Error:", error)
@@ -356,50 +361,37 @@ const RegisterFeeding = ({ refreshData, onCloseForm }) => {
       }
 
       setErrorMessage(extractErrorMessage(error))
+      setShowErrorAlert(true)
     } finally {
       setIsSubmitting(false)
     }
   }
 
-  const closeModal = () => {
-    if (successMessage && onCloseForm) {
-      onCloseForm() // Cierra el formulario (ej. modal padre)
+  const handleCloseSuccessAlert = () => {
+    setShowSuccessAlert(false)
+    setSuccessMessage("")
+    // Actualizar los datos sin recargar la página
+    if (refreshData) {
+      refreshData()
     }
-    setSuccessMessage("") // Cierra la alerta
+    // Cerrar el formulario después de cerrar la alerta
+    if (onCloseForm) {
+      onCloseForm()
+    }
+  }
+
+  const handleCloseErrorAlert = () => {
+    setShowErrorAlert(false)
     setErrorMessage("")
   }
 
   return (
     <>
-      {errorMessage && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
-            <h2 className="text-xl font-semibold text-center mb-4">Error</h2>
-            <p className="text-center mb-6">{errorMessage}</p>
-            <button
-              onClick={() => setErrorMessage("")}
-              className="w-full py-2 px-4 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-md transition duration-300"
-            >
-              Cerrar
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Alerta de éxito */}
+      <AlertModal type="success" message={successMessage} isOpen={showSuccessAlert} onClose={handleCloseSuccessAlert} />
 
-      {successMessage && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
-            <h2 className="text-xl font-semibold text-center mb-4">Éxito</h2>
-            <p className="text-center mb-6">{successMessage}</p>
-            <button
-              onClick={closeModal}
-              className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-300"
-            >
-              Cerrar
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Alerta de error */}
+      <AlertModal type="error" message={errorMessage} isOpen={showErrorAlert} onClose={handleCloseErrorAlert} />
 
       <form
         onSubmit={handlerSubmit}

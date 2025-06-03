@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react"
 import axiosInstance from "@/lib/axiosInstance"
+import AlertModal from "@/components/utils/AlertModal"
 
-const RegisterHealth = ({ refreshData }) => {
+const RegisterHealth = ({ refreshData, onCloseForm }) => {
   const [name_health, setNameHealth] = useState("")
   const [fecha_health, setFechaHealth] = useState("")
   const [descripcion_health, setDescripcionHealth] = useState("")
@@ -13,6 +14,8 @@ const RegisterHealth = ({ refreshData }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
   const [successMessage, setSuccessMessage] = useState("")
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false)
+  const [showErrorAlert, setShowErrorAlert] = useState(false)
   const [debugInfo, setDebugInfo] = useState("")
 
   // Establecer la fecha actual al cargar el componente
@@ -28,11 +31,19 @@ const RegisterHealth = ({ refreshData }) => {
         setIsLoading(true)
         const response = await axiosInstance.get("/Api/User/AllUser")
         if (response.status === 200) {
-          setUsers(response.data)
+          // Filtrar solo usuarios activos (blockard = 0 o estado != "Inactivo")
+          const allUsers = response.data || []
+          const activeUsers = allUsers.filter(user => 
+            (user.blockard === 0 || user.blockard === undefined || user.blockard === null) && 
+            (user.estado !== "Inactivo")
+          )
+          console.log("Usuarios totales:", allUsers.length, "Usuarios activos:", activeUsers.length)
+          setUsers(activeUsers)
         }
       } catch (error) {
         console.error("Error al obtener usuarios:", error)
         setErrorMessage("Error al obtener usuarios")
+        setShowErrorAlert(true)
       } finally {
         setIsLoading(false)
       }
@@ -49,6 +60,7 @@ const RegisterHealth = ({ refreshData }) => {
 
     if (!name_health || !fecha_health || !descripcion_health || !valor_health || !Id_user) {
       setErrorMessage("Todos los campos son obligatorios")
+      setShowErrorAlert(true)
       return
     }
 
@@ -75,14 +87,13 @@ const RegisterHealth = ({ refreshData }) => {
 
       if (response.status === 200) {
         setSuccessMessage(response.data.message || "Registro exitoso")
+        setShowSuccessAlert(true)
         // Limpiar los campos después de un registro exitoso
         setNameHealth("")
         setFechaHealth(new Date().toISOString().split("T")[0])
         setValorHealth("")
         setDescripcionHealth("")
         setIdUser("")
-
-        // No refrescamos los datos automáticamente, esperamos a que el usuario cierre la alerta
       }
     } catch (error) {
       console.error("Error al registrar la salud:", error)
@@ -105,12 +116,12 @@ const RegisterHealth = ({ refreshData }) => {
       }
 
       setErrorMessage(errorMsg)
+      setShowErrorAlert(true)
     }
   }
 
-  const closeModal = () => {
-    // Primero limpiamos los mensajes
-    setErrorMessage("")
+  const handleCloseSuccessAlert = () => {
+    setShowSuccessAlert(false)
     setSuccessMessage("")
     setDebugInfo("")
 
@@ -118,59 +129,31 @@ const RegisterHealth = ({ refreshData }) => {
     if (refreshData && typeof refreshData === "function") {
       refreshData()
     }
+
+    // Cerrar el formulario cuando se cierra la alerta
+    if (onCloseForm && typeof onCloseForm === "function") {
+      onCloseForm()
+    }
+  }
+
+  const handleCloseErrorAlert = () => {
+    setShowErrorAlert(false)
+    setErrorMessage("")
   }
 
   return (
     <>
-      {(errorMessage || successMessage) && (
-        <>
-          {/* Overlay con cobertura extendida */}
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-50"
-            style={{
-              height: "85vh",
-              width: "100%",
-              top: 0,
-              left: 0,
-              position: "fixed",
-              overflow: "hidden",
-            }}
-          ></div>
+      {/* Alerta de éxito */}
+      <AlertModal type="success" message={successMessage} isOpen={showSuccessAlert} onClose={handleCloseSuccessAlert} />
 
-          {/* Contenedor del modal con posición ajustada */}
-          <div className="fixed inset-0 z-50 flex items-start justify-center pointer-events-none">
-            <div
-              className="bg-white rounded-lg shadow-2xl p-6 max-w-md w-full pointer-events-auto"
-              style={{
-                marginTop: "200px",
-              }}
-            >
-              <h2 className="text-xl font-semibold text-center mb-4">{errorMessage ? "Error" : "Éxito"}</h2>
-              <p className="text-center mb-6">
-                {errorMessage
-                  ? "Ha ocurrido un error en la operación. Por favor, inténtelo de nuevo."
-                  : "La operación se ha completado con éxito."}
-              </p>
-              <button
-                onClick={closeModal}
-                className={`w-full py-2 px-4 ${
-                  errorMessage ? "bg-red-600 hover:bg-red-700" : "bg-blue-600 hover:bg-blue-700"
-                } text-white font-semibold rounded-lg shadow-md transition duration-300`}
-              >
-                Cerrar
-              </button>
-            </div>
-          </div>
-        </>
-      )}
-     
+      {/* Alerta de error */}
+      <AlertModal type="error" message={errorMessage} isOpen={showErrorAlert} onClose={handleCloseErrorAlert} />
+
       {/* Formulario */}
       <form
         onSubmit={handlerSubmit}
         className="p-5 bg-white shadow-lg rounded-lg max-w-md mx-auto mt-10 border border-gray-400"
       >
-        
-
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
           <div>
             <label className="block text-gray-700 font-medium mb-2">Nombre de Salud:</label>

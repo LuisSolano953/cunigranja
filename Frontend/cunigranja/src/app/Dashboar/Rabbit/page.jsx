@@ -8,7 +8,8 @@ import axiosInstance from "@/lib/axiosInstance"
 import UpdateRabbit from "./UpdateRabbit"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { MODAL_STYLE_CLASSES } from "@/components/utils/ModalDialog"
-import DataTable from "@/components/utils/DataTable" // Import the updated DataTable component
+import DataTable from "@/components/utils/DataTable"
+import AlertModal from "@/components/utils/AlertModal"
 
 export function RabbitPage() {
   const TitlePage = "Conejos"
@@ -20,15 +21,20 @@ export function RabbitPage() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [selectedRabbit, setSelectedRabbit] = useState(null)
 
+  // Estados para alertas
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false)
+  const [showErrorAlert, setShowErrorAlert] = useState(false)
+  const [alertMessage, setAlertMessage] = useState("")
+
   // Estos títulos deben coincidir exactamente con las propiedades del objeto que creamos abajo
   const titlesRabi = [
     "ID",
     "Nombre",
     "Fecha registro",
     "Peso inicial",
-    "sexo",
+    "Sexo",
     "Estado",
-    "peso actual",
+    "Peso actual",
     "Raza",
     "Jaula",
   ]
@@ -41,22 +47,10 @@ export function RabbitPage() {
 
       if (response.status === 200) {
         // Creamos un array de propiedades que coincida exactamente con el orden de titlesRabi
-        const propertyKeys = [
-          "Id", // ID
-          "name", // Nombre
-          "fecha", // Fecha salida
-          "peso_inicial", // Peso inicial
-          "sexo", // sexo
-          "estado", // Estado
-          "peso_actual", // peso actual
-          "raza", // Raza
-          "jaula", // Jaula
-        ]
-
         const data = response.data.map((item) => {
           // Primero creamos un objeto con las propiedades en el orden correcto para la tabla
           const displayData = {
-            Id: item.id_rabbit,
+            Id: item.Id_rabbit,
             name: item.name_rabbit,
             fecha: new Date(item.fecha_registro).toLocaleDateString("es-ES"),
             peso_inicial: item.peso_inicial,
@@ -71,12 +65,10 @@ export function RabbitPage() {
           return {
             ...displayData,
             // Campos adicionales para actualizar
-            Id: item.Id_rabbit, // Añadimos id para que DataTable pueda usarlo como key
-            Id_rabbit: item.Id_rabbit, // Añadimos explícitamente id_rabbit
+            Id_rabbit: item.Id_rabbit,
             name_rabbit: item.name_rabbit,
             fecha_registro: item.fecha_registro,
             sexo_rabbit: item.sexo_rabbit,
-            estado: item.estado,
             Id_race: item.Id_race,
             Id_cage: item.Id_cage,
           }
@@ -99,7 +91,6 @@ export function RabbitPage() {
 
   const handleUpdate = (row) => {
     console.log("Datos seleccionados para editar:", row)
-    // Asegurarse de que el objeto tenga la propiedad id_rabbit
     setSelectedRabbit(row)
     setIsEditModalOpen(true)
   }
@@ -110,28 +101,80 @@ export function RabbitPage() {
   }
 
   const handleUpdateSuccess = () => {
-    // Refresh the data
     fetchRabbit()
-
-    // Close the modal
     handleCloseEditModal()
+  }
+
+  // Función para activar/desactivar conejos
+  const handleToggleRabbitStatus = async (rabbit) => {
+    try {
+      const newStatus = rabbit.estado === "Activo" ? "Inactivo" : "Activo"
+
+      const payload = {
+        Id_rabbit: rabbit.Id_rabbit || rabbit.Id,
+        name_rabbit: rabbit.name_rabbit || rabbit.name,
+        fecha_registro: rabbit.fecha_registro,
+        peso_inicial: rabbit.peso_inicial,
+        sexo_rabbit: rabbit.sexo_rabbit || rabbit.sexo,
+        estado: newStatus,
+        peso_actual: rabbit.peso_actual,
+        Id_cage: rabbit.Id_cage,
+        Id_race: rabbit.Id_race,
+      }
+
+      console.log("Actualizando estado del conejo:", payload)
+
+      const response = await axiosInstance.post("/Api/Rabbit/UpdateRabbit", payload)
+
+      if (response.status === 200) {
+        setAlertMessage(`Conejo ${newStatus.toLowerCase()} correctamente`)
+        setShowSuccessAlert(true)
+        fetchRabbit() // Recargar datos
+      }
+    } catch (error) {
+      console.error("Error al cambiar estado del conejo:", error)
+      setAlertMessage("Error al cambiar el estado del conejo")
+      setShowErrorAlert(true)
+    }
+  }
+
+  const handleCloseSuccessAlert = () => {
+    setShowSuccessAlert(false)
+    setAlertMessage("")
+  }
+
+  const handleCloseErrorAlert = () => {
+    setShowErrorAlert(false)
+    setAlertMessage("")
   }
 
   return (
     <NavPrivada>
+      {/* Alertas */}
+      <AlertModal type="success" message={alertMessage} isOpen={showSuccessAlert} onClose={handleCloseSuccessAlert} />
+      <AlertModal type="error" message={alertMessage} isOpen={showErrorAlert} onClose={handleCloseErrorAlert} />
+
       <ContentPage
-        TitlePage={TitlePage}
+        TitlePage="Conejos"
         Data={RegisterRabiData}
         TitlesTable={titlesRabi}
-        FormPage={() => <RegisterRabbit refreshData={fetchRabbit} />}
+        FormPage={RegisterRabbit}
         refreshData={fetchRabbit}
         onUpdate={handleUpdate}
         isLoading={isLoading}
         error={error}
         showDeleteButton={false}
-        showChartButton={true} // Add this prop to show the chart button
-        CustomDataTable={DataTable} // Use the custom DataTable component
+        showChartButton={true}
+        CustomDataTable={(props) => (
+          <DataTable
+            {...props}
+            isRabbitTable={true}
+            showStatusButton={true}
+            onToggleStatus={handleToggleRabbitStatus}
+          />
+        )}
       />
+
       {/* Edit Modal */}
       <Dialog open={isEditModalOpen} onOpenChange={handleCloseEditModal}>
         <DialogContent className={MODAL_STYLE_CLASSES}>

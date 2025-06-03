@@ -2,6 +2,7 @@
 
 import axiosInstance from "@/lib/axiosInstance"
 import { useState, useEffect } from "react"
+import AlertModal from "@/components/utils/AlertModal"
 
 const RegisterMortality = ({ refreshData, onCloseForm }) => {
   const [fecha_mortality, setFechaMortality] = useState("")
@@ -14,6 +15,8 @@ const RegisterMortality = ({ refreshData, onCloseForm }) => {
   const [showAlert, setShowAlert] = useState(false)
   const [alertMessage, setAlertMessage] = useState("")
   const [isSuccess, setIsSuccess] = useState(false)
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false)
+  const [showErrorAlert, setShowErrorAlert] = useState(false)
 
   useEffect(() => {
     async function fetchData() {
@@ -22,8 +25,20 @@ const RegisterMortality = ({ refreshData, onCloseForm }) => {
           axiosInstance.get("/Api/Rabbit/GetRabbit"),
           axiosInstance.get("/Api/User/AllUser"),
         ])
-        setRabbit(rabbitRes.data || [])
-        setUsers(userRes.data || [])
+
+        // Filtrar solo conejos activos para mortalidad (filtro en frontend)
+        const allRabbits = rabbitRes.data || []
+        const activeRabbits = allRabbits.filter((rabbit) => rabbit.estado === "Activo")
+        setRabbit(activeRabbits)
+
+        // Filtrar solo usuarios activos
+        const allUsers = userRes.data || []
+        const activeUsers = allUsers.filter(
+          (user) =>
+            (user.blockard === 0 || user.blockard === undefined || user.blockard === null) &&
+            user.estado !== "Inactivo",
+        )
+        setUsers(activeUsers)
       } catch (error) {
         console.error("Error al obtener datos:", error)
       }
@@ -38,80 +53,103 @@ const RegisterMortality = ({ refreshData, onCloseForm }) => {
     if (!fecha_mortality || !causa_mortality || !id_rabbit || !id_user) {
       setAlertMessage("Todos los campos son obligatorios")
       setIsSuccess(false)
-      setShowAlert(true)
+      setShowErrorAlert(true)
+      return
+    }
+
+    // Convertir IDs a números
+    const rabbitId = Number.parseInt(id_rabbit, 10)
+    const userId = Number.parseInt(id_user, 10)
+
+    // Validar que los IDs sean números válidos
+    if (isNaN(rabbitId) || rabbitId <= 0) {
+      setAlertMessage(`ID del conejo inválido: ${id_rabbit}`)
+      setShowErrorAlert(true)
+      return
+    }
+
+    if (isNaN(userId) || userId <= 0) {
+      setAlertMessage(`ID del usuario inválido: ${id_user}`)
+      setShowErrorAlert(true)
       return
     }
 
     setIsSubmitting(true)
 
+    // FORMATO EXACTO COMO EN SWAGGER
     const body = {
-      fecha_mortality: new Date(fecha_mortality).toISOString(),
-      causa_mortality,
-      id_rabbit: Number.parseInt(id_rabbit, 10) || 0,
-      id_user: Number.parseInt(id_user, 10) || 0,
+      Id_mortality: 0,
+      causa_mortality: causa_mortality.trim(),
+      fecha_mortality: fecha_mortality,
+      Id_rabbit: rabbitId,
+      Id_user: userId,
     }
 
     try {
-      const response = await axiosInstance.post("/Api/Mortality/CreateMortality", body)
-      setAlertMessage(response.data.message || "Registro exitoso")
+      const response = await fetch("https://localhost:7208/Api/Mortality/CreateMortality", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(body),
+      })
+
+      if (!response.ok) {
+        const errorText = await response.text()
+        throw new Error(`HTTP ${response.status}: ${errorText}`)
+      }
+
+      const responseData = await response.json()
+
+      setAlertMessage(
+        responseData.message || "Mortalidad registrada exitosamente. El conejo ha sido marcado como inactivo.",
+      )
       setIsSuccess(true)
-      setShowAlert(true)
+      setShowSuccessAlert(true)
+
+      // Limpiar campos del formulario
+      setFechaMortality("")
+      setCausaMortality("")
+      setIdRabbit("")
+      setIdUser("")
 
       // Refrescar datos
       if (typeof refreshData === "function") {
         refreshData()
       }
     } catch (error) {
-      const errorMsg = error.response?.data?.message || "Error al registrar mortalidad"
-      setAlertMessage(errorMsg)
+      console.error("Error:", error)
+      setAlertMessage(error.message || "Error al registrar mortalidad")
       setIsSuccess(false)
-      setShowAlert(true)
+      setShowErrorAlert(true)
     } finally {
       setIsSubmitting(false)
     }
   }
 
-  // Función para cerrar la alerta y el formulario
-  const handleCloseAlert = () => {
-    setShowAlert(false)
-
-    // Si fue exitoso, también cerrar el formulario
-    if (isSuccess && typeof onCloseForm === "function") {
-      // Limpiar campos antes de cerrar
-      setFechaMortality("")
-      setCausaMortality("")
-      setIdRabbit("")
-      setIdUser("")
-
-      // Cerrar el formulario
+  const handleCloseSuccessAlert = () => {
+    setShowSuccessAlert(false)
+    if (typeof onCloseForm === "function") {
       onCloseForm()
     }
   }
 
+  const handleCloseErrorAlert = () => {
+    setShowErrorAlert(false)
+  }
+
   return (
     <>
-      {/* Alerta modal */}
-      {showAlert && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
-            <h2 className="text-xl font-semibold text-center mb-4">{isSuccess ? "Éxito" : "Error"}</h2>
-            <p className="text-center mb-6">{alertMessage}</p>
-            <button
-              onClick={handleCloseAlert}
-              className={`w-full py-2 px-4 ${
-                isSuccess ? "bg-blue-600 hover:bg-blue-700" : "bg-red-600 hover:bg-red-700"
-              } text-white font-semibold rounded-lg shadow-md transition duration-300`}
-            >
-              Cerrar
-            </button>
-          </div>
-        </div>
-      )}
+      <AlertModal type="success" message={alertMessage} isOpen={showSuccessAlert} onClose={handleCloseSuccessAlert} />
+      <AlertModal type="error" message={alertMessage} isOpen={showErrorAlert} onClose={handleCloseErrorAlert} />
 
       <form
         onSubmit={handleSubmit}
         className="p-8 bg-white shadow-lg rounded-lg max-w-2xl mx-auto mt-10 border border-gray-400"
       >
+        <h2 className="text-xl font-bold text-center mb-6">Registrar Mortalidad</h2>
+
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div>
             <label className="block text-gray-700 font-medium mb-2">Conejo:</label>
@@ -119,15 +157,26 @@ const RegisterMortality = ({ refreshData, onCloseForm }) => {
               value={id_rabbit}
               onChange={(e) => setIdRabbit(e.target.value)}
               required
-              className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10"
+              className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10 bg-white cursor-pointer hover:border-gray-500 transition-colors"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' strokeLinecap='round' strokeLinejoin='round' strokeWidth='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
+                backgroundPosition: "right 0.5rem center",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "1.5em 1.5em",
+                paddingRight: "2.5rem",
+              }}
             >
-              <option value="">Seleccione un Conejo</option>
-              {rabbit.map((r) => (
-                <option key={r.id_rabbit} value={r.id_rabbit}>
-                  {r.name_rabbit}
-                </option>
-              ))}
+              <option value="">Seleccione</option>
+              {rabbit.map((r) => {
+                const rabbitId = r.Id_rabbit || r.id_rabbit
+                return (
+                  <option key={rabbitId} value={rabbitId}>
+                    {r.name_rabbit} 
+                  </option>
+                )
+              })}
             </select>
+            <p className="text-xs text-gray-500 mt-1">Solo se muestran conejos activos ({rabbit.length} disponibles)</p>
           </div>
 
           <div>
@@ -137,7 +186,8 @@ const RegisterMortality = ({ refreshData, onCloseForm }) => {
               value={fecha_mortality}
               onChange={(e) => setFechaMortality(e.target.value)}
               required
-              className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10"
+              max={new Date().toISOString().split("T")[0]}
+              className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10 hover:border-gray-500 transition-colors"
             />
           </div>
 
@@ -148,7 +198,8 @@ const RegisterMortality = ({ refreshData, onCloseForm }) => {
               value={causa_mortality}
               onChange={(e) => setCausaMortality(e.target.value)}
               required
-              className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10"
+              placeholder="Ej: Enfermedad, Accidente, etc."
+              className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10 hover:border-gray-500 transition-colors"
             />
           </div>
 
@@ -158,24 +209,42 @@ const RegisterMortality = ({ refreshData, onCloseForm }) => {
               value={id_user}
               onChange={(e) => setIdUser(e.target.value)}
               required
-              className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10"
+              className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10 bg-white cursor-pointer hover:border-gray-500 transition-colors"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' strokeLinecap='round' strokeLinejoin='round' strokeWidth='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
+                backgroundPosition: "right 0.5rem center",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "1.5em 1.5em",
+                paddingRight: "2.5rem",
+              }}
             >
-              <option value="">Seleccione un Usuario</option>
-              {users.map((u) => (
-                <option key={u.id_user} value={u.id_user}>
-                  {u.name_user}
-                </option>
-              ))}
+              <option value="">Seleccione</option>
+              {users.map((u) => {
+                const userId = u.Id_user || u.id_user
+                return (
+                  <option key={userId} value={userId}>
+                    {u.name_user}
+                  </option>
+                )
+              })}
             </select>
+            <p className="text-xs text-gray-500 mt-1">Usuarios activos ({users.length} disponibles)</p>
           </div>
+        </div>
+
+        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
+          <p className="text-sm text-yellow-800">
+            <strong>⚠️ Importante:</strong> Al registrar una mortalidad, el conejo seleccionado será automáticamente
+            marcado como "Inactivo".
+          </p>
         </div>
 
         <button
           type="submit"
-          className="w-full p-3 mt-4 bg-black text-white rounded hover:bg-gray-700"
+          className="w-full p-3 mt-4 bg-black text-white rounded hover:bg-gray-700 disabled:bg-gray-400 transition-colors"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Registrando..." : "Guardar Mortalidad"}
+          {isSubmitting ? "Registrando..." : "Registrar Mortalidad"}
         </button>
       </form>
     </>

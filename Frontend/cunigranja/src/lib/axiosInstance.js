@@ -1,11 +1,24 @@
-import axios from "axios";
+import axios from "axios"
 
-const axiosInstance =axios.create({
-    baseURL: 'https://localhost:7208/',
-    headers: {
-        'accept': '*/*',
-        'content-type': 'application/json'
-    }    
-});
+const axiosInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "https://localhost:7208/",
+  headers: {
+    "Content-Type": "application/json",
+  },
+})
 
-export default axiosInstance;
+// Interceptor para agregar el token a las peticiones
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token")
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  },
+)
+
+export default axiosInstance

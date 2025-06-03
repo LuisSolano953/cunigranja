@@ -25,8 +25,8 @@ export default function GraficoConejo({ rabbitId, isOpen, onClose, refreshTrigge
     secondary: "#10b981", // Emerald-500
     secondaryLight: "#6ee7b7", // Emerald-300
     accent: "#f97316", // Orange-500
-    background: "#f9fafb", // Gray-50
-    backgroundAlt: "#f3f4f6", // Gray-100
+    bacground: "#f9fafb", // Gray-50
+    bacgroundAlt: "#f3f4f6", // Gray-100
     text: "#1f2937", // Gray-800
     textLight: "#6b7280", // Gray-500
     border: "#e5e7eb", // Gray-200
@@ -622,9 +622,9 @@ export default function GraficoConejo({ rabbitId, isOpen, onClose, refreshTrigge
                   strokeWidth="3"
                   paintOrder="stroke"
                 >
-                  {point.weight} kg
+                  {point.weight} g
                 </text>
-                <title>{`${point.label}: ${point.weight} kg`}</title>
+                <title>{`${point.label}: ${point.weight} g`}</title>
               </g>
             )
           })}
@@ -642,7 +642,7 @@ export default function GraficoConejo({ rabbitId, isOpen, onClose, refreshTrigge
             fill={colors.text}
             transform="rotate(-90, 30, 300)"
           >
-            Peso (kg)
+            Peso (g)
           </text>
 
           {/* Legend */}
@@ -684,7 +684,7 @@ export default function GraficoConejo({ rabbitId, isOpen, onClose, refreshTrigge
             <div className="flex items-start justify-between">
               <div>
                 <h3 className="text-lg font-semibold text-indigo-900 mb-1">Peso Inicial</h3>
-                <p className="text-3xl font-bold text-indigo-700">{initialWeight.toFixed(2)} kg</p>
+                <p className="text-3xl font-bold text-indigo-700">{initialWeight.toFixed(2)} g</p>
                 <p className="text-sm text-indigo-500 mt-1">Registrado el {formatDate(rabbitInfo.fecha_registro)}</p>
               </div>
               <div className="bg-indigo-100 p-2 rounded-full">
@@ -699,7 +699,7 @@ export default function GraficoConejo({ rabbitId, isOpen, onClose, refreshTrigge
             <div className="flex items-start justify-between">
               <div>
                 <h3 className="text-lg font-semibold text-orange-900 mb-1">Peso Actual</h3>
-                <p className="text-3xl font-bold text-orange-700">{currentWeight.toFixed(2)} kg</p>
+                <p className="text-3xl font-bold text-orange-700">{currentWeight.toFixed(2)} g</p>
                 <p className="text-sm text-orange-500 mt-1">Último registro de peso</p>
               </div>
               <div className="bg-orange-100 p-2 rounded-full">
@@ -714,7 +714,7 @@ export default function GraficoConejo({ rabbitId, isOpen, onClose, refreshTrigge
             <div className="flex items-start justify-between">
               <div>
                 <h3 className="text-lg font-semibold text-emerald-900 mb-1">Ganancia Total</h3>
-                <p className="text-3xl font-bold text-emerald-700">{weightGain.toFixed(2)} kg</p>
+                <p className="text-3xl font-bold text-emerald-700">{weightGain.toFixed(2)} g</p>
                 <p className="text-sm text-emerald-500 mt-1">{growthPercentage.toFixed(1)}% de incremento</p>
               </div>
               <div className="bg-emerald-100 p-2 rounded-full">
@@ -729,7 +729,7 @@ export default function GraficoConejo({ rabbitId, isOpen, onClose, refreshTrigge
             <div className="flex items-start justify-between">
               <div>
                 <h3 className="text-lg font-semibold text-blue-900 mb-1">Crecimiento Diario</h3>
-                <p className="text-3xl font-bold text-blue-700">{dailyGrowthRate.toFixed(3)} kg</p>
+                <p className="text-3xl font-bold text-blue-700">{dailyGrowthRate.toFixed(3)} g</p>
                 <p className="text-sm text-blue-500 mt-1">Promedio por día</p>
               </div>
               <div className="bg-blue-100 p-2 rounded-full">

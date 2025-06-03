@@ -1,49 +1,72 @@
-  "use client"
+"use client"
 
-  import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-  import { useState } from "react"
-  import { Button } from "../ui/button"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { useState, useCallback, useEffect } from "react"
+import { Button } from "@/components/ui/button"
 
-  export const MODAL_STYLE_CLASSES = "max-h-[90vh] overflow-y-auto sm:max-w-[500px]"
+export const MODAL_STYLE_CLASSES = "max-h-[90vh] overflow-y-auto w-[95vw] max-w-[500px] sm:w-full"
 
-  function ModalDialog({ TitlePage, FormPage, refreshData }) {
-    const [isOpen, setIsOpen] = useState(false)
+function ModalDialog({ TitlePage, FormPage, refreshData }) {
+  const [isOpen, setIsOpen] = useState(false)
 
-    // Cierra el modal
-    const handleCloseForm = () => {
+  // Cierra el modal - usando useCallback para mantener la referencia estable
+  const handleCloseForm = useCallback(() => {
+    console.log("handleCloseForm llamado - cerrando modal")
+    setIsOpen(false)
+  }, [])
+
+  // Escuchar el evento personalizado para cerrar el modal
+  useEffect(() => {
+    const handleCloseModalEvent = (event) => {
+      console.log("Evento close-modal recibido", event.detail)
       setIsOpen(false)
     }
 
-    return (
-      <>
-        {/* Botón para abrir el modal */}
-        <Button onClick={() => setIsOpen(true)}>Registrar {TitlePage}</Button>
+    // Registrar el evento global
+    window.addEventListener("close-modal", handleCloseModalEvent)
 
-        {/* Modal */}
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
-          <DialogContent className={MODAL_STYLE_CLASSES}>
-            {/* Título centrado */}
-            <DialogHeader className="text-center">
-              <DialogTitle className="text-lg sm:text-xl font-semibold">
-                Registrar {TitlePage}
-              </DialogTitle>
-            </DialogHeader>
+    // Limpiar al desmontar
+    return () => {
+      window.removeEventListener("close-modal", handleCloseModalEvent)
+    }
+  }, [])
 
-            {/* Formulario */}
-            <div className="mt-4">
-              {typeof FormPage === "function" ? (
-                <FormPage
-                  refreshData={typeof refreshData === "function" ? refreshData : () => {}}
-                  onCloseForm={handleCloseForm}
-                />
-              ) : (
-                FormPage
-              )}
-            </div>
-          </DialogContent>
-        </Dialog>
-      </>
-    )
-  }
+  return (
+    <>
+      {/* Botón para abrir el modal - Responsive */}
+      <Button
+        onClick={() => setIsOpen(true)}
+        className="w-full sm:w-auto text-sm sm:text-base px-3 py-2 sm:px-4 sm:py-2"
+      >
+        <span className="hidden sm:inline">Registrar {TitlePage}</span>
+        <span className="sm:hidden">+ {TitlePage}</span>
+      </Button>
 
-  export default ModalDialog
+      {/* Modal */}
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogContent className={MODAL_STYLE_CLASSES}>
+          {/* Título centrado - Responsive */}
+          <DialogHeader className="text-center px-2 sm:px-4">
+            <DialogTitle className="text-base sm:text-lg md:text-xl font-semibold break-words">
+              Registrar {TitlePage}
+            </DialogTitle>
+          </DialogHeader>
+
+          {/* Formulario - Responsive padding */}
+          <div className="mt-2 sm:mt-4 px-2 sm:px-4">
+            {typeof FormPage === "function" ? (
+              <FormPage
+                refreshData={typeof refreshData === "function" ? refreshData : () => {}}
+                onCloseForm={handleCloseForm}
+              />
+            ) : (
+              FormPage
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
+  )
+}
+
+export default ModalDialog

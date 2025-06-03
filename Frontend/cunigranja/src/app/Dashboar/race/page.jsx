@@ -94,7 +94,7 @@ function Racepage() {
      <Dialog open={isEditModalOpen} onOpenChange={handleCloseEditModal}>
         <DialogContent className={MODAL_STYLE_CLASSES}>
           <DialogHeader>
-            <DialogTitle>Editar Reproducción</DialogTitle>
+            <DialogTitle>Actualizar Raza</DialogTitle>
           </DialogHeader>
           <div className="">
             {selectedRace && (

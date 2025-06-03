@@ -3,7 +3,9 @@ import { useEffect, useState } from "react"
 import NavPrivada from "@/components/Nav/NavPrivada"
 import ContentPage from "@/components/utils/ContentPage"
 import RegisterMortality from "./RegisterMortality"
+import UpdateMortality from "./UpdateMortality"
 import axiosInstance from "@/lib/axiosInstance"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 
 function Mortalitypage() {
   const TitlePage = "Mortalidad"
@@ -11,6 +13,8 @@ function Mortalitypage() {
   const [RegisterMortalityData, setRegisterMortalityData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [selectedMortality, setSelectedMortality] = useState(null)
 
   const titlesMortality = ["ID", "Conejo", "Fecha muerte", "Causa de muerte", "Responsable"]
 
@@ -38,7 +42,7 @@ function Mortalitypage() {
           }
 
           return {
-            id: item.id_mortality,
+            id: item.Id_mortality,
             // Usar name_rabbit en lugar de nombre_rabi
             conejo: item.name_rabbit || item.nombre_rabbit || "Sin nombre",
             fecha: formattedDate,
@@ -87,6 +91,24 @@ function Mortalitypage() {
     }
   }
 
+  const handleUpdate = (row) => {
+    console.log("Datos para actualizar:", row)
+    setSelectedMortality(row)
+    setIsEditModalOpen(true)
+  }
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false)
+    setSelectedMortality(null)
+  }
+
+  const handleUpdateSuccess = () => {
+    // Refresh the data
+    fetchMortality()
+    // Close the modal
+    handleCloseEditModal()
+  }
+
   return (
     <NavPrivada>
       <ContentPage
@@ -95,11 +117,31 @@ function Mortalitypage() {
         TitlesTable={titlesMortality}
         FormPage={RegisterMortality}
         onDelete={handleDelete}
+        onUpdate={handleUpdate}
         isLoading={isLoading}
         error={error}
+        showDeleteButton={false}
         refreshData={fetchMortality}
         endpoint="/Api/Mortality/DeleteMortality"
       />
+
+      {/* Edit Modal - Con espaciado y scroll como el formulario de registro */}
+      <Dialog open={isEditModalOpen} onOpenChange={handleCloseEditModal}>
+        <DialogContent className=" max-h-[90vh] overflow-y-auto p-6">
+          <DialogHeader>
+            <DialogTitle>Actualizar Mortalidad</DialogTitle>
+          </DialogHeader>
+          <div className="mt-4">
+            {selectedMortality && (
+              <UpdateMortality
+                mortalityData={selectedMortality}
+                onClose={handleCloseEditModal}
+                onUpdate={handleUpdateSuccess}
+              />
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </NavPrivada>
   )
 }
