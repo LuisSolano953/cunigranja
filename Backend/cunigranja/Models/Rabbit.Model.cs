@@ -11,7 +11,6 @@ namespace cunigranja.Models
 
         [DisplayName("nombre del Conejo")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [StringLength(250, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
         public string name_rabbit { get; set; }
 
         [DisplayName("Fecha de salida")]
@@ -19,12 +18,9 @@ namespace cunigranja.Models
         [DataType(DataType.Date)]
         public DateTime fecha_registro { get; set; }
 
-        [Range(1, 300, ErrorMessage = "el peso actual debe ser mayor que 0.")]
-        [Display(Name = "peso actual de conejo")]
+      
         public int peso_actual { get; set; }
 
-        [Range(1, 300, ErrorMessage = "el peso inicial del conejo debe ser mayor que 0.")]
-        [Display(Name = "peso inicial del conejo")]
         public int peso_inicial { get; set; }
 
         [DisplayName("sexo del Conejo")]

@@ -15,16 +15,11 @@ namespace cunigranja.Models
         [DataType(DataType.Date)]
         public DateTime fecha_nacimiento { get; set; }
 
-        [Range(1, 50, ErrorMessage = "La cantidad de Cantidad de conejos nacidos debe ser mayor que 0.")]
-        [Display(Name = "Cantidad de conejos nacidos")]
         public int total_conejos { get; set; }
 
-        [Range(1, 30, ErrorMessage = "La cantidad de nacidos vivos debe ser mayor que 0.")]
-        [Display(Name = "nacidos vivos")]
         public int nacidos_vivos { get; set; }
 
-        [Range(0, 30, ErrorMessage = "La cantidad de nacidos muertos puede  ser igual omayor que 0.")]
-        [Display(Name = "nacidos muertos")]
+        
         public int nacidos_muertos { get; set; }
         public int Id_rabbit { get; set; }
         [ForeignKey("Id_rabbit")]

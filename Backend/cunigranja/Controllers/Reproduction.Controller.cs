@@ -47,7 +47,8 @@ namespace cunigranja.Controllers
                 total_conejos=e.total_conejos,
                 nacidos_muertos=e.nacidos_muertos,
                 nacidos_vivos=  e.nacidos_vivos,
-                name_rabbit=e.rabbitmodel.name_rabbit,
+                Id_rabbit = e.rabbitmodel.Id_rabbit,
+                name_rabbit =e.rabbitmodel.name_rabbit,
             }).ToList();
 
             return Ok(reproduction);

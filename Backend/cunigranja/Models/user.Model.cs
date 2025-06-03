@@ -56,6 +56,7 @@ namespace cunigranja.Models
         [Required(ErrorMessage = "El campo {0} es requerido")]
         [StringLength(250, ErrorMessage = "el campo {0} tiene un limite de caracteres de {1}")]
         public string email_user { get; set; } //VARCHAR 250
+        public string estado { get; set; }//VARCHAR 250
 
         public string? salt { get; set; }
     }

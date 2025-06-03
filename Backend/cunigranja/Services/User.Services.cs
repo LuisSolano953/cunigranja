@@ -47,6 +47,7 @@ namespace cunigranja.Services
             // Traer el usuario existente utilizando el ID
             var user = _context.user.SingleOrDefault(u => u.Id_user == Id);
 
+
             if (user != null)
             {
                 // Actualizar solo los campos que tienen valores en updatedUser

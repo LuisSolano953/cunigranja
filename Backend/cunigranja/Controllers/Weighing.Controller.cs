@@ -13,6 +13,7 @@ namespace cunigranja.Controllers
         public readonly WeighingServices _Services;
         public IConfiguration _configuration { get; set; }
         public GeneralFunctions FunctionsGeneral;
+
         public weighingController(IConfiguration configuration, WeighingServices weighingServices)
         {
             FunctionsGeneral = new GeneralFunctions(configuration);
@@ -26,7 +27,6 @@ namespace cunigranja.Controllers
             try
             {
                 _Services.Add(entity);
-
                 return Ok(new { message = "creado con extito" });
             }
             catch (Exception ex)
@@ -46,14 +46,14 @@ namespace cunigranja.Controllers
                 ganancia_peso = w.ganancia_peso,
                 peso_actual = w.peso_actual,
                 name_user = w.user.name_user,
+                Id_user = w.user.Id_user,
                 name_rabbit = w.rabbitmodel.name_rabbit,
-
+                Id_rabbit = w.rabbitmodel.Id_rabbit,
             }).ToList();
 
             return Ok(weighing);
         }
 
-        // Nuevo endpoint para obtener pesajes por ID de conejo
         [HttpGet("GetWeighingByRabbit")]
         public ActionResult<IEnumerable<WeighingModel>> GetWeighingByRabbit(int id_rabbit)
         {
@@ -73,12 +73,42 @@ namespace cunigranja.Controllers
             }
         }
 
+        // ✅ NUEVO ENDPOINT - Usando WeighingModel existente
+        [HttpPost("RecalculateRabbitWeight")]
+        public IActionResult RecalculateRabbitWeight([FromBody] WeighingModel request)
+        {
+            try
+            {
+                // Usar Id_rabbit y peso_actual del modelo WeighingModel
+                // Id_rabbit = ID del conejo
+                // peso_actual = nuevo peso inicial
+                if (request == null || request.Id_rabbit <= 0)
+                {
+                    return BadRequest("ID de conejo inválido");
+                }
+
+                // Llamar al método existente en el servicio
+                _Services.RecalculateRabbitCurrentWeight(request.Id_rabbit, request.peso_actual);
+
+                return Ok(new
+                {
+                    message = "Peso recalculado correctamente",
+                    rabbitId = request.Id_rabbit,
+                    newPesoInicial = request.peso_actual
+                });
+            }
+            catch (Exception ex)
+            {
+                FunctionsGeneral.AddLog(ex.Message);
+                return StatusCode(500, new { message = "Error al recalcular el peso", error = ex.Message });
+            }
+        }
+
         [HttpGet("ConsulWeighing")]
         public ActionResult<WeighingModel> GetweighingById(int Id_weighing)
         {
             try
             {
-
                 var weighing = _Services.GetWeighingById(Id_weighing);
                 if (weighing != null)
                 {
@@ -94,21 +124,19 @@ namespace cunigranja.Controllers
                 FunctionsGeneral.AddLog(ex.Message);
                 return StatusCode(500, ex.ToString());
             }
-
         }
+
         [HttpPost("UpdateWeighing")]
         public IActionResult UpdateWeighing(WeighingModel entity)
         {
             try
             {
-                if (entity.Id_weighing <= 0) // Verifica que el ID sea válido
+                if (entity.Id_weighing <= 0)
                 {
                     return BadRequest("Invalid weighing ID.");
                 }
 
-                // Llamar al método de actualización en el servicio
                 _Services.UpdateWeighing(entity.Id_weighing, entity);
-
                 return Ok("Weighing updated successfully.");
             }
             catch (Exception ex)
@@ -117,6 +145,7 @@ namespace cunigranja.Controllers
                 return StatusCode(500, ex.ToString());
             }
         }
+
         [HttpGet("GetWeighingInRange")]
         public ActionResult<IEnumerable<WeighingModel>> GetCagesInRange(int startId, int endId)
         {
@@ -135,6 +164,7 @@ namespace cunigranja.Controllers
                 return StatusCode(500, ex.ToString());
             }
         }
+
         [HttpDelete("DeleteWeighing")]
         public IActionResult DeleteWeighingById(int Id_weighing)
         {

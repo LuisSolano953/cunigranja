@@ -25,7 +25,6 @@ namespace cunigranja.Services
 
         public IEnumerable<FoodModel> GetFood()
         {
-            // Asegurarse de que todos los saldos se muestren con 2 decimales
             var foods = _context.food.ToList();
             foreach (var food in foods)
             {
@@ -36,16 +35,12 @@ namespace cunigranja.Services
 
         public void Add(FoodModel entity)
         {
-            // Asegurarse de que la unidad_food siempre sea "g" (gramos)
             if (string.IsNullOrEmpty(entity.unidad_food))
             {
                 entity.unidad_food = "g";
             }
 
-            // Redondear el saldo existente a 2 decimales
             entity.saldo_existente = Math.Round(entity.saldo_existente, 2);
-
-            // Actualizar automáticamente el estado según el saldo
             UpdateFoodState(entity);
 
             _context.food.Add(entity);
@@ -69,7 +64,6 @@ namespace cunigranja.Services
             var food = _context.food.Find(Id_food);
             if (food != null)
             {
-                // Redondear el saldo existente a 2 decimales
                 food.saldo_existente = Math.Round(food.saldo_existente, 2);
             }
             return food;
@@ -85,25 +79,19 @@ namespace cunigranja.Services
 
                     if (food != null)
                     {
-                        // Guardar el saldo anterior para posible recálculo
                         double oldSaldo = food.saldo_existente;
-
-                        // Redondear el saldo existente a 2 decimales
                         updatedFood.saldo_existente = Math.Round(updatedFood.saldo_existente, 2);
 
-                        // No permitir activar manualmente un alimento si su saldo es 0
                         if (updatedFood.saldo_existente <= 0 && updatedFood.estado_food != "Inactivo")
                         {
                             updatedFood.estado_food = "Inactivo";
                         }
 
-                        // Actualizar automáticamente el estado según el saldo
                         UpdateFoodState(updatedFood);
-
                         _context.Entry(food).CurrentValues.SetValues(updatedFood);
                         _context.SaveChanges();
 
-                        // Si el saldo ha cambiado, recalcular todos los registros relacionados
+                        // Solo recalcular si el saldo ha cambiado significativamente
                         if (Math.Abs(oldSaldo - updatedFood.saldo_existente) > 0.001)
                         {
                             RecalculateFoodBalance(Id, updatedFood.saldo_existente);
@@ -130,7 +118,6 @@ namespace cunigranja.Services
                          .Where(u => u.Id_food >= startId && u.Id_food <= endId)
                          .ToList();
 
-            // Redondear todos los saldos a 2 decimales
             foreach (var food in foods)
             {
                 food.saldo_existente = Math.Round(food.saldo_existente, 2);
@@ -139,12 +126,11 @@ namespace cunigranja.Services
             return foods;
         }
 
-        // Método auxiliar para actualizar el estado del alimento según el saldo
         public void UpdateFoodState(FoodModel food)
         {
             if (food.saldo_existente <= 0)
             {
-                food.estado_food = "Inactivo"; // Cuando el saldo es 0, el estado es Inactivo
+                food.estado_food = "Inactivo";
             }
             else if (food.saldo_existente <= 5000) // 5kg = 5000g
             {
@@ -156,7 +142,6 @@ namespace cunigranja.Services
             }
         }
 
-        // Método para validar la coherencia entre saldo y estado
         public bool ValidateFoodState(FoodModel food)
         {
             if ((food.estado_food == "Existente" || food.estado_food == "Casi por acabar") && food.saldo_existente <= 0)
@@ -172,167 +157,126 @@ namespace cunigranja.Services
             return true;
         }
 
-        // Método para obtener cuántos kilogramos hay en un bulto
         public int KilosPorBulto()
         {
-            // Por defecto, un bulto tiene 40kg
             return 40;
         }
 
-        // Método para convertir bultos a gramos
         public int BultosAKilogramos(int bultos)
         {
-            // Ahora convertimos bultos a gramos (40kg = 40000g por bulto)
             return bultos * KilosPorBulto() * 1000;
         }
 
-        // Método para convertir gramos a kilogramos (ahora devuelve gramos)
         public double GramosAKilogramos(int gramos)
         {
-            // Ya no convertimos a kilogramos, simplemente devolvemos los gramos
-            // Mantenemos el nombre del método para no romper referencias existentes
             return gramos;
         }
 
-        // Método mejorado para recalcular saldos cuando cambia el saldo de un alimento
-        public void RecalculateFoodBalance(int foodId, double newSaldo)
+        // MÉTODO CORREGIDO: RecalculateFoodBalance
+        public void RecalculateFoodBalance(int foodId, double newSaldoBase)
         {
             try
             {
-                using (var transaction = _context.Database.BeginTransaction())
+                if (FunctionsGeneral != null)
                 {
-                    try
+                    FunctionsGeneral.AddLog($"=== INICIO RecalculateFoodBalance ===");
+                    FunctionsGeneral.AddLog($"Alimento ID: {foodId}, Nuevo saldo base: {newSaldoBase}");
+                }
+
+                // NO usar transacción aquí porque puede ser llamado desde otra transacción
+                // El contexto ya debería estar en una transacción desde el método que llama
+
+                // 1. Obtener el alimento y actualizar su saldo
+                var food = _context.food.Find(foodId);
+                if (food == null)
+                {
+                    throw new Exception($"Alimento con ID {foodId} no encontrado");
+                }
+
+                // Redondear el saldo base
+                newSaldoBase = Math.Round(newSaldoBase, 2);
+                food.saldo_existente = newSaldoBase;
+                UpdateFoodState(food);
+
+                // 2. Obtener TODOS los registros de alimentación para este alimento
+                // ORDENADOS POR FECHA ASCENDENTE (del más antiguo al más reciente)
+                var feedingRecords = _context.feeding
+                    .Where(f => f.Id_food == foodId)
+                    .OrderBy(f => f.fecha_feeding)
+                    .ThenBy(f => f.hora_feeding)
+                    .ThenBy(f => f.Id_feeding) // Para asegurar orden consistente
+                    .ToList();
+
+                if (FunctionsGeneral != null)
+                {
+                    FunctionsGeneral.AddLog($"Encontrados {feedingRecords.Count} registros de alimentación");
+                }
+
+                if (feedingRecords.Any())
+                {
+                    // 3. Recalcular cada registro secuencialmente desde el saldo base
+                    double saldoActual = newSaldoBase;
+
+                    foreach (var feeding in feedingRecords)
                     {
-                        // Obtener el alimento
-                        var food = _context.food.Find(foodId);
-                        if (food == null)
+                        // Restar la cantidad de esta alimentación del saldo actual
+                        // CORREGIDO: Especificar explícitamente el tipo double para resolver la ambigüedad
+                        double cantidadGramos = (double)Math.Round((double)feeding.cantidad_feeding, 2);
+                        saldoActual = Math.Round(saldoActual - cantidadGramos, 2);
+
+                        // Asegurar que no sea negativo
+                        if (saldoActual < 0)
                         {
-                            throw new Exception($"Alimento con ID {foodId} no encontrado");
+                            saldoActual = 0;
                         }
 
-                        // Guardar el saldo anterior para logging
-                        double oldSaldo = food.saldo_existente;
+                        // Actualizar la existencia actual de este registro
+                        // CORREGIDO: Especificar explícitamente el tipo double para resolver la ambigüedad
+                        feeding.existencia_actual = (double)Math.Round(saldoActual, 1);
 
-                        // Registrar la operación si está disponible el servicio de logging
                         if (FunctionsGeneral != null)
                         {
-                            FunctionsGeneral.AddLog($"RecalculateFoodBalance: Alimento ID {foodId}, saldo anterior: {oldSaldo}, nuevo saldo: {newSaldo}");
+                            FunctionsGeneral.AddLog($"Registro ID {feeding.Id_feeding}: -{cantidadGramos}g, saldo resultante: {saldoActual}g");
                         }
-
-                        // Asegurarse de que el saldo esté redondeado a 2 decimales para cálculos internos
-                        newSaldo = Math.Round(newSaldo, 2);
-
-                        // Actualizar el saldo del alimento
-                        food.saldo_existente = newSaldo;
-
-                        // Actualizar el estado según el nuevo saldo
-                        UpdateFoodState(food);
-
-                        // Guardar los cambios en la tabla de alimentos
-                        _context.SaveChanges();
-
-                        // 1. ACTUALIZAR TABLA DE ENTRADAS
-                        // Obtener la entrada más reciente para este alimento
-                        var latestEntry = _context.entrada
-                            .Where(e => e.Id_food == foodId)
-                            .OrderByDescending(e => e.fecha_entrada)
-                            .FirstOrDefault();
-
-                        if (latestEntry != null)
-                        {
-                            // Actualizar la existencia actual en la entrada más reciente
-                            latestEntry.existencia_actual = (int)Math.Round(newSaldo);
-                            _context.SaveChanges();
-
-                            // Registrar la actualización
-                            if (FunctionsGeneral != null)
-                            {
-                                FunctionsGeneral.AddLog($"RecalculateFoodBalance: Actualizada existencia actual en entrada ID {latestEntry.Id_entrada} a {latestEntry.existencia_actual}");
-                            }
-                        }
-
-                        // 2. ACTUALIZAR TABLA DE ALIMENTACIÓN
-                        // Obtener TODOS los registros de alimentación que usan este alimento específico por ID
-                        var feedingRecords = _context.feeding
-                            .Where(f => f.Id_food == foodId)
-                            .OrderByDescending(f => f.fecha_feeding)
-                            .ThenByDescending(f => f.hora_feeding)
-                            .ToList();
-
-                        if (feedingRecords.Any())
-                        {
-                            // Registrar para depuración
-                            if (FunctionsGeneral != null)
-                            {
-                                FunctionsGeneral.AddLog($"RecalculateFoodBalance: Encontrados {feedingRecords.Count} registros de alimentación para alimento ID {foodId}");
-                            }
-
-                            // Calcular el saldo final después de aplicar todas las alimentaciones
-                            double saldoFinal = newSaldo;
-
-                            // Actualizar el registro más reciente con el nuevo saldo exacto
-                            var latestFeeding = feedingRecords.First();
-
-                            // Restar la cantidad de alimentación del registro más reciente
-                            // Ya no convertimos a kg, usamos directamente los gramos
-                            double cantidadGramos = latestFeeding.cantidad_feeding;
-                            saldoFinal = Math.Round(newSaldo - cantidadGramos, 2);
-
-                            // La existencia actual en alimentación debe ser el saldo después de restar esta alimentación
-                            latestFeeding.existencia_actual = Math.Round(saldoFinal, 1);
-
-                            if (FunctionsGeneral != null)
-                            {
-                                FunctionsGeneral.AddLog($"RecalculateFoodBalance: Registro más reciente (ID {latestFeeding.Id_feeding}) actualizado a {latestFeeding.existencia_actual}");
-                            }
-
-                            // Recalcular todos los registros anteriores en cascada
-                            double runningBalance = saldoFinal;
-
-                            for (int i = 1; i < feedingRecords.Count; i++)
-                            {
-                                // Para cada registro anterior, sumar la cantidad del registro actual
-                                // (porque estamos yendo hacia atrás en el tiempo)
-                                double cantidadActualGramos = feedingRecords[i].cantidad_feeding;
-                                runningBalance = Math.Round(runningBalance + cantidadActualGramos, 2);
-
-                                // Redondear a 1 decimal para visualización
-                                feedingRecords[i].existencia_actual = Math.Round(runningBalance, 1);
-
-                                if (FunctionsGeneral != null && i % 10 == 0) // Loggear cada 10 registros para no saturar
-                                {
-                                    FunctionsGeneral.AddLog($"RecalculateFoodBalance: Registro ID {feedingRecords[i].Id_feeding} actualizado a {feedingRecords[i].existencia_actual}");
-                                }
-                            }
-
-                            // Guardar todos los cambios en la tabla de alimentación
-                            _context.SaveChanges();
-
-                            // Actualizar el saldo del alimento con el saldo final después de todas las alimentaciones
-                            food.saldo_existente = saldoFinal;
-                            UpdateFoodState(food);
-                            _context.SaveChanges();
-
-                            // Registrar la actualización
-                            if (FunctionsGeneral != null)
-                            {
-                                FunctionsGeneral.AddLog($"RecalculateFoodBalance: Actualizados {feedingRecords.Count} registros de alimentación para alimento ID {foodId}");
-                                FunctionsGeneral.AddLog($"RecalculateFoodBalance: Saldo final del alimento actualizado a {saldoFinal}");
-                            }
-                        }
-
-                        transaction.Commit();
                     }
-                    catch (Exception ex)
+
+                    // 4. Actualizar el saldo final del alimento
+                    food.saldo_existente = saldoActual;
+                    UpdateFoodState(food);
+
+                    if (FunctionsGeneral != null)
                     {
-                        transaction.Rollback();
-                        throw ex;
+                        FunctionsGeneral.AddLog($"Saldo final del alimento: {saldoActual}g");
                     }
+                }
+
+                // 5. Actualizar la entrada más reciente con el saldo base
+                var latestEntry = _context.entrada
+                    .Where(e => e.Id_food == foodId)
+                    .OrderByDescending(e => e.fecha_entrada)
+                    .ThenByDescending(e => e.Id_entrada)
+                    .FirstOrDefault();
+
+                if (latestEntry != null)
+                {
+                    // CORREGIDO: Especificar explícitamente el tipo double para resolver la ambigüedad
+                    latestEntry.existencia_actual = (int)Math.Round(newSaldoBase);
+                    if (FunctionsGeneral != null)
+                    {
+                        FunctionsGeneral.AddLog($"Entrada más reciente ID {latestEntry.Id_entrada} actualizada a {latestEntry.existencia_actual}");
+                    }
+                }
+
+                // 6. Guardar todos los cambios
+                _context.SaveChanges();
+
+                if (FunctionsGeneral != null)
+                {
+                    FunctionsGeneral.AddLog($"=== FIN RecalculateFoodBalance ===");
                 }
             }
             catch (Exception ex)
             {
-                // Registrar el error si está disponible el servicio de logging
                 if (FunctionsGeneral != null)
                 {
                     FunctionsGeneral.AddLog($"Error en RecalculateFoodBalance: {ex.Message}");
@@ -341,7 +285,7 @@ namespace cunigranja.Services
                         FunctionsGeneral.AddLog($"Inner Exception: {ex.InnerException.Message}");
                     }
                 }
-                throw; // Re-lanzar la excepción para que el controlador la maneje
+                throw;
             }
         }
     }

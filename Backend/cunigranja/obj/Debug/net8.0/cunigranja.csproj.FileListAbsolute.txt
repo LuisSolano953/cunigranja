@@ -873,3 +873,4 @@ C:\Users\usser\Documents\cunigranja\cunigranja\Backend\cunigranja\obj\Debug\net8
 C:\Users\usser\Documents\cunigranja\cunigranja\Backend\cunigranja\obj\Debug\net8.0\cunigranja.genruntimeconfig.cache
 C:\Users\usser\Documents\cunigranja\cunigranja\Backend\cunigranja\obj\Debug\net8.0\ref\cunigranja.dll
 C:\Users\usser\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\cunigranja.staticwebassets.runtime.json
+C:\Users\SENA\Documents\main\cunigranja\Backend\cunigranja\bin\Debug\net8.0\cunigranja.staticwebassets.runtime.json

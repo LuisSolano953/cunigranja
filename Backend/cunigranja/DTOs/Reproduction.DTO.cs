@@ -13,6 +13,7 @@ namespace cunigranja.DTOs
         public int nacidos_vivos { get; set; }
 
         public int nacidos_muertos { get; set; }
+        public int Id_rabbit { get; set; }
         public string name_rabbit{ get; set; }
     }
 }

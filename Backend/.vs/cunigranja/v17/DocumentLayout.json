@@ -3,36 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\usser\\documents\\main\\cunigranja\\backend\\cunigranja\\functions\\general.functions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\functions\\general.functions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\usser\\documents\\main\\cunigranja\\backend\\cunigranja\\dtos\\weighing.dto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\dtos\\weighing.dto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\usser\\documents\\main\\cunigranja\\backend\\cunigranja\\models\\user.model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\models\\user.model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\usser\\documents\\main\\cunigranja\\backend\\cunigranja\\services\\weighing.services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\services\\weighing.services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\usser\\documents\\main\\cunigranja\\backend\\cunigranja\\services\\user.services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\services\\user.services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\usser\\documents\\main\\cunigranja\\backend\\cunigranja\\controllers\\weighing.controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\controllers\\weighing.controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\usser\\documents\\main\\cunigranja\\backend\\cunigranja\\controllers\\user.controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\controllers\\user.controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\usser\\documents\\main\\cunigranja\\backend\\cunigranja\\controllers\\feeding.controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\controllers\\feeding.controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\usser\\documents\\main\\cunigranja\\backend\\cunigranja\\services\\entrada.services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\services\\entrada.services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\usser\\documents\\main\\cunigranja\\backend\\cunigranja\\services\\feeding.services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\services\\feeding.services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\usser\\documents\\main\\cunigranja\\backend\\cunigranja\\services\\food.services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\services\\food.services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\usser\\documents\\main\\cunigranja\\backend\\cunigranja\\models\\weighing.model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\models\\weighing.model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,111 +26,57 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "user.Model.cs",
-              "DocumentMoniker": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Models\\user.Model.cs",
-              "RelativeDocumentMoniker": "cunigranja\\Models\\user.Model.cs",
-              "ToolTip": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Models\\user.Model.cs",
-              "RelativeToolTip": "cunigranja\\Models\\user.Model.cs",
-              "ViewState": "AQIAACcAAAAAAAAAAAAuwD4AAAAAAAAA",
+              "Title": "Weighing.Services.cs",
+              "DocumentMoniker": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Services\\Weighing.Services.cs",
+              "RelativeDocumentMoniker": "cunigranja\\Services\\Weighing.Services.cs",
+              "ToolTip": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Services\\Weighing.Services.cs",
+              "RelativeToolTip": "cunigranja\\Services\\Weighing.Services.cs",
+              "ViewState": "AQIAABYBAAAAAAAAAAAAwEMBAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-06T17:03:54.722Z",
+              "WhenOpened": "2025-06-02T16:43:41.99Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "User.Services.cs",
-              "DocumentMoniker": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Services\\User.Services.cs",
-              "RelativeDocumentMoniker": "cunigranja\\Services\\User.Services.cs",
-              "ToolTip": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Services\\User.Services.cs",
-              "RelativeToolTip": "cunigranja\\Services\\User.Services.cs",
-              "ViewState": "AQIAACoAAAAAAAAAAAAUwEUAAAAAAAAA",
+              "Title": "Weighing.Controller.cs",
+              "DocumentMoniker": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Controllers\\Weighing.Controller.cs",
+              "RelativeDocumentMoniker": "cunigranja\\Controllers\\Weighing.Controller.cs",
+              "ToolTip": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Controllers\\Weighing.Controller.cs",
+              "RelativeToolTip": "cunigranja\\Controllers\\Weighing.Controller.cs",
+              "ViewState": "AQIAAKAAAAAAAAAAAAAuwMQAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-06T17:03:35.583Z",
+              "WhenOpened": "2025-06-01T18:37:26.541Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Weighing.DTO.cs",
+              "DocumentMoniker": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\DTOs\\Weighing.DTO.cs",
+              "RelativeDocumentMoniker": "cunigranja\\DTOs\\Weighing.DTO.cs",
+              "ToolTip": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\DTOs\\Weighing.DTO.cs",
+              "RelativeToolTip": "cunigranja\\DTOs\\Weighing.DTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-01T18:37:18.22Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "User.Controller.cs",
-              "DocumentMoniker": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Controllers\\User.Controller.cs",
-              "RelativeDocumentMoniker": "cunigranja\\Controllers\\User.Controller.cs",
-              "ToolTip": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Controllers\\User.Controller.cs",
-              "RelativeToolTip": "cunigranja\\Controllers\\User.Controller.cs",
-              "ViewState": "AQIAACwBAAAAAAAAAAAqwEkBAAAAAAAA",
+              "Title": "Weighing.Model.cs",
+              "DocumentMoniker": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Models\\Weighing.Model.cs",
+              "RelativeDocumentMoniker": "cunigranja\\Models\\Weighing.Model.cs",
+              "ToolTip": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Models\\Weighing.Model.cs",
+              "RelativeToolTip": "cunigranja\\Models\\Weighing.Model.cs",
+              "ViewState": "AQIAAAQAAAAAAAAAAAAAACEAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-06T17:03:21.315Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "General.Functions.cs",
-              "DocumentMoniker": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Functions\\General.Functions.cs",
-              "RelativeDocumentMoniker": "cunigranja\\Functions\\General.Functions.cs",
-              "ToolTip": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Functions\\General.Functions.cs",
-              "RelativeToolTip": "cunigranja\\Functions\\General.Functions.cs",
-              "ViewState": "AQIAAIYAAAAAAAAAAAAAwJwAAAA/AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-06T16:06:32.289Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Food.Services.cs",
-              "DocumentMoniker": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Services\\Food.Services.cs",
-              "RelativeDocumentMoniker": "cunigranja\\Services\\Food.Services.cs",
-              "ToolTip": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Services\\Food.Services.cs",
-              "RelativeToolTip": "cunigranja\\Services\\Food.Services.cs",
-              "ViewState": "AQIAAEIBAAAAAAAAAAAAAFwBAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T18:34:35.498Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Feeding.Services.cs",
-              "DocumentMoniker": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Services\\Feeding.Services.cs",
-              "RelativeDocumentMoniker": "cunigranja\\Services\\Feeding.Services.cs",
-              "ToolTip": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Services\\Feeding.Services.cs",
-              "RelativeToolTip": "cunigranja\\Services\\Feeding.Services.cs",
-              "ViewState": "AQIAAGwBAAAAAAAAAAAAAH0BAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T18:34:34.472Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Entrada.Services.cs",
-              "DocumentMoniker": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Services\\Entrada.Services.cs",
-              "RelativeDocumentMoniker": "cunigranja\\Services\\Entrada.Services.cs",
-              "ToolTip": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Services\\Entrada.Services.cs",
-              "RelativeToolTip": "cunigranja\\Services\\Entrada.Services.cs",
-              "ViewState": "AQIAAOAAAAAAAAAAAAAAAO4AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T18:34:33.503Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Feeding.Controller.cs",
-              "DocumentMoniker": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Controllers\\Feeding.Controller.cs",
-              "RelativeDocumentMoniker": "cunigranja\\Controllers\\Feeding.Controller.cs",
-              "ToolTip": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Controllers\\Feeding.Controller.cs",
-              "RelativeToolTip": "cunigranja\\Controllers\\Feeding.Controller.cs",
-              "ViewState": "AQIAAP0BAAAAAAAAAAAqwDICAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T18:09:42.464Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-01T18:37:07.446Z"
             }
           ]
         }
