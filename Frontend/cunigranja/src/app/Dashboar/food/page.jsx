@@ -34,7 +34,6 @@ function Foodpage() {
       if (response.status === 200) {
         console.log("Datos de alimentos:", response.data)
 
-        // Transformar datos para la tabla
         const data = response.data.map((item) => ({
           id: item.Id_food || item.id_food,
           nombre: item.name_food,
@@ -42,7 +41,6 @@ function Foodpage() {
           valor: item.valor_food,
           unidad: item.unidad_food,
           saldo: item.saldo_existente,
-          // Mantener todos los datos originales para edición
           ...item,
         }))
 
@@ -56,41 +54,32 @@ function Foodpage() {
     }
   }
 
-  // Función para verificar si un alimento está en uso
   const checkIfFoodInUse = async (foodId) => {
     try {
-      console.log(`Verificando si el alimento ${foodId} está en uso...`)
       const numericId = Number.parseInt(foodId, 10)
 
-      // Verificar en entradas
       try {
         const entriesResponse = await axiosInstance.get(`/Api/Entrada/GetEntradaByFood/${numericId}`)
-        console.log(`Entradas para alimento ${numericId}:`, entriesResponse.data)
         if (entriesResponse.data && entriesResponse.data.length > 0) {
-          console.log(`Alimento ${numericId} está en uso en entradas`)
           return true
         }
       } catch (entriesError) {
-        console.log(`No hay entradas para alimento ${numericId} o error:`, entriesError.response?.status)
+        console.log(`No hay entradas para alimento ${numericId}`)
       }
 
-      // Verificar en alimentación
       try {
         const feedingResponse = await axiosInstance.get(`/Api/Feeding/GetFeedingByFood/${numericId}`)
-        console.log(`Alimentaciones para alimento ${numericId}:`, feedingResponse.data)
         if (feedingResponse.data && feedingResponse.data.length > 0) {
-          console.log(`Alimento ${numericId} está en uso en alimentaciones`)
           return true
         }
       } catch (feedingError) {
-        console.log(`No hay alimentaciones para alimento ${numericId} o error:`, feedingError.response?.status)
+        console.log(`No hay alimentaciones para alimento ${numericId}`)
       }
 
-      console.log(`Alimento ${numericId} NO está en uso`)
       return false
     } catch (error) {
       console.error("Error checking if food is in use:", error)
-      return false // En caso de error, asumir que no está en uso
+      return false
     }
   }
 
@@ -100,12 +89,7 @@ function Foodpage() {
 
   const handleDelete = async (id) => {
     try {
-      console.log("Intentando eliminar alimento con ID:", id)
-
-      // Asegurarse de que el ID sea un número
       const numericId = Number.parseInt(id, 10)
-
-      // Verificar si el alimento está siendo utilizado
       const isInUse = await checkIfFoodInUse(numericId)
 
       if (isInUse) {
@@ -114,28 +98,16 @@ function Foodpage() {
         return null
       }
 
-      // Usar el formato correcto para la solicitud DELETE
-      const url = `/Api/Food/DeleteFood?id=${numericId}`
-      console.log("URL de eliminación:", url)
-
-      const response = await axiosInstance.delete(url)
-
-      console.log("Respuesta de eliminación:", response)
-
-      // Recargar datos después de eliminar
-      setTimeout(() => {
-        fetchFood()
-      }, 1000)
-
+      const response = await axiosInstance.delete(`/Api/Food/DeleteFood?id=${numericId}`)
+      setTimeout(() => fetchFood(), 1000)
       return response
     } catch (error) {
-      console.error("Error detallado al eliminar:", error.response?.data || error.message || error)
+      console.error("Error al eliminar:", error)
       throw error
     }
   }
 
   const handleUpdate = (row) => {
-    console.log("Datos seleccionados para editar:", row)
     setSelectedFood(row)
     setIsEditModalOpen(true)
   }
@@ -149,12 +121,21 @@ function Foodpage() {
     fetchFood()
   }
 
-  // Función para activar/desactivar alimentos
+  // Función MODIFICADA para activar/desactivar con lógica automática
   const handleToggleFoodStatus = async (food) => {
     try {
-      const newStatus = food.estado_food === "Activo" ? "Inactivo" : "Activo"
+      const currentStatus = food.estado_food || food.estado
+      let newStatus
 
-      const payload = {
+      // MODIFICACIÓN: Cuando se activa, usar "Existente" en lugar de "Activo"
+      if (currentStatus === "Inactivo") {
+        newStatus = "Existente" // El backend evaluará automáticamente el estado correcto
+      } else {
+        newStatus = "Inactivo"
+      }
+
+      // Crear el objeto FoodModel completo
+      const foodModel = {
         Id_food: food.Id_food || food.id,
         name_food: food.name_food || food.nombre,
         estado_food: newStatus,
@@ -163,18 +144,35 @@ function Foodpage() {
         saldo_existente: food.saldo_existente || food.saldo,
       }
 
-      console.log("Actualizando estado del alimento:", payload)
+      console.log("Cambiando estado del alimento:", foodModel)
 
-      const response = await axiosInstance.post("/Api/Food/UpdateFood", payload)
+      const response = await axiosInstance.put("/Api/Food/ToggleFoodStatus", foodModel)
 
       if (response.status === 200) {
-        setAlertMessage(`Alimento ${newStatus.toLowerCase()} correctamente`)
+        // Mensaje más específico según la acción
+        if (currentStatus === "Inactivo") {
+          setAlertMessage("Alimento activado correctamente. El estado se ajustó automáticamente según el saldo.")
+        } else {
+          setAlertMessage("Alimento desactivado correctamente.")
+        }
+
         setShowSuccessAlert(true)
-        fetchFood() // Recargar datos
+        fetchFood() // Recargar datos para ver el estado final
       }
     } catch (error) {
       console.error("Error al cambiar estado del alimento:", error)
-      setAlertMessage("Error al cambiar el estado del alimento")
+
+      let errorMessage = "Error al cambiar el estado del alimento"
+
+      if (error.response) {
+        if (error.response.status === 405) {
+          errorMessage = "Método no permitido. Verifique la configuración del servidor."
+        } else if (error.response.data) {
+          errorMessage = error.response.data.message || error.response.data || errorMessage
+        }
+      }
+
+      setAlertMessage(errorMessage)
       setShowErrorAlert(true)
     }
   }
@@ -191,7 +189,6 @@ function Foodpage() {
 
   return (
     <NavPrivada>
-      {/* Alertas */}
       <AlertModal type="success" message={alertMessage} isOpen={showSuccessAlert} onClose={handleCloseSuccessAlert} />
       <AlertModal type="error" message={alertMessage} isOpen={showErrorAlert} onClose={handleCloseErrorAlert} />
 
@@ -219,7 +216,6 @@ function Foodpage() {
         )}
       />
 
-      {/* Edit Modal */}
       <Dialog open={isEditModalOpen} onOpenChange={handleCloseEditModal}>
         <DialogContent className={MODAL_STYLE_CLASSES}>
           <DialogHeader>

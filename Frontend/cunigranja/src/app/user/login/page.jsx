@@ -20,6 +20,8 @@ function LoginPage() {
   const [showStars, setShowStars] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
+  // ✅ Estado para controlar el loading de navegación
+  const [isNavigating, setIsNavigating] = useState(false)
 
   const closeModal = () => {
     setErrorMessage("")
@@ -27,8 +29,14 @@ function LoginPage() {
 
   const closeSuccessModal = () => {
     setSuccessMessage("")
-    // Activar el loading del layout y navegar al dashboard
-    router.push("/Dashboar")
+    // ✅ Activar el estado de navegación para mostrar loading
+    setIsNavigating(true)
+
+    // ✅ Pequeño delay para que se vea el loading antes de navegar
+    setTimeout(() => {
+      // Navegar al dashboard - esto activará el loading del layout
+      router.push("/Dashboar")
+    }, 100)
   }
 
   async function handleSubmit(event) {
@@ -123,6 +131,103 @@ function LoginPage() {
       }
     }
   }, []) // Empty dependency array means this runs once after initial render
+
+  // ✅ Loading Screen Component para navegación
+  const NavigationLoadingScreen = () => (
+    <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
+      {/* Partículas decorativas */}
+      <div className="absolute inset-0 overflow-hidden opacity-10">
+        {Array.from({ length: 15 }).map((_, i) => (
+          <div
+            key={i}
+            className="absolute bg-white rounded-full"
+            style={{
+              width: `${5 + (i % 5) * 2}px`,
+              height: `${5 + (i % 5) * 2}px`,
+              top: `${(i * 5) % 100}%`,
+              left: `${(i * 7 + 3) % 100}%`,
+              animation: `pulse 5s ease-in-out infinite ${i % 5}s`,
+              opacity: 0.2 + (i % 6) * 0.1,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Tarjeta principal con bordes iluminados */}
+      <div className="relative max-w-md w-full mx-6">
+        {/* Efecto de iluminación exterior */}
+        <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-cyan-300 to-purple-500 rounded-2xl blur opacity-70 animate-pulse"></div>
+
+        {/* Tarjeta blanca con más estilo interior */}
+        <div className="relative bg-white rounded-xl shadow-2xl overflow-hidden">
+          {/* Decoración de esquina superior */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-blue-100 to-transparent -mr-8 -mt-8 rounded-full opacity-50"></div>
+          <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-blue-100 to-transparent -ml-6 -mb-6 rounded-full opacity-40"></div>
+
+          {/* Línea decorativa superior */}
+          <div className="h-1 w-full bg-gradient-to-r from-blue-400 to-purple-500"></div>
+
+          <div className="p-8 flex flex-col items-center relative">
+            {/* Logo con efecto */}
+            <div className="relative w-28 h-28 mb-6">
+              <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-xl animate-pulse"></div>
+              <div className="absolute inset-0 border-2 border-blue-100 rounded-full"></div>
+              <div className="relative flex items-center justify-center h-full">
+                <img
+                  src="/assets/img/CUNIGRANJA-1.png"
+                  alt="CUNIGRANJA Logo"
+                  className="w-20 h-20 object-contain drop-shadow-lg"
+                />
+              </div>
+            </div>
+
+            {/* Texto de carga con más estilo */}
+            <h2 className="text-2xl font-semibold text-gray-800 mb-1 tracking-tight relative">
+              Accediendo al Dashboard
+              <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-blue-400 to-transparent"></div>
+            </h2>
+            <p className="text-gray-500 text-sm mb-8 italic">Preparando su experiencia</p>
+
+            {/* Barra de progreso animada */}
+            <div className="w-full mb-4 relative">
+              <div className="w-full bg-gray-100 h-3 rounded-full overflow-hidden shadow-inner">
+                <div
+                  className="h-full bg-gradient-to-r from-blue-400 via-blue-500 to-purple-600 rounded-full animate-pulse"
+                  style={{ width: "75%" }}
+                />
+              </div>
+              <div className="flex justify-between text-xs text-gray-400 mt-2 px-1">
+                <span>Autenticado</span>
+                <span>Cargando...</span>
+                <span>Dashboard</span>
+              </div>
+            </div>
+
+            {/* Mensaje de estado */}
+            <div className="text-center text-sm text-gray-600">
+              <span className="flex items-center justify-center gap-1 text-green-600 font-medium">
+                <Loader2 className="w-4 h-4 animate-spin" />
+                Redirigiendo al dashboard...
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Estilos para las animaciones */}
+      <style jsx global>{`
+        @keyframes pulse {
+          0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.3; }
+          50% { transform: scale(1.5) translate(10px, -10px); opacity: 0.7; }
+        }
+      `}</style>
+    </div>
+  )
+
+  // ✅ Si está navegando, mostrar el loading screen
+  if (isNavigating) {
+    return <NavigationLoadingScreen />
+  }
 
   return (
     <>

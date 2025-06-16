@@ -196,6 +196,7 @@ const RegisterFood = ({ onCloseForm }) => {
           <button
             type="submit"
             className="bg-black text-white font-semibold py-3 px-6 rounded-lg hover:bg-gray-600 transition-colors"
+            
           >
             Registrar Alimento
           </button>

@@ -12,5 +12,6 @@ namespace cunigranja.DTOs
         public string descripcion_health { get; set; }
         public int valor_health { get; set; }
         public string name_user { get; set; }
+        public int Id_user { get; set; }
     }
 }

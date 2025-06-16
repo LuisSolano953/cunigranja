@@ -57,6 +57,7 @@ namespace cunigranja.Controllers
                 fecha_mortality = t.fecha_mortality,
                 name_user = t.user.name_user,
                 name_rabbit = t.rabbitmodel.name_rabbit,
+                Id_rabbit=t.rabbitmodel.Id_rabbit
             }).ToList();
 
             return Ok(mortality);
@@ -163,6 +164,44 @@ namespace cunigranja.Controllers
             {
                 FunctionsGeneral.AddLog(ex.Message);
                 return StatusCode(500, ex.ToString());
+            }
+        }
+        // En tu controlador de Mortality
+        // ✅ NUEVO ENDPOINT - Obtener registros de mortalidad por conejo
+        [HttpGet("GetMortalityByRabbit")]
+        public IActionResult GetMortalityByRabbit(int rabbitId)
+        {
+            try
+            {
+                Console.WriteLine($"🔍 Buscando registros de mortalidad para rabbit ID: {rabbitId}");
+
+                // Usar el servicio existente para obtener todos los registros
+                var allMortality = _Services.GetAll();
+
+                // Filtrar por ID del conejo
+                var mortalityRecords = allMortality
+                    .Where(m => m.Id_rabbit == rabbitId)
+                    .Select(m => new
+                    {
+                        Id_mortality = m.Id_mortality,
+                        Id_rabbit = m.Id_rabbit,
+                        causa_mortality = m.causa_mortality,
+                        fecha_mortality = m.fecha_mortality,
+                       
+                        name_user = m.user?.name_user,
+                        name_rabbit = m.rabbitmodel?.name_rabbit
+                    })
+                    .ToList();
+
+                Console.WriteLine($"Encontrados {mortalityRecords.Count} registros de mortalidad");
+
+                return Ok(mortalityRecords);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Error al buscar registros de mortalidad: {ex.Message}");
+                FunctionsGeneral.AddLog(ex.Message);
+                return StatusCode(500, new { message = "Error al buscar registros de mortalidad", details = ex.Message });
             }
         }
     }

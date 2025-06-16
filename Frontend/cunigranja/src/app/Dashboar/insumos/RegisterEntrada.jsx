@@ -25,22 +25,88 @@ const RegisterEntrada = ({ refreshData, onCloseForm }) => {
   // Constante para la conversión
   const GRAMOS_POR_BULTO = 40000 // 40kg = 40000g
 
+  // Función para validar que solo contenga números
+  const containsLetters = (text) => {
+    return /[a-zA-Z]/.test(text)
+  }
+
+  // Manejar cambios en la cantidad (solo números)
+  const handleCantidadChange = (e) => {
+    const inputValue = e.target.value
+
+    // Verificar si contiene letras
+    if (containsLetters(inputValue)) {
+      setErrorMessage("La cantidad solo puede contener números")
+      setShowErrorAlert(true)
+      return // No actualizar el estado si contiene letras
+    }
+
+    // Si no contiene letras, actualizar
+    setCantidadEntrada(inputValue)
+
+    // Limpiar cualquier error previo
+    if (errorMessage && showErrorAlert) {
+      setErrorMessage("")
+      setShowErrorAlert(false)
+    }
+  }
+
+  // Manejar cambios en el valor unitario (solo números)
+  const handleValorChange = (e) => {
+    const inputValue = e.target.value
+
+    // Verificar si contiene letras
+    if (containsLetters(inputValue)) {
+      setErrorMessage("El valor unitario solo puede contener números")
+      setShowErrorAlert(true)
+      return // No actualizar el estado si contiene letras
+    }
+
+    // Si no contiene letras, actualizar
+    setValorEntrada(inputValue)
+
+    // Limpiar cualquier error previo
+    if (errorMessage && showErrorAlert) {
+      setErrorMessage("")
+      setShowErrorAlert(false)
+    }
+  }
+
   useEffect(() => {
     async function fetchFood() {
       try {
         setLoadingFood(true)
         const response = await axiosInstance.get("/Api/Food/GetFood")
         if (response.status === 200) {
+          // MODIFICADO: Filtrar alimentos por estados permitidos
+          const availableFoods = response.data.filter((item) => {
+            // Verificar diferentes posibles nombres de campo para el estado
+            const estado = item.estado_food || item.estado || item.Estado || item.status || item.Status || ""
+
+            // Normalizar el estado a minúsculas para comparación insensible a mayúsculas/minúsculas
+            const estadoLower = estado.toLowerCase()
+
+            // Permitir solo estados "Existente" y "Casi por acabar"
+            return (
+              estadoLower === "existente" ||
+              estadoLower === "casi por acabar" ||
+              estadoLower === "casi agotado" ||
+              estadoLower === "casi por agotarse"
+            )
+          })
+
           // Formatear los saldos para mostrar solo 2 decimales
-          const formattedFood = response.data.map((item) => ({
+          const formattedFood = availableFoods.map((item) => ({
             ...item,
             saldo_existente: Math.round(item.saldo_existente * 100) / 100,
           }))
+
           setFood(formattedFood)
+          console.log(`Alimentos cargados: ${response.data.length} total, ${formattedFood.length} disponibles`)
         }
       } catch (error) {
         console.error("Error al obtener food:", error)
-        setErrorMessage("Error al obtener food")
+        setErrorMessage("Error al obtener alimentos")
         setShowErrorAlert(true)
       } finally {
         setLoadingFood(false)
@@ -70,12 +136,9 @@ const RegisterEntrada = ({ refreshData, onCloseForm }) => {
       // Obtener el saldo existente actual del alimento
       const saldoExistenteActual = selectedFood.saldo_existente
 
-      // Calcular el nuevo saldo total (saldo existente + cantidad entrada) y redondear a 2 decimales
-      const nuevoSaldoTotal = Math.round((saldoExistenteActual + cantidadGramos) * 100) / 100
-      // Convertir a string y eliminar ceros finales innecesarios después del punto decimal
-      const nuevoSaldoStr = nuevoSaldoTotal.toString()
-      // Si tiene decimales, mostrar solo los necesarios (como en la tabla de alimentos)
-      setExistenciaActualG(nuevoSaldoStr.includes(".") ? nuevoSaldoStr.replace(/\.?0+$/, "") : nuevoSaldoStr)
+      // Calcular el nuevo saldo total (saldo existente + cantidad entrada) y redondear a entero
+      const nuevoSaldoTotal = Math.round(saldoExistenteActual + cantidadGramos)
+      setExistenciaActualG(nuevoSaldoTotal.toString())
     } else {
       setExistenciaActualG("")
     }
@@ -142,8 +205,41 @@ const RegisterEntrada = ({ refreshData, onCloseForm }) => {
     }
   }
 
+  // Función para validar todos los campos numéricos
+  const validateAllNumericFields = () => {
+    const errors = []
+
+    if (containsLetters(valor_entrada)) {
+      errors.push("El valor unitario solo puede contener números")
+    }
+
+    if (containsLetters(cantidad_entrada)) {
+      errors.push("La cantidad solo puede contener números")
+    }
+
+    // Validar que Id_food sea un número válido
+    if (Id_food && (isNaN(Number(Id_food)) || Number(Id_food) <= 0)) {
+      errors.push("Debe seleccionar un alimento válido")
+    }
+
+    return errors
+  }
+
   async function handlerSubmit(e) {
     e.preventDefault()
+
+    // Validaciones finales antes de enviar
+    if (containsLetters(cantidad_entrada)) {
+      setErrorMessage("La cantidad solo puede contener números")
+      setShowErrorAlert(true)
+      return
+    }
+
+    if (containsLetters(valor_entrada)) {
+      setErrorMessage("El valor unitario solo puede contener números")
+      setShowErrorAlert(true)
+      return
+    }
 
     if (!fecha_entrada || !valor_entrada || !cantidad_entrada || !Id_food) {
       setErrorMessage("Todos los campos son obligatorios.")
@@ -151,10 +247,17 @@ const RegisterEntrada = ({ refreshData, onCloseForm }) => {
       return
     }
 
+    // Validación completa de todos los campos numéricos
+    const numericErrors = validateAllNumericFields()
+    if (numericErrors.length > 0) {
+      setErrorMessage(numericErrors.join(". "))
+      setShowErrorAlert(true)
+      return
+    }
+
     setIsLoading(true)
     try {
       // Formatear la fecha correctamente para el backend
-      // Crear un objeto Date con la fecha seleccionada
       const fechaPartes = fecha_entrada.split("-")
       const año = Number.parseInt(fechaPartes[0])
       const mes = Number.parseInt(fechaPartes[1]) - 1 // Los meses en JavaScript son 0-11
@@ -166,16 +269,15 @@ const RegisterEntrada = ({ refreshData, onCloseForm }) => {
       // Formatear la fecha como string en formato yyyy-MM-dd
       const fechaFormateada = `${fechaObj.getFullYear()}-${String(fechaObj.getMonth() + 1).padStart(2, "0")}-${String(fechaObj.getDate()).padStart(2, "0")}`
 
-      // Asegurarse de que los valores numéricos se envíen como números, no como strings
+      // CORRECCIÓN: Enviar todos los valores como enteros para evitar errores de validación
       const entradaData = {
-        Id_entrada: 0, // Asegurarse de que se envía el ID (aunque sea 0 para nuevos registros)
+        Id_entrada: 0,
         fecha_entrada: fechaFormateada,
-        valor_entrada: Number(valor_entrada),
-        cantidad_entrada: Number(cantidad_entrada),
+        valor_entrada: Math.round(Number(valor_entrada)), // Convertir a entero
+        cantidad_entrada: Math.round(Number(cantidad_entrada)), // Convertir a entero
         Id_food: Number(Id_food),
-        // Agregar estos valores, aunque serán recalculados en el backend
-        valor_total: Number(valor_total) || 0,
-        existencia_actual: Number(existencia_actual_g) || 0,
+        valor_total: Math.round(Number(valor_total)) || 0, // Convertir a entero
+        existencia_actual: Math.round(Number(existencia_actual_g)) || 0, // Convertir a entero
       }
 
       console.log("Datos a enviar:", entradaData)
@@ -219,6 +321,9 @@ const RegisterEntrada = ({ refreshData, onCloseForm }) => {
     setShowErrorAlert(false)
     setErrorMessage("")
   }
+
+  // Verificar si hay errores de validación
+  const hasValidationErrors = containsLetters(cantidad_entrada) || containsLetters(valor_entrada)
 
   return (
     <>
@@ -269,11 +374,17 @@ const RegisterEntrada = ({ refreshData, onCloseForm }) => {
                       (item.Id_food || item.id_food) && (
                         <option key={item.Id_food || item.id_food} value={item.Id_food || item.id_food}>
                           {item.name_food} ({item.saldo_existente.toFixed(2)} g)
+                          {/* Mostrar el estado del alimento */}
+                          {item.estado_food ? ` - ${item.estado_food}` : ""}
                         </option>
                       ),
                   )}
               </select>
             )}
+            <p className="text-xs text-green-600 mt-1">
+              ✅ Solo se muestran alimentos disponibles ({food.length} disponibles)
+            </p>
+            <p className="text-xs text-gray-500">Estados permitidos: "Existente" y "Casi por acabar"</p>
           </div>
 
           <div>
@@ -281,15 +392,19 @@ const RegisterEntrada = ({ refreshData, onCloseForm }) => {
               Cantidad de Entrada (bultos):
             </label>
             <input
-              type="number"
+              type="text"
               id="cantidad_entrada"
               value={cantidad_entrada}
-              onChange={(e) => setCantidadEntrada(e.target.value)}
-              className="w-full border border-gray-400 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-gray-600"
+              onChange={handleCantidadChange}
+              className={`w-full border rounded-lg p-2 focus:outline-none focus:ring-2 ${
+                containsLetters(cantidad_entrada)
+                  ? "border-red-500 focus:ring-red-500"
+                  : "border-gray-400 focus:ring-gray-600"
+              }`}
               required
-              min="1"
-              step="1" // Solo números enteros
+              placeholder="Ingrese la cantidad"
             />
+            <p className="text-xs text-red-500 mt-1">⚠️ Solo se permiten números</p>
             <small className="text-gray-500">1 bulto = {GRAMOS_POR_BULTO} g</small>
           </div>
 
@@ -298,15 +413,19 @@ const RegisterEntrada = ({ refreshData, onCloseForm }) => {
               Valor Unitario:
             </label>
             <input
-              type="number"
+              type="text"
               id="valor_entrada"
               value={valor_entrada}
-              onChange={(e) => setValorEntrada(e.target.value)}
-              className="w-full border border-gray-400 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-gray-600"
+              onChange={handleValorChange}
+              className={`w-full border rounded-lg p-2 focus:outline-none focus:ring-2 ${
+                containsLetters(valor_entrada)
+                  ? "border-red-500 focus:ring-red-500"
+                  : "border-gray-400 focus:ring-gray-600"
+              }`}
               required
-              min="1"
-              step="1" // Solo números enteros
+              placeholder="Ingrese el valor"
             />
+            <p className="text-xs text-red-500 mt-1">⚠️ Solo se permiten números</p>
           </div>
 
           <div>
@@ -341,8 +460,17 @@ const RegisterEntrada = ({ refreshData, onCloseForm }) => {
         <div className="flex justify-center mt-6">
           <button
             type="submit"
-            disabled={isLoading}
-            className="bg-black text-white font-semibold py-3 px-6 rounded-lg hover:bg-gray-600 transition-colors w-full"
+            disabled={
+              isLoading ||
+              hasValidationErrors ||
+              !fecha_entrada ||
+              !valor_entrada ||
+              !cantidad_entrada ||
+              !Id_food ||
+              containsLetters(valor_entrada) ||
+              containsLetters(cantidad_entrada)
+            }
+            className="bg-black text-white font-semibold py-3 px-6 rounded-lg hover:bg-gray-600 transition-colors w-full disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? "Registrando..." : "Registrar Entrada"}
           </button>

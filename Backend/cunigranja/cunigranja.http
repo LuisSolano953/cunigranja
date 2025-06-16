@@ -1,4 +1,4 @@
-@cunigranja_HostAddress = http://localhost:5004
+  @cunigranja_HostAddress = http://localhost:5004
 
 GET {{cunigranja_HostAddress}}/weatherforecast/
 Accept: application/json

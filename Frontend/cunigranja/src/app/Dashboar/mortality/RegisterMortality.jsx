@@ -18,6 +18,32 @@ const RegisterMortality = ({ refreshData, onCloseForm }) => {
   const [showSuccessAlert, setShowSuccessAlert] = useState(false)
   const [showErrorAlert, setShowErrorAlert] = useState(false)
 
+  // Función para validar que no contenga números
+  const containsNumbers = (text) => {
+    return /\d/.test(text)
+  }
+
+  // Manejar cambios en el input de causa y validar números
+  const handleCausaChange = (e) => {
+    const inputValue = e.target.value
+
+    // Verificar si contiene números
+    if (containsNumbers(inputValue)) {
+      setAlertMessage("La causa de muerte no puede contener números")
+      setShowErrorAlert(true)
+      return // No actualizar el estado si contiene números
+    }
+
+    // Si no contiene números, actualizar
+    setCausaMortality(inputValue)
+
+    // Limpiar cualquier error previo
+    if (alertMessage && showErrorAlert) {
+      setAlertMessage("")
+      setShowErrorAlert(false)
+    }
+  }
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -41,6 +67,8 @@ const RegisterMortality = ({ refreshData, onCloseForm }) => {
         setUsers(activeUsers)
       } catch (error) {
         console.error("Error al obtener datos:", error)
+        setAlertMessage(`Error al cargar datos: ${error.message}`)
+        setShowErrorAlert(true)
       }
     }
     fetchData()
@@ -49,6 +77,13 @@ const RegisterMortality = ({ refreshData, onCloseForm }) => {
   async function handleSubmit(event) {
     event.preventDefault()
     if (isSubmitting) return
+
+    // Validación final antes de enviar
+    if (containsNumbers(causa_mortality)) {
+      setAlertMessage("La causa de muerte no puede contener números")
+      setShowErrorAlert(true)
+      return
+    }
 
     if (!fecha_mortality || !causa_mortality || !id_rabbit || !id_user) {
       setAlertMessage("Todos los campos son obligatorios")
@@ -86,24 +121,11 @@ const RegisterMortality = ({ refreshData, onCloseForm }) => {
     }
 
     try {
-      const response = await fetch("https://localhost:7208/Api/Mortality/CreateMortality", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(body),
-      })
-
-      if (!response.ok) {
-        const errorText = await response.text()
-        throw new Error(`HTTP ${response.status}: ${errorText}`)
-      }
-
-      const responseData = await response.json()
+      // USAR AXIOSINSTANCE EN LUGAR DE FETCH NATIVO
+      const response = await axiosInstance.post("/Api/Mortality/CreateMortality", body)
 
       setAlertMessage(
-        responseData.message || "Mortalidad registrada exitosamente. El conejo ha sido marcado como inactivo.",
+        response.data.message || "Mortalidad registrada exitosamente. El conejo ha sido marcado como inactivo.",
       )
       setIsSuccess(true)
       setShowSuccessAlert(true)
@@ -120,7 +142,19 @@ const RegisterMortality = ({ refreshData, onCloseForm }) => {
       }
     } catch (error) {
       console.error("Error:", error)
-      setAlertMessage(error.message || "Error al registrar mortalidad")
+
+      // Manejar errores de axios
+      if (error.response) {
+        // El servidor respondió con un código de error
+        setAlertMessage(error.response.data.message || `Error ${error.response.status}: ${error.response.data}`)
+      } else if (error.request) {
+        // La petición se hizo pero no hubo respuesta
+        setAlertMessage("Error de conexión: No se pudo conectar con el servidor")
+      } else {
+        // Algo más pasó
+        setAlertMessage(error.message || "Error al registrar mortalidad")
+      }
+
       setIsSuccess(false)
       setShowErrorAlert(true)
     } finally {
@@ -137,6 +171,7 @@ const RegisterMortality = ({ refreshData, onCloseForm }) => {
 
   const handleCloseErrorAlert = () => {
     setShowErrorAlert(false)
+    setAlertMessage("")
   }
 
   return (
@@ -171,7 +206,7 @@ const RegisterMortality = ({ refreshData, onCloseForm }) => {
                 const rabbitId = r.Id_rabbit || r.id_rabbit
                 return (
                   <option key={rabbitId} value={rabbitId}>
-                    {r.name_rabbit} 
+                    {r.name_rabbit}
                   </option>
                 )
               })}
@@ -196,11 +231,16 @@ const RegisterMortality = ({ refreshData, onCloseForm }) => {
             <input
               type="text"
               value={causa_mortality}
-              onChange={(e) => setCausaMortality(e.target.value)}
+              onChange={handleCausaChange}
               required
               placeholder="Ej: Enfermedad, Accidente, etc."
-              className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10 hover:border-gray-500 transition-colors"
+              className={`w-full border rounded-lg p-2 focus:ring-2 h-10 hover:border-gray-500 transition-colors ${
+                containsNumbers(causa_mortality)
+                  ? "border-red-500 focus:ring-red-500"
+                  : "border-gray-400 focus:ring-gray-600"
+              }`}
             />
+            <p className="text-xs text-red-500 mt-1">⚠️ No se permiten números en la causa de muerte</p>
           </div>
 
           <div>
@@ -242,7 +282,7 @@ const RegisterMortality = ({ refreshData, onCloseForm }) => {
         <button
           type="submit"
           className="w-full p-3 mt-4 bg-black text-white rounded hover:bg-gray-700 disabled:bg-gray-400 transition-colors"
-          disabled={isSubmitting}
+          disabled={isSubmitting || containsNumbers(causa_mortality)}
         >
           {isSubmitting ? "Registrando..." : "Registrar Mortalidad"}
         </button>

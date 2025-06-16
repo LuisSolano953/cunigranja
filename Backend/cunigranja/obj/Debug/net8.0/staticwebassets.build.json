@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "YE0ZjWq+pYBvYgjZ8Ex6a5uyLo6VdTF7SVcY+eGwgD4=",
+  "Hash": "5jql7KW/KykNMjngMBNTs+WZTiyfk4IaWxtL9sogCXA=",
   "Source": "cunigranja",
   "BasePath": "_content/cunigranja",
   "Mode": "Default",
@@ -10,30 +10,116 @@
     {
       "Name": "cunigranja\\wwwroot",
       "Source": "cunigranja",
-      "ContentRoot": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\nesto\\OneDrive\\Desktop\\Cunigranja-Nv\\Backend\\cunigranja\\wwwroot\\",
       "BasePath": "_content/cunigranja",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\wwwroot\\images\\logo_cuni.png",
+      "Identity": "C:\\Users\\nesto\\OneDrive\\Desktop\\Cunigranja-Nv\\Backend\\cunigranja\\wwwroot\\images\\logo_cuni.png",
       "SourceId": "cunigranja",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\nesto\\OneDrive\\Desktop\\Cunigranja-Nv\\Backend\\cunigranja\\wwwroot\\",
       "BasePath": "_content/cunigranja",
-      "RelativePath": "images/logo_cuni.png",
+      "RelativePath": "images/logo_cuni#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "wa5ojydgwq",
+      "Integrity": "KET+b0wUSpas8Rx4CtZh/HtvsExGI24lNrGIje4KWgw=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\logo_cuni.png"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "images/logo_cuni.png",
+      "AssetFile": "C:\\Users\\nesto\\OneDrive\\Desktop\\Cunigranja-Nv\\Backend\\cunigranja\\wwwroot\\images\\logo_cuni.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "170708"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"KET+b0wUSpas8Rx4CtZh/HtvsExGI24lNrGIje4KWgw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 30 Mar 2025 18:27:04 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-KET+b0wUSpas8Rx4CtZh/HtvsExGI24lNrGIje4KWgw="
+        }
+      ]
+    },
+    {
+      "Route": "images/logo_cuni.wa5ojydgwq.png",
+      "AssetFile": "C:\\Users\\nesto\\OneDrive\\Desktop\\Cunigranja-Nv\\Backend\\cunigranja\\wwwroot\\images\\logo_cuni.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "170708"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"KET+b0wUSpas8Rx4CtZh/HtvsExGI24lNrGIje4KWgw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 30 Mar 2025 18:27:04 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "wa5ojydgwq"
+        },
+        {
+          "Name": "label",
+          "Value": "images/logo_cuni.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-KET+b0wUSpas8Rx4CtZh/HtvsExGI24lNrGIje4KWgw="
+        }
+      ]
     }
   ]
 }

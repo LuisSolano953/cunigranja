@@ -46,7 +46,8 @@ namespace cunigranja.Controllers
                 fecha_health=h.fecha_health,
                 descripcion_health=h.descripcion_health,
                 valor_health=h.valor_health,
-                name_user=h.user.name_user
+                name_user=h.user.name_user,
+                Id_user=h.user.Id_user
                  
 
             }).ToList();
@@ -68,7 +69,7 @@ namespace cunigranja.Controllers
                 }
                 else
                 {
-                    return NotFound("Health record not found.");
+                    return NotFound("Error al encontrar sanidad.");
                 }
             }
             catch (Exception ex)
@@ -92,7 +93,7 @@ namespace cunigranja.Controllers
                 // Llamar al método de actualización en el servicio
                 _Services.UpdateHealth(entity.Id_health, entity);
 
-                return Ok("Health updated successfully.");
+                return Ok("Sanidad actualizada correctamente.");
             }
             catch (Exception ex)
             {

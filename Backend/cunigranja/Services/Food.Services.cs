@@ -82,12 +82,12 @@ namespace cunigranja.Services
                         double oldSaldo = food.saldo_existente;
                         updatedFood.saldo_existente = Math.Round(updatedFood.saldo_existente, 2);
 
-                        if (updatedFood.saldo_existente <= 0 && updatedFood.estado_food != "Inactivo")
+                        // Solo forzar a Inactivo si el saldo es exactamente 0
+                        if (updatedFood.saldo_existente <= 0)
                         {
                             updatedFood.estado_food = "Inactivo";
                         }
 
-                        UpdateFoodState(updatedFood);
                         _context.Entry(food).CurrentValues.SetValues(updatedFood);
                         _context.SaveChanges();
 
@@ -109,6 +109,75 @@ namespace cunigranja.Services
                     }
                     throw;
                 }
+            }
+        }
+
+        // MÉTODO MODIFICADO: Para activar/desactivar con lógica automática
+        public bool ToggleFoodStatus(int foodId, string newStatus)
+        {
+            try
+            {
+                var food = _context.food.Find(foodId);
+                if (food == null)
+                {
+                    if (FunctionsGeneral != null)
+                    {
+                        FunctionsGeneral.AddLog($"Alimento con ID {foodId} no encontrado");
+                    }
+                    return false;
+                }
+
+                if (FunctionsGeneral != null)
+                {
+                    FunctionsGeneral.AddLog($"Cambiando estado de alimento ID {foodId} de '{food.estado_food}' a '{newStatus}'");
+                }
+
+                // Si se está activando el alimento (de Inactivo a Existente)
+                if (food.estado_food == "Inactivo" && newStatus == "Existente")
+                {
+                    // Primero ponerlo como Existente
+                    food.estado_food = "Existente";
+
+                    // Luego evaluar automáticamente según el saldo
+                    UpdateFoodState(food);
+
+                    if (FunctionsGeneral != null)
+                    {
+                        FunctionsGeneral.AddLog($"Alimento activado. Estado final después de evaluación automática: '{food.estado_food}'");
+                    }
+                }
+                // Si se está desactivando (cualquier estado a Inactivo)
+                else if (newStatus == "Inactivo")
+                {
+                    food.estado_food = "Inactivo";
+
+                    if (FunctionsGeneral != null)
+                    {
+                        FunctionsGeneral.AddLog($"Alimento desactivado a 'Inactivo'");
+                    }
+                }
+                else
+                {
+                    // Para cualquier otro cambio, usar el estado solicitado
+                    food.estado_food = newStatus;
+                }
+
+                _context.SaveChanges();
+
+                if (FunctionsGeneral != null)
+                {
+                    FunctionsGeneral.AddLog($"Estado final guardado: '{food.estado_food}' para alimento ID {foodId}");
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                if (FunctionsGeneral != null)
+                {
+                    FunctionsGeneral.AddLog($"Error en ToggleFoodStatus: {ex.Message}");
+                }
+                throw;
             }
         }
 
@@ -172,7 +241,6 @@ namespace cunigranja.Services
             return gramos;
         }
 
-        // MÉTODO CORREGIDO: RecalculateFoodBalance
         public void RecalculateFoodBalance(int foodId, double newSaldoBase)
         {
             try
@@ -183,28 +251,23 @@ namespace cunigranja.Services
                     FunctionsGeneral.AddLog($"Alimento ID: {foodId}, Nuevo saldo base: {newSaldoBase}");
                 }
 
-                // NO usar transacción aquí porque puede ser llamado desde otra transacción
-                // El contexto ya debería estar en una transacción desde el método que llama
-
-                // 1. Obtener el alimento y actualizar su saldo
                 var food = _context.food.Find(foodId);
                 if (food == null)
                 {
                     throw new Exception($"Alimento con ID {foodId} no encontrado");
                 }
 
-                // Redondear el saldo base
                 newSaldoBase = Math.Round(newSaldoBase, 2);
                 food.saldo_existente = newSaldoBase;
+
+                // Evaluar estado automáticamente según el saldo
                 UpdateFoodState(food);
 
-                // 2. Obtener TODOS los registros de alimentación para este alimento
-                // ORDENADOS POR FECHA ASCENDENTE (del más antiguo al más reciente)
                 var feedingRecords = _context.feeding
                     .Where(f => f.Id_food == foodId)
                     .OrderBy(f => f.fecha_feeding)
                     .ThenBy(f => f.hora_feeding)
-                    .ThenBy(f => f.Id_feeding) // Para asegurar orden consistente
+                    .ThenBy(f => f.Id_feeding)
                     .ToList();
 
                 if (FunctionsGeneral != null)
@@ -214,24 +277,18 @@ namespace cunigranja.Services
 
                 if (feedingRecords.Any())
                 {
-                    // 3. Recalcular cada registro secuencialmente desde el saldo base
                     double saldoActual = newSaldoBase;
 
                     foreach (var feeding in feedingRecords)
                     {
-                        // Restar la cantidad de esta alimentación del saldo actual
-                        // CORREGIDO: Especificar explícitamente el tipo double para resolver la ambigüedad
                         double cantidadGramos = (double)Math.Round((double)feeding.cantidad_feeding, 2);
                         saldoActual = Math.Round(saldoActual - cantidadGramos, 2);
 
-                        // Asegurar que no sea negativo
                         if (saldoActual < 0)
                         {
                             saldoActual = 0;
                         }
 
-                        // Actualizar la existencia actual de este registro
-                        // CORREGIDO: Especificar explícitamente el tipo double para resolver la ambigüedad
                         feeding.existencia_actual = (double)Math.Round(saldoActual, 1);
 
                         if (FunctionsGeneral != null)
@@ -240,17 +297,17 @@ namespace cunigranja.Services
                         }
                     }
 
-                    // 4. Actualizar el saldo final del alimento
                     food.saldo_existente = saldoActual;
+
+                    // Evaluar estado final automáticamente
                     UpdateFoodState(food);
 
                     if (FunctionsGeneral != null)
                     {
-                        FunctionsGeneral.AddLog($"Saldo final del alimento: {saldoActual}g");
+                        FunctionsGeneral.AddLog($"Saldo final del alimento: {saldoActual}g, Estado final: {food.estado_food}");
                     }
                 }
 
-                // 5. Actualizar la entrada más reciente con el saldo base
                 var latestEntry = _context.entrada
                     .Where(e => e.Id_food == foodId)
                     .OrderByDescending(e => e.fecha_entrada)
@@ -259,7 +316,6 @@ namespace cunigranja.Services
 
                 if (latestEntry != null)
                 {
-                    // CORREGIDO: Especificar explícitamente el tipo double para resolver la ambigüedad
                     latestEntry.existencia_actual = (int)Math.Round(newSaldoBase);
                     if (FunctionsGeneral != null)
                     {
@@ -267,7 +323,6 @@ namespace cunigranja.Services
                     }
                 }
 
-                // 6. Guardar todos los cambios
                 _context.SaveChanges();
 
                 if (FunctionsGeneral != null)

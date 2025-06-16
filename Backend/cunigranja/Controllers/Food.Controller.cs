@@ -173,5 +173,35 @@ namespace cunigranja.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+        [HttpPut("ToggleFoodStatus")]
+        public IActionResult ToggleFoodStatus([FromBody] FoodModel entity)
+        {
+            try
+            {
+                if (entity.Id_food <= 0)
+                {
+                    return BadRequest("Invalid food ID.");
+                }
+
+                FunctionsGeneral.AddLog($"Cambiando estado del alimento ID {entity.Id_food} a {entity.estado_food}");
+
+                var result = _Services.ToggleFoodStatus(entity.Id_food, entity.estado_food);
+
+                if (result)
+                {
+                    return Ok(new { message = $"Estado del alimento cambiado a {entity.estado_food} correctamente" });
+                }
+                else
+                {
+                    return NotFound("Food not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                FunctionsGeneral.AddLog($"Error en ToggleFoodStatus: {ex.Message}");
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
     }
 }

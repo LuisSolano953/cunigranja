@@ -18,6 +18,32 @@ const RegisterHealth = ({ refreshData, onCloseForm }) => {
   const [showErrorAlert, setShowErrorAlert] = useState(false)
   const [debugInfo, setDebugInfo] = useState("")
 
+  // Función para validar que no contenga números
+  const containsNumbers = (text) => {
+    return /\d/.test(text)
+  }
+
+  // Manejar cambios en el input y validar números
+  const handleNameChange = (e) => {
+    const inputValue = e.target.value
+
+    // Verificar si contiene números
+    if (containsNumbers(inputValue)) {
+      setErrorMessage("El nombre de sanidad no puede contener números")
+      setShowErrorAlert(true)
+      return // No actualizar el estado si contiene números
+    }
+
+    // Si no contiene números, actualizar
+    setNameHealth(inputValue)
+
+    // Limpiar cualquier error previo
+    if (errorMessage && showErrorAlert) {
+      setErrorMessage("")
+      setShowErrorAlert(false)
+    }
+  }
+
   // Establecer la fecha actual al cargar el componente
   useEffect(() => {
     const today = new Date().toISOString().split("T")[0]
@@ -33,9 +59,10 @@ const RegisterHealth = ({ refreshData, onCloseForm }) => {
         if (response.status === 200) {
           // Filtrar solo usuarios activos (blockard = 0 o estado != "Inactivo")
           const allUsers = response.data || []
-          const activeUsers = allUsers.filter(user => 
-            (user.blockard === 0 || user.blockard === undefined || user.blockard === null) && 
-            (user.estado !== "Inactivo")
+          const activeUsers = allUsers.filter(
+            (user) =>
+              (user.blockard === 0 || user.blockard === undefined || user.blockard === null) &&
+              user.estado !== "Inactivo",
           )
           console.log("Usuarios totales:", allUsers.length, "Usuarios activos:", activeUsers.length)
           setUsers(activeUsers)
@@ -57,6 +84,13 @@ const RegisterHealth = ({ refreshData, onCloseForm }) => {
     setErrorMessage("")
     setSuccessMessage("")
     setDebugInfo("")
+
+    // Validación final antes de enviar
+    if (containsNumbers(name_health)) {
+      setErrorMessage("El nombre de sanidad no puede contener números")
+      setShowErrorAlert(true)
+      return
+    }
 
     if (!name_health || !fecha_health || !descripcion_health || !valor_health || !Id_user) {
       setErrorMessage("Todos los campos son obligatorios")
@@ -160,11 +194,16 @@ const RegisterHealth = ({ refreshData, onCloseForm }) => {
             <input
               type="text"
               value={name_health}
-              onChange={(e) => setNameHealth(e.target.value)}
-              className="w-full border border-gray-400 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-gray-600"
+              onChange={handleNameChange}
+              className={`w-full border rounded-lg p-2 focus:outline-none focus:ring-2 ${
+                containsNumbers(name_health)
+                  ? "border-red-500 focus:ring-red-500"
+                  : "border-gray-400 focus:ring-gray-600"
+              }`}
               required
               placeholder="Ingrese el nombre"
             />
+            <p className="text-xs text-red-500 mt-1">⚠️ No se permiten números en el nombre</p>
           </div>
 
           <div>
@@ -191,16 +230,30 @@ const RegisterHealth = ({ refreshData, onCloseForm }) => {
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Valor:</label>
-            <input
-              type="number"
-              value={valor_health}
-              onChange={(e) => setValorHealth(e.target.value)}
-              className="w-full border border-gray-400 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-gray-600"
-              required
-              placeholder="Ingrese el valor"
-            />
-          </div>
+  <label className="block text-gray-700 font-medium mb-2">Valor:</label>
+  <input
+    type="number"
+    min="0"
+    value={valor_health}
+    onChange={(e) => {
+      const value = e.target.value;
+      // Permitimos vacío para que el usuario pueda borrar
+      if (value === '' || (!isNaN(value) && parseFloat(value) >= 0)) {
+        setValorHealth(value);
+      }
+    }}
+    onPaste={(e) => {
+      const pasted = e.clipboardData.getData('text');
+      if (parseFloat(pasted) < 0) {
+        e.preventDefault(); // Bloquea pegar negativos
+      }
+    }}
+    className="w-full border border-gray-400 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-gray-600"
+    required
+    placeholder="Ingrese el valor"
+  />
+</div>
+
         </div>
 
         <div className="mb-6">
@@ -215,11 +268,15 @@ const RegisterHealth = ({ refreshData, onCloseForm }) => {
               required
             >
               <option value="">Seleccione un responsable</option>
-              {users.map((user) => (
-                <option key={user.id_user || user.Id_user} value={user.id_user || user.Id_user}>
-                  {user.name_user}
-                </option>
-              ))}
+              {users.map((user) => {
+                // Obtener el ID del usuario de diferentes posibles campos
+                const userId = user.id_user || user.Id_user || user.id
+                return (
+                  <option key={`user-${userId}`} value={userId}>
+                    {user.name_user || user.nombre || "Usuario sin nombre"}
+                  </option>
+                )
+              })}
             </select>
           )}
         </div>
@@ -227,7 +284,8 @@ const RegisterHealth = ({ refreshData, onCloseForm }) => {
         <div className="flex justify-center">
           <button
             type="submit"
-            className="bg-black text-white font-semibold py-3 px-6 rounded-lg hover:bg-gray-600 transition-colors"
+            disabled={containsNumbers(name_health)}
+            className="bg-black text-white font-semibold py-3 px-6 rounded-lg hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Registrar Salud
           </button>

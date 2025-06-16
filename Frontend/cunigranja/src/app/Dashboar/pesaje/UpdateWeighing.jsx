@@ -268,7 +268,7 @@ const UpdateWeighing = ({ weighingData, onClose, onUpdate, refreshData }) => {
         onSubmit={handleSubmit}
         className="p-8 bg-white shadow-lg rounded-lg max-w-md mx-auto border border-gray-400"
       >
-        <h2 className="text-xl font-bold text-center mb-6">Actualizar Pesaje</h2>
+        
 
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div>

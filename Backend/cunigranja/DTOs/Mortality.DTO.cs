@@ -13,6 +13,7 @@ namespace cunigranja.DTOs
         public DateTime fecha_mortality { get; set; }
 
         public string name_rabbit{  get; set; }
+        public int Id_rabbit{  get; set;}
         public string name_user { get; set; }
     }
 }

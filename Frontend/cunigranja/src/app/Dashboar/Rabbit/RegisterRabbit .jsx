@@ -11,7 +11,8 @@ const RegisterRabbit = ({ onCloseForm, refreshData }) => {
   const [fecha_registro, setFechaRegistro] = useState("")
   const [peso_inicial, setPesoInicial] = useState("")
   const [sexo_rabbit, setSexoRabbit] = useState("")
-  const [estado, setEstado] = useState("Activo")
+  // ✅ Estado siempre será "Activo" por defecto y no se puede cambiar
+  const [estado] = useState("Activo")
   // peso_actual is managed internally but not shown to the user
   const [peso_actual, setPesoActual] = useState("")
   const [Id_cage, setIdCage] = useState("")
@@ -243,7 +244,7 @@ const RegisterRabbit = ({ onCloseForm, refreshData }) => {
       return
     }
 
-    if (!fecha_registro || !peso_inicial || !sexo_rabbit || !estado || !Id_cage || !Id_race) {
+    if (!fecha_registro || !peso_inicial || !sexo_rabbit || !Id_cage || !Id_race) {
       setErrorMessage("Todos los campos son obligatorios.")
       setShowErrorAlert(true)
       return
@@ -281,7 +282,7 @@ const RegisterRabbit = ({ onCloseForm, refreshData }) => {
         fecha_registro: formattedDate,
         peso_inicial: Number.parseInt(peso_inicial, 10),
         sexo_rabbit: sexo_rabbit,
-        estado: estado,
+        estado: estado, // ✅ Siempre será "Activo"
         // Always set peso_actual equal to peso_inicial for new rabbits
         peso_actual: Number.parseInt(peso_inicial, 10),
         Id_cage: Number.parseInt(Id_cage, 10),
@@ -310,7 +311,7 @@ const RegisterRabbit = ({ onCloseForm, refreshData }) => {
         setFechaRegistro("")
         setPesoInicial("")
         setSexoRabbit("")
-        setEstado("Activo")
+        // ✅ No necesitamos resetear estado ya que siempre es "Activo"
         setPesoActual("")
         setIdCage("")
         setIdRace("")
@@ -465,18 +466,14 @@ const RegisterRabbit = ({ onCloseForm, refreshData }) => {
             </select>
           </div>
 
+          {/* ✅ Campo de estado - Solo visual, siempre Activo */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">Estado del conejo:</label>
-            <select
-              value={estado}
-              onChange={(e) => setEstado(e.target.value)}
-              className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10"
-              required
-            >
-              <option value="">Seleccione un estado</option>
-              <option value="Activo">Activo</option>
-              <option value="Inactivo">Inactivo</option>
-            </select>
+            <div className="w-full border border-gray-300 rounded-lg p-2 h-10 bg-gray-50 flex items-center text-gray-700">
+              <span className="text-green-600 font-medium">● Activo</span>
+              <span className="ml-2 text-xs text-gray-500">(automático)</span>
+            </div>
+            <small className="text-gray-500 text-xs">Los conejos nuevos siempre se registran como activos</small>
           </div>
 
           <div>

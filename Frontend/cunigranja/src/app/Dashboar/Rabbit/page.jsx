@@ -105,11 +105,86 @@ export function RabbitPage() {
     handleCloseEditModal()
   }
 
-  // Función para activar/desactivar conejos
+  //  Función optimizada para verificar registros de mortalidad
+  const checkMortalityRecord = async (rabbitId) => {
+    try {
+      console.log(" Verificando registros de mortalidad para rabbit ID:", rabbitId)
+
+      // Usar el nuevo endpoint específico
+      const response = await axiosInstance.get(`/Api/Mortality/GetMortalityByRabbit?rabbitId=${rabbitId}`)
+
+      if (response.status === 200) {
+        console.log(" Respuesta del servidor:", response.data)
+        const mortalityRecords = response.data || []
+
+        console.log(` Registros encontrados: ${mortalityRecords.length}`)
+
+        if (mortalityRecords.length > 0) {
+          console.log(" Registros de mortalidad:", mortalityRecords)
+          return true
+        }
+
+        return false
+      }
+
+      return false
+    } catch (error) {
+      console.error(" Error al verificar registros de mortalidad:", error)
+
+      // Si el endpoint específico falla, intentar con el endpoint general
+      try {
+        console.log(" Intentando con endpoint general...")
+        const response = await axiosInstance.get("/Api/Mortality/AllMortality")
+
+        if (response.status === 200 && response.data) {
+          const mortalityRecords = response.data.filter(
+            (record) => record.Id_rabbit == rabbitId || record.id_rabbit == rabbitId,
+          )
+
+          console.log(` Registros encontrados (método alternativo): ${mortalityRecords.length}`)
+          return mortalityRecords.length > 0
+        }
+      } catch (fallbackError) {
+        console.error(" Error en método alternativo:", fallbackError)
+      }
+
+      return false
+    }
+  }
+
+  // Función para activar/desactivar conejos con verificación de mortalidad
   const handleToggleRabbitStatus = async (rabbit) => {
     try {
-      const newStatus = rabbit.estado === "Activo" ? "Inactivo" : "Activo"
+      console.log(" Procesando cambio de estado para conejo:", rabbit)
 
+      const currentStatus = rabbit.estado
+      const newStatus = currentStatus === "Activo" ? "Inactivo" : "Activo"
+
+      console.log(` Cambio de estado: ${currentStatus} → ${newStatus}`)
+
+      //  Si se está intentando activar el conejo, verificar registros de mortalidad
+      if (newStatus === "Activo") {
+        console.log(" Intentando activar conejo - Verificando mortalidad...")
+
+        const rabbitId = rabbit.Id_rabbit || rabbit.Id
+        console.log("ID del conejo a verificar:", rabbitId)
+
+        const hasMortalityRecords = await checkMortalityRecord(rabbitId)
+        console.log(" Resultado verificación mortalidad:", hasMortalityRecords)
+
+        if (hasMortalityRecords) {
+          console.log(" BLOQUEANDO ACTIVACIÓN - Se encontraron registros de mortalidad")
+          setAlertMessage(
+            ` No es posible activar el conejo "${rabbit.name_rabbit || rabbit.name}" porque tiene registros de mortalidad. Por favor, revise y gestione los registros en el módulo de mortalidad antes de activarlo.`,
+          )
+          setShowErrorAlert(true)
+          return //  Salir sin activar el conejo
+        }
+
+        console.log(" No se encontraron registros de mortalidad - Procediendo con la activación")
+      }
+
+      // Proceso normal para cambio de estado
       const payload = {
         Id_rabbit: rabbit.Id_rabbit || rabbit.Id,
         name_rabbit: rabbit.name_rabbit || rabbit.name,
@@ -122,18 +197,19 @@ export function RabbitPage() {
         Id_race: rabbit.Id_race,
       }
 
-      console.log("Actualizando estado del conejo:", payload)
+      console.log(" Enviando payload de actualización:", payload)
 
       const response = await axiosInstance.post("/Api/Rabbit/UpdateRabbit", payload)
 
       if (response.status === 200) {
-        setAlertMessage(`Conejo ${newStatus.toLowerCase()} correctamente`)
+        console.log(" Estado actualizado correctamente")
+        setAlertMessage(` Conejo ${newStatus.toLowerCase()} correctamente`)
         setShowSuccessAlert(true)
         fetchRabbit() // Recargar datos
       }
     } catch (error) {
-      console.error("Error al cambiar estado del conejo:", error)
-      setAlertMessage("Error al cambiar el estado del conejo")
+      console.error(" Error al cambiar estado del conejo:", error)
+      setAlertMessage(" Error al cambiar el estado del conejo")
       setShowErrorAlert(true)
     }
   }
@@ -179,7 +255,7 @@ export function RabbitPage() {
       <Dialog open={isEditModalOpen} onOpenChange={handleCloseEditModal}>
         <DialogContent className={MODAL_STYLE_CLASSES}>
           <DialogHeader>
-            <DialogTitle>Actualizar Conejo</DialogTitle>
+            <DialogTitle>Ver Información del Conejo</DialogTitle>
           </DialogHeader>
           <div className="">
             {selectedRabbit && (

@@ -1,22 +1,34 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\",
+  "WorkspaceRootPath": "C:\\Users\\nesto\\OneDrive\\Desktop\\Cunigranja-Nv\\Backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\usser\\documents\\main\\cunigranja\\backend\\cunigranja\\dtos\\weighing.dto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\dtos\\weighing.dto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\nesto\\onedrive\\desktop\\cunigranja-nv\\backend\\cunigranja\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\usser\\documents\\main\\cunigranja\\backend\\cunigranja\\services\\weighing.services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\services\\weighing.services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\nesto\\onedrive\\desktop\\cunigranja-nv\\backend\\cunigranja\\functions\\general.functions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\functions\\general.functions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\usser\\documents\\main\\cunigranja\\backend\\cunigranja\\controllers\\weighing.controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\controllers\\weighing.controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\nesto\\onedrive\\desktop\\cunigranja-nv\\backend\\cunigranja\\controllers\\mortality.controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\controllers\\mortality.controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\usser\\documents\\main\\cunigranja\\backend\\cunigranja\\models\\weighing.model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\models\\weighing.model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\nesto\\onedrive\\desktop\\cunigranja-nv\\backend\\cunigranja\\services\\mortality.services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\services\\mortality.services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\nesto\\onedrive\\desktop\\cunigranja-nv\\backend\\cunigranja\\dtos\\mortality.dto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\dtos\\mortality.dto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\nesto\\onedrive\\desktop\\cunigranja-nv\\backend\\cunigranja\\controllers\\mountscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\controllers\\mountscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|c:\\users\\nesto\\onedrive\\desktop\\cunigranja-nv\\backend\\cunigranja\\cunigranja.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{480AAB24-8223-4D24-8A0D-587A1BD56F32}|cunigranja\\cunigranja.csproj|solutionrelative:cunigranja\\cunigranja.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,57 +38,93 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Weighing.Services.cs",
-              "DocumentMoniker": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Services\\Weighing.Services.cs",
-              "RelativeDocumentMoniker": "cunigranja\\Services\\Weighing.Services.cs",
-              "ToolTip": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Services\\Weighing.Services.cs",
-              "RelativeToolTip": "cunigranja\\Services\\Weighing.Services.cs",
-              "ViewState": "AQIAABYBAAAAAAAAAAAAwEMBAAAAAAAA",
+              "Title": "General.Functions.cs",
+              "DocumentMoniker": "C:\\Users\\nesto\\OneDrive\\Desktop\\Cunigranja-Nv\\Backend\\cunigranja\\Functions\\General.Functions.cs",
+              "RelativeDocumentMoniker": "cunigranja\\Functions\\General.Functions.cs",
+              "ToolTip": "C:\\Users\\nesto\\OneDrive\\Desktop\\Cunigranja-Nv\\Backend\\cunigranja\\Functions\\General.Functions.cs",
+              "RelativeToolTip": "cunigranja\\Functions\\General.Functions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACsAAAA6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-02T16:43:41.99Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Weighing.Controller.cs",
-              "DocumentMoniker": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Controllers\\Weighing.Controller.cs",
-              "RelativeDocumentMoniker": "cunigranja\\Controllers\\Weighing.Controller.cs",
-              "ToolTip": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Controllers\\Weighing.Controller.cs",
-              "RelativeToolTip": "cunigranja\\Controllers\\Weighing.Controller.cs",
-              "ViewState": "AQIAAKAAAAAAAAAAAAAuwMQAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-01T18:37:26.541Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Weighing.DTO.cs",
-              "DocumentMoniker": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\DTOs\\Weighing.DTO.cs",
-              "RelativeDocumentMoniker": "cunigranja\\DTOs\\Weighing.DTO.cs",
-              "ToolTip": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\DTOs\\Weighing.DTO.cs",
-              "RelativeToolTip": "cunigranja\\DTOs\\Weighing.DTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-01T18:37:18.22Z",
+              "WhenOpened": "2025-06-16T12:10:01.46Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Weighing.Model.cs",
-              "DocumentMoniker": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Models\\Weighing.Model.cs",
-              "RelativeDocumentMoniker": "cunigranja\\Models\\Weighing.Model.cs",
-              "ToolTip": "C:\\Users\\usser\\Documents\\main\\cunigranja\\Backend\\cunigranja\\Models\\Weighing.Model.cs",
-              "RelativeToolTip": "cunigranja\\Models\\Weighing.Model.cs",
-              "ViewState": "AQIAAAQAAAAAAAAAAAAAACEAAAAAAAAA",
+              "Title": "Mortality.Services.cs",
+              "DocumentMoniker": "C:\\Users\\nesto\\OneDrive\\Desktop\\Cunigranja-Nv\\Backend\\cunigranja\\Services\\Mortality.Services.cs",
+              "RelativeDocumentMoniker": "cunigranja\\Services\\Mortality.Services.cs",
+              "ToolTip": "C:\\Users\\nesto\\OneDrive\\Desktop\\Cunigranja-Nv\\Backend\\cunigranja\\Services\\Mortality.Services.cs",
+              "RelativeToolTip": "cunigranja\\Services\\Mortality.Services.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-01T18:37:07.446Z"
+              "WhenOpened": "2025-06-16T03:07:11.15Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Mortality.DTO.cs",
+              "DocumentMoniker": "C:\\Users\\nesto\\OneDrive\\Desktop\\Cunigranja-Nv\\Backend\\cunigranja\\DTOs\\Mortality.DTO.cs",
+              "RelativeDocumentMoniker": "cunigranja\\DTOs\\Mortality.DTO.cs",
+              "ToolTip": "C:\\Users\\nesto\\OneDrive\\Desktop\\Cunigranja-Nv\\Backend\\cunigranja\\DTOs\\Mortality.DTO.cs",
+              "RelativeToolTip": "cunigranja\\DTOs\\Mortality.DTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAtAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-16T03:04:13.664Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MountsController.cs",
+              "DocumentMoniker": "C:\\Users\\nesto\\OneDrive\\Desktop\\Cunigranja-Nv\\Backend\\cunigranja\\Controllers\\MountsController.cs",
+              "RelativeDocumentMoniker": "cunigranja\\Controllers\\MountsController.cs",
+              "ToolTip": "C:\\Users\\nesto\\OneDrive\\Desktop\\Cunigranja-Nv\\Backend\\cunigranja\\Controllers\\MountsController.cs",
+              "RelativeToolTip": "cunigranja\\Controllers\\MountsController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-16T03:01:52.882Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "cunigranja.http",
+              "DocumentMoniker": "C:\\Users\\nesto\\OneDrive\\Desktop\\Cunigranja-Nv\\Backend\\cunigranja\\cunigranja.http",
+              "RelativeDocumentMoniker": "cunigranja\\cunigranja.http",
+              "ToolTip": "C:\\Users\\nesto\\OneDrive\\Desktop\\Cunigranja-Nv\\Backend\\cunigranja\\cunigranja.http",
+              "RelativeToolTip": "cunigranja\\cunigranja.http",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAACAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2025-06-12T12:31:27.712Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\nesto\\OneDrive\\Desktop\\Cunigranja-Nv\\Backend\\cunigranja\\appsettings.json",
+              "RelativeDocumentMoniker": "cunigranja\\appsettings.json",
+              "ToolTip": "C:\\Users\\nesto\\OneDrive\\Desktop\\Cunigranja-Nv\\Backend\\cunigranja\\appsettings.json*",
+              "RelativeToolTip": "cunigranja\\appsettings.json*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAABhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-12T12:31:25.436Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Mortality.Controller.cs",
+              "DocumentMoniker": "C:\\Users\\nesto\\OneDrive\\Desktop\\Cunigranja-Nv\\Backend\\cunigranja\\Controllers\\Mortality.Controller.cs",
+              "RelativeDocumentMoniker": "cunigranja\\Controllers\\Mortality.Controller.cs",
+              "ToolTip": "C:\\Users\\nesto\\OneDrive\\Desktop\\Cunigranja-Nv\\Backend\\cunigranja\\Controllers\\Mortality.Controller.cs",
+              "RelativeToolTip": "cunigranja\\Controllers\\Mortality.Controller.cs",
+              "ViewState": "AQIAALwAAAAAAAAAAAAcwMMAAAAjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-12T12:25:31.485Z"
             }
           ]
         }

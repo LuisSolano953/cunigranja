@@ -19,6 +19,32 @@ const UpdateMortality = ({ mortalityData, onClose, onUpdate }) => {
   const [showErrorAlert, setShowErrorAlert] = useState(false)
   const [originalRabbitId, setOriginalRabbitId] = useState("")
 
+  // Función para validar que no contenga números
+  const containsNumbers = (text) => {
+    return /\d/.test(text)
+  }
+
+  // Manejar cambios en el input de causa y validar números
+  const handleCausaChange = (e) => {
+    const inputValue = e.target.value
+
+    // Verificar si contiene números
+    if (containsNumbers(inputValue)) {
+      setAlertMessage("La causa de muerte no puede contener números")
+      setShowErrorAlert(true)
+      return // No actualizar el estado si contiene números
+    }
+
+    // Si no contiene números, actualizar
+    setCausaMortality(inputValue)
+
+    // Limpiar cualquier error previo
+    if (alertMessage && showErrorAlert) {
+      setAlertMessage("")
+      setShowErrorAlert(false)
+    }
+  }
+
   // Cargar datos iniciales del formulario
   useEffect(() => {
     if (mortalityData) {
@@ -39,7 +65,14 @@ const UpdateMortality = ({ mortalityData, onClose, onUpdate }) => {
         const formattedDate = data.fecha_mortality ? new Date(data.fecha_mortality).toISOString().split("T")[0] : ""
 
         setFechaMortality(formattedDate)
-        setCausaMortality(data.causa_mortality || "")
+
+        // Verificar si la causa contiene números
+        const causa = data.causa_mortality || ""
+        if (containsNumbers(causa)) {
+          console.warn("La causa de muerte contiene números:", causa)
+        }
+        setCausaMortality(causa)
+
         setIdRabbit(data.Id_rabbit?.toString() || "")
         setIdUser(data.Id_user?.toString() || "")
         setOriginalRabbitId(data.Id_rabbit?.toString() || "")
@@ -84,6 +117,13 @@ const UpdateMortality = ({ mortalityData, onClose, onUpdate }) => {
   async function handleSubmit(event) {
     event.preventDefault()
     if (isSubmitting) return
+
+    // Validación final antes de enviar
+    if (containsNumbers(causa_mortality)) {
+      setAlertMessage("La causa de muerte no puede contener números")
+      setShowErrorAlert(true)
+      return
+    }
 
     if (!fecha_mortality || !causa_mortality || !id_rabbit || !id_user) {
       setAlertMessage("Todos los campos son obligatorios")
@@ -175,6 +215,7 @@ const UpdateMortality = ({ mortalityData, onClose, onUpdate }) => {
 
   const handleCloseErrorAlert = () => {
     setShowErrorAlert(false)
+    setAlertMessage("")
   }
 
   // Función para determinar si un conejo está disponible
@@ -195,7 +236,7 @@ const UpdateMortality = ({ mortalityData, onClose, onUpdate }) => {
         onSubmit={handleSubmit}
         className="p-8 bg-white shadow-lg rounded-lg max-w-2xl mx-auto border border-gray-400"
       >
-        <h2 className="text-xl font-bold text-center mb-6">Actualizar Mortalidad</h2>
+        
 
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div>
@@ -254,11 +295,16 @@ const UpdateMortality = ({ mortalityData, onClose, onUpdate }) => {
             <input
               type="text"
               value={causa_mortality}
-              onChange={(e) => setCausaMortality(e.target.value)}
+              onChange={handleCausaChange}
               required
               placeholder="Ej: Enfermedad, Accidente, etc."
-              className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10 hover:border-gray-500 transition-colors"
+              className={`w-full border rounded-lg p-2 focus:ring-2 h-10 hover:border-gray-500 transition-colors ${
+                containsNumbers(causa_mortality)
+                  ? "border-red-500 focus:ring-red-500"
+                  : "border-gray-400 focus:ring-gray-600"
+              }`}
             />
+            <p className="text-xs text-red-500 mt-1">⚠️ No se permiten números en la causa de muerte</p>
           </div>
 
           <div>
@@ -301,7 +347,7 @@ const UpdateMortality = ({ mortalityData, onClose, onUpdate }) => {
         <button
           type="submit"
           className="w-full p-3 mt-4 bg-black text-white rounded hover:bg-gray-700 disabled:bg-gray-400 transition-colors"
-          disabled={isSubmitting}
+          disabled={isSubmitting || containsNumbers(causa_mortality)}
         >
           {isSubmitting ? "Actualizando..." : "Actualizar Mortalidad"}
         </button>

@@ -12,7 +12,6 @@ namespace cunigranja.Models
         public int Id_health { get; set; } = 0;
 
         [Required(ErrorMessage = "El campo Nombre de {0} es obligatorio.")]
-        [StringLength(250, ErrorMessage = "El Nombre de Salud no puede tener más de 45 caracteres.")]
         [Display(Name = "Nombre de Salud")]
         public string name_health { get; set; }
 
@@ -26,8 +25,7 @@ namespace cunigranja.Models
         public string descripcion_health { get; set; }
 
 
-        [Range(1, int.MaxValue, ErrorMessage = "valor de la sanidad mator que 0.")]
-        [Display(Name = "Valor de la sanidad")]
+        
         public int valor_health { get; set; }
 
         public int Id_user { get; set; }

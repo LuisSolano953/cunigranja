@@ -397,7 +397,7 @@ const RegisterFeeding = ({ refreshData, onCloseForm }) => {
         onSubmit={handlerSubmit}
         className="p-8 bg-white shadow-lg rounded-lg max-w-md mx-auto mt-10 border border-gray-400"
       >
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Registrar Alimentación</h2>
+ 
 
         <div className="grid grid-cols-1 gap-4 mb-6">
           <div>
@@ -522,12 +522,14 @@ const RegisterFeeding = ({ refreshData, onCloseForm }) => {
 
         <div className="flex justify-center mt-6">
           <button
-            type="submit"
-            disabled={isSubmitting || !existencia_actual_g}
-            className={`text-white font-semibold py-3 px-6 rounded-lg transition-colors w-full ${
-              isSubmitting || !existencia_actual_g ? "bg-gray-400" : "bg-black hover:bg-gray-600"
-            }`}
-          >
+             type="submit"
+          disabled={isSubmitting || isValidating}
+          className={`w-full font-semibold py-3 rounded-lg transition-colors ${
+            isSubmitting || isValidating
+              ? "bg-gray-400 text-gray-600 cursor-not-allowed"
+              : "bg-black text-white hover:bg-gray-600"
+          }`}
+        >
             {isSubmitting
               ? retryCount > 0
                 ? `Reintentando (${retryCount}/${MAX_RETRIES})...`

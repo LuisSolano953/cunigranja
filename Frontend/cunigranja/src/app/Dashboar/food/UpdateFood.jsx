@@ -8,7 +8,6 @@ const UpdateFood = ({ foodData, onClose, onUpdate }) => {
   const [name_food, setNameFood] = useState("")
   const [estado_food, setEstadoFood] = useState("Existente")
   const [valor_food, setValorFood] = useState("")
-  const [unidad_food, setUnidadFood] = useState("g") // Default to g
   const [saldo_existente, setSaldoExistente] = useState("")
   const [originalSaldo, setOriginalSaldo] = useState("") // To compare changes
   const [errorMessage, setErrorMessage] = useState("")
@@ -19,16 +18,123 @@ const UpdateFood = ({ foodData, onClose, onUpdate }) => {
   const [affectedRecords, setAffectedRecords] = useState([])
   const [showAffectedWarning, setShowAffectedWarning] = useState(false)
 
+  // NUEVO: Estado para controlar si el alimento está inactivo
+  const [isFoodInactive, setIsFoodInactive] = useState(false)
+  const [originalEstado, setOriginalEstado] = useState("") // Para comparar el estado original
+
+  // Función para validar que solo contenga letras y espacios
+  const containsNumbers = (text) => {
+    return /\d/.test(text)
+  }
+
+  // Función para validar que solo contenga números
+  const containsLetters = (text) => {
+    return /[a-zA-Z]/.test(text)
+  }
+
+  // Manejar cambios en el nombre del alimento (solo letras)
+  const handleNameChange = (e) => {
+    const inputValue = e.target.value
+
+    // Verificar si contiene números
+    if (containsNumbers(inputValue)) {
+      setErrorMessage("El nombre del alimento no puede contener números")
+      setShowErrorAlert(true)
+      return // No actualizar el estado si contiene números
+    }
+
+    // Si no contiene números, actualizar
+    setNameFood(inputValue)
+
+    // Limpiar cualquier error previo
+    if (errorMessage && showErrorAlert) {
+      setErrorMessage("")
+      setShowErrorAlert(false)
+    }
+  }
+
+  // Manejar cambios en el valor (solo números)
+  const handleValorChange = (e) => {
+    const inputValue = e.target.value
+
+    // Verificar si contiene letras
+    if (containsLetters(inputValue)) {
+      setErrorMessage("El valor solo puede contener números")
+      setShowErrorAlert(true)
+      return // No actualizar el estado si contiene letras
+    }
+
+    // Si no contiene letras, actualizar
+    setValorFood(inputValue)
+
+    // Limpiar cualquier error previo
+    if (errorMessage && showErrorAlert) {
+      setErrorMessage("")
+      setShowErrorAlert(false)
+    }
+  }
+
+  // Manejar cambios en el saldo existente (solo números)
+  const handleSaldoChange = (e) => {
+    const inputValue = e.target.value
+
+    // Verificar si contiene letras
+    if (containsLetters(inputValue)) {
+      setErrorMessage("El saldo existente solo puede contener números")
+      setShowErrorAlert(true)
+      return // No actualizar el estado si contiene letras
+    }
+
+    // Si no contiene letras, actualizar
+    setSaldoExistente(inputValue)
+    const numericValue = Number(inputValue)
+
+    // MODIFICADO: Solo actualizar estado automáticamente si el alimento NO estaba originalmente inactivo
+    // Si estaba inactivo originalmente, mantener ese estado hasta que se actualice manualmente
+    if (originalEstado !== "Inactivo") {
+      // Update status automatically based on balance
+      if (numericValue <= 0) {
+        setEstadoFood("Inactivo")
+      } else if (numericValue <= 5000) {
+        // 5kg = 5000g
+        setEstadoFood("Casi por acabar")
+      } else {
+        setEstadoFood("Existente")
+      }
+    }
+
+    // Limpiar cualquier error previo
+    if (errorMessage && showErrorAlert) {
+      setErrorMessage("")
+      setShowErrorAlert(false)
+    }
+  }
+
   // Initialize form with food data when component mounts
   useEffect(() => {
     if (foodData) {
       console.log("Datos recibidos para editar:", foodData)
-      setNameFood(foodData.name_food || "")
+
+      // Verificar si los datos existentes contienen caracteres inválidos
+      const existingName = foodData.name_food || ""
+      if (containsNumbers(existingName)) {
+        console.warn("El nombre del alimento contiene números:", existingName)
+      }
+
+      const currentEstado = foodData.estado_food || "Existente"
+
+      setNameFood(existingName)
       setSaldoExistente(foodData.saldo_existente || "")
       setOriginalSaldo(foodData.saldo_existente || "") // Save original balance
-      setEstadoFood(foodData.estado_food || "Existente")
+      setEstadoFood(currentEstado)
+      setOriginalEstado(currentEstado) // NUEVO: Guardar estado original
       setValorFood(foodData.valor_food || "")
-      setUnidadFood(foodData.unidad_food || "g") // Initialize unit to g
+
+      // NUEVO: Verificar si el alimento está inactivo
+      const isInactive = currentEstado === "Inactivo" || currentEstado === "inactivo" || currentEstado === "INACTIVO"
+      setIsFoodInactive(isInactive)
+
+      console.log("Estado del alimento:", currentEstado, "¿Está inactivo?", isInactive)
     }
   }, [foodData])
 
@@ -74,22 +180,6 @@ const UpdateFood = ({ foodData, onClose, onUpdate }) => {
     }
   }, [saldo_existente, originalSaldo, foodData])
 
-  // Function to handle balance changes and update status automatically
-  const handleSaldoChange = (value) => {
-    const numericValue = Number(value)
-    setSaldoExistente(value)
-
-    // Update status automatically based on balance
-    if (numericValue <= 0) {
-      setEstadoFood("Inactivo")
-    } else if (numericValue <= 5000) {
-      // 5kg = 5000g
-      setEstadoFood("Casi por acabar")
-    } else {
-      setEstadoFood("Existente")
-    }
-  }
-
   // Función para recalcular los saldos en registros relacionados
   const recalculateAffectedRecords = async () => {
     try {
@@ -129,6 +219,35 @@ const UpdateFood = ({ foodData, onClose, onUpdate }) => {
 
   async function handlerSubmit(e) {
     e.preventDefault()
+
+    // NUEVA VALIDACIÓN: No permitir actualización si el alimento está inactivo
+    if (isFoodInactive) {
+      setErrorMessage(
+        "No se puede actualizar un alimento cuando está inactivo. El alimento debe estar activo para realizar modificaciones.",
+      )
+      setShowErrorAlert(true)
+      return
+    }
+
+    // Validaciones finales antes de enviar
+    if (containsNumbers(name_food)) {
+      setErrorMessage("El nombre del alimento no puede contener números")
+      setShowErrorAlert(true)
+      return
+    }
+
+    if (containsLetters(valor_food)) {
+      setErrorMessage("El valor solo puede contener números")
+      setShowErrorAlert(true)
+      return
+    }
+
+    if (containsLetters(saldo_existente)) {
+      setErrorMessage("El saldo existente solo puede contener números")
+      setShowErrorAlert(true)
+      return
+    }
+
     setIsLoading(true)
     setErrorMessage("")
     setSuccessMessage("")
@@ -139,13 +258,13 @@ const UpdateFood = ({ foodData, onClose, onUpdate }) => {
       const saldoRedondeado = Math.round(Number(saldo_existente) * 100) / 100
       console.log("Intentando actualizar alimento con ID:", numericId)
 
-      // Preparar los datos para enviar
+      // Preparar los datos para enviar (sin unidad ya que no es editable)
       const foodDataToUpdate = {
         Id_food: numericId,
-        name_food,
+        name_food: name_food.trim(),
         estado_food,
         valor_food: Number(valor_food),
-        unidad_food,
+        unidad_food: "g", // Siempre gramos, no editable
         saldo_existente: saldoRedondeado,
       }
 
@@ -205,6 +324,14 @@ const UpdateFood = ({ foodData, onClose, onUpdate }) => {
     setErrorMessage("")
   }
 
+  // Verificar si hay errores de validación
+  const hasValidationErrors =
+    containsNumbers(name_food) || containsLetters(valor_food) || containsLetters(saldo_existente)
+
+  // Determinar si el botón debe estar deshabilitado
+  const isSubmitDisabled =
+    isLoading || hasValidationErrors || !name_food.trim() || !valor_food || !saldo_existente || isFoodInactive // NUEVO: Deshabilitar si el alimento está inactivo
+
   return (
     <>
       {/* Alerta de éxito */}
@@ -220,8 +347,26 @@ const UpdateFood = ({ foodData, onClose, onUpdate }) => {
       >
         <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Actualizar Alimento</h2>
 
+        {/* NUEVA: Alerta de alimento inactivo */}
+        {isFoodInactive && (
+          <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <span className="text-red-400 text-xl">⚠️</span>
+              </div>
+              <div className="ml-3">
+                <h3 className="text-sm font-medium text-red-800">Alimento Inactivo</h3>
+                <p className="text-sm text-red-700 mt-1">
+                  No se puede actualizar este alimento porque está inactivo. Para realizar modificaciones, el alimento
+                  debe estar activo.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Affected records alert */}
-        {showAffectedWarning && (
+        {showAffectedWarning && !isFoodInactive && (
           <div className="mb-4 p-3 bg-yellow-100 border border-yellow-400 text-yellow-800 rounded">
             <h3 className="font-bold">¡Atención!</h3>
             <p>Este alimento está siendo utilizado en {affectedRecords.length} registro(s) de alimentación.</p>
@@ -235,11 +380,19 @@ const UpdateFood = ({ foodData, onClose, onUpdate }) => {
             <input
               type="text"
               value={name_food}
-              onChange={(e) => setNameFood(e.target.value)}
-              className="w-full border border-gray-400 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-gray-600"
+              onChange={handleNameChange}
+              className={`w-full border rounded-lg p-2 focus:outline-none focus:ring-2 ${
+                containsNumbers(name_food)
+                  ? "border-red-500 focus:ring-red-500"
+                  : isFoodInactive
+                    ? "border-red-300 bg-red-50"
+                    : "border-gray-400 focus:ring-gray-600"
+              }`}
               required
               placeholder="Ingrese el nombre"
+              disabled={isFoodInactive}
             />
+            <p className="text-xs text-red-500 mt-1">⚠️ Solo se permiten letras y espacios</p>
           </div>
 
           <div>
@@ -248,61 +401,74 @@ const UpdateFood = ({ foodData, onClose, onUpdate }) => {
               type="text"
               value={estado_food}
               readOnly
-              className="w-full border border-gray-400 rounded-lg p-2 bg-gray-100 focus:outline-none"
+              className={`w-full border rounded-lg p-2 focus:outline-none ${
+                isFoodInactive ? "border-red-300 bg-red-50 text-red-700" : "border-gray-400 bg-gray-100"
+              }`}
             />
-            <small className="text-gray-500">Se actualiza automáticamente según el saldo</small>
+            <small className={`${isFoodInactive ? "text-red-600" : "text-gray-500"}`}>
+              {isFoodInactive ? "❌ Estado: INACTIVO" : "Se actualiza automáticamente según el saldo"}
+            </small>
           </div>
 
           <div>
             <label className="block text-gray-800 font-medium mb-2">Valor:</label>
             <input
-              type="number"
+              type="text"
               value={valor_food}
-              onChange={(e) => setValorFood(e.target.value)}
-              className="w-full border border-gray-400 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-gray-600"
+              onChange={handleValorChange}
+              className={`w-full border rounded-lg p-2 focus:outline-none focus:ring-2 ${
+                containsLetters(valor_food)
+                  ? "border-red-500 focus:ring-red-500"
+                  : isFoodInactive
+                    ? "border-red-300 bg-red-50"
+                    : "border-gray-400 focus:ring-gray-600"
+              }`}
               required
               placeholder="Ingrese el valor"
-              min="1"
+              disabled={isFoodInactive}
             />
+            <p className="text-xs text-red-500 mt-1">⚠️ Solo se permiten números</p>
           </div>
 
           <div>
-            <label className="block text-gray-800 font-medium mb-2">Unidad:</label>
-            <select
-              value={unidad_food}
-              onChange={(e) => setUnidadFood(e.target.value)}
-              className="w-full border border-gray-400 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-gray-600"
-              required
-            >
-              <option value="g">Gramos (g)</option>
-            </select>
-          </div>
-
-          <div className="sm:col-span-2">
             <label className="block text-gray-800 font-medium mb-2">Saldo existente (gramos):</label>
             <input
-              type="number"
+              type="text"
               value={saldo_existente}
-              onChange={(e) => handleSaldoChange(e.target.value)}
-              className="w-full border border-gray-400 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-gray-600"
+              onChange={handleSaldoChange}
+              className={`w-full border rounded-lg p-2 focus:outline-none focus:ring-2 ${
+                containsLetters(saldo_existente)
+                  ? "border-red-500 focus:ring-red-500"
+                  : isFoodInactive
+                    ? "border-red-300 bg-red-50"
+                    : "border-gray-400 focus:ring-gray-600"
+              }`}
               required
               placeholder="Ingrese el saldo en gramos"
-              min="0"
-              step="1" // Permitir solo números enteros para gramos
+              disabled={isFoodInactive}
             />
-            <small className="text-gray-500">Ingrese el saldo en gramos. Saldo original: {originalSaldo} g</small>
+            <p className="text-xs text-red-500 mt-1">⚠️ Solo se permiten números</p>
+            <small className="text-gray-500">Saldo original: {originalSaldo} g</small>
           </div>
         </div>
 
         <div className="flex justify-center mt-4">
           <button
             type="submit"
-            disabled={isLoading}
-            className={`${
-              isLoading ? "bg-gray-400" : "bg-black hover:bg-gray-600"
-            } text-white font-semibold py-3 px-6 rounded-lg transition-colors`}
+            disabled={isSubmitDisabled}
+            className={`font-semibold py-3 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
+              isFoodInactive
+                ? "bg-red-500 text-white hover:bg-red-600"
+                : isLoading || hasValidationErrors
+                  ? "bg-gray-400 text-white"
+                  : "bg-black text-white hover:bg-gray-600"
+            }`}
           >
-            {isLoading ? "Procesando..." : "Actualizar Alimento"}
+            {isLoading
+              ? "Procesando..."
+              : isFoodInactive
+                ? "No se puede actualizar (Alimento inactivo)"
+                : "Actualizar Alimento"}
           </button>
         </div>
       </form>

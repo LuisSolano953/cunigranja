@@ -28,6 +28,9 @@ const UpdateRabbit = ({ rabbitData, onClose, onUpdate }) => {
   const [showWeightWarning, setShowWeightWarning] = useState(false)
   const [recalculatingWeight, setRecalculatingWeight] = useState(false)
 
+  // ✅ Verificar si el conejo está inactivo para deshabilitar la edición
+  const isRabbitInactive = estado === "Inactivo"
+
   // Inicializar formulario con datos del conejo cuando el componente se monta
   useEffect(() => {
     if (rabbitData) {
@@ -353,23 +356,8 @@ const UpdateRabbit = ({ rabbitData, onClose, onUpdate }) => {
       <AlertModal type="success" message={successMessage} isOpen={showSuccessAlert} onClose={handleCloseSuccessAlert} />
       <AlertModal type="error" message={errorMessage} isOpen={showErrorAlert} onClose={handleCloseErrorAlert} />
 
-      <form
-        onSubmit={handleSubmit}
-        className="p-8 bg-white shadow-lg rounded-lg max-w-md mx-auto mt-10 border border-gray-400 relative"
-      >
-        <h2 className="text-xl font-bold text-center mb-6">Actualizar Conejo</h2>
-
-        {showWeightWarning && (
-          <div className="mb-4 p-3 bg-yellow-100 border border-yellow-400 rounded text-sm text-yellow-800">
-            <p className="font-semibold">⚠️ Advertencia:</p>
-            <p>
-              Cambiar el peso inicial recalculará el peso actual del conejo.
-              <br />
-              <span className="font-medium">✅ Regla:</span> Las ganancias negativas se IGNORAN y NO se suman al peso
-              acumulado.
-            </p>
-          </div>
-        )}
+      <form className="p-8 bg-white shadow-lg rounded-lg max-w-md mx-auto mt-10 border border-gray-400 relative">
+        <h2 className="text-xl font-bold text-center mb-6">Ver Información del Conejo</h2>
 
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div>
@@ -377,9 +365,8 @@ const UpdateRabbit = ({ rabbitData, onClose, onUpdate }) => {
             <input
               type="text"
               value={name_rabbit}
-              onChange={(e) => setNameRabbit(e.target.value)}
-              className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10"
-              required
+              className="w-full border border-gray-300 rounded-lg p-2 h-10 bg-gray-50 text-gray-700"
+              readOnly
             />
           </div>
           <div>
@@ -387,105 +374,68 @@ const UpdateRabbit = ({ rabbitData, onClose, onUpdate }) => {
             <input
               type="date"
               value={formatDateForInput(fecha_registro)}
-              onChange={(e) => setFechaRegistro(e.target.value)}
-              className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10"
-              required
+              className="w-full border border-gray-300 rounded-lg p-2 h-10 bg-gray-50 text-gray-700"
+              readOnly
             />
           </div>
           <div>
             <label className="block text-gray-700 font-medium mb-2">Peso inicial:</label>
             <input
               type="text"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              value={peso_inicial}
-              onChange={(e) => handleNumericInput(e, setPesoInicial)}
-              className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10"
-              required
+              value={peso_inicial + " g"}
+              className="w-full border border-gray-300 rounded-lg p-2 h-10 bg-gray-50 text-gray-700"
+              readOnly
             />
           </div>
           <div>
             <label className="block text-gray-700 font-medium mb-2">Peso actual:</label>
             <input
               type="text"
-              value={peso_actual}
-              className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10 bg-gray-100"
+              value={peso_actual + " g"}
+              className="w-full border border-gray-300 rounded-lg p-2 h-10 bg-gray-50 text-gray-700"
               readOnly
             />
-            <p className="text-xs text-gray-500 mt-1">Se recalculará automáticamente (sin ganancias negativas)</p>
           </div>
 
           <div>
             <label className="block text-gray-700 font-medium mb-2">Sexo:</label>
-            <select
+            <input
+              type="text"
               value={sexo_rabbit}
-              onChange={(e) => setSexoRabbit(e.target.value)}
-              className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10"
-              required
-            >
-              <option value="">Seleccione</option>
-              <option value="Macho">Macho</option>
-              <option value="Hembra">Hembra</option>
-            </select>
+              className="w-full border border-gray-300 rounded-lg p-2 h-10 bg-gray-50 text-gray-700"
+              readOnly
+            />
           </div>
 
+          {/* ✅ Campo de estado - Solo visual, no manipulable */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">Estado del conejo:</label>
-            <select
-              value={estado}
-              onChange={(e) => setEstado(e.target.value)}
-              className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10"
-              required
-            >
-              <option value="">Seleccione un estado</option>
-              <option value="Activo">Activo</option>
-              <option value="Inactivo">Inactivo</option>
-            </select>
+            <div className="w-full border border-gray-300 rounded-lg p-2 h-10 bg-gray-50 flex items-center">
+              <span className={`font-medium ${estado === "Activo" ? "text-green-600" : "text-red-600"}`}>
+                ● {estado}
+              </span>
+              <span className="ml-2 text-xs text-gray-500">(no modificable)</span>
+            </div>
+            <small className="text-gray-500 text-xs">El estado del conejo no se puede modificar</small>
           </div>
 
           <div>
             <label className="block text-gray-700 font-medium mb-2">Jaula:</label>
-            <select
-              value={Id_cage}
-              onChange={(e) => setIdCage(e.target.value)}
-              className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10"
-              required
-            >
-              <option value="">Seleccione</option>
-              {cage.map((item) => {
-                const status = checkCageCapacity(item.Id_cage)
-                const isFull = !status.hasCapacity && item.Id_cage != rabbitData?.Id_cage
-                return (
-                  <option key={item.Id_cage} value={item.Id_cage} disabled={isFull}>
-                    {item.estado_cage} - {status.current}/{status.total} {isFull ? "(Llena)" : ""}
-                  </option>
-                )
-              })}
-            </select>
-            {Id_cage && (
-              <p className="text-xs text-gray-600 mt-1">
-                {(() => {
-                  const status = checkCageCapacity(Id_cage)
-                  return `Capacidad: ${status.current}/${status.total} conejos (${status.remaining} disponibles)`
-                })()}
-              </p>
-            )}
+            <input
+              type="text"
+              value={cage.find((c) => c.Id_cage == Id_cage)?.estado_cage || Id_cage}
+              className="w-full border border-gray-300 rounded-lg p-2 h-10 bg-gray-50 text-gray-700"
+              readOnly
+            />
           </div>
           <div>
             <label className="block text-gray-700 font-medium mb-2">Raza:</label>
-            <select
-              value={Id_race}
-              onChange={(e) => setIdRace(e.target.value)}
-              className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10"
-              required
-            >
-              <option value="">Seleccione</option>
-              {race.map((item) => (
-                <option key={item.Id_race} value={item.Id_race}>
-                  {item.nombre_race}
-                </option>
-              ))}
-            </select>
+            <input
+              type="text"
+              value={race.find((r) => r.Id_race == Id_race)?.nombre_race || ""}
+              className="w-full border border-gray-300 rounded-lg p-2 h-10 bg-gray-50 text-gray-700"
+              readOnly
+            />
           </div>
         </div>
 
@@ -516,11 +466,15 @@ const UpdateRabbit = ({ rabbitData, onClose, onUpdate }) => {
 
         <div className="flex justify-center mt-6">
           <button
-            type="submit"
-            disabled={isSubmitting || recalculatingWeight}
-            className="bg-black text-white font-semibold py-3 px-6 rounded-lg hover:bg-gray-600 transition-colors w-full disabled:opacity-50"
+            type="button"
+            onClick={() => {
+              if (typeof onClose === "function") {
+                onClose()
+              }
+            }}
+            className="bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-gray-700 transition-colors w-full"
           >
-            {isSubmitting || recalculatingWeight ? "Actualizando..." : "Actualizar Conejo"}
+            Cerrar
           </button>
         </div>
       </form>

@@ -19,8 +19,6 @@ namespace cunigranja.Models
 
         
 
-        [Range(1, 1000000, ErrorMessage = "el valor debe ser mayor que 0.")]
-        [Display(Name = "Valor de la entrada ")]
         public int valor_entrada { get; set; }
 
         public int Id_food { get; set; }

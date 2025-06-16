@@ -27,8 +27,37 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
   const [debug, setDebug] = useState({})
   const [idsFound, setIdsFound] = useState(false)
 
+  // NUEVO: Estado para controlar si el alimento está inactivo
+  const [isFoodInactive, setIsFoodInactive] = useState(false)
+
   // Campo calculado automáticamente - solo para mostrar al usuario
   const [existencia_actual, setExistenciaActual] = useState("")
+
+  // Función para validar que solo contenga números
+  const containsLetters = (text) => {
+    return /[a-zA-Z]/.test(text)
+  }
+
+  // Manejar cambios en la cantidad (solo números)
+  const handleCantidadChange = (e) => {
+    const inputValue = e.target.value
+
+    // Verificar si contiene letras
+    if (containsLetters(inputValue)) {
+      setErrorMessage("La cantidad solo puede contener números")
+      setShowErrorAlert(true)
+      return // No actualizar el estado si contiene letras
+    }
+
+    // Si no contiene letras, actualizar
+    setCantidadFeeding(inputValue)
+
+    // Limpiar cualquier error previo
+    if (errorMessage && showErrorAlert) {
+      setErrorMessage("")
+      setShowErrorAlert(false)
+    }
+  }
 
   // Depuración: Mostrar el contenido completo de feedingData
   useEffect(() => {
@@ -181,6 +210,13 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
           setIdFood(foundFood.Id_food.toString())
           setOriginalFoodId(foundFood.Id_food.toString())
           setSelectedFood(foundFood)
+
+          // NUEVO: Verificar si el alimento está inactivo
+          const estado =
+            foundFood.estado_food || foundFood.estado || foundFood.Estado || foundFood.status || foundFood.Status || ""
+          const isInactive = estado.toLowerCase() === "inactivo" || estado.toLowerCase() === "agotado"
+          setIsFoodInactive(isInactive)
+          console.log(`Estado del alimento: ${estado}, ¿Está inactivo/agotado?`, isInactive)
         } else {
           console.warn(`No se encontró alimento con nombre: ${feedingData.name_food}`)
         }
@@ -217,10 +253,16 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
       // Establecer los valores en el estado
       setFechaFeeding(formattedDate)
       setHoraFeeding(feedingData.hora_feeding || "")
-      setCantidadFeeding(feedingData.cantidad_feeding?.toString() || "")
+
+      // Verificar si la cantidad contiene letras
+      const cantidadStr = feedingData.cantidad_feeding?.toString() || ""
+      if (containsLetters(cantidadStr)) {
+        console.warn("La cantidad contiene letras:", cantidadStr)
+      }
+      setCantidadFeeding(cantidadStr)
 
       // Guardar valores originales para cálculos posteriores
-      setOriginalCantidad(feedingData.cantidad_feeding?.toString() || "")
+      setOriginalCantidad(cantidadStr)
 
       // Formatear existencia_actual para mostrar 2 decimales
       if (feedingData.existencia_actual !== undefined) {
@@ -266,6 +308,13 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
       if (foundFood) {
         console.log("Alimento encontrado:", foundFood)
         setSelectedFood(foundFood)
+
+        // NUEVO: Verificar si el alimento está inactivo
+        const estado =
+          foundFood.estado_food || foundFood.estado || foundFood.Estado || foundFood.status || foundFood.Status || ""
+        const isInactive = estado.toLowerCase() === "inactivo" || estado.toLowerCase() === "agotado"
+        setIsFoodInactive(isInactive)
+        console.log(`Estado del alimento: ${estado}, ¿Está inactivo/agotado?`, isInactive)
       } else {
         console.warn("No se encontró el alimento con ID:", Id_food)
       }
@@ -330,6 +379,23 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
   // Modificar la función HandleSubmit para asegurar que existencia_actual se redondee correctamente
   async function HandleSubmit(e) {
     e.preventDefault()
+
+    // NUEVA VALIDACIÓN: No permitir actualización si el alimento está inactivo
+    if (isFoodInactive) {
+      setErrorMessage(
+        "No se puede actualizar esta alimentación porque el alimento está inactivo o agotado. El alimento debe estar disponible para realizar modificaciones.",
+      )
+      setShowErrorAlert(true)
+      return
+    }
+
+    // Validación final antes de enviar
+    if (containsLetters(cantidad_feeding)) {
+      setErrorMessage("La cantidad solo puede contener números")
+      setShowErrorAlert(true)
+      return
+    }
+
     try {
       setIsSubmitting(true)
 
@@ -400,6 +466,19 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
     setErrorMessage("")
   }
 
+  // Verificar si hay errores de validación
+  const hasValidationErrors = containsLetters(cantidad_feeding)
+
+  // Determinar si el botón debe estar deshabilitado
+  const isSubmitDisabled =
+    isSubmitting ||
+    hasValidationErrors ||
+    !Id_food ||
+    !Id_rabbit ||
+    !Id_user ||
+    containsLetters(cantidad_feeding) ||
+    isFoodInactive // NUEVO: Deshabilitar si el alimento está inactivo
+
   return (
     <>
       {/* Alerta de éxito */}
@@ -413,7 +492,26 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
         onSubmit={HandleSubmit}
         className="p-8 bg-white shadow-lg rounded-lg max-w-md mx-auto mt-10 border border-gray-400 relative"
       >
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Actualizar Alimentación</h2>
+        
+
+        {/* NUEVA: Alerta de alimento inactivo */}
+        {isFoodInactive && (
+          <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <span className="text-red-400 text-xl">⚠️</span>
+              </div>
+              <div className="ml-3">
+                <h3 className="text-sm font-medium text-red-800">Alimentacion No Disponible</h3>
+                <p className="text-sm text-red-700 mt-1">
+                  No se puede actualizar esta alimentación porque el alimento "
+                  {selectedFood?.nombre_food || selectedFood?.name_food}" está inactivo o agotado. Para realizar
+                  modificaciones, el alimento debe estar disponible.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div>
@@ -424,6 +522,7 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
               onChange={(e) => setFechaFeeding(e.target.value)}
               className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10"
               required
+              disabled={isFoodInactive}
             />
           </div>
           <div>
@@ -434,6 +533,7 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
               onChange={(e) => setHoraFeeding(e.target.value)}
               className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10"
               required
+              disabled={isFoodInactive}
             />
           </div>
           <div>
@@ -441,10 +541,19 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
             <input
               type="text"
               value={cantidad_feeding}
-              onChange={(e) => setCantidadFeeding(e.target.value)}
-              className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10"
+              onChange={handleCantidadChange}
+              className={`w-full border rounded-lg p-2 focus:ring-2 h-10 ${
+                containsLetters(cantidad_feeding)
+                  ? "border-red-500 focus:ring-red-500"
+                  : isFoodInactive
+                    ? "border-red-300 bg-red-50"
+                    : "border-gray-400 focus:ring-gray-600"
+              }`}
               required
+              placeholder="Ingrese la cantidad"
+              disabled={isFoodInactive}
             />
+            <p className="text-xs text-red-500 mt-1">⚠️ Solo se permiten números</p>
             {selectedFood && (
               <small className="text-gray-500">
                 Original: {originalCantidad} {selectedFood.unidad_food || "g"}
@@ -456,8 +565,11 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
             <select
               value={Id_user}
               onChange={(e) => setIdUser(e.target.value)}
-              className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10"
+              className={`w-full border rounded-lg p-2 focus:ring-2 h-10 ${
+                isFoodInactive ? "border-red-300 bg-red-50" : "border-gray-400 focus:ring-gray-600"
+              }`}
               required
+              disabled={isFoodInactive}
             >
               <option value="">Seleccione</option>
               {users.map((user) => (
@@ -474,24 +586,32 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
               value={Id_food}
               onChange={(e) => handleFoodChange(e.target.value)}
               disabled
-              className="w-full p-2 border rounded bg-gray-100 cursor-not-allowed"
+              className={`w-full p-2 border rounded cursor-not-allowed ${
+                isFoodInactive ? "bg-red-50 border-red-300 text-red-700" : "bg-gray-100"
+              }`}
             >
               <option value="">Seleccione</option>
               {food.map((item) => (
                 <option key={item.Id_food} value={item.Id_food}>
                   {item.nombre_food || item.name_food}
+                  {isFoodInactive && selectedFood?.Id_food === item.Id_food ? " (INACTIVO/AGOTADO)" : ""}
                 </option>
               ))}
             </select>
-            <small className="text-gray-500">No se puede cambiar el alimento</small>
+            <small className={`${isFoodInactive ? "text-red-600" : "text-gray-500"}`}>
+              {isFoodInactive ? "❌ Alimento no disponible" : "No se puede cambiar el alimento"}
+            </small>
           </div>
           <div>
             <label className="block text-gray-700 font-medium mb-2">Conejo:</label>
             <select
               value={Id_rabbit}
               onChange={(e) => setIdRabbit(e.target.value)}
-              className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10"
+              className={`w-full border rounded-lg p-2 focus:ring-2 h-10 ${
+                isFoodInactive ? "border-red-300 bg-red-50" : "border-gray-400 focus:ring-gray-600"
+              }`}
               required
+              disabled={isFoodInactive}
             >
               <option value="">Seleccione</option>
               {rabbit.map((item) => (
@@ -518,18 +638,30 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
         <div className="flex justify-center mt-6">
           <button
             type="submit"
-            disabled={isSubmitting || !Id_food || !Id_rabbit || !Id_user}
-            className={`${
-              !Id_food || !Id_rabbit || !Id_user ? "bg-gray-400 cursor-not-allowed" : "bg-black hover:bg-gray-600"
-            } text-white font-semibold py-3 px-6 rounded-lg transition-colors w-full`}
+            disabled={isSubmitDisabled}
+            className={`font-semibold py-3 px-6 rounded-lg transition-colors w-full disabled:opacity-50 disabled:cursor-not-allowed ${
+              isFoodInactive
+                ? "bg-red-500 text-white hover:bg-red-600"
+                : isSubmitDisabled
+                  ? "bg-gray-400 text-white"
+                  : "bg-black text-white hover:bg-gray-600"
+            }`}
           >
-            {isSubmitting ? "Actualizando..." : "Actualizar"}
+            {isSubmitting
+              ? "Actualizando..."
+              : isFoodInactive
+                ? "No se puede actualizar (Alimento no disponible)"
+                : "Actualizar"}
           </button>
         </div>
 
-        {(!Id_food || !Id_rabbit || !Id_user) && (
+        {(!Id_food || !Id_rabbit || !Id_user || hasValidationErrors || isFoodInactive) && (
           <p className="text-red-500 text-center mt-2 text-sm">
-            Faltan IDs importantes. Por favor, verifica que los selectores tengan valores seleccionados.
+            {isFoodInactive
+              ? "El alimento está inactivo o agotado"
+              : hasValidationErrors
+                ? "La cantidad solo puede contener números"
+                : "Faltan IDs importantes. Por favor, verifica que los selectores tengan valores seleccionados."}
           </p>
         )}
       </form>

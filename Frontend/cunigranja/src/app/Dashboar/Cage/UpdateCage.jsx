@@ -269,7 +269,7 @@ const UpdateCage = ({ cageData, onClose, onUpdate }) => {
         onSubmit={handlerSubmit}
         className="p-6 bg-white shadow-md rounded-lg max-w-md mx-auto mt-10 border border-gray-200"
       >
-        <h2 className="text-xl font-bold text-gray-800 mb-4 text-center">Actualizar Jaula</h2>
+        
 
         <div className="mb-4">
           <label className="block text-gray-700 font-medium mb-2">
