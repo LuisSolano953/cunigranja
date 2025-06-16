@@ -3,16 +3,16 @@ version: '3.8'
 services:
   backend:
     build:
-      context: ./cunigranja/cunigranja
+      context: ./Backend/cunigranja
       dockerfile: Dockerfile
     ports:
-      - "5001:80" # Ajusta si tu app escucha en otro puerto
+      - "5001:80"
     networks:
       - app-network
 
   frontend:
     build:
-      context: ./frontEndcunigranja
+      context: ./Frontend/cunigranja
       dockerfile: Dockerfile
     ports:
       - "3002:80"
@@ -22,3 +22,4 @@ services:
 networks:
   app-network:
     driver: bridge
+
