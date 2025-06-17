@@ -1,7 +1,11 @@
 {
   "Files": [
     {
+<<<<<<< HEAD
       "Id": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\cunigranja\\wwwroot\\images\\logo_cuni.png",
+=======
+      "Id": "C:\\Users\\nesto\\OneDrive\\Desktop\\Cunigranja-Nv\\Backend\\cunigranja\\wwwroot\\images\\logo_cuni.png",
+>>>>>>> 5778637353c2db992520ee2ba3a3b42b97ccbb83
       "PackagePath": "staticwebassets\\images\\logo_cuni.png"
     },
     {
@@ -17,6 +21,13 @@
       "PackagePath": "buildTransitive\\cunigranja.props"
     },
     {
+<<<<<<< HEAD
+=======
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.cunigranja.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+>>>>>>> 5778637353c2db992520ee2ba3a3b42b97ccbb83
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.cunigranja.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     }

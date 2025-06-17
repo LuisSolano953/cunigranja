@@ -1,0 +1,1917 @@
+[
+  {
+    "ContainingType": "cunigranja.Controllers.CageController",
+    "Method": "GetCageById",
+    "RelativePath": "Api/Cage/ConsultCage",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "cunigranja.Models.CageModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.CageController",
+    "Method": "Create",
+    "RelativePath": "Api/Cage/CreateCage",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.CageModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.CageController",
+    "Method": "DeleteCageById",
+    "RelativePath": "Api/Cage/DeleteCage",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.CageController",
+    "Method": "GetCage",
+    "RelativePath": "Api/Cage/GetCage",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.Models.CageModel, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.CageController",
+    "Method": "GetCageInRange",
+    "RelativePath": "Api/Cage/GetCagesInRange",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "startId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "endId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.Models.CageModel, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.CageController",
+    "Method": "UpdateCage",
+    "RelativePath": "Api/Cage/UpdateCage",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.CageModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.DesteteController",
+    "Method": "GetDesteteById",
+    "RelativePath": "Api/Destete/ConsultDestete",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "cunigranja.Models.DesteteModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.DesteteController",
+    "Method": "Create",
+    "RelativePath": "Api/Destete/CreateDestete",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.DesteteModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.DesteteController",
+    "Method": "DeleteDesteteById",
+    "RelativePath": "Api/Destete/DeleteDestete",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.DesteteController",
+    "Method": "GetAllsDestete",
+    "RelativePath": "Api/Destete/GetDestete",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.DTOs.DesteteDTO, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.DesteteController",
+    "Method": "GetDesteteInRange",
+    "RelativePath": "Api/Destete/GetDesteteInRange",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "startId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "endId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.Models.DesteteModel, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.DesteteController",
+    "Method": "UpdateDestete",
+    "RelativePath": "Api/Destete/UpdateDestete",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.DesteteModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.EntradaController",
+    "Method": "GetEntradaById",
+    "RelativePath": "Api/Entrada/ConsultEntrada",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "cunigranja.Models.EntradaModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.EntradaController",
+    "Method": "Create",
+    "RelativePath": "Api/Entrada/CreateEntrada",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.EntradaModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.EntradaController",
+    "Method": "DeleteEntradaById",
+    "RelativePath": "Api/Entrada/DeleteEntrada",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.EntradaController",
+    "Method": "GetAllsEntrada",
+    "RelativePath": "Api/Entrada/GetEntrada",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.DTOs.EntradaDTO, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.EntradaController",
+    "Method": "GetEntradaInRange",
+    "RelativePath": "Api/Entrada/GetEntradaInRange",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "startId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "endId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.Models.EntradaModel, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.EntradaController",
+    "Method": "UpdateEntrada",
+    "RelativePath": "Api/Entrada/UpdateEntrada",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.EntradaModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.FeedingController",
+    "Method": "GetFeedingById",
+    "RelativePath": "Api/Feeding/ConsultFeeding",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "cunigranja.Models.FeedingModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.FeedingController",
+    "Method": "Add",
+    "RelativePath": "Api/Feeding/CreateFeeding",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.FeedingModel",
+        "IsRequired": true
+      },
+      {
+        "Name": "skipRecalculation",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.FeedingController",
+    "Method": "AddSimple",
+    "RelativePath": "Api/Feeding/CreateFeedingSimple",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.FeedingModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.FeedingController",
+    "Method": "DeleteFeedingById",
+    "RelativePath": "Api/Feeding/DeleteFeeding",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.FeedingController",
+    "Method": "GetAvailableFood",
+    "RelativePath": "Api/Feeding/GetAvailableFood",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.Models.FoodModel, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.FeedingController",
+    "Method": "GetsAllFeeding",
+    "RelativePath": "Api/Feeding/GetFeeding",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.DTOs.FeedingDTO, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.FeedingController",
+    "Method": "GetFeedingByFood",
+    "RelativePath": "Api/Feeding/GetFeedingByFood/{foodId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "foodId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.DTOs.FeedingDTO, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.FeedingController",
+    "Method": "GetFeedingInRange",
+    "RelativePath": "Api/Feeding/GetFeedingInRange",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "startId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "endId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.Models.FeedingModel, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.FeedingController",
+    "Method": "UpdateFeeding",
+    "RelativePath": "Api/Feeding/UpdateFeeding",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.FeedingModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.FoodController",
+    "Method": "GetFoodById",
+    "RelativePath": "Api/Food/ConsulFood",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id_food",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "cunigranja.Models.FoodModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.FoodController",
+    "Method": "Create",
+    "RelativePath": "Api/Food/CreateFood",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.FoodModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.FoodController",
+    "Method": "DeleteFoodById",
+    "RelativePath": "Api/Food/DeleteFood",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id_food",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.FoodController",
+    "Method": "Getfood",
+    "RelativePath": "Api/Food/GetFood",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.Models.FoodModel, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.FoodController",
+    "Method": "GetCagesInRange",
+    "RelativePath": "Api/Food/GetFoodInRange",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "startId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "endId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.Models.FoodModel, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.FoodController",
+    "Method": "RecalculateFoodBalance",
+    "RelativePath": "Api/Food/RecalculateFoodBalance",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "cunigranja.Controllers.FoodController\u002BRecalculateBalanceRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.FoodController",
+    "Method": "ToggleFoodStatus",
+    "RelativePath": "Api/Food/ToggleFoodStatus",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.FoodModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.FoodController",
+    "Method": "UpdateFood",
+    "RelativePath": "Api/Food/UpdateFood",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.FoodModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.HealthController",
+    "Method": "GetHealth",
+    "RelativePath": "Api/Health/AllHealth",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.Models.HealthModel, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.HealthController",
+    "Method": "GetHealthById",
+    "RelativePath": "Api/Health/ConsulHealth",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "cunigranja.Models.HealthModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.HealthController",
+    "Method": "Add",
+    "RelativePath": "Api/Health/CreateHealth",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.HealthModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.HealthController",
+    "Method": "DeleteHealthById",
+    "RelativePath": "Api/Health/DeleteHealth",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.HealthController",
+    "Method": "GetCagesInRange",
+    "RelativePath": "Api/Health/GetHealthInRange",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "startId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "endId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.Models.HealthModel, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.HealthController",
+    "Method": "UpdateHealth",
+    "RelativePath": "Api/Health/UpdateHealth",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.HealthModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.MortalityController",
+    "Method": "GetAllsMortality",
+    "RelativePath": "Api/Mortality/AllMortality",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.DTOs.MortalityDTO, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.MortalityController",
+    "Method": "GetById",
+    "RelativePath": "Api/Mortality/ConsulMortality",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "cunigranja.Models.MortalityModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.MortalityController",
+    "Method": "Add",
+    "RelativePath": "Api/Mortality/CreateMortality",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.MortalityModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.MortalityController",
+    "Method": "DeleteHealthById",
+    "RelativePath": "Api/Mortality/DeleteMortality",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.MortalityController",
+    "Method": "GetMortalityByRabbit",
+    "RelativePath": "Api/Mortality/GetMortalityByRabbit",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "rabbitId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.MortalityController",
+    "Method": "GetMortalityInRange",
+    "RelativePath": "Api/Mortality/GetMortalityhInRange",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "startId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "endId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.Models.HealthModel, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.MortalityController",
+    "Method": "UpdateMortality",
+    "RelativePath": "Api/Mortality/UpdateMortality",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.MortalityModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.MountsController",
+    "Method": "GetMountsById",
+    "RelativePath": "Api/Mounts/ConsultMounts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "cunigranja.Models.MountsModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.MountsController",
+    "Method": "Create",
+    "RelativePath": "Api/Mounts/CreateMounts",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.MountsModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.MountsController",
+    "Method": "DeleteMountsById",
+    "RelativePath": "Api/Mounts/DeleteMounts",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.MountsController",
+    "Method": "GetsAllMounts",
+    "RelativePath": "Api/Mounts/GetMounts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.Models.MountsModel, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.MountsController",
+    "Method": "GetMountsInRange",
+    "RelativePath": "Api/Mounts/GetMountsInRange",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "startId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "endId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.Models.MountsModel, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.MountsController",
+    "Method": "UpdateMounts",
+    "RelativePath": "Api/Mounts/UpdateCage",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.MountsModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.RabbitController",
+    "Method": "GetRabbitById",
+    "RelativePath": "Api/Rabbit/ConsultRabbit",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "cunigranja.Models.RabbitModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.RabbitController",
+    "Method": "Create",
+    "RelativePath": "Api/Rabbit/CreateRabbit",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.RabbitModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.RabbitController",
+    "Method": "DeleteRabbitById",
+    "RelativePath": "Api/Rabbit/DeleteRabbit",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.RabbitController",
+    "Method": "GetRabbit",
+    "RelativePath": "Api/Rabbit/GetRabbit",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.DTOs.RabbitDTO, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.RabbitController",
+    "Method": "GetRabbitInRange",
+    "RelativePath": "Api/Rabbit/GetRabbitsInRange",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "startId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "endId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.Models.RabbitModel, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.RabbitController",
+    "Method": "UpdateRabbit",
+    "RelativePath": "Api/Rabbit/UpdateRabbit",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.RabbitModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.RaceController",
+    "Method": "GetRaceById",
+    "RelativePath": "Api/Race/ConsulRace",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id_race",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "cunigranja.Models.RaceModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.RaceController",
+    "Method": "Create",
+    "RelativePath": "Api/Race/CreateRace",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.RaceModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.RaceController",
+    "Method": "DeleteRaceById",
+    "RelativePath": "Api/Race/DeleteRace",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id_race",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.RaceController",
+    "Method": "GetRace",
+    "RelativePath": "Api/Race/GetRace",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.Models.RaceModel, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.RaceController",
+    "Method": "GetRaceInRange",
+    "RelativePath": "Api/Race/GetRaceInRange",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "startId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "endId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.Models.RaceModel, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.RaceController",
+    "Method": "UpdateRace",
+    "RelativePath": "Api/Race/UpdateRace",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.RaceModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.ReproductionController",
+    "Method": "GetReproductionById",
+    "RelativePath": "Api/Reproduction/ConsulReproduction",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id_reproduction",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "cunigranja.Models.ReproductionModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.ReproductionController",
+    "Method": "create",
+    "RelativePath": "Api/Reproduction/CreateReproduction",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.ReproductionModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.ReproductionController",
+    "Method": "DeleteReproductionById",
+    "RelativePath": "Api/Reproduction/DeleteReproduction",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.ReproductionController",
+    "Method": "GetsAllReproduction",
+    "RelativePath": "Api/Reproduction/GetReproduction",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.DTOs.ReproductionDTO, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.ReproductionController",
+    "Method": "GetCagesInRange",
+    "RelativePath": "Api/Reproduction/GetReproductionInRange",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "startId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "endId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.Models.FoodModel, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.ReproductionController",
+    "Method": "UpdateReproduction",
+    "RelativePath": "Api/Reproduction/UpdateReproduction",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.ReproductionModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.UserController",
+    "Method": "GetUsers",
+    "RelativePath": "Api/User/AllUser",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.Models.User, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.UserController",
+    "Method": "ChangePassword",
+    "RelativePath": "Api/User/ChangePassword",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "cunigranja.Models.LoginUser",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.UserController",
+    "Method": "GetUserById",
+    "RelativePath": "Api/User/ConsulUser",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id_user",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "cunigranja.Models.User",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.UserController",
+    "Method": "GetUsersInRange",
+    "RelativePath": "Api/User/ConsulUsersInRange",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "startId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "endId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.Models.User, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.UserController",
+    "Method": "CreateUser",
+    "RelativePath": "Api/User/CreateUser",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.User",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.UserController",
+    "Method": "DeleteUserById",
+    "RelativePath": "Api/User/DeleteUser",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id_user",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.UserController",
+    "Method": "Login",
+    "RelativePath": "Api/User/Login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "login",
+        "Type": "cunigranja.Models.LoginUser",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.UserController",
+    "Method": "RecoverAdminPassword",
+    "RelativePath": "Api/User/RecoverAdminPassword",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "cunigranja.Models.ResetPassUser",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.UserController",
+    "Method": "ResetPassword",
+    "RelativePath": "Api/User/ResetPassUser",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "user",
+        "Type": "cunigranja.Models.ResetPassUser",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.UserController",
+    "Method": "ResetPasswordConfirm",
+    "RelativePath": "Api/User/ResetPasswordConfirm",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "cunigranja.Models.ResetPasswordModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.UserController",
+    "Method": "ToggleUserStatus",
+    "RelativePath": "Api/User/ToggleUserStatus",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "newStatus",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.UserController",
+    "Method": "UpdateUser",
+    "RelativePath": "Api/User/UpdateUser",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.User",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.UserController",
+    "Method": "UpdateUserStatus",
+    "RelativePath": "Api/User/UpdateUserStatus",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userUpdate",
+        "Type": "cunigranja.Models.User",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.UserController",
+    "Method": "ValidateToken",
+    "RelativePath": "Api/User/ValidateToken",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "cunigranja.Models.TokenRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.weighingController",
+    "Method": "GetweighingById",
+    "RelativePath": "Api/weighing/ConsulWeighing",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id_weighing",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "cunigranja.Models.WeighingModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.weighingController",
+    "Method": "Create",
+    "RelativePath": "Api/weighing/CreateWeighing",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.WeighingModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.weighingController",
+    "Method": "DeleteWeighingById",
+    "RelativePath": "Api/weighing/DeleteWeighing",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id_weighing",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.weighingController",
+    "Method": "GetAllWeighing",
+    "RelativePath": "Api/weighing/GetWeighing",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.DTOs.WeighingDTO, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.weighingController",
+    "Method": "GetWeighingByRabbit",
+    "RelativePath": "Api/weighing/GetWeighingByRabbit",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id_rabbit",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.Models.WeighingModel, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.weighingController",
+    "Method": "GetCagesInRange",
+    "RelativePath": "Api/weighing/GetWeighingInRange",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "startId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "endId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[cunigranja.Models.WeighingModel, cunigranja, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.weighingController",
+    "Method": "RecalculateRabbitWeight",
+    "RelativePath": "Api/weighing/RecalculateRabbitWeight",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "cunigranja.Models.WeighingModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "cunigranja.Controllers.weighingController",
+    "Method": "UpdateWeighing",
+    "RelativePath": "Api/weighing/UpdateWeighing",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "cunigranja.Models.WeighingModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

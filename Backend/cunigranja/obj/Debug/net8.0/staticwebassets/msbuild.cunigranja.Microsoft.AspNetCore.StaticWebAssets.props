@@ -1,6 +1,10 @@
 ﻿<Project>
   <ItemGroup>
+<<<<<<< HEAD
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\images\logo_cuni.png))">
+=======
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\logo_cuni.png'))">
+>>>>>>> 5778637353c2db992520ee2ba3a3b42b97ccbb83
       <SourceType>Package</SourceType>
       <SourceId>cunigranja</SourceId>
       <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
@@ -12,9 +16,17 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
+<<<<<<< HEAD
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\images\logo_cuni.png))</OriginalItemSpec>
+=======
+      <Fingerprint>wa5ojydgwq</Fingerprint>
+      <Integrity>KET+b0wUSpas8Rx4CtZh/HtvsExGI24lNrGIje4KWgw=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\logo_cuni.png'))</OriginalItemSpec>
+>>>>>>> 5778637353c2db992520ee2ba3a3b42b97ccbb83
     </StaticWebAsset>
   </ItemGroup>
 </Project>
