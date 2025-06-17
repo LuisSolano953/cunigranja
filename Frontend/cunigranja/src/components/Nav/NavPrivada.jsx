@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { User, LogOut, Loader2, Shield, Settings } from "lucide-react"
-import { Sidebar } from "./sidebar"
+import { Sidebar } from "./Sidebar"
 import { useAuth } from "@/context/authContext"
 import { useRouter } from "next/navigation"
 
