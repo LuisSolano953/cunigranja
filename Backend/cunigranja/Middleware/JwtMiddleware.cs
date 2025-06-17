@@ -13,12 +13,17 @@ namespace cunigranja.Middleware
         private readonly IConfiguration _configuration;
         private readonly RequestDelegate _next;
         public JwtModel Jwt;
+        private readonly List<string> _publicRoutes;
 
         public JwtMiddleware(RequestDelegate next, IConfiguration configuration)
         {
             _next = next;
-            _configuration = configuration;
+            FunctionsGeneral = new GeneralFunctions(_configuration);
             Jwt = _configuration.GetSection("JWT").Get<JwtModel>();
+            _publicRoutes = _configuration.GetSection("RutePublic")
+                            .Get<List<RouteConfig>>()
+                            .Select(route => route.Route)
+                            .ToList();
         }
 
         public async Task Invoke(HttpContext context, UserServices userService)
@@ -26,22 +31,39 @@ namespace cunigranja.Middleware
             try
             {
                 var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-                if (token != null)
+
+                var path = context.Request.Path;
+
+               
+                if (_publicRoutes.Contains(path))
                 {
-                     AttachUserToContext(context, userService, token);
+                    await _next(context);
+                    return;
+                }
+                if (token == null)
+                {
+                    context.Response.StatusCode = 401;
+                    context.Response.ContentType = "aplication/json";
+                    await context.Response.WriteAsync("{\"error\":\"token invalido o no autorizado.\"}");
+                }
+                if (!AttachUserToContext(context, userService, token))
+                {
+                    context.Response.StatusCode = 401;
+                    context.Response.ContentType = "aplication/json";
+                    await context.Response.WriteAsync("{\"error\":\"token invalido o no autorizado.\"}");
                 }
                 await _next(context);
+                return;
+                
             }
             catch (Exception ex)
             {
 
-                FunctionsGeneral.AddLog(ex.ToString());
-               
-
+                throw;
             }
         }
 
-        public  void AttachUserToContext(HttpContext context, UserServices userService, string token)
+        public bool AttachUserToContext(HttpContext context, UserServices userService, string token)
         {
             try
             {
@@ -60,14 +82,16 @@ namespace cunigranja.Middleware
                 var userEmail = jwtToken.Claims.First(x => x.Type == "User").Value;
 
                 context.Items["User"] = userService.GetByEmail(userEmail);
+                return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-             
+
                 FunctionsGeneral.AddLog(ex.Message);
+                return false;
             }
 
-         }
+        }
     }
 
 }

@@ -2,6 +2,7 @@
 using cunigranja.Services;
 using Microsoft.AspNetCore.Mvc;
 using cunigranja.Functions;
+using cunigranja.DTOs;
 
 namespace cunigranja.Controllers
 {
@@ -20,16 +21,14 @@ namespace cunigranja.Controllers
             _configuration = configuration;
         }
 
-        // GET: api/Health/AllHealth
-
-        // POST: api/Health/CreateHealth
+        
         [HttpPost("CreateHealth")]
         public IActionResult Add(HealthModel entity)
         {
             try
             {
                 _Services.Add(entity);
-                return Ok();
+                return Ok(new { message = "sanidad creado con extito" });
             }
             catch (Exception ex)
             {
@@ -40,7 +39,20 @@ namespace cunigranja.Controllers
         [HttpGet("AllHealth")]
         public ActionResult<IEnumerable<HealthModel>> GetHealth()
         {
-            return Ok(_Services.GetHealth());
+            var health = _Services.GetAll().Select(h => new HealthDTO
+            {
+                Id_health = h.Id_health,
+                name_health=h.name_health,
+                fecha_health=h.fecha_health,
+                descripcion_health=h.descripcion_health,
+                valor_health=h.valor_health,
+                name_user=h.user.name_user,
+                Id_user=h.user.Id_user
+                 
+
+            }).ToList();
+
+            return Ok(health);
         }
 
         // GET: api/Health/ConsulHealth?id=1
@@ -57,7 +69,7 @@ namespace cunigranja.Controllers
                 }
                 else
                 {
-                    return NotFound("Health record not found.");
+                    return NotFound("Error al encontrar sanidad.");
                 }
             }
             catch (Exception ex)
@@ -81,7 +93,7 @@ namespace cunigranja.Controllers
                 // Llamar al método de actualización en el servicio
                 _Services.UpdateHealth(entity.Id_health, entity);
 
-                return Ok("Health updated successfully.");
+                return Ok("Sanidad actualizada correctamente.");
             }
             catch (Exception ex)
             {

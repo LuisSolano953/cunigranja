@@ -1,5 +1,12 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# Archivos temporales y generados automáticamente
+.vs/
+bin/
+obj/
+*.Log
+
+
 # dependencies
 /node_modules
 /.pnp

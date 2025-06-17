@@ -27,7 +27,7 @@ namespace cunigranja.Controllers
             try
             {
                 _raceServices.Add(entity);
-                return Ok();
+                return Ok(new { message = "raza creado con extito" });
             }
             catch (Exception ex)
             {
@@ -79,12 +79,12 @@ namespace cunigranja.Controllers
         {
             try
             {
-                if (entity.Id_race <= 0) // Verifica que el ID sea válido
+                if (entity.Id_race <= 0) 
                 {
                     return BadRequest("Invalid Race ID.");
                 }
 
-                // Llamar al método de actualización en el servicio
+                
                 _raceServices.UpdateRace(entity.Id_race, entity);
                 return Ok("Race updated successfully.");
             }

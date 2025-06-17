@@ -27,7 +27,7 @@ namespace cunigranja.Controllers
             try
             {
                 _Services.Add(entity);
-                return Ok();
+                return Ok(new { message = "jaula creado con extito" });
             }
             catch (Exception ex)
             {

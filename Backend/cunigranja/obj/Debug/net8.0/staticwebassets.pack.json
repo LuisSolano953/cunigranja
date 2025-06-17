@@ -1,0 +1,25 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\SENA\\Documents\\main\\cunigranja\\Backend\\cunigranja\\wwwroot\\images\\logo_cuni.png",
+      "PackagePath": "staticwebassets\\images\\logo_cuni.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.cunigranja.props",
+      "PackagePath": "build\\cunigranja.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.cunigranja.props",
+      "PackagePath": "buildMultiTargeting\\cunigranja.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.cunigranja.props",
+      "PackagePath": "buildTransitive\\cunigranja.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.cunigranja.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

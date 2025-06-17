@@ -1,0 +1,356 @@
+12/06/2025 10:41:52 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:41:52 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:41:52 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:41:52 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:41:52 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:41:52 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:41:52 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:41:52 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:42:17 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:42:17 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:42:17 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:42:17 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:42:17 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:42:17 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:42:17 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:42:17 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:42:20 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:42:20 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:42:20 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:42:20 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:42:20 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:42:20 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:42:20 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:42:20 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:42:24 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:42:24 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:42:24 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:42:24 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:42:24 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:42:24 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:42:24 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:42:24 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:42:25 a. m.Cambiando estado del alimento ID 2 a Inactivo
+12/06/2025 10:42:25 a. m.Cambiando estado de alimento ID 2 de 'Existente' a 'Inactivo'
+12/06/2025 10:42:25 a. m.Alimento desactivado a 'Inactivo'
+12/06/2025 10:42:25 a. m.Estado final guardado: 'Inactivo' para alimento ID 2
+12/06/2025 10:42:25 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:42:26 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:42:26 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:42:26 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:42:26 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:42:26 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:42:26 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:42:26 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:42:27 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:42:27 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:42:27 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:42:27 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:42:27 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:42:27 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:42:27 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:42:27 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:42:28 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:42:28 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:42:28 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:42:29 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:42:29 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:42:29 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:42:29 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:42:29 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:42:30 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:42:30 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:42:31 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:42:31 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:42:31 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:42:31 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:42:31 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:42:31 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:52:29 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:52:30 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:52:30 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:52:30 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:52:30 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:52:30 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:52:30 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:52:30 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:52:34 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:52:34 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:52:34 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:52:34 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:52:34 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:52:34 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:52:34 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:52:34 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:52:40 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:52:40 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:52:40 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:52:40 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:52:40 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:52:40 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:52:40 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:52:40 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:53:39 a. m.Cambiando estado del alimento ID 2 a Existente
+12/06/2025 10:53:39 a. m.Cambiando estado de alimento ID 2 de 'Inactivo' a 'Existente'
+12/06/2025 10:53:39 a. m.Alimento activado. Estado final después de evaluación automática: 'Existente'
+12/06/2025 10:53:39 a. m.Estado final guardado: 'Existente' para alimento ID 2
+12/06/2025 10:53:39 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:53:39 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:53:39 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:53:39 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:53:39 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:53:39 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:53:39 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:53:39 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:53:40 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:53:40 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:53:40 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:53:40 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:53:40 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:53:40 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:53:40 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:53:40 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:53:42 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:53:42 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:53:42 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:53:42 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:53:42 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:53:42 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:53:42 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:53:42 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:53:44 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:53:44 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:53:44 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:53:44 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:53:44 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:53:44 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:53:44 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:53:44 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:53:47 a. m.Cambiando estado del alimento ID 2 a Inactivo
+12/06/2025 10:53:47 a. m.Cambiando estado de alimento ID 2 de 'Existente' a 'Inactivo'
+12/06/2025 10:53:47 a. m.Alimento desactivado a 'Inactivo'
+12/06/2025 10:53:47 a. m.Estado final guardado: 'Inactivo' para alimento ID 2
+12/06/2025 10:53:47 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:53:47 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:53:47 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:53:47 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:53:47 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:53:47 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:53:47 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:53:47 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:53:48 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:53:48 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:53:48 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:53:48 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:53:48 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:53:48 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:53:48 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:53:48 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:53:49 a. m.Cambiando estado del alimento ID 2 a Existente
+12/06/2025 10:53:49 a. m.Cambiando estado de alimento ID 2 de 'Inactivo' a 'Existente'
+12/06/2025 10:53:49 a. m.Alimento activado. Estado final después de evaluación automática: 'Existente'
+12/06/2025 10:53:49 a. m.Estado final guardado: 'Existente' para alimento ID 2
+12/06/2025 10:53:49 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:53:49 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:53:49 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:53:49 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:53:49 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:53:49 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:53:49 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:53:49 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:53:51 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:53:51 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:53:51 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:53:51 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:53:51 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:53:51 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:53:51 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:53:51 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:53:53 a. m.Cambiando estado del alimento ID 2 a Inactivo
+12/06/2025 10:53:53 a. m.Cambiando estado de alimento ID 2 de 'Existente' a 'Inactivo'
+12/06/2025 10:53:53 a. m.Alimento desactivado a 'Inactivo'
+12/06/2025 10:53:53 a. m.Estado final guardado: 'Inactivo' para alimento ID 2
+12/06/2025 10:53:53 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:53:53 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:53:53 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:53:53 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:53:53 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:53:53 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:53:53 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:53:53 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:53:55 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:53:55 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:53:55 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:53:55 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:53:55 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:53:55 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:53:55 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:53:55 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:53:56 a. m.Cambiando estado del alimento ID 2 a Existente
+12/06/2025 10:53:56 a. m.Cambiando estado de alimento ID 2 de 'Inactivo' a 'Existente'
+12/06/2025 10:53:56 a. m.Alimento activado. Estado final después de evaluación automática: 'Existente'
+12/06/2025 10:53:56 a. m.Estado final guardado: 'Existente' para alimento ID 2
+12/06/2025 10:53:56 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:53:56 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:53:56 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:53:56 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:53:56 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:53:56 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:53:56 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:53:56 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:53:59 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:53:59 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:53:59 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:53:59 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:53:59 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:53:59 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:53:59 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:53:59 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:54:17 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:54:17 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:54:17 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:54:17 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:54:17 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:54:17 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:54:17 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 10:54:17 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 10:54:17 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:54:17 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:54:17 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:54:17 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:54:17 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:54:17 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:54:17 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 10:54:17 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 10:56:48 a. m.GetAvailableFood: Encontrados 1 alimentos disponibles
+12/06/2025 10:56:48 a. m.GetAvailableFood: Encontrados 1 alimentos disponibles
+12/06/2025 11:16:04 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 11:16:04 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 11:16:04 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 11:16:04 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 11:16:04 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 11:16:04 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 11:16:04 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 11:16:04 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 11:16:04 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 11:16:04 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 11:16:04 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 11:16:04 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 11:16:04 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 11:16:04 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 11:16:04 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 11:16:04 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 11:16:44 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 11:16:44 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 11:16:44 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 11:16:44 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 11:16:44 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 11:16:44 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 11:16:44 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 11:16:44 a. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 11:16:44 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 11:16:44 a. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 11:16:44 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 11:16:44 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 11:16:44 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 11:16:44 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 11:16:44 a. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 11:16:44 a. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 12:08:25 p. m.GetAvailableFood: Encontrados 1 alimentos disponibles
+12/06/2025 12:08:25 p. m.GetAvailableFood: Encontrados 1 alimentos disponibles
+12/06/2025 1:30:58 p. m.GetAvailableFood: Encontrados 1 alimentos disponibles
+12/06/2025 1:30:58 p. m.GetAvailableFood: Encontrados 1 alimentos disponibles
+12/06/2025 1:31:10 p. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 1:31:10 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 1:31:10 p. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 1:31:10 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 1:31:10 p. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 1:31:10 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 1:31:10 p. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 1:31:10 p. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 1:31:10 p. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 1:31:10 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 1:31:10 p. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 1:31:10 p. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 1:31:10 p. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 1:31:10 p. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 1:31:10 p. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 1:31:10 p. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 1:31:18 p. m.Cambiando estado del alimento ID 2 a Inactivo
+12/06/2025 1:31:18 p. m.Cambiando estado de alimento ID 2 de 'Existente' a 'Inactivo'
+12/06/2025 1:31:18 p. m.Alimento desactivado a 'Inactivo'
+12/06/2025 1:31:18 p. m.Estado final guardado: 'Inactivo' para alimento ID 2
+12/06/2025 1:31:18 p. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 1:31:18 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 1:31:18 p. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 1:31:18 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 1:31:18 p. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 1:31:18 p. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 1:31:18 p. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 1:31:18 p. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 1:31:19 p. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 1:31:19 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 1:31:19 p. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 1:31:19 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 1:31:19 p. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 1:31:19 p. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 1:31:19 p. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 1:31:19 p. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 1:31:27 p. m.GetAvailableFood: Encontrados 0 alimentos disponibles
+12/06/2025 1:31:27 p. m.GetAvailableFood: Encontrados 0 alimentos disponibles
+12/06/2025 1:48:41 p. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 1:48:41 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 1:48:41 p. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 1:48:41 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 1:48:41 p. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 1:48:41 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 1:48:41 p. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 1:48:41 p. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 1:48:41 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 1:48:41 p. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 1:48:41 p. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 1:48:41 p. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 1:48:41 p. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 1:48:41 p. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 1:48:41 p. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 1:48:41 p. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 1:49:58 p. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 1:49:58 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 1:49:58 p. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 1:49:58 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 1:49:58 p. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 1:49:58 p. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 1:49:58 p. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 1:49:58 p. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 1:50:08 p. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 1:50:08 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 1:50:08 p. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 1:50:08 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 1:50:08 p. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 1:50:08 p. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 1:50:08 p. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 1:50:08 p. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 1:50:22 p. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 1:50:22 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 1:50:22 p. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 1:50:22 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 1:50:22 p. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 1:50:22 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 1:50:22 p. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 1:50:22 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 1:50:22 p. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 1:50:22 p. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 1:50:22 p. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 1:50:22 p. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 1:50:22 p. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 1:50:22 p. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 1:50:22 p. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 1:50:22 p. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 1:50:32 p. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 1:50:32 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 1:50:32 p. m.GetFeedingByFood: Buscando registros para alimento ID 1
+12/06/2025 1:50:32 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 1
+12/06/2025 1:50:32 p. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 1:50:32 p. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2
+12/06/2025 1:50:32 p. m.GetFeedingByFood: Buscando registros para alimento ID 2
+12/06/2025 1:50:32 p. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 2

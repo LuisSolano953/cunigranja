@@ -6,9 +6,8 @@ namespace cunigranja.Models
     public class RaceModel
     {
         [Key]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [Range(0, 100, ErrorMessage = "El campo {0} debe estar entre {1} y {2}.")]
-        public int Id_race { get; set; }
+
+        public int Id_race { get; set; } = 0;
 
         [DisplayName("Raza del Conejo")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]

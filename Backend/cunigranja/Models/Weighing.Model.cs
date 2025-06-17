@@ -1,28 +1,33 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace cunigranja.Models
 {
     public class WeighingModel
     {
         [Key]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [Range(0, 100, ErrorMessage = "El campo {0} debe estar entre {1} y {2}.")]
-        public int Id_weighing { get; set; }
+        public int Id_weighing { get; set; } = 0;
 
         [DataType(DataType.Date)]
         [Display(Name = "Fecha del pesaje")]
-        [Required(ErrorMessage = "La fecha de mortalidad es obligatoria.")]
+        [Required(ErrorMessage = "La fecha de pesaje es obligatoria.")]
         public DateTime fecha_weighing { get; set; }
 
-        [DisplayName("peso actual")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [StringLength(250, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
-        public string peso_actual { get; set; }
+      
+        public int peso_actual { get; set; }
 
-        [DisplayName("peso ganado")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [StringLength(250, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
-        public string ganancia_peso { get; set; }
+       
+        public int ganancia_peso { get; set; }
+
+        public int Id_rabbit { get; set; }
+
+        [ForeignKey("Id_rabbit")]
+        public RabbitModel? rabbitmodel { get; set; }
+
+        public int Id_user { get; set; }
+
+        [ForeignKey("Id_user")]
+        public User? user { get; set; }
     }
 }

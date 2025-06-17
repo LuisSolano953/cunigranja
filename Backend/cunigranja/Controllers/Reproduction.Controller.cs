@@ -1,4 +1,5 @@
-﻿using cunigranja.Functions;
+﻿using cunigranja.DTOs;
+using cunigranja.Functions;
 using cunigranja.Models;
 using cunigranja.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,7 @@ namespace cunigranja.Controllers
             try
             {
                 _Services.Add(entity);
-                return Ok();
+                return Ok(new { message = "reproduccion creado con extito" });
             }
                 catch (Exception ex)
                 {
@@ -36,19 +37,25 @@ namespace cunigranja.Controllers
         }
         [HttpGet("GetReproduction")]
 
-        public ActionResult<IEnumerable<ReproductionModel>> Getreproduction()
+        public ActionResult<IEnumerable<ReproductionDTO>> GetsAllReproduction()
         {
-            try
-            {
-                return Ok( _Services.GetReproduction());
-            }
-            catch (Exception ex)
-            {
-                    FunctionsGeneral.AddLog(ex.Message);
-                    return StatusCode(500, ex.ToString());
 
-            }
+            var reproduction = _Services.GetAll().Select(e => new ReproductionDTO
+            {
+                Id_reproduction = e.Id_reproduction,            
+                fecha_nacimiento= e.fecha_nacimiento,
+                total_conejos=e.total_conejos,
+                nacidos_muertos=e.nacidos_muertos,
+                nacidos_vivos=  e.nacidos_vivos,
+                Id_rabbit = e.rabbitmodel.Id_rabbit,
+                name_rabbit =e.rabbitmodel.name_rabbit,
+            }).ToList();
+
+            return Ok(reproduction);
+
+
         }
+
         [HttpGet("ConsulReproduction")]
         public ActionResult<ReproductionModel> GetReproductionById(int Id_reproduction)
         {
@@ -75,12 +82,12 @@ namespace cunigranja.Controllers
         {
             try
             {
-                if (entity.Id_reproduction <= 0) // Verifica que el ID sea válido
+                if (entity.Id_reproduction <= 0) 
                 {
                     return BadRequest("Invalid reproduction ID.");
                 }
 
-                // Llamar al método de actualización en el servicio
+                
                 _Services.UpdateReproduction(entity.Id_reproduction, entity);
 
                 return Ok("Reproduction updated successfully.");
@@ -111,25 +118,17 @@ namespace cunigranja.Controllers
 
         }
         [HttpDelete("DeleteReproduction")]
-        public IActionResult DeleteReproductionById(int Id_reproduction)
+        public IActionResult DeleteReproductionById(int Id)
         {
             try
             {
-                if (Id_reproduction <= 0)
+                var existingReproduction = _Services.GetReproductionById(Id);
+                if (existingReproduction == null)
                 {
-                    return BadRequest("Invalid reproduction ID.");
+                    return NotFound();
                 }
-
-                var result = _Services.DeleteById(Id_reproduction);
-
-                if (result)
-                {
-                    return Ok("Reproduction deleted successfully.");
-                }
-                else
-                {
-                    return NotFound("Reproduction not found.");
-                }
+                _Services.DeleteById(Id);
+                return Ok();
             }
             catch (Exception ex)
             {

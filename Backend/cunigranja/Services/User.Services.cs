@@ -15,7 +15,11 @@ namespace cunigranja.Services
             return _context.user.ToList();
         }
 
-        
+        public async Task<bool> CheckIfUserExists(string email)
+        {
+            return await _context.user.AnyAsync(u => u.email_user == email);
+        }
+
 
         public void Add(User entity)
         {
@@ -42,6 +46,7 @@ namespace cunigranja.Services
         {
             // Traer el usuario existente utilizando el ID
             var user = _context.user.SingleOrDefault(u => u.Id_user == Id);
+
 
             if (user != null)
             {

@@ -27,7 +27,7 @@ namespace cunigranja.Controllers
             {
                 _Services.Add(entity);
 
-                return Ok();
+                return Ok(new { message = "alimento creado con extito" });
             }
             catch (Exception ex)
             {
@@ -73,19 +73,17 @@ namespace cunigranja.Controllers
                 return StatusCode(500, ex.ToString());
             }
         }
-        [HttpPost("UpdateFood")]
-        public IActionResult UpdateFood(FoodModel entity)
+        [HttpPut("UpdateFood")]
+        public IActionResult UpdateFood([FromBody] FoodModel entity)
         {
             try
             {
-                if (entity.Id_food <= 0) // Verifica que el ID sea válido
+                if (entity.Id_food <= 0)
                 {
                     return BadRequest("Invalid food ID.");
                 }
 
-                // Llamar al método de actualización en el servicio
                 _Services.UpdateFood(entity.Id_food, entity);
-
                 return Ok("Food updated successfully.");
             }
             catch (Exception ex)
@@ -139,5 +137,71 @@ namespace cunigranja.Controllers
                 return StatusCode(500, ex.ToString());
             }
         }
+
+        // NUEVA CLASE: Para recibir los datos de la solicitud de recálculo
+        public class RecalculateBalanceRequest
+        {
+            public int id_food { get; set; }
+            public double new_saldo { get; set; }
+        }
+
+        // NUEVO MÉTODO: Recalcular saldos cuando cambia el saldo de un alimento
+        [HttpPost("RecalculateFoodBalance")]
+        public IActionResult RecalculateFoodBalance([FromBody] RecalculateBalanceRequest request)
+        {
+            try
+            {
+                if (request == null)
+                {
+                    return BadRequest("Los datos de recálculo son nulos");
+                }
+
+                if (request.id_food <= 0)
+                {
+                    return BadRequest("ID de alimento inválido");
+                }
+
+                // Registrar la solicitud para depuración
+                FunctionsGeneral.AddLog($"RecalculateFoodBalance: Recalculando saldo para alimento ID {request.id_food}, nuevo saldo: {request.new_saldo}");
+
+                _Services.RecalculateFoodBalance(request.id_food, request.new_saldo);
+                return Ok(new { message = "Saldo recalculado correctamente" });
+            }
+            catch (Exception ex)
+            {
+                FunctionsGeneral.AddLog($"Error en RecalculateFoodBalance: {ex.Message}");
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpPut("ToggleFoodStatus")]
+        public IActionResult ToggleFoodStatus([FromBody] FoodModel entity)
+        {
+            try
+            {
+                if (entity.Id_food <= 0)
+                {
+                    return BadRequest("Invalid food ID.");
+                }
+
+                FunctionsGeneral.AddLog($"Cambiando estado del alimento ID {entity.Id_food} a {entity.estado_food}");
+
+                var result = _Services.ToggleFoodStatus(entity.Id_food, entity.estado_food);
+
+                if (result)
+                {
+                    return Ok(new { message = $"Estado del alimento cambiado a {entity.estado_food} correctamente" });
+                }
+                else
+                {
+                    return NotFound("Food not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                FunctionsGeneral.AddLog($"Error en ToggleFoodStatus: {ex.Message}");
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
     }
 }

@@ -50,11 +50,41 @@ namespace cunigranja.Services
                 _context.SaveChanges();
             }
         }
+
+        // Método para verificar la capacidad de una jaula
+        public bool CheckCageCapacity(int cageId)
+        {
+            // Obtener la jaula
+            var cage = _context.cage.FirstOrDefault(c => c.Id_cage == cageId);
+            if (cage == null) return false;
+
+            // Obtener la cantidad máxima de animales que soporta
+            int maxCapacity = cage.cantidad_animales;
+
+            // Contar cuántos conejos están asignados a esta jaula
+            int currentOccupancy = _context.rabbit.Count(r => r.Id_cage == cageId);
+
+            // Verificar si hay capacidad disponible
+            return currentOccupancy < maxCapacity;
+        }
+
+        // Método para obtener la ocupación actual de una jaula
+        public int GetCageOccupancy(int cageId)
+        {
+            return _context.rabbit.Count(r => r.Id_cage == cageId);
+        }
+        // Añade este método a tu clase CageServices
         public IEnumerable<CageModel> GetCageInRange(int startId, int endId)
         {
             return _context.cage
                            .Where(u => u.Id_cage >= startId && u.Id_cage <= endId)
                            .ToList();
+        }
+        // Método para obtener la capacidad máxima de una jaula
+        public int GetCageCapacity(int cageId)
+        {
+            var cage = _context.cage.FirstOrDefault(c => c.Id_cage == cageId);
+            return cage?.cantidad_animales ?? 0;
         }
     }
 }

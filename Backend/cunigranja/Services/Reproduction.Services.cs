@@ -1,4 +1,5 @@
 ﻿using cunigranja.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace cunigranja.Services
 {
@@ -10,18 +11,18 @@ namespace cunigranja.Services
         {
             _context = context;
         }
-        public IEnumerable<ReproductionModel> GetReproduction()
+        public IEnumerable<ReproductionModel> GetAll()
         {
-            return _context.reproduction.ToList();
+            return _context.reproduction.Include(e => e.rabbitmodel).ToList();
         }
         public void Add(ReproductionModel entity)
         {
             _context.reproduction.Add(entity);
             _context.SaveChanges();
         }
-        public bool DeleteById(int Id_reproduction)
+        public bool DeleteById(int Id)
         {
-            var reproduction = _context.reproduction.Find(Id_reproduction);
+            var reproduction = _context.reproduction.Find(Id);
             if (reproduction!= null)
             {
                 _context.reproduction.Remove(reproduction);
