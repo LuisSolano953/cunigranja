@@ -1,0 +1,2 @@
+05/04/2025 10:51:41Can't convert NULL to Int32
+05/04/2025 18:17:05The database operation was expected to affect 1 row(s), but actually affected 0 row(s); data may have been modified or deleted since entities were loaded. See https://go.microsoft.com/fwlink/?LinkId=527962 for information on understanding and handling optimistic concurrency exceptions.

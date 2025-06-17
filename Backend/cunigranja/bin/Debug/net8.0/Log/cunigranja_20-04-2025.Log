@@ -1,0 +1,167 @@
+20/04/2025 2:26:47 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 2:26:50 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 2:26:50 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 2:26:50 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 2:26:50 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 2:26:50 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 2:26:50 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 2:26:50 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 2:26:50 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 2:26:50 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 2:26:50 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 2:26:50 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 2:26:56 p. m.RecalculateFoodBalance: Recalculando saldo para alimento ID 9, nuevo saldo: 120
+20/04/2025 2:27:39 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 2:27:39 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 2:27:40 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 2:27:40 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 2:27:41 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 2:27:41 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 2:27:43 p. m.RecalculateFoodBalance: Recalculando saldo para alimento ID 9, nuevo saldo: 120
+20/04/2025 4:24:12 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 4:24:12 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 4:24:22 p. m.RecalculateFoodBalance: Recalculando saldo para alimento ID 9, nuevo saldo: 121
+20/04/2025 4:24:22 p. m.RecalculateFoodBalance: Alimento ID 9, saldo anterior: 120, nuevo saldo: 121, diferencia: 1
+20/04/2025 4:24:23 p. m.RecalculateFoodBalance: Actualizada existencia actual en entrada ID 1 a 121
+20/04/2025 4:24:23 p. m.RecalculateFoodBalance: Actualizados 1 registros de alimentación para alimento ID 9
+20/04/2025 4:24:53 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 4:24:53 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 4:24:54 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 4:24:54 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 4:24:57 p. m.RecalculateFoodBalance: Recalculando saldo para alimento ID 9, nuevo saldo: 121
+20/04/2025 4:24:57 p. m.RecalculateFoodBalance: Alimento ID 9, saldo anterior: 120,0999984741211, nuevo saldo: 121, diferencia: 0,9000015258789062
+20/04/2025 4:24:57 p. m.RecalculateFoodBalance: Actualizada existencia actual en entrada ID 1 a 121
+20/04/2025 4:24:57 p. m.RecalculateFoodBalance: Actualizados 1 registros de alimentación para alimento ID 9
+20/04/2025 4:25:04 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 4:25:04 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 4:25:05 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 4:25:05 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 4:26:19 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 4:26:19 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 4:26:21 p. m.RecalculateFoodBalance: Recalculando saldo para alimento ID 9, nuevo saldo: 122
+20/04/2025 4:26:21 p. m.RecalculateFoodBalance: Alimento ID 9, saldo anterior: 121, nuevo saldo: 122, diferencia: 1
+20/04/2025 4:26:21 p. m.RecalculateFoodBalance: Actualizada existencia actual en entrada ID 1 a 122
+20/04/2025 4:26:21 p. m.RecalculateFoodBalance: Actualizados 1 registros de alimentación para alimento ID 9
+20/04/2025 4:27:02 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 4:27:02 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 4:27:05 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 4:27:05 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 4:27:07 p. m.RecalculateFoodBalance: Recalculando saldo para alimento ID 9, nuevo saldo: 123
+20/04/2025 4:27:07 p. m.RecalculateFoodBalance: Alimento ID 9, saldo anterior: 122,9000015258789, nuevo saldo: 123, diferencia: 0,09999847412109375
+20/04/2025 4:27:07 p. m.RecalculateFoodBalance: Actualizada existencia actual en entrada ID 1 a 123
+20/04/2025 4:27:07 p. m.RecalculateFoodBalance: Actualizados 1 registros de alimentación para alimento ID 9
+20/04/2025 4:27:38 p. m.GetAvailableFood: Encontrados 6 alimentos disponibles
+20/04/2025 4:27:38 p. m.GetAvailableFood: Encontrados 6 alimentos disponibles
+20/04/2025 4:40:24 p. m.GetAvailableFood: Encontrados 6 alimentos disponibles
+20/04/2025 4:40:24 p. m.GetAvailableFood: Encontrados 6 alimentos disponibles
+20/04/2025 4:40:41 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 4:40:41 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 4:40:43 p. m.RecalculateFoodBalance: Recalculando saldo para alimento ID 9, nuevo saldo: 123,3
+20/04/2025 4:40:43 p. m.RecalculateFoodBalance: Alimento ID 9, saldo anterior: 123,0999984741211, nuevo saldo: 123,3, diferencia: 0,2000015258789034
+20/04/2025 4:40:43 p. m.RecalculateFoodBalance: Actualizada existencia actual en entrada ID 1 a 123
+20/04/2025 4:40:43 p. m.RecalculateFoodBalance: Actualizados 1 registros de alimentación para alimento ID 9
+20/04/2025 4:41:17 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 4:41:17 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 4:41:17 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 4:41:17 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 4:41:19 p. m.RecalculateFoodBalance: Recalculando saldo para alimento ID 9, nuevo saldo: 125
+20/04/2025 4:41:19 p. m.RecalculateFoodBalance: Alimento ID 9, saldo anterior: 123,30000305175781, nuevo saldo: 125, diferencia: 1,6999969482421875
+20/04/2025 4:41:19 p. m.RecalculateFoodBalance: Actualizada existencia actual en entrada ID 1 a 125
+20/04/2025 4:41:19 p. m.RecalculateFoodBalance: Actualizados 1 registros de alimentación para alimento ID 9
+20/04/2025 4:42:06 p. m.GetAvailableFood: Encontrados 6 alimentos disponibles
+20/04/2025 4:42:06 p. m.GetAvailableFood: Encontrados 6 alimentos disponibles
+20/04/2025 4:42:22 p. m.GetAvailableFood: Encontrados 6 alimentos disponibles
+20/04/2025 4:42:22 p. m.GetAvailableFood: Encontrados 6 alimentos disponibles
+20/04/2025 4:48:32 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 4:48:32 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 4:48:34 p. m.RecalculateFoodBalance: Recalculando saldo para alimento ID 9, nuevo saldo: 126
+20/04/2025 4:48:34 p. m.RecalculateFoodBalance: Alimento ID 9, saldo anterior: 124, nuevo saldo: 126, diferencia: 2
+20/04/2025 4:48:34 p. m.RecalculateFoodBalance: Actualizada existencia actual en entrada ID 1 a 126
+20/04/2025 4:48:34 p. m.RecalculateFoodBalance: Actualizados 1 registros de alimentación para alimento ID 9
+20/04/2025 4:51:16 p. m.Datos recibidos: fecha=20/04/2025 12:00:00 a. m., valor=3000, cantidad=12, Id_food=9
+20/04/2025 6:11:38 p. m.UpdateFeeding: ID=1, Cantidad original=1000, Nueva cantidad=100
+20/04/2025 6:11:39 p. m.RecalculateFoodBalance: Alimento ID 9, nuevo saldo: 606,9
+20/04/2025 6:11:39 p. m.RecalculateFoodBalance: Actualizada existencia actual en entrada ID 3 a 607
+20/04/2025 6:11:39 p. m.RecalculateFoodBalance: Actualizados 1 registros de alimentación para alimento ID 9
+20/04/2025 6:15:57 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 6:15:57 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 6:15:58 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 6:15:58 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 6:16:03 p. m.RecalculateFoodBalance: Recalculando saldo para alimento ID 9, nuevo saldo: 607
+20/04/2025 6:16:03 p. m.RecalculateFoodBalance: Alimento ID 9, nuevo saldo: 607
+20/04/2025 6:16:03 p. m.RecalculateFoodBalance: Actualizada existencia actual en entrada ID 3 a 607
+20/04/2025 6:16:03 p. m.RecalculateFoodBalance: Actualizados 1 registros de alimentación para alimento ID 9
+20/04/2025 6:16:28 p. m.UpdateFeeding: ID=1, Cantidad original=100, Nueva cantidad=100
+20/04/2025 6:16:28 p. m.RecalculateFoodBalance: Alimento ID 6, nuevo saldo: 4,9
+20/04/2025 6:16:28 p. m.RecalculateFoodBalance: Actualizados 2 registros de alimentación para alimento ID 6
+20/04/2025 8:05:45 p. m.GetAvailableFood: Encontrados 6 alimentos disponibles
+20/04/2025 8:05:45 p. m.GetAvailableFood: Encontrados 6 alimentos disponibles
+20/04/2025 8:06:14 p. m.GetAvailableFood: Encontrados 6 alimentos disponibles
+20/04/2025 8:06:14 p. m.GetAvailableFood: Encontrados 6 alimentos disponibles
+20/04/2025 8:06:29 p. m.Datos recibidos: Id_food=9, cantidad=100, Id_rabbit=22, Id_user=1, hora=20:06
+20/04/2025 8:06:29 p. m.RecalculateFoodBalance: Alimento ID 9, saldo anterior: 606,9, nuevo saldo: 606,9
+20/04/2025 8:06:30 p. m.RecalculateFoodBalance: Actualizada existencia actual en entrada ID 3 a 607
+20/04/2025 8:06:30 p. m.RecalculateFoodBalance: Encontrados 1 registros de alimentación para alimento ID 9
+20/04/2025 8:06:30 p. m.RecalculateFoodBalance: Registro más reciente (ID 1) actualizado a 606,9
+20/04/2025 8:06:30 p. m.RecalculateFoodBalance: Actualizados 1 registros de alimentación para alimento ID 9
+20/04/2025 8:11:09 p. m.UpdateFeeding: ID=1, Cantidad original=100, Nueva cantidad=200
+20/04/2025 8:11:09 p. m.RecalculateFoodBalance: Alimento ID 9, saldo anterior: 606,8, nuevo saldo: 606,8
+20/04/2025 8:11:09 p. m.RecalculateFoodBalance: Actualizada existencia actual en entrada ID 3 a 607
+20/04/2025 8:11:09 p. m.RecalculateFoodBalance: Encontrados 1 registros de alimentación para alimento ID 9
+20/04/2025 8:11:09 p. m.RecalculateFoodBalance: Registro más reciente (ID 1) actualizado a 606,8
+20/04/2025 8:11:09 p. m.RecalculateFoodBalance: Actualizados 1 registros de alimentación para alimento ID 9
+20/04/2025 8:33:51 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 8:33:51 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 8:33:59 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 8:33:59 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 8:34:02 p. m.RecalculateFoodBalance: Recalculando saldo para alimento ID 9, nuevo saldo: 608
+20/04/2025 8:34:02 p. m.RecalculateFoodBalance: Alimento ID 9, saldo anterior: 606,7999877929688, nuevo saldo: 608
+20/04/2025 8:34:03 p. m.RecalculateFoodBalance: Actualizada existencia actual en entrada ID 3 a 608
+20/04/2025 8:34:03 p. m.RecalculateFoodBalance: Encontrados 1 registros de alimentación para alimento ID 9
+20/04/2025 8:34:03 p. m.RecalculateFoodBalance: Registro más reciente (ID 1) actualizado a 608
+20/04/2025 8:34:03 p. m.RecalculateFoodBalance: Actualizados 1 registros de alimentación para alimento ID 9
+20/04/2025 8:34:09 p. m.GetFeedingByFood: Buscando registros para alimento ID 9
+20/04/2025 8:34:09 p. m.GetFeedingByFood: Encontrados 1 registros para alimento ID 9
+20/04/2025 8:34:11 p. m.RecalculateFoodBalance: Recalculando saldo para alimento ID 9, nuevo saldo: 609
+20/04/2025 8:34:11 p. m.RecalculateFoodBalance: Alimento ID 9, saldo anterior: 608, nuevo saldo: 609
+20/04/2025 8:34:11 p. m.RecalculateFoodBalance: Actualizada existencia actual en entrada ID 3 a 609
+20/04/2025 8:34:11 p. m.RecalculateFoodBalance: Encontrados 1 registros de alimentación para alimento ID 9
+20/04/2025 8:34:11 p. m.RecalculateFoodBalance: Registro más reciente (ID 1) actualizado a 609
+20/04/2025 8:34:11 p. m.RecalculateFoodBalance: Actualizados 1 registros de alimentación para alimento ID 9
+20/04/2025 10:37:23 p. m.Datos recibidos: fecha=20/04/2025 12:00:00 a. m., valor=30000, cantidad=5, Id_food=12
+20/04/2025 10:37:23 p. m.RecalculateFoodBalance: Alimento ID 12, saldo anterior: 320, nuevo saldo: 320
+20/04/2025 10:37:23 p. m.RecalculateFoodBalance: Actualizada existencia actual en entrada ID 1 a 320
+20/04/2025 10:37:49 p. m.GetAvailableFood: Encontrados 1 alimentos disponibles
+20/04/2025 10:37:49 p. m.GetAvailableFood: Encontrados 1 alimentos disponibles
+20/04/2025 10:38:13 p. m.Datos recibidos: Id_food=12, cantidad=100, Id_rabbit=22, Id_user=1, hora=22:38
+20/04/2025 10:38:13 p. m.Add: Alimento ID=12, Saldo anterior=320, Cantidad=0,1, Nuevo saldo=319,9
+20/04/2025 10:38:13 p. m.Error en RecalculateFoodBalance: The connection is already in a transaction and cannot participate in another transaction.
+20/04/2025 10:38:14 p. m.Error en FeedingServices.Add: The connection is already in a transaction and cannot participate in another transaction.
+20/04/2025 10:38:14 p. m.Error en CreateFeeding: The connection is already in a transaction and cannot participate in another transaction.
+20/04/2025 10:38:14 p. m.Stack Trace:    at cunigranja.Services.FeedingServices.Add(FeedingModel entity) in C:\Users\usser\Documents\main\cunigranja\Backend\cunigranja\Services\Feeding.Services.cs:line 139
+   at cunigranja.Controllers.FeedingController.Add(FeedingModel entity) in C:\Users\usser\Documents\main\cunigranja\Backend\cunigranja\Controllers\Feeding.Controller.cs:line 73
+20/04/2025 10:43:32 p. m.Datos recibidos: Id_food=12, cantidad=100, Id_rabbit=22, Id_user=1, hora=22:43
+20/04/2025 10:43:32 p. m.Add: Alimento ID=12, Saldo anterior=320, Cantidad=0,1, Nuevo saldo=319,9
+20/04/2025 10:43:32 p. m.Error en RecalculateFoodBalance: The connection is already in a transaction and cannot participate in another transaction.
+20/04/2025 10:43:32 p. m.Error en FeedingServices.Add: The connection is already in a transaction and cannot participate in another transaction.
+20/04/2025 10:43:32 p. m.Error en CreateFeeding: The connection is already in a transaction and cannot participate in another transaction.
+20/04/2025 10:43:32 p. m.Stack Trace:    at cunigranja.Services.FeedingServices.Add(FeedingModel entity) in C:\Users\usser\Documents\main\cunigranja\Backend\cunigranja\Services\Feeding.Services.cs:line 139
+   at cunigranja.Controllers.FeedingController.Add(FeedingModel entity) in C:\Users\usser\Documents\main\cunigranja\Backend\cunigranja\Controllers\Feeding.Controller.cs:line 73
+20/04/2025 11:02:53 p. m.GetAvailableFood: Encontrados 1 alimentos disponibles
+20/04/2025 11:02:53 p. m.GetAvailableFood: Encontrados 1 alimentos disponibles
+20/04/2025 11:02:53 p. m.GetAvailableFood: Encontrados 1 alimentos disponibles
+20/04/2025 11:02:53 p. m.GetAvailableFood: Encontrados 1 alimentos disponibles
+20/04/2025 11:03:02 p. m.Datos recibidos: Id_food=12, cantidad=100, Id_rabbit=22, Id_user=1, hora=23:02, skipRecalculation=False
+20/04/2025 11:03:03 p. m.Add: Alimento ID=12, Saldo anterior=320, Cantidad=0,1, Nuevo saldo=319,9, Existencia actual=319,9
+20/04/2025 11:03:44 p. m.RecalculateFoodBalance: Alimento ID 12, saldo anterior: 359,9, nuevo saldo: 359,9
+20/04/2025 11:03:44 p. m.RecalculateFoodBalance: Actualizada existencia actual en entrada ID 1 a 360
+20/04/2025 11:03:44 p. m.RecalculateFoodBalance: Encontrados 1 registros de alimentación para alimento ID 12
+20/04/2025 11:03:44 p. m.RecalculateFoodBalance: Registro más reciente (ID 3) actualizado a 359,8
+20/04/2025 11:03:44 p. m.RecalculateFoodBalance: Actualizados 1 registros de alimentación para alimento ID 12
+20/04/2025 11:03:44 p. m.RecalculateFoodBalance: Saldo final del alimento actualizado a 359,8
+20/04/2025 11:04:14 p. m.RecalculateFoodBalance: Alimento ID 12, saldo anterior: 319,8, nuevo saldo: 319,8
+20/04/2025 11:04:14 p. m.RecalculateFoodBalance: Actualizada existencia actual en entrada ID 1 a 320
+20/04/2025 11:04:14 p. m.RecalculateFoodBalance: Encontrados 1 registros de alimentación para alimento ID 12
+20/04/2025 11:04:14 p. m.RecalculateFoodBalance: Registro más reciente (ID 3) actualizado a 319,7
+20/04/2025 11:04:14 p. m.RecalculateFoodBalance: Actualizados 1 registros de alimentación para alimento ID 12
+20/04/2025 11:04:14 p. m.RecalculateFoodBalance: Saldo final del alimento actualizado a 319,7

@@ -1,0 +1,42 @@
+4/05/2025 2:23:39 p. m.GetFeedingByFood: Buscando registros para alimento ID 13
+4/05/2025 2:23:39 p. m.GetFeedingByFood: Encontrados 0 registros para alimento ID 13
+4/05/2025 2:23:46 p. m.RecalculateFoodBalance: Recalculando saldo para alimento ID 13, nuevo saldo: 340000
+4/05/2025 2:23:46 p. m.RecalculateFoodBalance: Alimento ID 13, saldo anterior: 3400000, nuevo saldo: 340000
+4/05/2025 2:24:52 p. m.Datos recibidos: fecha=4/05/2025 12:00:00 a. m., valor=40000, cantidad=5, Id_food=13
+4/05/2025 2:24:52 p. m.RecalculateFoodBalance: Alimento ID 13, saldo anterior: 540000, nuevo saldo: 540000
+4/05/2025 2:24:52 p. m.RecalculateFoodBalance: Actualizada existencia actual en entrada ID 2 a 540000
+4/05/2025 2:25:16 p. m.GetAvailableFood: Encontrados 2 alimentos disponibles
+4/05/2025 2:25:16 p. m.GetAvailableFood: Encontrados 2 alimentos disponibles
+4/05/2025 2:25:54 p. m.Datos recibidos: Id_food=13, cantidad=100, Id_rabbit=23, Id_user=1, hora=14:25, skipRecalculation=False
+4/05/2025 2:25:54 p. m.Add: Alimento ID=13, Saldo anterior=540000, Cantidad=100, Nuevo saldo=539900, Existencia actual=539900
+4/05/2025 2:33:23 p. m.GetAvailableFood: Encontrados 2 alimentos disponibles
+4/05/2025 2:33:23 p. m.GetAvailableFood: Encontrados 2 alimentos disponibles
+4/05/2025 2:41:19 p. m.GetFeedingById: ID=5, Alimento ID=13, Existencia actual=539900
+4/05/2025 2:41:19 p. m.UpdateFeeding: ID=5, Cantidad original=100, Nueva cantidad=120
+4/05/2025 2:41:19 p. m.UpdateFeeding: ID=5, Alimento original ID=13, Nuevo alimento ID=13, Cantidad original=100, Nueva cantidad=120
+4/05/2025 2:41:19 p. m.UpdateFeeding: Mismo alimento ID=13, Diferencia=20, Nuevo saldo=539880
+4/05/2025 2:41:19 p. m.Error en RecalculateFoodBalance: The connection is already in a transaction and cannot participate in another transaction.
+4/05/2025 2:41:19 p. m.Error en FeedingServices.UpdateFeeding: The connection is already in a transaction and cannot participate in another transaction.
+4/05/2025 2:41:20 p. m.Error en UpdateFeeding: The connection is already in a transaction and cannot participate in another transaction.
+4/05/2025 2:46:54 p. m.GetFeedingById: ID=5, Alimento ID=13, Existencia actual=539900
+4/05/2025 2:46:54 p. m.UpdateFeeding: ID=5, Cantidad original=100, Nueva cantidad=120
+4/05/2025 2:46:54 p. m.Usando método UpdateFeedingDirectly
+4/05/2025 2:46:54 p. m.UpdateFeedingDirectly: ID=5, Alimento original ID=13, Nuevo alimento ID=13, Cantidad original=100, Nueva cantidad=120
+4/05/2025 2:46:54 p. m.UpdateFeedingDirectly: Mismo alimento ID=13, Diferencia=20, Nuevo saldo=539880
+4/05/2025 2:46:54 p. m.UpdateFeedingDirectly: Transacción completada con éxito
+4/05/2025 2:46:54 p. m.GetFeedingById: ID=5, Alimento ID=13, Existencia actual=539880
+4/05/2025 3:04:04 p. m.GetFeedingByFood: Buscando registros para alimento ID 12
+4/05/2025 3:04:04 p. m.GetFeedingByFood: Encontrados 2 registros para alimento ID 12
+4/05/2025 3:04:13 p. m.RecalculateFoodBalance: Recalculando saldo para alimento ID 12, nuevo saldo: 319000
+4/05/2025 3:04:13 p. m.RecalculateFoodBalance: Alimento ID 12, saldo anterior: 319,6000061035156, nuevo saldo: 319000
+4/05/2025 3:04:14 p. m.RecalculateFoodBalance: Actualizada existencia actual en entrada ID 1 a 319000
+4/05/2025 3:04:14 p. m.RecalculateFoodBalance: Encontrados 2 registros de alimentación para alimento ID 12
+4/05/2025 3:04:14 p. m.RecalculateFoodBalance: Registro más reciente (ID 4) actualizado a 318900
+4/05/2025 3:04:14 p. m.RecalculateFoodBalance: Actualizados 2 registros de alimentación para alimento ID 12
+4/05/2025 3:04:14 p. m.RecalculateFoodBalance: Saldo final del alimento actualizado a 318900
+4/05/2025 3:04:14 p. m.Error en RecalculateFoodBalance: The connection is already in a transaction and cannot participate in another transaction.
+4/05/2025 3:04:14 p. m.Error en UpdateFood: The connection is already in a transaction and cannot participate in another transaction.
+4/05/2025 3:04:14 p. m.The connection is already in a transaction and cannot participate in another transaction.
+4/05/2025 3:04:14 p. m.Error en RecalculateFoodBalance: The connection is already in a transaction and cannot participate in another transaction.
+4/05/2025 3:04:14 p. m.Error en UpdateFood: The connection is already in a transaction and cannot participate in another transaction.
+4/05/2025 3:04:14 p. m.The connection is already in a transaction and cannot participate in another transaction.
