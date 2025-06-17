@@ -15,7 +15,7 @@ services:
       context: ./Frontend/cunigranja
       dockerfile: Dockerfile
     ports:
-      - "3002:80"
+      - "3002:3002"
     networks:
       - app-network
 
