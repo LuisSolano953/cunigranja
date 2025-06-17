@@ -1,8 +1,0 @@
-25/05/2025 8:43:35 p. m.An error occurred while saving the entity changes. See the inner exception for details.
-25/05/2025 10:46:12 p. m.No se encontró el conejo con ID 0
-25/05/2025 10:46:52 p. m.No se encontró el conejo con ID 0
-25/05/2025 10:47:43 p. m.No se encontró el conejo con ID 212
-25/05/2025 10:49:13 p. m.No se encontró el conejo con ID 0
-25/05/2025 11:29:35 p. m.An error occurred while saving the entity changes. See the inner exception for details.
-25/05/2025 11:33:20 p. m.The instance of entity type 'RabbitModel' cannot be tracked because another instance with the same key value for {'Id_rabbit'} is already being tracked. When attaching existing entities, ensure that only one entity instance with a given key value is attached. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see the conflicting key values.
-25/05/2025 11:52:43 p. m.The instance of entity type 'RabbitModel' cannot be tracked because another instance with the same key value for {'Id_rabbit'} is already being tracked. When attaching existing entities, ensure that only one entity instance with a given key value is attached. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see the conflicting key values.

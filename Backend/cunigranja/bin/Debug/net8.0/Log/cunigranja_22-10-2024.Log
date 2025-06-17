@@ -1,2 +1,0 @@
-22/10/2024 11:46:10 a. m.The entity type 'FeedingModel' requires a primary key to be defined. If you intended to use a keyless entity type, call 'HasNoKey' in 'OnModelCreating'. For more information on keyless entity types, see https://go.microsoft.com/fwlink/?linkid=2141943.
-22/10/2024 11:58:32 a. m.The entity type 'FeedingModel' requires a primary key to be defined. If you intended to use a keyless entity type, call 'HasNoKey' in 'OnModelCreating'. For more information on keyless entity types, see https://go.microsoft.com/fwlink/?linkid=2141943.
