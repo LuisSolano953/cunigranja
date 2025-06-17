@@ -298,7 +298,7 @@ const UpdateCage = ({ cageData, onClose, onUpdate }) => {
           {validationError && <small className="text-red-500 mt-1 block">{validationError}</small>}
           {!validationError && estado_cage.trim() !== originalCageNumber.trim() && (
             <small className="text-blue-600">
-              Número original: "{originalCageNumber}" → Nuevo: "{estado_cage}"
+             `Número original: &quot;${originalCageNumber}&quot; → Nuevo: &quot;${estado_cage}&quot;`,
             </small>
           )}
           {!validationError && estado_cage.trim() === originalCageNumber.trim() && (

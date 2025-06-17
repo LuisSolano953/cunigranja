@@ -384,7 +384,7 @@ const RegisterEntrada = ({ refreshData, onCloseForm }) => {
             <p className="text-xs text-green-600 mt-1">
               ✅ Solo se muestran alimentos disponibles ({food.length} disponibles)
             </p>
-            <p className="text-xs text-gray-500">Estados permitidos: "Existente" y "Casi por acabar"</p>
+            <p className="text-xs text-gray-500">Estados permitidos: &quot;Existente&quot; y &quot;Casi por acabar&quot;</p>
           </div>
 
           <div>

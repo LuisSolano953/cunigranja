@@ -504,8 +504,8 @@ const UpdateFeeding = ({ feedingData, onClose, onUpdate }) => {
               <div className="ml-3">
                 <h3 className="text-sm font-medium text-red-800">Alimentacion No Disponible</h3>
                 <p className="text-sm text-red-700 mt-1">
-                  No se puede actualizar esta alimentación porque el alimento "
-                  {selectedFood?.nombre_food || selectedFood?.name_food}" está inactivo o agotado. Para realizar
+                  No se puede actualizar esta alimentación porque el alimento &quot;
+                  {selectedFood?.nombre_food || selectedFood?.name_food}&quot; está inactivo o agotado. Para realizar 
                   modificaciones, el alimento debe estar disponible.
                 </p>
               </div>

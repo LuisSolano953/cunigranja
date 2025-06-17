@@ -427,7 +427,7 @@ const UpdateEntrada = ({ entradaData, onClose, onUpdate }) => {
               <div className="ml-3">
                 <h3 className="text-sm font-medium text-red-800">Alimento Inactivo</h3>
                 <p className="text-sm text-red-700 mt-1">
-                  No se puede actualizar esta entrada porque el alimento "{selectedFood?.name_food}" está inactivo. Para
+                 No se puede actualizar esta entrada porque el alimento &quot;{selectedFood?.name_food}&quot; está inactivo. Para
                   realizar modificaciones, el alimento debe estar activo.
                 </p>
               </div>

@@ -340,7 +340,7 @@ const UpdateMortality = ({ mortalityData, onClose, onUpdate }) => {
           <p className="text-sm text-blue-800">
             <strong>ℹ️ Información:</strong> Al actualizar la mortalidad:
             <br />• Si cambia el conejo, el conejo anterior se reactivará
-            <br />• El nuevo conejo seleccionado se marcará como "Inactivo"
+            <br />• El nuevo conejo seleccionado se marcará como &quot;Inactivo&quot;
           </p>
         </div>
 

@@ -275,7 +275,7 @@ const RegisterMortality = ({ refreshData, onCloseForm }) => {
         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
           <p className="text-sm text-yellow-800">
             <strong>⚠️ Importante:</strong> Al registrar una mortalidad, el conejo seleccionado será automáticamente
-            marcado como "Inactivo".
+           marcado como &quot;Inactivo&quot;.
           </p>
         </div>
 
