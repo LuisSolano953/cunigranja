@@ -12,13 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigin",
-        builder => builder
-        .AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader());
+    options.AddPolicy("AllowSpecificOrigin", policy =>
+    {
+        policy.WithOrigins("http://10.6.96.50:3002")
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
 });
-
 // Add services to the container.
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -35,16 +35,16 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     });
 
-// Configuraci髇 de Swagger/OpenAPI
+// Configuraci贸n de Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Configuraci髇 de la base de datos
+// Configuraci贸n de la base de datos
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaulConnection"),
     new MySqlServerVersion(new Version(8, 0, 23))));
 
-// Configuraci髇 de JWT
+// Configuraci贸n de JWT
 //var key = builder.Configuration.GetSection("JWT:KeySecret").Value;
 
 //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -99,12 +99,12 @@ builder.Services.AddScoped<WeighingServices>();
 // Luego registramos RabbitServices que depende de WeighingServices
 builder.Services.AddScoped<RabbitServices>();
 
-// Mantener el resto de los servicios como est醤
+// Mantener el resto de los servicios como est谩n
 builder.Services.AddScoped<CageServices>();
 builder.Services.AddScoped<HealthServices>();
 
 // Registrar los servicios de inventario en el orden correcto
-// Primero FoodServices ya que otros servicios dependen de 閘
+// Primero FoodServices ya que otros servicios dependen de 茅l
 builder.Services.AddScoped<FoodServices>();
 // Luego los servicios que dependen de FoodServices
 builder.Services.AddScoped<EntradaServices>();
@@ -127,7 +127,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// Aseg鷕ate de agregar el middleware de routing y autenticaci髇 en el orden correcto
+// Aseg煤rate de agregar el middleware de routing y autenticaci贸n en el orden correcto
 app.UseCors("AllowSpecificOrigin");
 app.UseRouting();
 app.UseAuthentication();
@@ -138,7 +138,7 @@ app.UseAuthorization();
 
 // Mapea los controladores
 app.MapControllers();
-app.UseStaticFiles(); // Activa la carpeta wwwroot como p鷅lica
+app.UseStaticFiles(); // Activa la carpeta wwwroot como p煤blica
 
 
 app.Run();
