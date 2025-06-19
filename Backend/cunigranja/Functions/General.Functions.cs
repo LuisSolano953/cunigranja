@@ -41,7 +41,7 @@ namespace cunigranja.Functions
                 };
 
                 // Crear el enlace de restablecimiento con el token
-                string resetLink = $"http://localhost:3000/user/reset_password?token={resetToken}";
+                string resetLink = $"http://10.6.96.50:3002/user/reset_password?token={resetToken}";
 
 
                 // Crear el cuerpo del correo con HTML y la imagen incrustada
