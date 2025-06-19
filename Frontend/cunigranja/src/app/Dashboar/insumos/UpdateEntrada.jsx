@@ -19,7 +19,7 @@ const UpdateEntrada = ({ entradaData, onClose, onUpdate }) => {
   const [loadingFood, setLoadingFood] = useState(true)
   const [selectedFood, setSelectedFood] = useState(null)
 
-  // NUEVO: Estado para controlar si el alimento está inactivo
+  // MODIFICADO: Estado para controlar si el alimento está inactivo (solo bloquear si es "Inactivo")
   const [isSelectedFoodInactive, setIsSelectedFoodInactive] = useState(false)
 
   // Campos calculados automáticamente - solo para mostrar al usuario
@@ -33,6 +33,24 @@ const UpdateEntrada = ({ entradaData, onClose, onUpdate }) => {
   // Función para validar que solo contenga números
   const containsLetters = (text) => {
     return /[a-zA-Z]/.test(text)
+  }
+
+  // NUEVA: Función para determinar si un alimento puede ser actualizado
+  const canUpdateFood = (foodItem) => {
+    if (!foodItem) return false
+
+    const estado = foodItem.estado_food || foodItem.Estado || foodItem.status || foodItem.Status || ""
+    const estadoLower = estado.toLowerCase()
+
+    // Permitir actualización si el estado es "Existente" o "Casi por acabar"
+    // Solo bloquear si es "Inactivo"
+    return estadoLower !== "inactivo"
+  }
+
+  // NUEVA: Función para obtener el estado del alimento de forma consistente
+  const getFoodStatus = (foodItem) => {
+    if (!foodItem) return "Desconocido"
+    return foodItem.estado_food || foodItem.Estado || foodItem.status || foodItem.Status || "Desconocido"
   }
 
   // Manejar cambios en la cantidad (solo números)
@@ -102,20 +120,25 @@ const UpdateEntrada = ({ entradaData, onClose, onUpdate }) => {
         setLoadingFood(true)
         const response = await axiosInstance.get("/Api/Food/GetFood")
         if (response.status === 200) {
-          // CARGAR TODOS LOS ALIMENTOS (activos e inactivos) para poder mostrar el alimento actual
-          // pero marcar cuáles están inactivos
+          // CARGAR TODOS LOS ALIMENTOS para poder mostrar el alimento actual
           const formattedFood = response.data.map((item) => ({
             ...item,
             saldo_existente: Math.round(item.saldo_existente * 100) / 100,
-            // Verificar diferentes posibles nombres de campo para el estado
-            isActive: (() => {
-              const estado = item.estado || item.Estado || item.status || item.Status
-              return estado === "Activo" || estado === "activo" || estado === "ACTIVO"
-            })(),
+            // MODIFICADO: Usar la nueva función para determinar si se puede actualizar
+            canUpdate: canUpdateFood(item),
+            status: getFoodStatus(item),
           }))
 
           setFood(formattedFood)
           console.log(`Alimentos cargados: ${formattedFood.length} total`)
+          console.log(
+            "Estados de alimentos:",
+            formattedFood.map((f) => ({
+              name: f.name_food,
+              status: f.status,
+              canUpdate: f.canUpdate,
+            })),
+          )
         }
       } catch (error) {
         console.error("Error al obtener food:", error)
@@ -169,8 +192,8 @@ const UpdateEntrada = ({ entradaData, onClose, onUpdate }) => {
           setIdFood((foundFood.Id_food || foundFood.id_food)?.toString() || "")
           setSelectedFood(foundFood)
 
-          // VERIFICAR SI EL ALIMENTO ESTÁ INACTIVO
-          setIsSelectedFoodInactive(!foundFood.isActive)
+          // MODIFICADO: Verificar si el alimento NO se puede actualizar (solo si es inactivo)
+          setIsSelectedFoodInactive(!foundFood.canUpdate)
 
           // Guardar el saldo existente original del alimento
           setSaldoExistenteOriginal(foundFood.saldo_existente)
@@ -196,9 +219,9 @@ const UpdateEntrada = ({ entradaData, onClose, onUpdate }) => {
     const selected = food.find((item) => (item.Id_food || item.id_food)?.toString() === foodId)
     setSelectedFood(selected)
 
-    // VERIFICAR SI EL ALIMENTO SELECCIONADO ESTÁ INACTIVO
+    // MODIFICADO: Verificar si el alimento seleccionado NO se puede actualizar
     if (selected) {
-      setIsSelectedFoodInactive(!selected.isActive)
+      setIsSelectedFoodInactive(!selected.canUpdate)
     } else {
       setIsSelectedFoodInactive(false)
     }
@@ -243,10 +266,11 @@ const UpdateEntrada = ({ entradaData, onClose, onUpdate }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    // VALIDACIÓN: No permitir actualización si el alimento está inactivo
+    // MODIFICADO: Validación mejorada - solo bloquear si el alimento está inactivo
     if (isSelectedFoodInactive) {
+      const estadoActual = getFoodStatus(selectedFood)
       setErrorMessage(
-        "No se puede actualizar una entrada cuando el alimento está inactivo. El alimento debe estar activo para realizar modificaciones.",
+        `No se puede actualizar una entrada cuando el alimento está en estado "${estadoActual}". Solo se pueden actualizar entradas de alimentos con estado "Existente" o "Casi por acabar".`,
       )
       setShowErrorAlert(true)
       return
@@ -302,14 +326,8 @@ const UpdateEntrada = ({ entradaData, onClose, onUpdate }) => {
       console.log("=== DATOS DE LA PETICIÓN ===")
       console.log("ID de entrada:", entradaId)
       console.log("Datos a enviar:", data)
-      console.log("Tipos de datos:")
-      console.log("- Id_entrada:", typeof data.Id_entrada, data.Id_entrada)
-      console.log("- fecha_entrada:", typeof data.fecha_entrada, data.fecha_entrada)
-      console.log("- valor_entrada:", typeof data.valor_entrada, data.valor_entrada)
-      console.log("- cantidad_entrada:", typeof data.cantidad_entrada, data.cantidad_entrada)
-      console.log("- valor_total:", typeof data.valor_total, data.valor_total)
-      console.log("- Id_food:", typeof data.Id_food, data.Id_food)
-      console.log("- existencia_actual:", typeof data.existencia_actual, data.existencia_actual)
+      console.log("Estado del alimento:", getFoodStatus(selectedFood))
+      console.log("Puede actualizar:", selectedFood?.canUpdate)
       console.log("============================")
 
       // Verificar que el endpoint existe antes de hacer la petición
@@ -401,7 +419,24 @@ const UpdateEntrada = ({ entradaData, onClose, onUpdate }) => {
     !valor_entrada ||
     !cantidad_entrada ||
     !Id_food ||
-    isSelectedFoodInactive // NUEVO: Deshabilitar si el alimento está inactivo
+    isSelectedFoodInactive // Solo deshabilitar si el alimento está inactivo
+
+  // NUEVA: Función para obtener el color del estado
+  const getStatusColor = (status) => {
+    const statusLower = status.toLowerCase()
+    switch (statusLower) {
+      case "existente":
+        return "text-green-600"
+      case "casi por acabar":
+        return "text-yellow-600"
+      case "agotado":
+        return "text-orange-600"
+      case "inactivo":
+        return "text-red-600"
+      default:
+        return "text-gray-600"
+    }
+  }
 
   return (
     <>
@@ -415,9 +450,9 @@ const UpdateEntrada = ({ entradaData, onClose, onUpdate }) => {
         onSubmit={handleSubmit}
         className="p-8 bg-white shadow-lg rounded-lg max-w-md mx-auto mt-10 border border-gray-400"
       >
-        
+        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Actualizar Entrada</h2>
 
-        {/* NUEVO: Alerta de alimento inactivo */}
+        {/* MODIFICADO: Alerta mejorada para alimentos inactivos */}
         {isSelectedFoodInactive && (
           <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
             <div className="flex items-center">
@@ -425,10 +460,32 @@ const UpdateEntrada = ({ entradaData, onClose, onUpdate }) => {
                 <span className="text-red-400 text-xl">⚠️</span>
               </div>
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-red-800">Alimento Inactivo</h3>
+                <h3 className="text-sm font-medium text-red-800">Alimento No Disponible</h3>
                 <p className="text-sm text-red-700 mt-1">
-                 No se puede actualizar esta entrada porque el alimento &quot;{selectedFood?.name_food}&quot; está inactivo. Para
-                  realizar modificaciones, el alimento debe estar activo.
+                  No se puede actualizar esta entrada porque el alimento &quot;{selectedFood?.name_food}&quot; está en
+                  estado &quot;{getFoodStatus(selectedFood)}&quot;. Solo se pueden actualizar entradas de alimentos con
+                  estado &quot;Existente&quot; o &quot;Casi por acabar&quot;.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* NUEVO: Mostrar información del estado actual del alimento */}
+        {selectedFood && !isSelectedFoodInactive && (
+          <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <span className="text-green-400 text-xl">✅</span>
+              </div>
+              <div className="ml-3">
+                <h3 className="text-sm font-medium text-green-800">Alimento Disponible</h3>
+                <p className="text-sm text-green-700 mt-1">
+                  El alimento &quot;{selectedFood.name_food}&quot; está en estado &quot;
+                  <span className={`font-semibold ${getStatusColor(getFoodStatus(selectedFood))}`}>
+                    {getFoodStatus(selectedFood)}
+                  </span>
+                  &quot; y puede ser actualizado.
                 </p>
               </div>
             </div>
@@ -478,14 +535,19 @@ const UpdateEntrada = ({ entradaData, onClose, onUpdate }) => {
                   <option
                     key={item.Id_food || item.id_food}
                     value={item.Id_food || item.id_food}
-                    className={!item.isActive ? "text-red-500" : ""}
+                    className={!item.canUpdate ? "text-red-500" : ""}
                   >
-                    {item.name_food} ({item.saldo_existente.toFixed(2)} g) {!item.isActive ? "(INACTIVO)" : ""}
+                    {item.name_food} ({item.saldo_existente.toFixed(2)} g) - {item.status}
+                    {!item.canUpdate ? " (NO DISPONIBLE)" : ""}
                   </option>
                 ))}
               </select>
             )}
-            {isSelectedFoodInactive && <p className="text-xs text-red-600 mt-1">❌ Este alimento está inactivo</p>}
+            {isSelectedFoodInactive && (
+              <p className="text-xs text-red-600 mt-1">
+                ❌ Este alimento está en estado &quot;{getFoodStatus(selectedFood)}&quot; y no se puede actualizar
+              </p>
+            )}
           </div>
 
           {/* Cantidad de Entrada */}
@@ -588,7 +650,7 @@ const UpdateEntrada = ({ entradaData, onClose, onUpdate }) => {
             {isLoading
               ? "Actualizando..."
               : isSelectedFoodInactive
-                ? "No se puede actualizar (Alimento inactivo)"
+                ? `No se puede actualizar (${getFoodStatus(selectedFood)})`
                 : "Actualizar Entrada"}
           </button>
         </div>
