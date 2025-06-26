@@ -31,7 +31,7 @@ function Entradapage() {
     
           Id_entrada: item.Id_entrada, // ← AGREGAR ESTA LÍNEA para mantener el ID original
           Alimento: item.foodmodel?.name_food || item.name_food || "N/A",
-          Fecha: item.fecha_entrada,
+          Fecha: new Date(item.fecha_entrada).toLocaleDateString("es-ES"),
           Cantidad: item.cantidad_entrada,
           "Valor unitario": item.valor_entrada,
           "Valor total": item.valor_total,
