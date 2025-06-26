@@ -188,19 +188,38 @@ function DataTable({
     return true
   }
 
-  // Función para exportar a Excel con estilos profesionales
+  // Función mejorada para exportar a Excel con formato más limpio
   const exportToExcel = () => {
     try {
       // Usar los datos filtrados si hay búsqueda, sino todos los datos
       const dataToExport = filteredData.length > 0 ? filteredData : Data
 
-      // Preparar los datos para Excel
+      // Preparar los datos para Excel de forma más limpia
       const excelData = dataToExport.map((row) => {
         const newRow = {}
         TitlesTable.forEach((title, index) => {
           const key = Object.keys(row)[index]
-          const value = key ? row[key] : null
-          newRow[title] = value !== null && value !== undefined ? value : ""
+          let value = key ? row[key] : null
+
+          // Limpiar y formatear los valores
+          if (value !== null && value !== undefined) {
+            value = String(value).trim()
+            // Si es una fecha, formatearla mejor
+            if (key && (key.toLowerCase().includes("fecha") || key.toLowerCase().includes("date"))) {
+              try {
+                const date = new Date(value)
+                if (!isNaN(date.getTime())) {
+                  value = date.toLocaleDateString("es-ES")
+                }
+              } catch (e) {
+                // Mantener el valor original si no se puede convertir
+              }
+            }
+          } else {
+            value = ""
+          }
+
+          newRow[title] = value
         })
         return newRow
       })
@@ -209,139 +228,132 @@ function DataTable({
       const wb = XLSX.utils.book_new()
 
       // Crear la hoja con los datos
-      const ws = XLSX.utils.json_to_sheet(excelData)
+      const ws = XLSX.utils.json_to_sheet([])
 
-      // Obtener el rango de datos
+      // Agregar encabezado con información del reporte
+      const currentDate = new Date().toLocaleDateString("es-ES", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+
+      // Agregar título y fecha
+      XLSX.utils.sheet_add_aoa(
+        ws,
+        [
+          ["REPORTE DE DATOS"],
+          [`Fecha de generación: ${currentDate}`],
+          [`Total de registros: ${dataToExport.length}`],
+          [], // Fila vacía para separación
+        ],
+        { origin: "A1" },
+      )
+
+      // Agregar los headers y datos
+      XLSX.utils.sheet_add_json(ws, excelData, {
+        origin: "A5",
+        skipHeader: false,
+      })
+
+      // Obtener el rango total
       const range = XLSX.utils.decode_range(ws["!ref"])
 
-      // Configurar estilos para los headers
-      for (let col = range.s.c; col <= range.e.c; col++) {
-        const headerCell = XLSX.utils.encode_cell({ r: 0, c: col })
-        if (!ws[headerCell]) continue
-
-        // Estilo para headers
-        ws[headerCell].s = {
-          font: {
-            bold: true,
-            color: { rgb: "FFFFFF" },
-            sz: 12,
-          },
-          fill: {
-            fgColor: { rgb: "428BCA" }, // Azul similar al PDF
-          },
-          alignment: {
-            horizontal: "center",
-            vertical: "center",
-          },
-          border: {
-            top: { style: "thin", color: { rgb: "000000" } },
-            bottom: { style: "thin", color: { rgb: "000000" } },
-            left: { style: "thin", color: { rgb: "000000" } },
-            right: { style: "thin", color: { rgb: "000000" } },
-          },
+      // Configurar estilos para el título
+      if (ws["A1"]) {
+        ws["A1"].s = {
+          font: { bold: true, sz: 14, color: { rgb: "1F4E79" } },
+          alignment: { horizontal: "center", vertical: "center" },
+          fill: { fgColor: { rgb: "E7F3FF" } },
         }
       }
 
-      // Aplicar estilos a las celdas de datos
-      for (let row = range.s.r + 1; row <= range.e.r; row++) {
+      // Estilo para la fecha
+      if (ws["A2"]) {
+        ws["A2"].s = {
+          font: { sz: 10, color: { rgb: "666666" } },
+          alignment: { horizontal: "left" },
+        }
+      }
+
+      // Estilo para el total de registros
+      if (ws["A3"]) {
+        ws["A3"].s = {
+          font: { sz: 10, color: { rgb: "666666" } },
+          alignment: { horizontal: "left" },
+        }
+      }
+
+      // Configurar estilos para los headers (fila 5)
+      for (let col = range.s.c; col <= range.e.c; col++) {
+        const headerCell = XLSX.utils.encode_cell({ r: 4, c: col })
+        if (ws[headerCell]) {
+          ws[headerCell].s = {
+            font: { bold: true, color: { rgb: "FFFFFF" }, sz: 11 },
+            fill: { fgColor: { rgb: "4472C4" } },
+            alignment: { horizontal: "center", vertical: "center" },
+            border: {
+              top: { style: "thin", color: { rgb: "000000" } },
+              bottom: { style: "thin", color: { rgb: "000000" } },
+              left: { style: "thin", color: { rgb: "000000" } },
+              right: { style: "thin", color: { rgb: "000000" } },
+            },
+          }
+        }
+      }
+
+      // Aplicar estilos a las celdas de datos (desde fila 6 en adelante)
+      for (let row = 5; row <= range.e.r; row++) {
         for (let col = range.s.c; col <= range.e.c; col++) {
           const cellAddress = XLSX.utils.encode_cell({ r: row, c: col })
-          if (!ws[cellAddress]) continue
-
-          // Alternar colores de filas
-          const isEvenRow = row % 2 === 0
-          ws[cellAddress].s = {
-            font: {
-              sz: 10,
-            },
-            fill: {
-              fgColor: { rgb: isEvenRow ? "F5F5F5" : "FFFFFF" },
-            },
-            alignment: {
-              horizontal: "left",
-              vertical: "center",
-            },
-            border: {
-              top: { style: "thin", color: { rgb: "CCCCCC" } },
-              bottom: { style: "thin", color: { rgb: "CCCCCC" } },
-              left: { style: "thin", color: { rgb: "CCCCCC" } },
-              right: { style: "thin", color: { rgb: "CCCCCC" } },
-            },
+          if (ws[cellAddress]) {
+            const isEvenRow = (row - 5) % 2 === 0
+            ws[cellAddress].s = {
+              font: { sz: 10 },
+              fill: { fgColor: { rgb: isEvenRow ? "F8F9FA" : "FFFFFF" } },
+              alignment: { horizontal: "left", vertical: "center" },
+              border: {
+                top: { style: "thin", color: { rgb: "E0E0E0" } },
+                bottom: { style: "thin", color: { rgb: "E0E0E0" } },
+                left: { style: "thin", color: { rgb: "E0E0E0" } },
+                right: { style: "thin", color: { rgb: "E0E0E0" } },
+              },
+            }
           }
         }
       }
 
       // Configurar ancho de columnas automático
       const colWidths = TitlesTable.map((title) => {
-        // Calcular ancho basado en el contenido
         let maxWidth = title.length
         dataToExport.forEach((row) => {
           const key = Object.keys(row)[TitlesTable.indexOf(title)]
           const value = key ? String(row[key] || "") : ""
           maxWidth = Math.max(maxWidth, value.length)
         })
-        return { wch: Math.min(Math.max(maxWidth + 2, 10), 50) }
+        return { wch: Math.min(Math.max(maxWidth + 3, 12), 40) }
       })
       ws["!cols"] = colWidths
-
-      // Agregar título y fecha en las primeras filas
-      XLSX.utils.sheet_add_aoa(
-        ws,
-        [
-          ["REPORTE DE DATOS"],
-          [`Generado el: ${new Date().toLocaleDateString("es-ES")}`],
-          [], // Fila vacía
-        ],
-        { origin: "A1" },
-      )
-
-      // Mover los datos hacia abajo
-      const newData = [TitlesTable, ...excelData.map((row) => TitlesTable.map((title) => row[title]))]
-      XLSX.utils.sheet_add_aoa(ws, newData, { origin: "A4" })
-
-      // Estilo para el título
-      ws["A1"].s = {
-        font: {
-          bold: true,
-          sz: 16,
-          color: { rgb: "000000" },
-        },
-        alignment: {
-          horizontal: "center",
-        },
-      }
-
-      // Estilo para la fecha
-      ws["A2"].s = {
-        font: {
-          sz: 10,
-          color: { rgb: "666666" },
-        },
-      }
 
       // Fusionar celdas para el título
       ws["!merges"] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: TitlesTable.length - 1 } }]
 
-      // Actualizar el rango
-      ws["!ref"] = XLSX.utils.encode_range({
-        s: { c: 0, r: 0 },
-        e: { c: TitlesTable.length - 1, r: dataToExport.length + 3 },
-      })
-
       // Agregar la hoja al workbook
-      XLSX.utils.book_append_sheet(wb, ws, "Datos")
+      XLSX.utils.book_append_sheet(wb, ws, "Reporte")
+
+      // Generar nombre de archivo con fecha
+      const fileName = `reporte_${new Date().toISOString().split("T")[0]}.xlsx`
 
       // Descargar el archivo
-      XLSX.writeFile(wb, "datos_exportados.xlsx")
+      XLSX.writeFile(wb, fileName)
 
       console.log("Archivo Excel exportado exitosamente")
     } catch (error) {
       console.error("Error al exportar a Excel:", error)
-      alert("Error al exportar a Excel")
+      alert("Error al exportar a Excel. Por favor, inténtalo de nuevo.")
     }
   }
 
-  // Función para exportar a PDF (corregida con importación correcta)
+  // Función para exportar a PDF (sin cambios)
   const exportToPDF = () => {
     try {
       // Usar los datos filtrados si hay búsqueda, sino todos los datos
