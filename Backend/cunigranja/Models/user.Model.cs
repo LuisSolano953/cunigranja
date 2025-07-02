@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace cunigranja.Models
@@ -26,7 +26,14 @@ namespace cunigranja.Models
         public string Token { get; set; }
         public string NewPassword { get; set; }
     }
-
+    // NUEVA CLASE PARA NOTIFICACIONES DE NUEVAS CUENTAS
+    public class NewAccountNotificationRequest
+    {
+        public string AdminEmail { get; set; } = string.Empty;
+        public string NewUserName { get; set; } = string.Empty;
+        public string NewUserEmail { get; set; } = string.Empty;
+        public string UserType { get; set; } = string.Empty;
+    }
     public class User
     {
         [Key]
