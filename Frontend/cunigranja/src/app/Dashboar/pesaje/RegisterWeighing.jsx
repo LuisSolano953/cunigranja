@@ -21,6 +21,12 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
   const [isCalculating, setIsCalculating] = useState(false)
   const [debugInfo, setDebugInfo] = useState("")
 
+  // Estados para validación de fechas
+  const [minAllowedDate, setMinAllowedDate] = useState("")
+  const [rabbitWeighingHistory, setRabbitWeighingHistory] = useState([])
+  const [isFirstWeighing, setIsFirstWeighing] = useState(true)
+  const [lastWeighingDate, setLastWeighingDate] = useState(null)
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -52,6 +58,7 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
             (user.blockard === 0 || user.blockard === undefined || user.blockard === null) &&
             user.estado !== "Inactivo",
         )
+
         console.log("Usuarios totales:", allUsers.length, "Usuarios activos:", activeUsers.length)
         setUsers(activeUsers)
       } catch (error) {
@@ -60,8 +67,96 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
         setShowErrorAlert(true)
       }
     }
+
     fetchData()
   }, [])
+
+  // FUNCIÓN CORREGIDA: Obtener historial y establecer fecha mínima basada en el ÚLTIMO REGISTRO
+  async function fetchRabbitWeighingHistory(rabbitId) {
+    try {
+      console.log(`🔍 Buscando historial de pesajes para conejo ID: ${rabbitId}`)
+
+      let weighings = []
+
+      // Intentar primero el endpoint específico por conejo
+      try {
+        const response = await axiosInstance.get(`/Api/weighing/GetWeighingByRabbit?rabbitId=${rabbitId}`)
+        if (response.status === 200) {
+          weighings = response.data || []
+          console.log(`✅ Endpoint específico funcionó - encontrados ${weighings.length} registros`)
+        }
+      } catch (specificError) {
+        console.log("⚠️ Endpoint específico falló, intentando endpoint general...")
+
+        // Si falla, usar el endpoint general y filtrar
+        try {
+          const response = await axiosInstance.get("/Api/weighing/GetWeighing")
+          if (response.status === 200) {
+            const allWeighings = response.data || []
+            // Filtrar por el ID del conejo (verificar ambos formatos de ID)
+            weighings = allWeighings.filter(
+              (w) =>
+                w.Id_rabbit === rabbitId ||
+                w.id_rabbit === rabbitId ||
+                w.Id_rabbit === Number.parseInt(rabbitId) ||
+                w.id_rabbit === Number.parseInt(rabbitId),
+            )
+            console.log(`✅ Endpoint general funcionó - total: ${allWeighings.length}, filtrados: ${weighings.length}`)
+          }
+        } catch (generalError) {
+          console.error("❌ Ambos endpoints fallaron:", generalError)
+          weighings = []
+        }
+      }
+
+      console.log(`📊 Registros encontrados para conejo ${rabbitId}:`, weighings)
+
+      setRabbitWeighingHistory(weighings)
+
+      if (weighings.length === 0) {
+        // Es el primer pesaje, no hay restricciones de fecha
+        setIsFirstWeighing(true)
+        setMinAllowedDate("")
+        setLastWeighingDate(null)
+        console.log("🆕 Es el primer pesaje de este conejo - sin restricciones de fecha")
+      } else {
+        // Ya hay pesajes, encontrar la fecha MÁS RECIENTE (último registro)
+        setIsFirstWeighing(false)
+
+        // Ordenar por fecha para encontrar el ÚLTIMO registro (más reciente)
+        const sortedWeighings = weighings.sort((a, b) => {
+          const dateA = new Date(a.fecha_weighing)
+          const dateB = new Date(b.fecha_weighing)
+          return dateB - dateA // Orden descendente (más reciente primero)
+        })
+
+        const lastWeighingRecord = sortedWeighings[0] // El más reciente
+        const lastWeighingDate = new Date(lastWeighingRecord.fecha_weighing)
+
+        setLastWeighingDate(lastWeighingDate)
+
+        console.log(`📅 ÚLTIMO registro encontrado:`, lastWeighingRecord)
+        console.log(`📅 Fecha del ÚLTIMO pesaje:`, lastWeighingDate)
+
+        // Formatear la fecha para el input datetime-local (YYYY-MM-DDTHH:MM)
+        const minDate = lastWeighingDate.toISOString().slice(0, 16)
+        setMinAllowedDate(minDate)
+
+        console.log(`🚫 Fecha mínima permitida establecida: ${minDate}`)
+        console.log(`📈 Total de registros previos: ${weighings.length}`)
+        console.log(
+          `🔄 El próximo registro (${weighings.length + 1}) debe ser posterior a: ${lastWeighingDate.toLocaleString("es-ES")}`,
+        )
+      }
+    } catch (error) {
+      console.error("❌ Error al obtener historial de pesajes:", error)
+      // Si hay error, asumir que es el primer pesaje
+      setIsFirstWeighing(true)
+      setMinAllowedDate("")
+      setLastWeighingDate(null)
+      setRabbitWeighingHistory([])
+    }
+  }
 
   // When rabbit selection changes, fetch the rabbit data to get peso_inicial
   useEffect(() => {
@@ -70,6 +165,11 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
         setSelectedRabbitData(null)
         setPesoActual("")
         setGananciaPeso("")
+        // Limpiar datos de validación de fechas
+        setMinAllowedDate("")
+        setRabbitWeighingHistory([])
+        setIsFirstWeighing(true)
+        setLastWeighingDate(null)
         return
       }
 
@@ -84,6 +184,9 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
           return
         }
 
+        // Obtener historial de pesajes antes de obtener datos del conejo
+        await fetchRabbitWeighingHistory(rabbitId)
+
         // Añadir un parámetro de timestamp para evitar caché
         const timestamp = new Date().getTime()
 
@@ -92,6 +195,7 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
 
         if (response.status === 200) {
           const rabbitData = response.data
+
           console.log("Datos del conejo seleccionado:", rabbitData)
 
           // Verificar que el conejo sigue siendo activo
@@ -104,6 +208,7 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
           }
 
           setSelectedRabbitData(rabbitData)
+
           // Clear the current weight input to force user to enter new measurement
           setPesoActual("")
           setGananciaPeso("")
@@ -113,7 +218,6 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
         // Mostrar información más detallada sobre el error
         if (error.response) {
           console.log("Detalles del error:", error.response.data)
-
           // Si hay errores específicos de validación, mostrarlos
           if (error.response.data && error.response.data.errors) {
             const errorDetails = JSON.stringify(error.response.data.errors)
@@ -155,6 +259,20 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
     }
   }, [selectedRabbitData, peso_actual])
 
+  // Función para validar fecha seleccionada
+  const validateSelectedDate = (selectedDate) => {
+    if (!selectedDate) return true // Si no hay fecha, no validar aún
+
+    if (isFirstWeighing) return true // Si es el primer pesaje, cualquier fecha es válida
+
+    if (!minAllowedDate) return true // Si no hay fecha mínima, permitir
+
+    const selected = new Date(selectedDate)
+    const minDate = new Date(minAllowedDate)
+
+    return selected >= minDate
+  }
+
   // Función para verificar si el peso actual del conejo se actualizó correctamente
   async function verifyRabbitUpdate(rabbitId) {
     try {
@@ -168,6 +286,7 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
       }
 
       const response = await axiosInstance.get(`/Api/Rabbit/ConsultRabbit?id=${numericId}&_t=${timestamp}`)
+
       if (response.status === 200) {
         const updatedRabbit = response.data
         console.log("Datos del conejo después de la actualización:", updatedRabbit)
@@ -181,11 +300,42 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
 
   async function handleSubmit(event) {
     event.preventDefault()
+
     if (isSubmitting) return
 
     // Validate form data
     if (!fecha_weighing || !id_rabbit || !id_user || !peso_actual) {
       setErrorMessage("Todos los campos son obligatorios")
+      setShowErrorAlert(true)
+      return
+    }
+
+    // VALIDACIÓN MEJORADA: Verificar que la fecha sea posterior al ÚLTIMO REGISTRO
+    if (!isFirstWeighing && !validateSelectedDate(fecha_weighing)) {
+      const lastDateFormatted = lastWeighingDate.toLocaleString("es-ES", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+
+      const selectedDateFormatted = new Date(fecha_weighing).toLocaleString("es-ES", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+
+      setErrorMessage(
+        `❌ FECHA INVÁLIDA - CRONOLOGÍA INCORRECTA:\n\n` +
+          `📅 Fecha que intentas registrar: ${selectedDateFormatted}\n` +
+          `🚫 Fecha del ÚLTIMO registro: ${lastDateFormatted}\n\n` +
+          `⚠️ Este conejo ya tiene ${rabbitWeighingHistory.length} registro(s) de pesaje.\n` +
+          `📈 El registro #${rabbitWeighingHistory.length + 1} debe tener una fecha POSTERIOR al último registro.\n\n` +
+          `💡 Esto mantiene la cronología correcta de los pesajes.`,
+      )
       setShowErrorAlert(true)
       return
     }
@@ -221,6 +371,7 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
       }
 
       console.log("Datos frescos del conejo antes de actualizar:", freshRabbitData)
+
       let debugText = `Peso actual antes de actualizar: ${freshRabbitData.peso_actual}\n`
 
       // Calcular la ganancia de peso correctamente
@@ -256,11 +407,10 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
       }
 
       console.log("Enviando datos de pesaje:", weighingData)
+
       debugText += `Enviando peso medido: ${weighingData.peso_actual}, ganancia: ${weighingData.ganancia_peso}\n`
 
       // Llamar al endpoint normal de creación de pesaje
-      // El servicio actualizado se encargará de calcular correctamente la ganancia
-      // y actualizar el peso del conejo
       const response = await axiosInstance.post("/Api/weighing/CreateWeighing", weighingData)
 
       if (response.status === 200) {
@@ -272,11 +422,13 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
           if (verifiedRabbit) {
             debugText += `Verificación: Peso actual después de actualizar: ${verifiedRabbit.peso_actual}\n`
             const expectedWeight = isPositiveGain ? currentMeasuredWeight : lastRecordedWeight
+
             if (Math.abs(verifiedRabbit.peso_actual - expectedWeight) < 0.01) {
               debugText += `✅ La actualización se realizó correctamente.\n`
             } else {
               debugText += `❌ La actualización NO se realizó correctamente. El peso actual debería ser ${expectedWeight} pero es ${verifiedRabbit.peso_actual}\n`
             }
+
             setDebugInfo(debugText)
           }
         }, 1000)
@@ -291,6 +443,11 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
         setPesoActual("")
         setIdUser("")
         setSelectedRabbitData(null)
+        // Limpiar datos de validación de fechas
+        setMinAllowedDate("")
+        setRabbitWeighingHistory([])
+        setIsFirstWeighing(true)
+        setLastWeighingDate(null)
 
         // Refresh the data in the parent component
         if (typeof refreshData === "function") {
@@ -301,6 +458,7 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
       }
     } catch (error) {
       console.error("Error completo:", error)
+
       let errorMsg = error.response?.data?.message || error.message || "Error al registrar pesaje"
 
       // Añadir detalles adicionales si están disponibles
@@ -319,12 +477,10 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
 
   const handleCloseSuccessAlert = () => {
     setShowSuccessAlert(false)
-
     // Refresh data in parent component if successful
     if (typeof refreshData === "function") {
       refreshData()
     }
-
     // Close the form
     if (typeof onCloseForm === "function") {
       onCloseForm()
@@ -389,9 +545,26 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
               type="datetime-local"
               value={fecha_weighing}
               onChange={(e) => setFechaWeighing(e.target.value)}
+              min={minAllowedDate} // Establecer fecha mínima basada en el ÚLTIMO registro
               required
               className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10"
             />
+            {/* Mostrar información sobre restricciones de fecha */}
+            {!isFirstWeighing && minAllowedDate && lastWeighingDate && (
+              <small className="text-blue-600 text-xs block mt-1">
+                📅 Debe ser posterior a:{" "}
+                {lastWeighingDate.toLocaleString("es-ES", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </small>
+            )}
+            {isFirstWeighing && (
+              <small className="text-green-600 text-xs block mt-1">✅ Primer pesaje - cualquier fecha es válida</small>
+            )}
           </div>
 
           <div>
@@ -457,8 +630,59 @@ const RegisterWeighing = ({ refreshData, onCloseForm }) => {
             </p>
             <p>Peso inicial: {selectedRabbitData.peso_inicial} g</p>
             <p>Peso actual acumulado: {selectedRabbitData.peso_actual} g</p>
+
+            {/* INFORMACIÓN DETALLADA DEL HISTORIAL CON CRONOLOGÍA */}
+            <div className="mt-2 p-2 bg-blue-50 rounded border">
+              <p className="font-semibold text-blue-800">📊 Cronología de Pesajes:</p>
+              <p>
+                Registros existentes:{" "}
+                <span className="font-semibold text-blue-600">{rabbitWeighingHistory.length}</span>
+              </p>
+
+              {isFirstWeighing ? (
+                <p className="text-green-600 font-semibold">
+                  ✅ Este será el PRIMER pesaje (#{rabbitWeighingHistory.length + 1}) - cualquier fecha es válida
+                </p>
+              ) : (
+                <div>
+                  <p className="text-orange-600 font-semibold">
+                    ⚠️ Este será el pesaje #{rabbitWeighingHistory.length + 1}
+                  </p>
+                  {lastWeighingDate && (
+                    <p className="text-red-600 font-semibold">
+                      🚫 Debe ser POSTERIOR al último registro:{" "}
+                      {lastWeighingDate.toLocaleString("es-ES", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {/* Mostrar los últimos 3 registros ordenados cronológicamente */}
+              {rabbitWeighingHistory.length > 0 && (
+                <div className="mt-1">
+                  <p className="text-xs text-gray-500">Últimos registros (más reciente primero):</p>
+                  {rabbitWeighingHistory
+                    .sort((a, b) => new Date(b.fecha_weighing) - new Date(a.fecha_weighing))
+                    .slice(0, 3)
+                    .map((record, index) => (
+                      <p key={index} className="text-xs text-gray-500">
+                        • #{rabbitWeighingHistory.length - index}:{" "}
+                        {new Date(record.fecha_weighing).toLocaleString("es-ES")} - {record.peso_actual}g
+                        {index === 0 && <span className="text-red-500 font-bold"> ← ÚLTIMO</span>}
+                      </p>
+                    ))}
+                </div>
+              )}
+            </div>
+
             {peso_actual && (
-              <div>
+              <div className="mt-2">
                 <p
                   className={`font-semibold ${Number.parseFloat(ganancia_peso) >= 0 ? "text-blue-600" : "text-orange-600"}`}
                 >
