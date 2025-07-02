@@ -18,7 +18,7 @@ import {
   Menu,
   X,
 } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 import Image from "next/image"
 
 export function Sidebar({ onNavigate }) {
@@ -26,6 +26,7 @@ export function Sidebar({ onNavigate }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const router = useRouter()
+  const pathname = usePathname()
 
   // Detectar si es móvil
   useEffect(() => {
@@ -59,11 +60,17 @@ export function Sidebar({ onNavigate }) {
     setIsExpanded(false)
     setIsMobileMenuOpen(false)
 
-    // Activar la pantalla de carga antes de navegar
+    // Verificar si ya estamos en la misma ruta
+    if (pathname === href) {
+      console.log("Ya estás en esta página:", href)
+      return // No hacer nada si ya estamos en la misma ruta
+    }
+
+    // Solo navegar si es una ruta diferente
+    console.log("Navegando de", pathname, "a", href)
     if (typeof onNavigate === "function") {
       onNavigate()
     }
-
     router.push(href)
   }
 
@@ -134,18 +141,24 @@ export function Sidebar({ onNavigate }) {
                       transition-colors duration-200
                       text-white group
                       hover:bg-white/10
+                      ${pathname === item.href ? "bg-white/20" : ""}
                       ${isExpanded || isMobileMenuOpen ? "justify-start px-2 sm:px-4" : "justify-center px-1 sm:px-2"}
                     `}
                     onClick={() => handleItemClick(item.href)}
                   >
                     <div className="flex-shrink-0">
                       {React.cloneElement(item.icon, {
-                        className:
-                          "h-6 w-6 sm:h-8 sm:w-8 md:h-10 md:w-10 text-white transition-colors duration-200 group-hover:text-blue-400",
+                        className: `h-6 w-6 sm:h-8 sm:w-8 md:h-10 md:w-10 transition-colors duration-200 group-hover:text-blue-400 ${
+                          pathname === item.href ? "text-blue-400" : "text-white"
+                        }`,
                       })}
                     </div>
                     {(isExpanded || isMobileMenuOpen) && (
-                      <span className="flex-1 text-left truncate text-white transition-colors duration-200 group-hover:text-blue-400 text-sm sm:text-base">
+                      <span
+                        className={`flex-1 text-left truncate transition-colors duration-200 group-hover:text-blue-400 text-sm sm:text-base ${
+                          pathname === item.href ? "text-blue-400" : "text-white"
+                        }`}
+                      >
                         {item.name}
                       </span>
                     )}
