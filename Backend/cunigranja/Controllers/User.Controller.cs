@@ -1,4 +1,4 @@
-﻿using cunigranja.Functions;
+using cunigranja.Functions;
 using cunigranja.Models;
 using cunigranja.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -530,6 +530,82 @@ namespace cunigranja.Controllers
             {
                 FunctionsGeneral.AddLog(ex.ToString());
                 return StatusCode(500, new { message = "Error en el servidor", error = ex.Message });
+            }
+        }
+        // NUEVO ENDPOINT PARA ENVIAR NOTIFICACIONES DE NUEVAS CUENTAS
+        [HttpPost("SendNewAccountNotification")]
+        public async Task<IActionResult> SendNewAccountNotification([FromBody] NewAccountNotificationRequest request)
+        {
+            try
+            {
+                // Validar que todos los campos requeridos estén presentes
+                if (string.IsNullOrEmpty(request.AdminEmail) ||
+                    string.IsNullOrEmpty(request.NewUserName) ||
+                    string.IsNullOrEmpty(request.NewUserEmail) ||
+                    string.IsNullOrEmpty(request.UserType))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Todos los campos son requeridos"
+                    });
+                }
+
+                // Validar formato de email
+                if (!FunctionsGeneral.IsValidEmail(request.AdminEmail) ||
+                    !FunctionsGeneral.IsValidEmail(request.NewUserEmail))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Formato de email inválido"
+                    });
+                }
+
+                // Verificar que el administrador principal existe
+                var adminUser = _Services.GetByEmail(request.AdminEmail);
+                if (adminUser == null || adminUser.tipo_user != "administrador")
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Administrador principal no encontrado"
+                    });
+                }
+
+                // Enviar la notificación usando el método existente en GeneralFunctions
+                var result = await FunctionsGeneral.SendNewAccountNotification(
+                    request.AdminEmail,
+                    request.NewUserName,
+                    request.NewUserEmail,
+                    request.UserType
+                );
+
+                if (result.status)
+                {
+                    return Ok(new
+                    {
+                        success = true,
+                        message = result.Message
+                    });
+                }
+                else
+                {
+                    return StatusCode(500, new
+                    {
+                        success = false,
+                        message = result.Message
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                FunctionsGeneral.AddLog($"Error en SendNewAccountNotification: {ex.Message}");
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Error interno del servidor"
+                });
             }
         }
 
