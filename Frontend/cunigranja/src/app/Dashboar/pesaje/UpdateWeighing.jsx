@@ -20,6 +20,12 @@ const UpdateWeighing = ({ weighingData, onClose, onUpdate, refreshData }) => {
   const [showErrorAlert, setShowErrorAlert] = useState(false)
   const [originalWeighingData, setOriginalWeighingData] = useState(null)
 
+  // NUEVOS ESTADOS PARA VALIDACIÓN CRONOLÓGICA
+  const [minAllowedDate, setMinAllowedDate] = useState("")
+  const [rabbitWeighingHistory, setRabbitWeighingHistory] = useState([])
+  const [isFirstWeighing, setIsFirstWeighing] = useState(true)
+  const [lastWeighingDate, setLastWeighingDate] = useState(null)
+
   // Cargar datos iniciales del formulario
   useEffect(() => {
     if (weighingData) {
@@ -27,32 +33,129 @@ const UpdateWeighing = ({ weighingData, onClose, onUpdate, refreshData }) => {
     }
   }, [weighingData])
 
+  // NUEVA FUNCIÓN: Obtener historial de pesajes excluyendo el registro actual
+  async function fetchRabbitWeighingHistoryForUpdate(rabbitId, currentWeighingId) {
+    try {
+      console.log(
+        `🔍 [UPDATE] Buscando historial de pesajes para conejo ID: ${rabbitId}, excluyendo pesaje ID: ${currentWeighingId}`,
+      )
+
+      let weighings = []
+
+      // Intentar primero el endpoint específico por conejo
+      try {
+        const response = await axiosInstance.get(`/Api/weighing/GetWeighingByRabbit?rabbitId=${rabbitId}`)
+        if (response.status === 200) {
+          weighings = response.data || []
+          console.log(`✅ [UPDATE] Endpoint específico funcionó - encontrados ${weighings.length} registros`)
+        }
+      } catch (specificError) {
+        console.log("⚠️ [UPDATE] Endpoint específico falló, intentando endpoint general...")
+
+        // Si falla, usar el endpoint general y filtrar
+        try {
+          const response = await axiosInstance.get("/Api/weighing/GetWeighing")
+          if (response.status === 200) {
+            const allWeighings = response.data || []
+            // Filtrar por el ID del conejo (verificar ambos formatos de ID)
+            weighings = allWeighings.filter(
+              (w) =>
+                w.Id_rabbit === rabbitId ||
+                w.id_rabbit === rabbitId ||
+                w.Id_rabbit === Number.parseInt(rabbitId) ||
+                w.id_rabbit === Number.parseInt(rabbitId),
+            )
+            console.log(
+              `✅ [UPDATE] Endpoint general funcionó - total: ${allWeighings.length}, filtrados: ${weighings.length}`,
+            )
+          }
+        } catch (generalError) {
+          console.error("❌ [UPDATE] Ambos endpoints fallaron:", generalError)
+          weighings = []
+        }
+      }
+
+      // EXCLUIR el registro que se está editando actualmente
+      const otherWeighings = weighings.filter(
+        (w) =>
+          (w.Id_weighing || w.id_weighing) !== currentWeighingId &&
+          (w.Id_weighing || w.id_weighing) !== Number.parseInt(currentWeighingId),
+      )
+
+      console.log(`📊 [UPDATE] Registros encontrados para conejo ${rabbitId}:`, weighings.length)
+      console.log(`📊 [UPDATE] Otros registros (excluyendo actual):`, otherWeighings.length)
+
+      setRabbitWeighingHistory(otherWeighings)
+
+      if (otherWeighings.length === 0) {
+        // No hay otros registros, no hay restricciones de fecha
+        setIsFirstWeighing(true)
+        setMinAllowedDate("")
+        setLastWeighingDate(null)
+        console.log("🆕 [UPDATE] No hay otros registros - sin restricciones de fecha")
+      } else {
+        // Hay otros registros, encontrar la fecha MÁS RECIENTE (último registro)
+        setIsFirstWeighing(false)
+
+        // Ordenar por fecha para encontrar el ÚLTIMO registro (más reciente)
+        const sortedWeighings = otherWeighings.sort((a, b) => {
+          const dateA = new Date(a.fecha_weighing)
+          const dateB = new Date(b.fecha_weighing)
+          return dateB - dateA // Orden descendente (más reciente primero)
+        })
+
+        const lastWeighingRecord = sortedWeighings[0] // El más reciente
+        const lastWeighingDate = new Date(lastWeighingRecord.fecha_weighing)
+
+        setLastWeighingDate(lastWeighingDate)
+
+        console.log(`📅 [UPDATE] ÚLTIMO registro encontrado (excluyendo actual):`, lastWeighingRecord)
+        console.log(`📅 [UPDATE] Fecha del ÚLTIMO pesaje:`, lastWeighingDate)
+
+        // Formatear la fecha para el input datetime-local (YYYY-MM-DDTHH:MM)
+        const minDate = lastWeighingDate.toISOString().slice(0, 16)
+        setMinAllowedDate(minDate)
+
+        console.log(`🚫 [UPDATE] Fecha mínima permitida establecida: ${minDate}`)
+        console.log(`📈 [UPDATE] Total de otros registros: ${otherWeighings.length}`)
+        console.log(`🔄 [UPDATE] La actualización debe ser posterior a: ${lastWeighingDate.toLocaleString("es-ES")}`)
+      }
+    } catch (error) {
+      console.error("❌ [UPDATE] Error al obtener historial de pesajes:", error)
+      // Si hay error, asumir que no hay restricciones
+      setIsFirstWeighing(true)
+      setMinAllowedDate("")
+      setLastWeighingDate(null)
+      setRabbitWeighingHistory([])
+    }
+  }
+
   // Función para obtener los detalles completos del pesaje
   const fetchWeighingDetails = async (weighingId) => {
     try {
       console.log("Obteniendo datos del pesaje ID:", weighingId)
-
       // Usar la misma URL que funciona en la página principal
       const response = await axiosInstance.get("/Api/Weighing/GetWeighing")
-
       if (response.status === 200) {
         const allWeighings = response.data
         const weighingRecord = allWeighings.find((w) => w.Id_weighing == weighingId)
-
         if (weighingRecord) {
           console.log("Datos del pesaje encontrados:", weighingRecord)
-
           // Formatear la fecha para el input datetime-local
           const formattedDate = weighingRecord.fecha_weighing
             ? new Date(weighingRecord.fecha_weighing).toISOString().slice(0, 16)
             : ""
-
           setFechaWeighing(formattedDate)
           setPesoActual(weighingRecord.peso_actual?.toString() || "")
           setGananciaPeso(weighingRecord.ganancia_peso?.toString() || "")
           setIdRabbit(weighingRecord.Id_rabbit?.toString() || "")
           setIdUser(weighingRecord.Id_user?.toString() || "")
           setOriginalWeighingData(weighingRecord)
+
+          // NUEVO: Obtener historial de pesajes para validación cronológica
+          if (weighingRecord.Id_rabbit) {
+            await fetchRabbitWeighingHistoryForUpdate(weighingRecord.Id_rabbit, weighingId)
+          }
 
           console.log("Valores establecidos:", {
             fecha: formattedDate,
@@ -100,6 +203,7 @@ const UpdateWeighing = ({ weighingData, onClose, onUpdate, refreshData }) => {
         setShowErrorAlert(true)
       }
     }
+
     fetchData()
   }, [])
 
@@ -108,6 +212,11 @@ const UpdateWeighing = ({ weighingData, onClose, onUpdate, refreshData }) => {
     async function fetchRabbitData() {
       if (!id_rabbit) {
         setSelectedRabbitData(null)
+        // NUEVO: Limpiar datos de validaci��n de fechas cuando no hay conejo seleccionado
+        setMinAllowedDate("")
+        setRabbitWeighingHistory([])
+        setIsFirstWeighing(true)
+        setLastWeighingDate(null)
         return
       }
 
@@ -118,6 +227,11 @@ const UpdateWeighing = ({ weighingData, onClose, onUpdate, refreshData }) => {
         const response = await axiosInstance.get(`/Api/Rabbit/ConsultRabbit?id=${rabbitId}`)
         if (response.status === 200) {
           setSelectedRabbitData(response.data)
+
+          // NUEVO: Si cambió el conejo, actualizar el historial de pesajes
+          if (originalWeighingData && rabbitId !== originalWeighingData.Id_rabbit) {
+            await fetchRabbitWeighingHistoryForUpdate(rabbitId, weighingData?.id)
+          }
         }
       } catch (error) {
         console.error("Error al obtener datos del conejo:", error)
@@ -142,13 +256,59 @@ const UpdateWeighing = ({ weighingData, onClose, onUpdate, refreshData }) => {
     }
   }, [selectedRabbitData, peso_actual, originalWeighingData])
 
+  // NUEVA FUNCIÓN: Validar fecha seleccionada para actualización
+  const validateSelectedDateForUpdate = (selectedDate) => {
+    if (!selectedDate) return true // Si no hay fecha, no validar aún
+
+    if (isFirstWeighing) return true // Si no hay otros registros, cualquier fecha es válida
+
+    if (!minAllowedDate) return true // Si no hay fecha mínima, permitir
+
+    const selected = new Date(selectedDate)
+    const minDate = new Date(minAllowedDate)
+
+    return selected >= minDate
+  }
+
   async function handleSubmit(event) {
     event.preventDefault()
+
     if (isSubmitting) return
 
     // Validaciones
     if (!fecha_weighing || !id_rabbit || !id_user || !peso_actual) {
       setErrorMessage("Todos los campos son obligatorios")
+      setShowErrorAlert(true)
+      return
+    }
+
+    // NUEVA VALIDACIÓN: Verificar cronología de fechas
+    if (!isFirstWeighing && !validateSelectedDateForUpdate(fecha_weighing)) {
+      const lastDateFormatted = lastWeighingDate.toLocaleString("es-ES", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+
+      const selectedDateFormatted = new Date(fecha_weighing).toLocaleString("es-ES", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+
+      setErrorMessage(
+        `❌ FECHA INVÁLIDA - CRONOLOGÍA INCORRECTA (ACTUALIZACIÓN):\n\n` +
+          `📅 Fecha que intentas establecer: ${selectedDateFormatted}\n` +
+          `🚫 Fecha del ÚLTIMO registro (otros): ${lastDateFormatted}\n\n` +
+          `⚠️ Este conejo tiene ${rabbitWeighingHistory.length} otro(s) registro(s) de pesaje.\n` +
+          `📈 La actualización debe tener una fecha POSTERIOR al último registro.\n\n` +
+          `💡 Esto mantiene la cronología correcta de los pesajes.\n` +
+          `🔄 Registro actual (ID #${weighingData?.id}) se está editando.`,
+      )
       setShowErrorAlert(true)
       return
     }
@@ -203,9 +363,7 @@ const UpdateWeighing = ({ weighingData, onClose, onUpdate, refreshData }) => {
     for (const endpoint of endpointsToTry) {
       try {
         console.log(`Probando endpoint: ${endpoint}`)
-
         const response = await axiosInstance.post(endpoint, body)
-
         console.log(`✅ Éxito con ${endpoint}:`, response.status, response.data)
 
         if (response.status === 200) {
@@ -217,7 +375,6 @@ const UpdateWeighing = ({ weighingData, onClose, onUpdate, refreshData }) => {
       } catch (error) {
         console.log(`❌ Error con ${endpoint}:`, error.response?.status, error.message)
         lastError = error
-
         // Si no es error 405, no probar más endpoints
         if (error.response?.status !== 405) {
           break
@@ -228,7 +385,6 @@ const UpdateWeighing = ({ weighingData, onClose, onUpdate, refreshData }) => {
     if (!success) {
       console.error("=== TODOS LOS ENDPOINTS FALLARON ===")
       console.error("Último error:", lastError)
-
       const errorMsg = lastError?.response?.data?.message || lastError?.message || "Error al actualizar pesaje"
       setErrorMessage(`Error ${lastError?.response?.status || "desconocido"}: ${errorMsg}`)
       setShowErrorAlert(true)
@@ -268,7 +424,7 @@ const UpdateWeighing = ({ weighingData, onClose, onUpdate, refreshData }) => {
         onSubmit={handleSubmit}
         className="p-8 bg-white shadow-lg rounded-lg max-w-md mx-auto border border-gray-400"
       >
-        
+        <h2 className="text-xl font-bold text-center mb-6">Actualizar Pesaje</h2>
 
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div>
@@ -319,9 +475,28 @@ const UpdateWeighing = ({ weighingData, onClose, onUpdate, refreshData }) => {
               type="datetime-local"
               value={fecha_weighing}
               onChange={(e) => setFechaWeighing(e.target.value)}
+              min={minAllowedDate} // NUEVO: Establecer fecha mínima basada en otros registros
               required
               className="w-full border border-gray-400 rounded-lg p-2 focus:ring-2 focus:ring-gray-600 h-10 hover:border-gray-500 transition-colors"
             />
+            {/* NUEVA INFORMACIÓN: Mostrar restricciones de fecha */}
+            {!isFirstWeighing && minAllowedDate && lastWeighingDate && (
+              <small className="text-blue-600 text-xs block mt-1">
+                📅 Debe ser posterior a:{" "}
+                {lastWeighingDate.toLocaleString("es-ES", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </small>
+            )}
+            {isFirstWeighing && (
+              <small className="text-green-600 text-xs block mt-1">
+                ✅ No hay otros registros - cualquier fecha es válida
+              </small>
+            )}
           </div>
 
           <div>
@@ -404,6 +579,8 @@ const UpdateWeighing = ({ weighingData, onClose, onUpdate, refreshData }) => {
             </p>
             <p>Peso inicial: {selectedRabbitData.peso_inicial} g</p>
             <p>Peso actual acumulado: {selectedRabbitData.peso_actual} g</p>
+
+           
             {peso_actual && (
               <div>
                 <p
@@ -420,22 +597,17 @@ const UpdateWeighing = ({ weighingData, onClose, onUpdate, refreshData }) => {
                 )}
               </div>
             )}
+
             <div className="bg-blue-50 border border-blue-200 rounded p-2 mt-2">
               <p className="text-blue-800 font-medium text-xs">
                 ℹ️ <strong>Modo Actualización:</strong> Los cambios en este pesaje NO afectarán el peso acumulado del
-                conejo. Solo se actualizará el registro del pesaje.
+                conejo. Solo se actualizará el registro del pesaje manteniendo la cronología correcta.
               </p>
             </div>
           </div>
         )}
 
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
-          <p className="text-sm text-blue-800">
-            <strong>ℹ️ Información:</strong> Al actualizar el pesaje:
-            <br />• Solo se modificará el registro del pesaje
-            <br />• El peso acumulado del conejo NO se verá afectado
-          </p>
-        </div>
+        
 
         <button
           type="submit"
